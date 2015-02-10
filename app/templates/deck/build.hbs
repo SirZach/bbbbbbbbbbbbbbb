@@ -1,14 +1,11 @@
 <div {{bind-attr class=":row :row-offcanvas :row-offcanvas-left filtersActive:active"}}>
 
   <div class="col-sm-3 col-lg-1 sidebar-offcanvas" id="sidebar">
-    {{#each fp in controllers.cards.filterProperties}}
-      <div>
-        <strong>{{fp.label}}</strong>
-        {{#each label in fp.valuesDisplay}}
-          {{filter-option tagName="div" fp=fp type="checkbox" displayValue=label}}
-        {{/each}}
-      </div>
-    {{/each}}
+    {{card-filters
+      typesSelected=controllers.cards.typesSelected
+      colorsSelected=controllers.cards.colorsSelected
+      legalitiesSelected=controllers.cards.legalitiesSelected
+    }}
   </div>
   <div class="col-sm-12 col-lg-11">
     <div class="col-sm-5">

@@ -1,35 +1,8 @@
 import Ember from 'ember';
-import filterableMixin from '../mixins/filterable_mixin';
 
-export default Ember.ArrayController.extend(filterableMixin, {
+export default Ember.ArrayController.extend({
   filtersActive: false,
 
-  filterProperties: [
-    {
-      label: 'Card Types',
-      propertyName: 'mainType',
-      values: ['Creature', 'Enchantment', 'Land', 'Instant', 'Sorcery', 'Artifact'],
-      possibleValues: ['Creature', 'Enchantment', 'Land', 'Instant', 'Sorcery', 'Artifact'],
-      valuesDisplay: ['Creature', 'Enchantment', 'Land', 'Instant', 'Sorcery', 'Artifact'],
-      and: false
-    },
-    {
-      label: 'Color',
-      propertyName: 'colors',
-      values: [ 'Black', 'Blue', 'Green', 'Red', 'White'],
-      possibleValues: [ 'Black', 'Blue', 'Green', 'Red', 'White'],
-      valuesDisplay: [ 'Black', 'Blue', 'Green', 'Red', 'White'],
-      and: false
-    },
-    {
-      label: 'Legalities',
-      propertyName: 'legal',
-      values: [ 'isStandard', 'isModern', 'isLegacy', 'isVintage'],
-      possibleValues: [ 'isStandard', 'isModern', 'isLegacy', 'isVintage'],
-      valuesDisplay: [ 'Standard', 'Modern', 'Legacy', 'Vintage'],
-      and: false
-    }
-  ],
   typesSelected: [],
 
   colorsSelected: [],
