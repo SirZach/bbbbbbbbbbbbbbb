@@ -5,6 +5,10 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 var app = new EmberApp({
   vendorFiles: {
     'handlebars.js': null
+  },
+  'ember-cli-selectize': {
+    //valid values are `default`, `bootstrap2`, `bootstrap3` or false
+    'theme': 'default'
   }
 });
 
