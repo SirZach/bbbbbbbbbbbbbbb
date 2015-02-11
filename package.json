@@ -40,6 +40,7 @@
     "ember-export-application-global": "^1.0.0",
     "ember-paper": "0.0.7",
     "express": "^4.8.5",
-    "glob": "^4.0.5"
+    "glob": "^4.0.5",
+    "liquid-fire": "^0.16.2"
   }
 }
