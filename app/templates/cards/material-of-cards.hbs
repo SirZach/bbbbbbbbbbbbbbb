@@ -1,20 +1,18 @@
 {{#paper-content classNames="md-whiteframe-z1 list-demo"}}
   {{#paper-list}}
-    {{#each listData}}
-      {{#paper-item}}
+    {{#each card in displayCards}}
+      {{#paper-item-card class="cursor-pointer" card=card action="showCard"}}
         {{#paper-tile-left}}
           {{x-card-image src=card.imageUrl class="face"}}
         {{/paper-tile-left}}
 
         {{#paper-tile-content}}
           <h3>{{card.name}}</h3>
-          <h4>zach</h4>
-          <p>
-            {{card.description}}
-          </p>
+          <h4>{{card.recentSet}}</h4>
+          <p class="truncate" {{bind-attr title=card.text}}>{{card.text}}</p>
         {{/paper-tile-content}}
-      {{/paper-item}}
-      {{paper-divider}} {{! OR {{paper-divider inset=true}} }}
+      {{/paper-item-card}}
+      {{paper-divider}} {{! OR {{paper-divider inset=true}}
     {{/each}}
   {{/paper-list}}
 {{/paper-content}}

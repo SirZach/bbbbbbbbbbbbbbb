@@ -27,6 +27,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.contentSecurityPolicy = {
       'img-src': "'self' http://cdn.smosh.com http://mtgimage.com",
+      'font-src': "https://fonts.gstatic.com http://localhost:4200",
       'style-src': "'self' 'unsafe-inline'"
     };
   }
