@@ -9,8 +9,8 @@
   <div class="col-sm-12 col-lg-11">
     <div class="col-sm-8">
       <button {{action "toggle" "filtersActive"}} class="btn btn-primary sm-display">Toggle Filters</button>
-      {{#full-height class="overflow-y-scroll"}}
-        {{partial "cards/table-of-cards"}}
+      {{#full-height class="overflow-y-scroll" epsilon=34}}
+        {{partial "cards/material-of-cards"}}
       {{/full-height}}
     </div>
     <div class="col-sm-4">

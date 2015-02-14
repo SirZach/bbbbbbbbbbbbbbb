@@ -38,7 +38,10 @@
     "ember-cli-uglify": "1.0.1",
     "ember-data": "1.0.0-beta.14.1",
     "ember-export-application-global": "^1.0.0",
+    "ember-paper": "miguelcobain/ember-paper",
     "express": "^4.8.5",
-    "glob": "^4.0.5"
+    "glob": "^4.0.5",
+    "liquid-fire": "^0.16.2",
+    "ember-infinite-scroll": "^0.1.4"
   }
 }

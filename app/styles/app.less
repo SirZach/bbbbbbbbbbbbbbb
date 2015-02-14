@@ -1,5 +1,8 @@
-@import "filters";
 @import "offcanvas";
+@import "material-of-cards";
+@import "magic-font";
+@import "utils";
+
 
 .sm-display {
   @media screen and (min-width: 1200px) {
@@ -34,6 +37,12 @@
   overflow-y: scroll;
 }
 
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .overlay {
   height: 100%;
   width: 100%;
@@ -42,4 +51,11 @@
   left: 0;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 1001;
+}
+
+.list-demo .face {
+  border-radius: 30px;
+  border: 1px solid #ddd;
+  width: 48px;
+  margin: 16px;
 }

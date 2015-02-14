@@ -1,14 +1,18 @@
 import Ember from 'ember';
 
-function resize () {
+function resize (epsilon) {
   var windowHeight = Ember.$(window).height(),
       navHeight = Ember.$('#navbar').outerHeight(true);
 
-  this.$().height(windowHeight - navHeight);
+  this.$().height(windowHeight - navHeight - epsilon);
 }
+
 export default Ember.Component.extend({
+  epsilion: 0,
+
   didInsertElement: function () {
-    resize.call(this);
-    Ember.$(window).resize(resize.bind(this));
+    var epsilon = this.get('epsilon');
+    resize.call(this, epsilon);
+    Ember.$(window).resize(resize.bind(this, epsilon));
   }
 });

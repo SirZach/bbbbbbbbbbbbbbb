@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import InfiniteScrollMixin from 'webatrice/mixins/infinite-scroll';
 
-export default Ember.ArrayController.extend({
+export default Ember.ArrayController.extend(InfiniteScrollMixin, {
   filtersActive: false,
 
   typesSelected: [],
@@ -76,9 +77,26 @@ export default Ember.ArrayController.extend({
   /** @property {String} the current search term */
   searchTerm: '',
 
+  hasMore: function () {
+    return this.get('iterable.length') < this.get('displayCards.length');
+  }.property('iterable.[]', 'displayCards.[]'),
+
+  repopulateIterable: function () {
+     this._super();
+
+     this.get('iterable').pushObjects(this.get('searchedContent').slice(0, this.get('chunkSize'))); //hydrating iterable when the model you care about changes
+   }.observes('searchedContent.[]', 'model.[]'),
+
+
   actions: {
     toggle: function (propertyName) {
       this.toggleProperty(propertyName);
+    },
+
+    fetchMore: function (callback) {
+      var model = this.get('searchedContent');
+      var promise = this.populateIterable(model);
+      callback(promise);
     }
   }
 });
