@@ -29,7 +29,7 @@ export default Ember.Mixin.create({
       iterableLength = this.get('iterable.length'),
       newData = model.slice(iterableLength, iterableLength + chunkSize);
 
-    var promise = new Ember.RSVP.Promise(function (resolve, reject) {
+    var promise = new Ember.RSVP.Promise(function (resolve) {
       Ember.run(null, resolve, newData);
     });
 
