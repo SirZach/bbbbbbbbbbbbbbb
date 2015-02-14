@@ -41,6 +41,7 @@
     "ember-paper": "miguelcobain/ember-paper",
     "express": "^4.8.5",
     "glob": "^4.0.5",
-    "liquid-fire": "^0.16.2"
+    "liquid-fire": "^0.16.2",
+    "ember-infinite-scroll": "^0.1.4"
   }
 }
