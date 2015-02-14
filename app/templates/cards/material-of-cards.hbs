@@ -9,6 +9,10 @@
         {{#paper-tile-content}}
           <h3>{{card.name}}</h3>
           <h4>{{card.recentSet}}</h4>
+          <ul class="pull-right paper-tile-content-right">
+            <li>{{card.powerToughnessFormatted}}</li>
+            <li class="ml-10">{{mana-formatted mana=card.manaCostFormatted}}</li>
+          </ul>
           <p class="truncate" {{bind-attr title=card.text}}>{{card.text}}</p>
         {{/paper-tile-content}}
       {{/paper-item-card}}
