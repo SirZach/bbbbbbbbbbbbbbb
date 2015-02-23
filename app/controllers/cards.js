@@ -2,6 +2,9 @@ import Ember from 'ember';
 import InfiniteScrollMixin from 'webatrice/mixins/infinite-scroll';
 
 export default Ember.ArrayController.extend(InfiniteScrollMixin, {
+  queryParams: ['searchTerm', 'typesSelected', 'colorsSelected',
+                'legalitiesSelected'],
+
   filtersActive: false,
 
   typesSelected: [],
@@ -89,8 +92,8 @@ export default Ember.ArrayController.extend(InfiniteScrollMixin, {
 
 
   actions: {
-    toggle: function (propertyName) {
-      this.toggleProperty(propertyName);
+    toggleFiltersActive: function () {
+      this.toggleProperty('filtersActive');
     },
 
     fetchMore: function (callback) {

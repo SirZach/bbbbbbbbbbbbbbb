@@ -8,7 +8,7 @@
   </div>
   <div class="col-sm-12 col-lg-11">
     <div class="col-sm-8">
-      <button {{action "toggle" "filtersActive"}} class="btn btn-primary sm-display">Toggle Filters</button>
+      {{#paper-button raised=true classNames="md-primary" action="toggleFiltersActive"}}Toggle Filters{{/paper-button}}
       {{#full-height class="overflow-y-scroll" epsilon=34}}
         {{paper-text label="Name" value=searchTerm}}
         {{partial "cards/material-of-cards"}}
