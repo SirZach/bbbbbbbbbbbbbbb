@@ -60,10 +60,6 @@ export default Ember.ArrayController.extend(InfiniteScrollMixin, {
   }.property('arrangedContent', 'typesSelected.[]',
     'colorsSelected.[]', 'legalitiesSelected.[]'),
 
-  displayCards: function () {
-    return this.get('searchedContent').slice(0, 100);
-  }.property('searchedContent'),
-
   searchedContent: function () {
     var searchTerm = this.get('searchTerm'),
         filteredCards = this.get('filteredCards');
@@ -81,8 +77,8 @@ export default Ember.ArrayController.extend(InfiniteScrollMixin, {
   searchTerm: '',
 
   hasMore: function () {
-    return this.get('iterable.length') < this.get('displayCards.length');
-  }.property('iterable.[]', 'displayCards.[]'),
+    return this.get('iterable.length') < this.get('model.length');
+  }.property('iterable.[]', 'model.[]'),
 
   repopulateIterable: function () {
      this._super();

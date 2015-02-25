@@ -1,15 +1,16 @@
 import Ember from 'ember';
+import InfiniteScrollMixin from 'webatrice/mixins/infinite-scroll';
 
-export default Ember.ObjectController.extend({
+export default Ember.ObjectController.extend(InfiniteScrollMixin, {
   needs: ['sets', 'cards', 'deck'],
 
   filtersActive: false,
 
   doNotShowTypes: [],
 
-  displayCards: Ember.computed.alias('controllers.cards.displayCards'),
-
   searchTerm: Ember.computed.alias('controllers.cards.searchTerm'),
+
+  searchedContent: Ember.computed.alias('controllers.cards.searchedContent'),
 
   canShowMainDeck: function () {
     return !this.get('doNotShowTypes').contains('mainDeck');
@@ -23,9 +24,19 @@ export default Ember.ObjectController.extend({
     return this.get('cards.length') || this.get('sideboard.length');
   }.property('cards.@each', 'sideboard.@each'),
 
+  hasMore: function () {
+    return this.get('iterable.length') < this.get('controllers.cards.model.length');
+  }.property('iterable.[]', 'controllers.cards.model.[]'),
+
+  repopulateIterable: function () {
+     this._super();
+
+     this.get('iterable').pushObjects(this.get('searchedContent').slice(0, this.get('chunkSize'))); //hydrating iterable when the model you care about changes
+   }.observes('searchedContent.[]', 'model.[]'),
+
   actions: {
-    toggle: function (propertyName) {
-      this.toggleProperty(propertyName);
+    toggleFiltersActive: function () {
+      this.toggleProperty('filtersActive');
     },
 
     showHide: function (superType) {
@@ -36,6 +47,12 @@ export default Ember.ObjectController.extend({
       } else {
         doNotShowTypes.pushObject(superType);
       }
+    },
+
+    fetchMore: function (callback) {
+      var model = this.get('searchedContent');
+      var promise = this.populateIterable(model);
+      callback(promise);
     }
   }
 });

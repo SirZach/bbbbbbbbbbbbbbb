@@ -8,11 +8,11 @@ function resize (epsilon) {
 }
 
 export default Ember.Component.extend({
-  epsilion: 0,
+  epsilon: 40,
 
-  didInsertElement: function () {
+  setupResizeListener: function () {
     var epsilon = this.get('epsilon');
     resize.call(this, epsilon);
     Ember.$(window).resize(resize.bind(this, epsilon));
-  }
+  }.on('didInsertElement')
 });
