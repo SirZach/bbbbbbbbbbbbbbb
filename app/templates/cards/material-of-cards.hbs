@@ -1,7 +1,7 @@
 {{#paper-content classNames="md-whiteframe-z1 list-demo"}}
   {{#paper-list}}
     {{#each card in iterable}}
-      {{#paper-item-card class="cursor-pointer" card=card action="showCard"}}
+      {{#paper-item class="cursor-pointer" param=card action="showCard"}}
         {{#paper-tile-left}}
           {{x-card-image src=card.imageUrl class="face"}}
         {{/paper-tile-left}}
@@ -15,7 +15,7 @@
           </ul>
           <p class="truncate" {{bind-attr title=card.text}}>{{card.text}}</p>
         {{/paper-tile-content}}
-      {{/paper-item-card}}
+      {{/paper-item}}
       {{paper-divider}} {{! OR {{paper-divider inset=true}}
     {{/each}}
   {{/paper-list}}
