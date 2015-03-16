@@ -101,5 +101,12 @@ export default Ember.Object.extend({
       return '';
     }
     return this.get('types')[0];
-  }.property('types')
+  }.property('types'),
+
+  channelFireballPrice: function () {
+    if (ENV.environment === 'development') {
+      return "http://localhost:3000/prices/" + this.get('name');
+    }
+    return 'http://magictcgprices.appspot.com/api/cfb/price.json?cardname=' + this.get('name');
+  }.property('name')
 });

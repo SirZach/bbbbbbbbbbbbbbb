@@ -28,7 +28,9 @@ module.exports = function(environment) {
     ENV.contentSecurityPolicy = {
       'img-src': "'self' http://cdn.smosh.com http://mtgimage.com",
       'font-src': "https://fonts.gstatic.com http://localhost:4200 http://www.fontsaddict.com",
-      'style-src': "'self' 'unsafe-inline'"
+      'style-src': "'self' 'unsafe-inline'",
+      'connect-src': "'self' http://localhost:3000",
+      'report-uri': "'none'"
     };
   }
 
