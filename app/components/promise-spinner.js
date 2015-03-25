@@ -7,7 +7,7 @@ export default Ember.Component.extend({
 
   fetchOnBeginning: function () {
     this.retrieveData();
-  }.on('init'),
+  }.on('didInsertElement'),
 
   retrieveData: function () {
     var url = this.get('url');
@@ -30,6 +30,7 @@ export default Ember.Component.extend({
     });
   },
 
+  //Why do I need this?
   urlChanged: function () {
     this.retrieveData();
   }.observes('url')
