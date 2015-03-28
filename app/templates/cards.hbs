@@ -1,16 +1,16 @@
 <div {{bind-attr class=":row :row-offcanvas :row-offcanvas-left filtersActive:active"}}>
   <div class="col-sm-3 col-lg-1 sidebar-offcanvas" id="sidebar">
     {{card-filters
-      typesSelected=typesSelected
-      colorsSelected=colorsSelected
-      legalitiesSelected=legalitiesSelected
+      typesSelected=types
+      colorsSelected=colors
+      legalitiesSelected=legalities
     }}
   </div>
   <div class="col-sm-12 col-lg-11">
     <div class="col-sm-8">
       {{#paper-button raised=true classNames="md-primary sm-display" action="toggleFiltersActive"}}Toggle Filters{{/paper-button}}
       {{#full-height class="overflow-y-scroll" epsilon=34}}
-        {{paper-text label="Name" value=searchTerm}}
+        {{paper-text label="Name" value=nameSearch}}
         {{partial "cards/material-of-cards"}}
       {{/full-height}}
     </div>
