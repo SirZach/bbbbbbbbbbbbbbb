@@ -84,15 +84,15 @@
               {{#if canShowMainDeck}}
 
                 {{#each group in model.mainDeckGroupings itemController="deckTableItem"}}
-                  {{#x-tr class="success cursor-pointer" action="showHide" param=group.superType}}
+                  {{#x-tr class="success cursor-pointer" action="showHide" param=group.model.superType}}
                     <td>
-                      <span class="indent indent-1">{{group.numberOf}}</span>
+                      <span class="indent indent-1">{{group.model.numberOf}}</span>
                       <i class="fa {{if group.canShow 'fa-caret-down' 'fa-caret-up'}} indent indent-1"></i>
                     </td>
-                    <td><strong>{{pluralize-string group.type}}</strong></td>
+                    <td><strong>{{pluralize-string group.model.type}}</strong></td>
                   {{/x-tr}}
                   {{#if group.canShow}}
-                    {{#each cardObj in group.cardObjs}}
+                    {{#each cardObj in group.model.cardObjs}}
                       {{#x-tr action="showCard" param=cardObj.card}}
                         <td>
                           <span class="indent indent-2">{{cardObj.count}}</span>
@@ -119,15 +119,15 @@
                 {{#if canShowMainDeck}}
 
                   {{#each group in model.sideDeckGroupings itemController="deckTableItem"}}
-                    {{#x-tr class="success cursor-pointer" action="showHide" param=group.superType}}
+                    {{#x-tr class="success cursor-pointer" action="showHide" param=group.model.superType}}
                       <td>
-                        <span class="indent indent-1">{{group.numberOf}}</span>
+                        <span class="indent indent-1">{{group.model.numberOf}}</span>
                         <i {{bind-attr class=":fa group.canShow:fa-caret-down:fa-caret-up :indent :indent-1"}}></i>
                       </td>
-                      <td><strong>{{pluralize-string group.type}}</strong></td>
+                      <td><strong>{{pluralize-string group.model.type}}</strong></td>
                     {{/x-tr}}
                     {{#if group.canShow}}
-                      {{#each cardObj in group.cardObjs}}
+                      {{#each cardObj in group.model.cardObjs}}
                         {{#x-tr action="showCard" param=cardObj.card}}
                           <td>
                             <span class="indent indent-2">{{cardObj.count}}</span>

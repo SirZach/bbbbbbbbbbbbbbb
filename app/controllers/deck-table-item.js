@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
   needs: ['deck/build'],
 
   /** @property {Boolean} - can this deck grouping be shown? */
