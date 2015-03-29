@@ -62,10 +62,8 @@ export default DS.Model.extend({
   recentSet: DS.attr('string'),
 
   imageUrl: function () {
-    if (ENV.environment === 'development') {
-      return '/img/jace.jpg';
-    }
-    return 'http://mtgimage.com/card/' + this.get('name') + '.jpg';
+    return this.get('store').adapterFor('application').get('host') +
+      '/images/' + this.get('name');
   }.property('name'),
 
   channelFireballPrice: function () {
