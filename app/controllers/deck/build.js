@@ -1,13 +1,19 @@
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
   needs: ['sets', 'cards', 'deck'],
 
   filtersActive: false,
 
   doNotShowTypes: [],
 
-  nameSearch: Ember.computed.alias('controllers.cards.searchTerm'),
+  nameSearch: Ember.computed.alias('controllers.cards.nameSearch'),
+
+  nameSearchDidChange: function () {
+    Ember.run.later(this, function () {
+      this.send('getNewCards');
+    });
+  }.observes('nameSearch'),
 
   filteredCards: Ember.computed.alias('controllers.cards.model'),
 

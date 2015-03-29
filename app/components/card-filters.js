@@ -5,5 +5,17 @@ export default Ember.Component.extend({
 
   colors: ['Black', 'Blue', 'Green', 'Red', 'White'],
 
-  legalities: ['Standard', 'Modern', 'Legacy', 'Vintage']
+  legalities: ['Standard', 'Modern', 'Legacy', 'Vintage'],
+
+  actions: {
+    typesChanged: function () {
+      this.sendAction('typesChanged');
+    },
+    colorsChanged: function () {
+      this.sendAction('colorsChanged');
+    },
+    legalitiesChanged: function () {
+      this.sendAction('legalitiesChanged');
+    }
+  }
 });

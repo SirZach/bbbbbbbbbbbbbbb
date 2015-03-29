@@ -1,11 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  
   queryParams: {
     nameSearch: {refreshModel: true},
-    types: {refreshModel: true},
-    colors: {refreshModel: true},
-    legalities: {refreshModel: true},
     page: {refreshModel: true}
   },
 
@@ -14,6 +12,15 @@ export default Ember.Route.extend({
   },
 
   actions: {
+    typesChanged: function () {
+      this.refresh();
+    },
+    colorsChanged: function () {
+      this.refresh();
+    },
+    legalitiesChanged: function () {
+      this.refresh();
+    },
     loading: function (transition, originRoute) {
       return false;
     },

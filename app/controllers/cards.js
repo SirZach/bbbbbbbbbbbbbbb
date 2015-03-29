@@ -21,6 +21,13 @@ export default Ember.ArrayController.extend({
   /** @property {String} the current search term */
   nameSearch: '',
 
+  /** need to observe since we're not having the route automatically update on the query param change for pagination reasons */
+  nameSearchDidChange: function () {
+    this.set('page', 0);
+  }.observes('nameSearch'),
+
+
+  /** @property {Array of Cards} alias property for material-of-cards partial */
   filteredCards: Ember.computed.alias('model'),
 
   actions: {
