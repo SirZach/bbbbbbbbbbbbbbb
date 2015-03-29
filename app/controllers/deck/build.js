@@ -7,6 +7,9 @@ export default Ember.Controller.extend({
 
   doNotShowTypes: [],
 
+  /** @property {Card} card selected to be viewed in more detail */
+  selectedCard: null,
+
   nameSearch: Ember.computed.alias('controllers.cards.nameSearch'),
 
   nameSearchDidChange: function () {
@@ -26,8 +29,8 @@ export default Ember.Controller.extend({
   }.property('doNotShowTypes.@each'),
 
   canShowDeckTable: function () {
-    return this.get('cards.length') || this.get('sideboard.length');
-  }.property('cards.@each', 'sideboard.@each'),
+    return this.get('model.cards.length') || this.get('model.sideboard.length');
+  }.property('model.cards.@each', 'model.sideboard.@each'),
 
   actions: {
     toggleFiltersActive: function () {

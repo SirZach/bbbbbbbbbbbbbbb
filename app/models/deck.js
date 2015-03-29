@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 function groupByName (prev, curr) {
-  var cardObj = prev.findBy('card.name', curr.name);
+  var cardObj = prev.findBy('card.name', curr.get('name'));
 
   if (cardObj) {
     cardObj.count++;

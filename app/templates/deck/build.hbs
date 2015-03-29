@@ -1,4 +1,4 @@
-<div {{bind-attr class=":row :row-offcanvas :row-offcanvas-left filtersActive:active"}}>
+<div class="row row-offcanvas row-offcanvas-left {{if filtersActive 'active'}}">
 
   <div class="col-sm-3 col-lg-1 sidebar-offcanvas" id="sidebar">
     {{card-filters
@@ -76,18 +76,18 @@
               {{!-- Main Deck --}}
               {{#x-tr class="info cursor-pointer" action="showHide" param="mainDeck"}}
                 <td>
-                  <span>{{cards.length}}</span>
-                  <i {{bind-attr class=":fa canShowMainDeck:fa-caret-down:fa-caret-up"}}></i>
+                  <span>{{model.cards.length}}</span>
+                  <i class="fa {{if canShowMainDeck 'fa-caret-down' 'fa-caret-up'}}"></i>
                 </td>
                 <td><strong>Maindeck</strong></td>
               {{/x-tr}}
               {{#if canShowMainDeck}}
 
-                {{#each group in mainDeckGroupings itemController="deckTableItem"}}
+                {{#each group in model.mainDeckGroupings itemController="deckTableItem"}}
                   {{#x-tr class="success cursor-pointer" action="showHide" param=group.superType}}
                     <td>
                       <span class="indent indent-1">{{group.numberOf}}</span>
-                      <i {{bind-attr class=":fa group.canShow:fa-caret-down:fa-caret-up :indent :indent-1"}}></i>
+                      <i class="fa {{if group.canShow 'fa-caret-down' 'fa-caret-up'}} indent indent-1"></i>
                     </td>
                     <td><strong>{{pluralize-string group.type}}</strong></td>
                   {{/x-tr}}
@@ -106,19 +106,19 @@
               {{/if}}
 
               {{!-- Sideboard --}}
-              {{#if sideboard.length}}
+              {{#if model.sideboard.length}}
                 <tr></tr>
                 {{#x-tr class="info cursor-pointer" action="showHide" param="sideDeck"}}
                   <td>
-                    <span>{{sideboard.length}}</span>
-                    <i {{bind-attr class=":fa canShowSideDeck:fa-caret-down:fa-caret-up"}}></i>
+                    <span>{{model.sideboard.length}}</span>
+                    <i class="fa {{if canShowSideDeck 'fa-caret-down' 'fa-caret-up'}}"></i>
                   </td>
                   <td><strong>Sideboard</strong></td>
                 {{/x-tr}}
 
                 {{#if canShowMainDeck}}
 
-                  {{#each group in sideDeckGroupings itemController="deckTableItem"}}
+                  {{#each group in model.sideDeckGroupings itemController="deckTableItem"}}
                     {{#x-tr class="success cursor-pointer" action="showHide" param=group.superType}}
                       <td>
                         <span class="indent indent-1">{{group.numberOf}}</span>
