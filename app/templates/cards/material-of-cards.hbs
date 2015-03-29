@@ -1,6 +1,6 @@
 {{#paper-content classNames="md-whiteframe-z1 list-demo"}}
   {{#paper-list}}
-    {{#each card in model}}
+    {{#each card in filteredCards}}
       {{#paper-item class="cursor-pointer" param=card action="showCard"}}
         {{#paper-tile-left}}
           {{x-card-image src=card.imageUrl class="face"}}
@@ -21,7 +21,8 @@
   {{/paper-list}}
 {{/paper-content}}
 
+{{!-- disabling infinite scroll for now :(
 {{#infinite-scroll content=model hasMore=true}}
   <span>Loading...</span>
 {{/infinite-scroll}}
-
+--}}
