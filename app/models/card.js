@@ -67,9 +67,11 @@ export default DS.Model.extend({
   }.property('name'),
 
   channelFireballPrice: function () {
+    //TODO: get host from the card.js adapter
     if (ENV.environment === 'development') {
       return "http://localhost:3000/prices/" + this.get('name');
+    } else {
+      return "https://big-furry-monster.herokuapp.com/prices/" + this.get('name');
     }
-    return 'http://magictcgprices.appspot.com/api/cfb/price.json?cardname=' + this.get('name');
   }.property('name')
 });
