@@ -41,6 +41,7 @@
     "ember-export-application-global": "^1.0.2",
     "ember-infinite-scroll": "^0.1.4",
     "ember-paper": "0.0.20",
+    "emberfire": "1.4.3",
     "express": "^4.8.5",
     "glob": "^4.0.5",
     "liquid-fire": "^0.16.2"
