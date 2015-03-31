@@ -55,12 +55,15 @@
 }
 
 .nav-avatar-container {
-  padding-bottom: 0px;
+  padding-bottom: 0px!important;
+
+  .fa-caret-down {position: relative; bottom: 3px;}
 
   .img {
-    height: 33px;
+    height: 30px;
+    width: 30px;
     position: relative;
-    bottom: 6px;
+    bottom: 3px;
     margin-right: 5px;
   }
 }
