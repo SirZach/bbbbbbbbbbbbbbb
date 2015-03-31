@@ -7,18 +7,25 @@
       <ul class="nav navbar-nav navbar-right">
         <li>{{#link-to 'cards'}}Cards{{/link-to}}</li>
         <li>{{#link-to 'deck.build' 'new'}}Build a Deck{{/link-to}}</li>
-        <li class="dropdown">
+        <li class="dropdown cursor-pointer">
           <a class="dropdown-toggle" data-toggle="dropdown">Contact {{fa-icon "caret-down"}}</a>
           <ul class="dropdown-menu">
             <li><a target="_blank" href="https://github.com/sirzach/bbbbbbbbbbbbbbb">{{fa-icon "github"}} Github</a></li>
           </ul>
         </li>
         {{#if isLoggedIn}}
-          <li class="dropdown">
+          <li class="dropdown cursor-pointer">
             <a class="dropdown-toggle" data-toggle="dropdown">Hi {{controllers.user.name}}{{fa-icon "caret-down"}}</a>
             <ul class="dropdown-menu">
               <li>{{#link-to 'user' controllers.user.id}}Profile{{/link-to}}</li>
               <li>{{#link-to 'decks.list' controllers.user.id}}Decks{{/link-to}}</li>
+            </ul>
+          </li>
+        {{else}}
+          <li class="dropdown cursor-pointer">
+            <a class="dropdown-toggle" data-toggle="dropdown">Login {{fa-icon "caret-down"}}</a>
+            <ul class="dropdown-menu">
+              <li><a {{action "loginWithGithub"}}>{{fa-icon "github"}} Login with Github</a></li>
             </ul>
           </li>
         {{/if}}
