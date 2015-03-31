@@ -62,8 +62,11 @@ export default DS.Model.extend({
   recentSet: DS.attr('string'),
 
   imageUrl: function () {
-    return this.get('store').adapterFor('application').get('host') +
-      '/images/' + this.get('name');
+    var host = 'https://big-furry-monster.herokuapp.com';
+    if (ENV.environment === 'development') {
+      host = 'http://localhost:3000';
+    }
+    return host + '/images/' + this.get('name');
   }.property('name'),
 
   channelFireballPrice: function () {
