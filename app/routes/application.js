@@ -10,6 +10,11 @@ export default Ember.Route.extend({
   },
 
   actions: {
+    loginWithGithub: function () {
+      this.get('session').login().then(function (user) {
+      }, function (error) {
+      });
+    },
 
     openModal: function (modalName, model) {
       return this.render(modalName, {
