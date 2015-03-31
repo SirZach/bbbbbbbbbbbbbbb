@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import Deck from 'webatrice/models/deck';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
   needs: ['cards'],
 
   actions: {
