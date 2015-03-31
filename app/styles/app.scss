@@ -54,6 +54,17 @@
   z-index: 1001;
 }
 
+.nav-avatar-container {
+  padding-bottom: 0px;
+
+  .img {
+    height: 33px;
+    position: relative;
+    bottom: 6px;
+    margin-right: 5px;
+  }
+}
+
 .list-demo .face {
   border-radius: 30px;
   border: 1px solid #ddd;

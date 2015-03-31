@@ -13,9 +13,11 @@
             <li><a target="_blank" href="https://github.com/sirzach/bbbbbbbbbbbbbbb">{{fa-icon "github"}} Github</a></li>
           </ul>
         </li>
-        {{#if isLoggedIn}}
+        {{#if session.isAuthenticated}}
           <li class="dropdown cursor-pointer">
-            <a class="dropdown-toggle" data-toggle="dropdown">Hi {{controllers.user.name}}{{fa-icon "caret-down"}}</a>
+            <a class="dropdown-toggle nav-avatar-container" data-toggle="dropdown">
+              <img src={{session.currentUser.github.cachedUserProfile.avatar_url}} class="img img-circle"/>{{fa-icon "caret-down"}}
+            </a>
             <ul class="dropdown-menu">
               <li>{{#link-to 'user' controllers.user.id}}Profile{{/link-to}}</li>
               <li>{{#link-to 'decks.list' controllers.user.id}}Decks{{/link-to}}</li>
