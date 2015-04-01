@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 
 function groupByName (prev, curr) {
   var cardObj = prev.findBy('card.name', curr.get('name'));
@@ -27,18 +28,21 @@ var CardObj = Ember.Object.extend({
   }.property('isMain', 'type')
 });
 
-var Deck = Ember.Object.extend({
+var Deck = DS.Model.extend({
+  /** @property {String} - owner of the deck */
+  owner: DS.attr('string'),
+
   /** @property {String} - the deck name */
-  name: null,
+  name: DS.attr('string'),
 
   /** @property {String} - user defined comments about the deck */
-  comments: null,
+  comments: DS.attr('string'),
 
   /** @property {Array[Card]} - an array of Cards that make up the main deck */
-  cards: [],
+  cards: DS.hasMany('card', {async: true}),
 
   /** @property {Array[Card]} - an array of Cards that make up the sideboard */
-  sideboard: [],
+  sideboard: DS.hasMany('card', {async: true}),
 
   /** @property {Boolean} - true if the entire deck + sideboard is standard */
   isStandard: function () {
@@ -52,7 +56,7 @@ var Deck = Ember.Object.extend({
     return cards.every(isStandard) && sideboard.every(isStandard);
   }.property('cards.[]', 'sideboard.[]'),
 
-
+  //TODO this is probably wrong - just check if isModern
   /** @property {Boolean} - true if the entire deck + sideboard is modern */
   isModern: function () {
     var cards = this.get('cards'),
@@ -65,6 +69,7 @@ var Deck = Ember.Object.extend({
     return cards.every(isModern) && sideboard.every(isModern);
   }.property('cards.[]', 'sideboard.[]'),
 
+  //TODO this is probably wrong - just check isLegacy
   /** @property {Boolean} - true if the entire deck + sideboard is legacy */
   isLegacy: function () {
     var cards = this.get('cards'),
@@ -77,6 +82,7 @@ var Deck = Ember.Object.extend({
     return cards.every(isLegacy) && sideboard.every(isLegacy);
   }.property('cards.[]', 'sideboard.[]'),
 
+  //TODO lol who knows
   /** @property {Boolean} - not sure about this. can a deck not ever be at least vintage? */
   isVintage: true,
 
@@ -160,6 +166,7 @@ var Deck = Ember.Object.extend({
   }.property('cards.@each', 'sideboard.@each')
 });
 
+/**
 Deck.reopenClass({
   createDeck: function (deckContents, cards) {
     var mainDeckCards = [],
@@ -189,4 +196,5 @@ Deck.reopenClass({
     });
   }
 });
+*/
 export default Deck;

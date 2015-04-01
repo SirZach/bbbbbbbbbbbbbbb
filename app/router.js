@@ -10,9 +10,9 @@ Router.map(function() {
   this.resource('user', {path: '/u/:user_id'});
   this.resource('decks', function () {
     this.route('list');
-    this.resource('deck', {path: '/:deck_id'}, function () {
-      this.route('build');
-    });
+  });
+  this.resource('deck', {path: '/d/:deck_id'}, function () {
+    this.route('build');
   });
 
   this.resource('cards', function () {
