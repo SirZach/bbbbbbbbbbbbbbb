@@ -24,7 +24,8 @@
     "currentRouteName",
     "ok",
     "test",
-    "module"
+    "module",
+    "moment"
   ],
   "node": false,
   "browser": false,

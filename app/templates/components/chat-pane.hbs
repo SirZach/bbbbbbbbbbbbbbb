@@ -4,8 +4,8 @@
       <img src={{chat.avatarUrl}} class="chat-avatar">
     {{/paper-tile-left}}
     {{#paper-tile-content}}
-      <h3>{{chat.name}}</h3>
-      <p>{{chat.says}}</p>
+      <h3 class="chat-message-by">{{chat.name}} <small>{{x-ago date=chat.when}}</small></h3>
+      <h3 class="chat-message-text">{{chat.says}}</h3>
     {{/paper-tile-content}}
   {{/chat-message}}
 {{/each}}
