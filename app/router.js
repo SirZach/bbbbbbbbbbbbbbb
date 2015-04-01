@@ -18,6 +18,10 @@ Router.map(function() {
   this.resource('cards', function () {
     this.resource('card', {path: '/:cardName'});
   });
+
+  this.resource('chat', function () {
+    this.resource('chat.channel', {path: '/:channel'});
+  });
 });
 
 export default Router;
