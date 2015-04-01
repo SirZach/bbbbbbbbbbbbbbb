@@ -1,0 +1,13 @@
+<ul>
+  {{#each chats as |chat|}}
+    {{#paper-item}}
+      {{#paper-tile-left}}
+        <img src={{chat.avatarUrl}} class="chat-avatar">
+      {{/paper-tile-left}}
+      {{#paper-tile-content}}
+        <h3>{{chat.name}}</h3>
+        <p>{{chat.says}}</p>
+      {{/paper-tile-content}}
+    {{/paper-item}}
+  {{/each}}
+</ul>
