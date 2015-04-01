@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  needs: ['sets', 'cards', 'deck'],
+  needs: ['cards', 'deck'],
 
   filtersActive: false,
 

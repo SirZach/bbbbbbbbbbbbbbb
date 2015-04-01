@@ -1,12 +1,20 @@
 import Ember from 'ember';
-import Deck from '../models/deck';
 
 export default Ember.Route.extend({
   model: function () {
-    return Deck.create({});
+    return this.store.createRecord('deck');
   },
 
   actions: {
+    saveDeck: function (deck) {
+      deck.set('owner', this.get('session.currentUser.github.username'));
+      deck.save();
+    },
+
+    showCard: function (card) {
+      this.controllerFor('deck.build').set('selectedCard', card);
+    },
+
     typesChanged: function () {
       this.send('getNewCards');
     },

@@ -1,13 +1,16 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  model: function () {
-    return [];
+  beforeModel: function () {
+    if (!this.get('isAuthenticated')) {
+      this.replaceWith('/');
+    }
   },
 
-  actions: {
-    showCard: function (card) {
-      this.controllerFor('deck.build').set('selectedCard', card);
-    }
+  model: function () {
+    return this.store.find('deck', {
+      orderBy: 'name',
+      equalTo: this.get('session.currentUser.github.username')
+    });
   }
 });
