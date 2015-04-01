@@ -8,11 +8,32 @@ var session = Ember.Object.extend({
 
     this.get('ref').onAuth(function (authData) {
       if (authData) {
+        var store = this.container.lookup('store:main');
+        var username = authData.github.username;
+        var avatarUrl = authData.github.cachedUserProfile.avatar_url;
+        var displayName = authData.github.displayName;
+        var email = authData.github.email;
+        store.find('user', {username: username}).then(function (records) {
+          var user;
+          if (records.get('length')) {
+            user = records.objectAt(0);
+          } else {
+            user = store.createRecord('user');
+          }
+          user.setProperties({
+            username: username,
+            avatarUrl: avatarUrl,
+            displayName: displayName,
+            email: email
+          });
+          user.incrementProperty('visits');
+          user.save();
+        });
         session.set('isAuthenticated', true);
       } else {
         session.set('isAuthenticated', false);
       }
-    });
+    }.bind(this));
   }.on('init'),
 
   login: function () {
