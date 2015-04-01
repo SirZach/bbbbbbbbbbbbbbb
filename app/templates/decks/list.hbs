@@ -1,3 +1,7 @@
-<p>list of decks would go here</p>
+<ul>
+  {{#each model as |deck|}}
+    <li>{{deck.name}}</li>
+  {{/each}}
+</ul>
 {{#link-to 'deck.build' 'new' class="btn btn-primary"}}Create new{{/link-to}}
 <button class="btn btn-success" {{action 'openModal' 'decks/import-deck'}}>Import deck</button>

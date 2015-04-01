@@ -5,27 +5,39 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
+        {{!-- Chat link --}}
         {{#if session.isAuthenticated}}
           <li>{{#link-to 'chat'}}Chat{{/link-to}}</li>
         {{/if}}
+
+        {{!-- Cards browser --}}
         <li>{{#link-to 'cards'}}Cards{{/link-to}}</li>
+
+        {{!-- Build a deck link --}}
         <li>{{#link-to 'deck.build' 'new'}}Build a Deck{{/link-to}}</li>
+
+        {{!-- Github link --}}
         <li class="dropdown cursor-pointer">
           <a class="dropdown-toggle" data-toggle="dropdown">Contact {{fa-icon "caret-down"}}</a>
           <ul class="dropdown-menu">
             <li><a target="_blank" href="https://github.com/sirzach/bbbbbbbbbbbbbbb">{{fa-icon "github"}} Github</a></li>
           </ul>
         </li>
+
+        {{!-- User dropdown area --}}
+        {{!-- Logged in user --}}
         {{#if session.isAuthenticated}}
           <li class="dropdown cursor-pointer">
             <a class="dropdown-toggle nav-avatar-container" data-toggle="dropdown">
               <img src={{session.currentUser.github.cachedUserProfile.avatar_url}} class="img img-circle"/>{{fa-icon "caret-down"}}
             </a>
             <ul class="dropdown-menu">
-              <li>{{#link-to 'user' controllers.user.id}}Profile{{/link-to}}</li>
-              <li>{{#link-to 'decks.list' controllers.user.id}}Decks{{/link-to}}</li>
+              <li>{{#link-to 'user'}}Profile{{/link-to}}</li>
+              <li>{{#link-to 'decks.list'}}Decks{{/link-to}}</li>
             </ul>
           </li>
+
+        {{!-- User is not logged in --}}
         {{else}}
           <li class="dropdown cursor-pointer">
             <a class="dropdown-toggle" data-toggle="dropdown">Login {{fa-icon "caret-down"}}</a>
