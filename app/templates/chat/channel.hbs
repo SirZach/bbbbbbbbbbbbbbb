@@ -1,3 +1,5 @@
-<h2>#{{channel}}</h2>
-{{chat-pane chats=model}}
-{{x-paper-text label="Say something!" value=says action="say"}}
+<div class="chat">
+  <h2 class="chat-title">#{{channel}}</h2>
+  {{chat-pane chats=model title=channel class="chat-pane"}}
+  {{x-paper-text label="Say something!" value=says action="say" class="chat-input"}}
+</div>
