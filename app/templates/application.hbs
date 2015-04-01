@@ -5,6 +5,9 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
+        {{#if session.isAuthenticated}}
+          <li>{{#link-to 'chat'}}Chat{{/link-to}}</li>
+        {{/if}}
         <li>{{#link-to 'cards'}}Cards{{/link-to}}</li>
         <li>{{#link-to 'deck.build' 'new'}}Build a Deck{{/link-to}}</li>
         <li class="dropdown cursor-pointer">
