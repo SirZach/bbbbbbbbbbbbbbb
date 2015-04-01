@@ -1,6 +1,7 @@
-import Ember from 'ember';
-import layout from '../templates/components/chat-message';
+import PaperItem from 'ember-paper/components/paper-item';
 
-export default Ember.Component.extend({
-  layout: layout
+export default PaperItem.extend({
+  notifyToScroll: function () {
+    this.get('parentView').send('messageInserted');
+  }.on('didInsertElement')
 });
