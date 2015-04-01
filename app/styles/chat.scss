@@ -4,3 +4,35 @@
   border-radius: 50%;
   border: 1px solid #ccc;
 }
+
+.chat {
+  position: fixed;
+  top: 52px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.chat-title {
+  margin-left: 16px;
+}
+
+.chat-pane {
+  position: absolute;
+  top: 58px;
+  bottom: 80px;
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+}
+
+.chat-input {
+  position: absolute;
+  bottom: 0;
+  width: calc(100% - 32px);
+  margin-left: 16px;
+
+  input {
+    width: 100%;
+  }
+}
