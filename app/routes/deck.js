@@ -1,8 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  model: function () {
-    return this.store.createRecord('deck');
+  model: function (params) {
+    if (params.deck_id === 'new') {
+      return this.store.createRecord('deck');
+    } else {
+      return this._super.apply(this, arguments);
+    }
   },
 
   actions: {

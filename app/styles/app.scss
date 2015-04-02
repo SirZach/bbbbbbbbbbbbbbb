@@ -39,6 +39,11 @@
   overflow-y: scroll;
 }
 
+.scrollable-paper-item {
+  padding-left: 5px;
+  padding-right: 15px;
+}
+
 .truncate {
   white-space: nowrap;
   overflow: hidden;

@@ -12,5 +12,15 @@ export default Ember.Route.extend({
       orderBy: 'owner',
       equalTo: this.get('session.currentUser.github.username')
     });
+  },
+
+  actions: {
+    goToDeck: function (deck) {
+      this.transitionTo('deck.build', deck);
+    },
+
+    importDeck: function () {
+      this.send('openModal', 'decks/import-deck');
+    }
   }
 });

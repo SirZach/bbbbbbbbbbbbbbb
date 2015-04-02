@@ -1,7 +1,20 @@
-<ul>
-  {{#each model as |deck|}}
-    <li>{{deck.name}}</li>
-  {{/each}}
-</ul>
-{{#link-to 'deck.build' 'new' class="btn btn-primary"}}Create new{{/link-to}}
-<button class="btn btn-success" {{action 'openModal' 'decks/import-deck'}}>Import deck</button>
+<div class="mb-10">
+  {{#paper-button raised=true classNames="md-primary mr-5" action="createNewDeck"}}Create New{{/paper-button}}
+
+  {{#paper-button raised=true action="importDeck"}}Import Deck{{/paper-button}}
+</div>
+
+<div>
+{{#paper-content classNames="md-whiteframe-z1"}}
+  {{#paper-list}}
+    {{#each model as |deck|}}
+      {{#paper-item class="cursor-pointer" param=deck action="goToDeck"}}
+        {{#paper-tile-content}}
+          <h3>{{deck.name}}</h3>
+        {{/paper-tile-content}}
+      {{/paper-item}}
+      {{paper-divider}}
+    {{/each}}
+  {{/paper-list}}
+{{/paper-content}}
+</div>

@@ -14,5 +14,9 @@ export default Ember.Component.extend({
     var epsilon = this.get('epsilon');
     resize.call(this, epsilon);
     Ember.$(window).resize(resize.bind(this, epsilon));
-  }.on('didInsertElement')
+  }.on('didInsertElement'),
+
+  removeListener: function () {
+    Ember.$(window).off('resize');
+  }.on('willDestroyElement')
 });
