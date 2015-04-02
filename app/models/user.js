@@ -5,5 +5,6 @@ export default DS.Model.extend({
     avatarUrl: DS.attr('string'),
     displayName: DS.attr('string'),
     email: DS.attr('string'),
-    visits: DS.attr('number', {defaultValue: 0})
+    visits: DS.attr('number', {defaultValue: 0}),
+    presence: DS.belongsTo('presence', {async: true})
 });
