@@ -13,7 +13,10 @@ var session = Ember.Object.extend({
         var avatarUrl = authData.github.cachedUserProfile.avatar_url;
         var displayName = authData.github.displayName;
         var email = authData.github.email;
-        store.find('user', {username: username}).then(function (records) {
+        store.find('user', {
+          orderBy: 'username',
+          equalTo: username
+        }).then(function (records) {
           var user;
           if (records.get('length')) {
             user = records.objectAt(0);
