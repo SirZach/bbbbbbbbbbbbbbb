@@ -1,24 +1,16 @@
 import Ember from 'ember';
 
-var basicLands = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest', 'Snow-Covered Plains',
-  'Snow-Covered Island', 'Snow-Covered Swamp', 'Snow-Covered Mountain', 'Snow-Covered Forest'];
-
 export default Ember.Component.extend({
   classNames: ['row'],
 
   /** @property {Boolean} - can this card be added to the main deck being built */
   canAddToDeck: function () {
-    var cardsInDeck = this.get('deck.cards'),
-      cardsInSideboard = this.get('deck.sideboard'),
-      currentCardName = this.get('card.name');
+    var deck = this.get('deck');
+    var currentCardName = this.get('card.name');
 
-    if (basicLands.contains(currentCardName)) {
-      return true;
-    }
-
-    return cardsInDeck.filterBy('name', currentCardName).length +
-      cardsInSideboard.filterBy('name', currentCardName).length < 4;
-  }.property('deck.cards.@each', 'deck.sideboard.@each', 'card'),
+    return deck.canAddToDeck(currentCardName, 'main') &&
+      deck.canAddToDeck(currentCardName, 'side');
+  }.property('deck.cardGroups.@each.count', 'card'),
 
   /** @property {Boolean} - is this card not allowed to go in the main deck */
   cannotAddToDeck: Ember.computed.not('canAddToDeck'),
@@ -26,9 +18,11 @@ export default Ember.Component.extend({
   /** @property {Boolean} - can this card be removed from the main deck */
   canRemoveFromMainDeck: function () {
     var currentCardName = this.get('card.name');
+    var deck = this.get('deck');
+    var cardGroup = deck.getCardGroup(currentCardName, 'main');
 
-    return this.get('deck.cards').filterBy('name', currentCardName).length;
-  }.property('deck.cards.@each', 'deck'),
+    return !!(cardGroup && cardGroup.count);
+  }.property('deck.mainCardGroups.@each', 'card'),
 
   /** @property {Boolean} - is this card allowed to be removed from the main deck */
   cannotRemoveFromMainDeck: Ember.computed.not('canRemoveFromMainDeck'),
@@ -36,9 +30,11 @@ export default Ember.Component.extend({
   /** @property {Boolean} - can this card be removed from the side deck */
   canRemoveFromSideDeck: function () {
     var currentCardName = this.get('card.name');
+    var deck = this.get('deck');
+    var cardGroup = deck.getCardGroup(currentCardName, 'side');
 
-    return this.get('deck.sideboard').filterBy('name', currentCardName).length;
-  }.property('deck.sideboard.@each'),
+    return !!(cardGroup && cardGroup.count);
+  }.property('deck.mainCardGroups.@each', 'card'),
 
   /** @property {Boolean} - can this card be removed from the side deck */
   cannotRemoveFromSideDeck: Ember.computed.not('canRemoveFromSideDeck'),
@@ -48,51 +44,27 @@ export default Ember.Component.extend({
 
   actions: {
     addToMain: function (card) {
-      this.get('deck.cards').pushObject(card);
+      this.get('deck').addCard(card, 'main');
     },
 
     addToSide: function (card) {
-      this.get('deck.sideboard').pushObject(card);
+      this.get('deck').addCard(card, 'side');
     },
 
     removeAllFromMain: function (card) {
-      this.get('deck.cards').removeObject(card);
+      this.get('deck').removeAllCards('main');
     },
 
     removeOneFromMain: function (card) {
-      var cards = this.get('deck.cards'),
-        cardName = card.get('name'),
-        i = 0,
-        index;
-
-      cards.forEach(function (c) {
-        if (c.get('name') === cardName) {
-          index = i;
-        }
-        i++;
-      });
-
-      cards.removeAt(index);
+      this.get('deck').removeCard(card, 'main');
     },
 
     removeAllFromSide: function (card) {
-      this.get('deck.sideboard').removeObject(card);
+      this.get('deck').removeAllCards('side');
     },
 
     removeOneFromSide: function (card) {
-      var cards = this.get('deck.sideboard'),
-        cardName = card.get('name'),
-        i = 0,
-        index;
-
-      cards.forEach(function (c) {
-        if (c.get('name') === cardName) {
-          index = i;
-        }
-        i++;
-      });
-
-      cards.removeAt(index);
+      this.get('deck').removeCard(card, 'side');
     }
   }
 });

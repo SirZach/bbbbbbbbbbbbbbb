@@ -1,36 +1,43 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import SpecialCards from 'webatrice/utils/special-cards';
 
-function groupByName (prev, curr) {
-  var cardObj = prev.findBy('card.name', curr.get('name'));
+/**
+ * Represents a collection of CardGroups.
+ */
+var CardFamily = Ember.Object.extend({
+  /** @property {Boolean} */
+  isMain: null,
 
-  if (cardObj) {
-    cardObj.count++;
-  } else {
-    prev.push({
-      count: 1,
-      card: curr
-    });
-  }
+  /** @property {String} - e.g. Creature */
+  type: null,
 
-  return prev;
-}
+  /** @property {CardGroup} - cards within this family */
+  cardGroups: null,
 
-var CardObj = Ember.Object.extend({
-  numberOf: function () {
-    return this.get('cardObjs').reduce(function (prev, curr) {
+  /** @property {Number} - sum of all cards in each group */
+  totalCount: function () {
+    return this.get('cardGroups').reduce(function (prev, curr) {
       return prev + curr.count;
     }, 0);
-  }.property('cardObjs'),
-
-  superType: function () {
-    return this.get('isMain') ? 'main' + this.get('type') : 'side' + this.get('type');
-  }.property('isMain', 'type')
+  }.property('cardGroups')
 });
 
+/**
+ * Creates a computed property to calculate a certain type of legality.
+ *
+ * @return {Ember.computed}
+ */
+function computeIsLegal(style) {
+  style = 'is' + style.capitalize();
+  return function () {
+    return this.get('cardGroups').isEvery('card.' + style);
+  }.property('cardGroups.@each.card.' + style);
+}
+
 var Deck = DS.Model.extend({
-  /** @property {String} - owner of the deck */
-  owner: DS.attr('string'),
+  /** @property {User} - owner of the deck */
+  owner: DS.belongsTo('user'),
 
   /** @property {String} - the deck name */
   name: DS.attr('string'),
@@ -38,132 +45,216 @@ var Deck = DS.Model.extend({
   /** @property {String} - user defined comments about the deck */
   comments: DS.attr('string'),
 
-  /** @property {Array[Card]} - an array of Cards that make up the main deck */
-  cards: DS.hasMany('card', {async: true}),
+  /** @property {Array[CardGroup]} - individual card multiples */
+  cardGroups: DS.hasMany('cardGroup', {embedded: true}),
 
-  /** @property {Array[Card]} - an array of Cards that make up the sideboard */
-  sideboard: DS.hasMany('card', {async: true}),
+  /** @property {Array[CardGroups]} - card groups only in the main board */
+  mainCardGroups: Ember.computed.filterBy('cardGroups', 'board', 'main'),
+
+  /** @property {Number} - number of cards in the main board */
+  mainCount: Ember.computed.sum('_mainCardGroupLengths'),
+  _mainCardGroupLengths: Ember.computed.mapBy('mainCardGroups', 'count'),
+
+  /** @property {Array[CardGroups]} - card groups only in the sideboard */
+  sideCardGroups: Ember.computed.filterBy('cardGroups', 'board', 'side'),
+
+  /** @property {Number} - number of cards in the sideboard */
+  sideCount: Ember.computed.sum('_sideCardGroupLengths'),
+  _sideCardGroupLengths: Ember.computed.mapBy('sideCardGroups', 'count'),
 
   /** @property {Boolean} - true if the entire deck + sideboard is standard */
-  isStandard: function () {
-    var cards = this.get('cards'),
-        sideboard = this.get('sideboard');
+  isStandard: computeIsLegal('standard'),
 
-    function isStandard (card) {
-      return card.get('isStandard');
-    }
-
-    return cards.every(isStandard) && sideboard.every(isStandard);
-  }.property('cards.[]', 'sideboard.[]'),
-
-  //TODO this is probably wrong - just check if isModern
   /** @property {Boolean} - true if the entire deck + sideboard is modern */
-  isModern: function () {
-    var cards = this.get('cards'),
-        sideboard = this.get('sideboard');
+  isModern: computeIsLegal('modern'),
 
-    function isModern (card) {
-      return card.get('isStandard') || card.get('isModern');
-    }
-
-    return cards.every(isModern) && sideboard.every(isModern);
-  }.property('cards.[]', 'sideboard.[]'),
-
-  //TODO this is probably wrong - just check isLegacy
   /** @property {Boolean} - true if the entire deck + sideboard is legacy */
-  isLegacy: function () {
-    var cards = this.get('cards'),
-        sideboard = this.get('sideboard');
+  isLegacy: computeIsLegal('legal'),
 
-    function isLegacy (card) {
-      return card.get('isStandard') || card.get('isModern') || card.get('isLegacy');
-    }
-
-    return cards.every(isLegacy) && sideboard.every(isLegacy);
-  }.property('cards.[]', 'sideboard.[]'),
-
-  //TODO lol who knows
-  /** @property {Boolean} - not sure about this. can a deck not ever be at least vintage? */
-  isVintage: true,
+  /** @property {Boolean} - true if the entire deck + sideboard is vintage */
+  isVintage: computeIsLegal('vintage'),
 
   /** @property {String} -  */
   classification: function () {
     var isStandard = this.get('isStandard'),
         isModern = this.get('isModern'),
-        isLegacy = this.get('isLegacy');
+        isLegacy = this.get('isLegacy'),
+        isVintage = this.get('isVintage');
 
-    if (!this.get('cards.length') && !this.get('sideboard.length')) {
+    if (this.get('cardGroups.length') === 0) {
       return '';
     }
 
-    return isStandard ? 'Standard' : isModern ? 'Modern' : isLegacy ? 'Legacy' : 'Vintage';
+    return isStandard ? 'Standard' : isModern ? 'Modern' : isLegacy ? 'Legacy' : isVintage ? 'Vintage' : 'Illegal';
   }.property('isStandard', 'isModern', 'isLegacy', 'isVintage'),
 
-  /** @property {Array[String]} - an array of all the different main card types in the deck */
-  cardTypes: function () {
-    return this.get('cards').mapBy('mainType').uniq();
-  }.property('cards.@each'),
+  /**
+   * @property {Array[String]} - An array of all the different card types in the
+   *                             main board.
+   */
+  mainCardTypes: function () {
+    return this.get('mainCardGroups').mapBy('card.mainType').uniq();
+  }.property('mainCardGroups.@each.card.mainType'),
 
-  /** @property {Array[CardObj]} - an array of CardObj that populates the deck table */
-  mainDeckGroupings: function () {
-    var cards = this.get('cards'),
-        cardTypes = this.get('cardTypes'),
-        cardGroups = cardTypes.map(function (cT) {
-          return CardObj.create({
+  /**
+   * @property {Array[CardObj]} - An array of families of cards in the main
+   *                              board. E.g. one family for creatures, one for
+   *                              lands, etc.
+   */
+  mainDeckFamilies: function () {
+    var cardGroups = this.get('mainCardGroups');
+    var cardTypes = this.get('mainCardTypes');
+    var cardFamilies = cardTypes.map(function (cardType) {
+          return CardFamily.create({
             isMain: true,
-            type: cT,
-            cardObjs: cards.filterBy('mainType', cT).reduce(groupByName, [])
+            type: cardType,
+            cardGroups: cardGroups.filterBy('card.mainType', cardType)
           });
         });
+    return cardFamilies;
+  }.property('mainCardGroups.@each.card.mainType'),
 
-    return cardGroups;
-  }.property('cards.@each'),
-
-    /** @property {Array[String]} - an array of all the different main card types in the deck */
+  /**
+   * @property {Array[String]} - An array of all the different card types in the
+   *                             sideboard.
+   */
   sideCardTypes: function () {
-    return this.get('sideboard').mapBy('mainType').uniq();
-  }.property('sideboard.@each'),
+    return this.get('sideCardGroups').mapBy('card.mainType').uniq();
+  }.property('sideCardGroups.@each.card.mainType'),
 
-  /** @property {Array[CardObj]} - an array of CardObj that populates the deck table */
-  sideDeckGroupings: function () {
-    var cards = this.get('sideboard'),
-        cardTypes = this.get('sideCardTypes'),
-        cardGroups = cardTypes.map(function (cT) {
-          return CardObj.create({
+  /**
+   * @property {Array[CardObj]} - An array of families of cards in the side-
+   *                              board. E.g. one family for creatures, one for
+   *                              lands, etc.
+   */
+  sideDeckFamilies: function () {
+    var cardGroups = this.get('sideCardGroups');
+    var cardTypes = this.get('sideCardTypes');
+    var cardFamilies = cardTypes.map(function (cardType) {
+          return CardFamily.create({
             isMain: false,
-            type: cT,
-            cardObjs: cards.filterBy('mainType', cT).reduce(groupByName, [])
+            type: cardType,
+            cardGroups: cardGroups.filterBy('card.mainType', cardType)
           });
         });
+    return cardFamilies;
+  }.property('sideCardGroups.@each.card.mainType'),
 
-    return cardGroups;
-  }.property('sideboard.@each'),
+  /**
+   * Is it legal to add another of these cards to the deck?
+   *
+   * @param {String} name - name of a card
+   * @param {String} board - 'main', 'side'
+   *
+   * @return {Boolean}
+   */
+  canAddToDeck: function (name, board) {
+    if (SpecialCards.BASIC_LANDS.contains(name) ||
+        SpecialCards.MORE_THAN_FOUR_LEGAL.contains(name)) {
+      return true;
+    }
+
+    var cardGroup = this.getCardGroup(name, board);
+    if (!cardGroup) {
+      return true;
+    }
+
+    return cardGroup.count < 4;
+  },
+
+  /**
+   * Get a card group by its card and board name.
+   *
+   * @param {String} name - name of a card
+   * @param {String} board - 'main', 'side'
+   *
+   * @return {CardGroup|null}
+   */
+  getCardGroup: function (name, board) {
+    debugger;
+    var cardGroups = this.get(board + 'CardGroups');
+    return cardGroups.filterBy('card.name', name)[0];
+  },
+
+  /**
+   * Add a card to the designated board if possible.
+   *
+   * @param {Card} card
+   * @param {String} board - 'main', 'side'
+   */
+  addCard: function (card, board) {
+    debugger;
+    var cardGroup;
+    if (this.canAddToDeck(card.get('name'), board)) {
+      cardGroup = getCardGroup(card.get('name'), board);
+      if (!cardGroup) {
+        cardGroup = this.store.create('cardGroup', {
+          board: board,
+          count: 0,
+          card: card
+        });
+        this.get('cardGroups').pushObject(cardGroup);
+      }
+      cardGroup.incrementProperty('count');
+    }
+  },
+
+  /**
+   * Remove a card from the designated board if possible.
+   *
+   * @param {Card} card
+   * @param {String} board - 'main', 'side'
+   */
+  removeCard: function (card, board) {
+    debugger;
+    var cardGroup;
+    cardGroup = getCardGroup(card.get('name'), board);
+    if (!cardGroup) {
+      cardGroup.decrementProperty('count');
+      if (cardGroup.get('count') === 0) {
+        this.get('cardGroups').removeObject(cardGroup);
+      }
+    }
+  },
+
+  /**
+   * Remove all cards from the designated board.
+   *
+   * @param {String} board - 'main', 'side'
+   */
+  removeAllCards: function (board) {
+    var toRemove = this.get(board + 'CardGroups');
+    var cardGroups = this.get('cardGroups');
+    toRemove.forEach(function (cardGroup) {
+      cardGroups.removeObject(cardGroup);
+    });
+  }
 
   /** @property {String} - a string representation of the deck that Cockatrice knows how to parse and import */
-  exportFormat: function () {
-    var mainDeckGroupings = this.get('mainDeckGroupings'),
-        sideDeckGroupings = this.get('sideDeckGroupings'),
-        exp = '';
+  // exportFormat: function () {
+  //   var mainDeckGroupings = this.get('mainDeckGroupings'),
+  //       sideDeckGroupings = this.get('sideDeckGroupings'),
+  //       exp = '';
 
-    mainDeckGroupings.forEach(function (group) {
-      group.cardObjs.forEach(function (cardObj) {
-        exp += cardObj.count + ' ' + cardObj.card.get('name') + '\n';
-      });
-    });
+  //   mainDeckGroupings.forEach(function (group) {
+  //     group.cardObjs.forEach(function (cardObj) {
+  //       exp += cardObj.count + ' ' + cardObj.card.get('name') + '\n';
+  //     });
+  //   });
 
-    sideDeckGroupings.forEach(function (group) {
-      group.cardObjs.forEach(function (cardObj) {
-        exp += 'SB: ' + cardObj.count + ' ' + cardObj.card.get('name') + '\n';
-      });
-    });
+  //   sideDeckGroupings.forEach(function (group) {
+  //     group.cardObjs.forEach(function (cardObj) {
+  //       exp += 'SB: ' + cardObj.count + ' ' + cardObj.card.get('name') + '\n';
+  //     });
+  //   });
 
-    return exp;
-  }.property('mainDeckGroupings.@each', 'sideDeckGroupings.@each'),
+  //   return exp;
+  // }.property('mainDeckGroupings.@each', 'sideDeckGroupings.@each'),
 
   /** @property {Number} - the total number of unique cards in the deck and sideboard */
-  numberOfUniqueCardsInDeck: function () {
-    return this.get('cards').uniq().length + this.get('sideboard').uniq().length;
-  }.property('cards.@each', 'sideboard.@each')
+  // numberOfUniqueCardsInDeck: function () {
+  //   return this.get('cards').uniq().length + this.get('sideboard').uniq().length;
+  // }.property('cards.@each', 'sideboard.@each')
 });
 
 /**

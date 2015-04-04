@@ -11,7 +11,7 @@ export default Ember.Route.extend({
 
   actions: {
     saveDeck: function (deck) {
-      deck.set('owner', this.get('session.currentUser.github.username'));
+      deck.set('owner', this.get('session.user'));
       deck.save();
     },
 
