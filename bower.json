@@ -17,6 +17,7 @@
     "selectize": "~0.12.0",
     "hammerjs": "~2.0.4",
     "firebase": "^2.1.0",
-    "momentjs": "~2.9.0"
+    "momentjs": "~2.9.0",
+    "jquery-idletimer": "~1.0.1"
   }
 }
