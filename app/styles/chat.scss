@@ -1,8 +1,12 @@
-.chat-avatar {
-  width: 60px;
+@mixin avatar {
   margin: 16px;
   border-radius: 50%;
   border: 1px solid #ccc;
+}
+
+.chat-avatar {
+  @include avatar;
+  width: 60px;
 }
 
 .chat {
@@ -41,34 +45,27 @@
 .active-user-list {
   width: 25%;
   height: calc(100% - 133px);
+  padding: 5px;
   float: left;
   overflow-y: auto;
 }
 
-.chat-online,
-.chat-idle,
-.chat-offline {
-  md-icon {
-    margin: 0;
-    position: relative;
-    top: 2px;
+.user-avatar {
+  @include avatar;
+  width: 40px;
+}
+
+.user-idle {
+  .user-avatar {
+    opacity: 0.6;
+  }
+}
+.user-offline {
+  .user-avatar {
+    opacity: 0.3;
   }
 }
 
-.chat-online {
-  md-icon {
-    color: green;
-  }
-}
-
-.chat-idle {
-  md-icon {
-    color: yellow;
-  }
-}
-
-.chat-offline {
-  md-icon {
-    color: red;
-  }
+.user-offline {
+  color: #AAA;
 }

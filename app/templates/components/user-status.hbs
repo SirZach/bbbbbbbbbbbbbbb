@@ -1,7 +1,15 @@
 {{#paper-item}}
-  {{paper-icon icon="check-circle-blank"}}
-  <h3>{{presence.user.username}}</h3>
-  {{#unless isActive}}
-    <h4>{{lastSeenLabel}} {{from-now presence.lastSeen includeSuffix=isOffline}}</h4>
-  {{/unless}}
+  {{#paper-tile-left}}
+    <img src={{presence.user.avatarUrl}} class="user-avatar">
+  {{/paper-tile-left}}
+  {{#paper-tile-content}}
+    <h3>{{presence.user.username}}</h3>
+    <h4>
+      {{lastSeenLabel}}
+      {{#unless isOnline}}
+        {{from-now presence.lastSeen includeSuffix=isOffline}}
+      {{/unless}}
+    </h4>
+  {{/paper-tile-content}}
 {{/paper-item}}
+{{paper-divider}}

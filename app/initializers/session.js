@@ -2,7 +2,7 @@ import Ember from 'ember';
 import $ from 'jquery';
 
 var FIREBASE_URL = 'https://dazzling-fire-7827.firebaseio.com';
-var IDLE_MS = 2000;
+var IDLE_MS = 60000;
 
 var session = Ember.Object.extend({
   ref: new Firebase(FIREBASE_URL),

@@ -1,5 +1,7 @@
-{{#paper-list}}
-  {{#each presences as |presence|}}
-    {{user-status presence=presence}}
-  {{/each}}
-{{/paper-list}}
+{{#paper-content classNames="md-whiteframe-z1"}}
+  {{#paper-list}}
+    {{#each presences as |presence|}}
+      {{user-status presence=presence}}
+    {{/each}}
+  {{/paper-list}}
+{{/paper-content}}
