@@ -5,7 +5,7 @@ import {
 
 moduleForModel('deck', {
   // Specify the other units that are required for this test.
-  needs: ['model:card']
+  needs: ['model:card', 'model:user', 'model:presence', 'model:cardGroup']
 });
 
 // Replace this with your real tests.

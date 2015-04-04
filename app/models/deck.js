@@ -215,16 +215,17 @@ var Deck = DS.Model.extend({
   },
 
   /**
-   * Remove all cards from the designated board.
+   * Remove all cards of the given type from the designated board.
    *
+   * @param {Card} card
    * @param {String} board - 'main', 'side'
    */
-  removeAllCards: function (board) {
-    var toRemove = this.get(board + 'CardGroups');
+  removeAllCards: function (card, board) {
     var cardGroups = this.get('cardGroups');
-    toRemove.forEach(function (cardGroup) {
+    var cardGroup = this.getCardGroup(card.get('name'), board);
+    if (cardGroup) {
       cardGroups.removeObject(cardGroup);
-    });
+    }
   }
 
   /** @property {String} - a string representation of the deck that Cockatrice knows how to parse and import */

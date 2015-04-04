@@ -52,7 +52,7 @@ export default Ember.Component.extend({
     },
 
     removeAllFromMain: function (card) {
-      this.get('deck').removeAllCards('main');
+      this.get('deck').removeAllCards(card, 'main');
     },
 
     removeOneFromMain: function (card) {
@@ -60,7 +60,7 @@ export default Ember.Component.extend({
     },
 
     removeAllFromSide: function (card) {
-      this.get('deck').removeAllCards('side');
+      this.get('deck').removeAllCards(card, 'side');
     },
 
     removeOneFromSide: function (card) {
