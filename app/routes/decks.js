@@ -10,7 +10,7 @@ export default Ember.Route.extend({
   model: function () {
     return this.store.find('deck', {
       orderBy: 'owner',
-      equalTo: this.get('session.currentUser.github.username')
+      equalTo: this.get('session.user.id')
     });
   },
 

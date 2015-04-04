@@ -18,9 +18,9 @@ var CardFamily = Ember.Object.extend({
   /** @property {Number} - sum of all cards in each group */
   totalCount: function () {
     return this.get('cardGroups').reduce(function (prev, curr) {
-      return prev + curr.count;
+      return prev + curr.get('count');
     }, 0);
-  }.property('cardGroups')
+  }.property('cardGroups.@each.count')
 });
 
 /**
@@ -159,7 +159,7 @@ var Deck = DS.Model.extend({
       return true;
     }
 
-    return cardGroup.count < 4;
+    return cardGroup.get('count') < 4;
   },
 
   /**
@@ -171,7 +171,6 @@ var Deck = DS.Model.extend({
    * @return {CardGroup|null}
    */
   getCardGroup: function (name, board) {
-    debugger;
     var cardGroups = this.get(board + 'CardGroups');
     return cardGroups.filterBy('card.name', name)[0];
   },
@@ -183,12 +182,11 @@ var Deck = DS.Model.extend({
    * @param {String} board - 'main', 'side'
    */
   addCard: function (card, board) {
-    debugger;
     var cardGroup;
     if (this.canAddToDeck(card.get('name'), board)) {
-      cardGroup = getCardGroup(card.get('name'), board);
+      cardGroup = this.getCardGroup(card.get('name'), board);
       if (!cardGroup) {
-        cardGroup = this.store.create('cardGroup', {
+        cardGroup = this.store.createRecord('cardGroup', {
           board: board,
           count: 0,
           card: card
@@ -206,10 +204,9 @@ var Deck = DS.Model.extend({
    * @param {String} board - 'main', 'side'
    */
   removeCard: function (card, board) {
-    debugger;
     var cardGroup;
-    cardGroup = getCardGroup(card.get('name'), board);
-    if (!cardGroup) {
+    cardGroup = this.getCardGroup(card.get('name'), board);
+    if (cardGroup) {
       cardGroup.decrementProperty('count');
       if (cardGroup.get('count') === 0) {
         this.get('cardGroups').removeObject(cardGroup);
