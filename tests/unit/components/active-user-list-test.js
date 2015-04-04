@@ -5,7 +5,7 @@ import {
 
 moduleForComponent('active-user-list', {
   // specify the other units that are required for this test
-  // needs: ['component:foo', 'helper:bar']
+  needs: ['component:paper-content', 'component:paper-list']
 });
 
 test('it renders', function(assert) {
