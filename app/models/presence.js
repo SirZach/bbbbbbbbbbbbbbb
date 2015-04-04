@@ -9,6 +9,7 @@ var PRIORITIES = {
 export default DS.Model.extend({
   user: DS.belongsTo('user', {async: true}),
   state: DS.attr('string'),
+  lastSeen: DS.attr('date'),
 
   statePriority: function () {
     var state = this.get('state');

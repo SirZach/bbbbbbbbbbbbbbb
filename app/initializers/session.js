@@ -1,6 +1,8 @@
 import Ember from 'ember';
+import $ from 'jquery';
 
 var FIREBASE_URL = 'https://dazzling-fire-7827.firebaseio.com';
+var IDLE_MS = 2000;
 
 var session = Ember.Object.extend({
   ref: new Firebase(FIREBASE_URL),
@@ -20,6 +22,19 @@ var session = Ember.Object.extend({
     }.bind(this));
   }.on('init'),
 
+  trackActivity: function () {
+    $(document).idleTimer({
+      // Call user idle after this many milliseconds.
+      timeout: IDLE_MS,
+      // Recognize the following events as the user being active.
+      events: 'mousemove keydown mousedown'
+    });
+    $(document).on('idle.idleTimer',
+      this.onPresenceStateChange.bind(this, 'idle'));
+    $(document).on('active.idleTimer',
+      this.onPresenceStateChange.bind(this, 'online'));
+  }.on('init'),
+
   /**
    * Updates an existing user profile or creates a new one.
    *
@@ -33,6 +48,7 @@ var session = Ember.Object.extend({
     var avatarUrl = authData.github.cachedUserProfile.avatar_url;
     var displayName = authData.github.displayName;
     var email = authData.github.email;
+    var self = this;
     return store.find('user', {
       orderBy: 'username',
       equalTo: username
@@ -50,16 +66,27 @@ var session = Ember.Object.extend({
         email: email
       });
       user.incrementProperty('visits');
+      self.set('user', user);
       return user.save();
+    });
+  },
+
+  onPresenceStateChange: function (state) {
+    this.get('user.presence').then(function (presence) {
+      presence.set('state', state);
+      if (state === 'idle') {
+        presence.set('lastSeen',
+          moment().subtract(IDLE_MS, 'milliseconds').toDate());
+      }
+      presence.save();
     });
   },
 
   /**
    * Set a user's online status.
-   *
-   * @param {User} user
    */
-  bindPresence: function (user) {
+  bindPresence: function () {
+    var user = this.get('user');
     var amOnline = new Firebase(FIREBASE_URL + '/.info/connected');
     var store = this.container.lookup('store:main');
     var presenceType = store.modelFor('presence');
@@ -75,7 +102,12 @@ var session = Ember.Object.extend({
         if (snapshot.val()) {
           var adapter = store.adapterFor('presence');
           var ref = adapter._getRef(presenceType, presence.get('id'));
-          ref.child('state').onDisconnect().set('offline');
+          ref.child('state')
+            .onDisconnect()
+            .set('offline');
+          ref.child('lastSeen')
+            .onDisconnect()
+            .set(Firebase.ServerValue.TIMESTAMP);
           presence.set('state', 'online');
           presence.save();
         }

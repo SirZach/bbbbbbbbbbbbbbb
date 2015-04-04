@@ -7,11 +7,7 @@ export default Ember.Component.extend({
   classNameBindings: ['statusClass'],
 
   statusClass: function () {
-    var status = this.get('presence.state');
-    if (status === 'online') {
-      return 'chat-online';
-    } else if (status === 'offline') {
-      return 'chat-offline';
-    }
+    var state = this.get('presence.state');
+    return 'chat-' + state;
   }.property('presence.state')
 });
