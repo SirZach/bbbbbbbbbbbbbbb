@@ -63,7 +63,7 @@ var session = Ember.Object.extend({
     var amOnline = new Firebase(FIREBASE_URL + '/.info/connected');
     var store = this.container.lookup('store:main');
     var presenceType = store.modelFor('presence');
-    var presence = user.get('presence').then(function (presence) {
+    user.get('presence').then(function (presence) {
       if (!presence) {
         presence = store.createRecord('presence', {
           user: user

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  
+
   queryParams: {
     nameSearch: {refreshModel: true},
     page: {refreshModel: true}
@@ -21,7 +21,7 @@ export default Ember.Route.extend({
     legalitiesChanged: function () {
       this.refresh();
     },
-    loading: function (transition, originRoute) {
+    loading: function (/* transition, originRoute */) {
       return false;
     },
     showCard: function (card) {

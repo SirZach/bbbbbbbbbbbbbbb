@@ -1,10 +1,16 @@
-import Ember from 'ember';
-import Deck from 'webatrice/models/deck';
+import {
+  moduleForModel,
+  test
+} from 'ember-qunit';
 
-module('Unit - DeckModel');
+moduleForModel('deck', {
+  // Specify the other units that are required for this test.
+  needs: ['model:card']
+});
 
 // Replace this with your real tests.
-test('it works', function() {
-  var subject = Deck.create();
-  ok(subject);
+test('it exists', function(assert) {
+  var model = this.subject();
+  // var store = this.store();
+  assert.ok(!!model);
 });
