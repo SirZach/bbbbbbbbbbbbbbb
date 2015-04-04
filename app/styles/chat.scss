@@ -18,17 +18,14 @@
 }
 
 .chat-pane {
-  position: absolute;
-  top: 58px;
-  bottom: 80px;
-  left: 0;
-  right: 0;
+  width: 75%;
+  height: calc(100% - 133px);
   overflow-y: auto;
+  float: left;
 }
 
 .chat-input {
-  position: absolute;
-  bottom: 0;
+  float: left;
   width: calc(100% - 32px);
   margin-left: 16px;
 
@@ -41,6 +38,37 @@
   color: #999;
 }
 
-.chat-message-text {
+.active-user-list {
+  width: 25%;
+  height: calc(100% - 133px);
+  float: left;
+  overflow-y: auto;
+}
 
+.chat-online,
+.chat-idle,
+.chat-offline {
+  md-icon {
+    margin: 0;
+    position: relative;
+    top: 2px;
+  }
+}
+
+.chat-online {
+  md-icon {
+    color: green;
+  }
+}
+
+.chat-idle {
+  md-icon {
+    color: yellow;
+  }
+}
+
+.chat-offline {
+  md-icon {
+    color: red;
+  }
 }

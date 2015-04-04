@@ -75,7 +75,7 @@ var session = Ember.Object.extend({
         if (snapshot.val()) {
           var adapter = store.adapterFor('presence');
           var ref = adapter._getRef(presenceType, presence.get('id'));
-          ref.child('state').onDisconnect().set('disconnected');
+          ref.child('state').onDisconnect().set('offline');
           presence.set('state', 'online');
           presence.save();
         }
