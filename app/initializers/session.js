@@ -72,6 +72,9 @@ var session = Ember.Object.extend({
   },
 
   onPresenceStateChange: function (state) {
+    if (!this.get('isAuthenticated')) {
+      return;
+    }
     this.get('user.presence').then(function (presence) {
       presence.set('state', state);
       if (state === 'idle') {
