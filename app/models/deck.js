@@ -226,33 +226,42 @@ var Deck = DS.Model.extend({
     if (cardGroup) {
       cardGroups.removeObject(cardGroup);
     }
-  }
+  },
 
   /** @property {String} - a string representation of the deck that Cockatrice knows how to parse and import */
-  // exportFormat: function () {
-  //   var mainDeckGroupings = this.get('mainDeckGroupings'),
-  //       sideDeckGroupings = this.get('sideDeckGroupings'),
-  //       exp = '';
+  exportFormat: function () {
+    var mainDeckFamilies = this.get('mainDeckFamilies');
+    var sideDeckFamilies = this.get('sideDeckFamilies');
+    var exp = '';
 
-  //   mainDeckGroupings.forEach(function (group) {
-  //     group.cardObjs.forEach(function (cardObj) {
-  //       exp += cardObj.count + ' ' + cardObj.card.get('name') + '\n';
-  //     });
-  //   });
+    mainDeckFamilies.forEach(function (family) {
+      family.get('cardGroups').forEach(function (cardGroup) {
+        exp += cardGroup.get('count');
+        exp += ' ';
+        exp += cardGroup.get('card.name');
+        exp += '\n';
+      });
+    });
 
-  //   sideDeckGroupings.forEach(function (group) {
-  //     group.cardObjs.forEach(function (cardObj) {
-  //       exp += 'SB: ' + cardObj.count + ' ' + cardObj.card.get('name') + '\n';
-  //     });
-  //   });
+    sideDeckFamilies.forEach(function (family) {
+      family.get('cardGroups').forEach(function (cardGroup) {
+        exp += 'SB: ';
+        exp += cardGroup.get('count');
+        exp += ' ';
+        exp += cardGroup.get('card.name');
+        exp += '\n';
+      });
+    });
 
-  //   return exp;
-  // }.property('mainDeckGroupings.@each', 'sideDeckGroupings.@each'),
+    return exp;
+  }.property('cardGroups.@each.count'),
 
-  /** @property {Number} - the total number of unique cards in the deck and sideboard */
-  // numberOfUniqueCardsInDeck: function () {
-  //   return this.get('cards').uniq().length + this.get('sideboard').uniq().length;
-  // }.property('cards.@each', 'sideboard.@each')
+  /** @property {Number} - the total number of unique cards in the main and sideboard */
+  numberOfUniqueCardsInDeck: function () {
+    var mainCardGroups = this.get('mainCardGroups');
+    var sideCardGroups = this.get('sideCardGroups');
+    return mainCardGroups.get('length') + sideCardGroups.get('length');
+  }.property('cardGroups.@each')
 });
 
 /**
