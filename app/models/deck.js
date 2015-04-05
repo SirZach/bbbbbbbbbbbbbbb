@@ -180,8 +180,9 @@ var Deck = DS.Model.extend({
    *
    * @param {Card} card
    * @param {String} board - 'main', 'side'
+   * @param {Number} count - (optional) number of cards to add
    */
-  addCard: function (card, board) {
+  addCard: function (card, board, count) {
     var cardGroup;
     if (this.canAddToDeck(card.get('name'), board)) {
       cardGroup = this.getCardGroup(card.get('name'), board);
@@ -194,6 +195,9 @@ var Deck = DS.Model.extend({
         this.get('cardGroups').pushObject(cardGroup);
       }
       cardGroup.incrementProperty('count');
+      if (--count) {
+        this.addCard(card, board, count);
+      }
     }
   },
 
@@ -264,35 +268,45 @@ var Deck = DS.Model.extend({
   }.property('cardGroups.@each')
 });
 
-/**
 Deck.reopenClass({
-  createDeck: function (deckContents, cards) {
-    var mainDeckCards = [],
-        sideboard = [],
-        deckCards = deckContents.split('\n');
-
-    deckCards.forEach(function (dC) {
-      var numberOfCards = dC.match(/\d+/)[0],
-          cardName = dC.substring(dC.indexOf(numberOfCards) + 1).trim(),
-          i;
-
-      if (dC.indexOf("SB:") > -1) { //we're inspecting a sideboard
-        for (i = 0; i < numberOfCards; i++) {
-          sideboard.push(cards.findBy('name', cardName));
+  /**
+   * Create a deck from the given textual input.
+   *
+   * @param {String} import - text form deck
+   * @param {Store} store - store in which to create this deck
+   *
+   * @return {Object} - {deck: Deck, errors: String[]}
+   */
+  createFromImport: function (importText, store) {
+    var deck = store.createRecord('deck');
+    var lines = importText.split('\n');
+    var errors = [];
+    lines.forEach(function (line) {
+      try {
+        line = line.trim();
+        var board = /^SB: /.test(line) ? 'side' : 'main';
+        var options = /^(SB: )?(\d+) (.+)$/.exec(line);
+        var count = Number(options[options.length - 2]);
+        if (isNaN(count)) {
+          throw new Error(options[options.length - 2] + ' is not a number');
         }
-      } else { //maindeck card
-        for (i = 0; i < numberOfCards; i++) {
-          mainDeckCards.push(cards.findBy('name', cardName));
+        var name = options[options.length - 1];
+        if (name.length === 0) {
+          throw new Error('No card name specified');
         }
+        store.find('card', name).then(function (card) {
+          deck.addCard(card, board, count);
+        });
+      } catch (error) {
+        console.log(error);
+        errors.push(line);
       }
     });
-
-    return Deck.create({
-      id: 'tmp',
-      cards: mainDeckCards,
-      sideboard: sideboard
-    });
+    return {
+      deck: deck,
+      errors: errors
+    };
   }
 });
-*/
+
 export default Deck;

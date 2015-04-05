@@ -10,8 +10,16 @@ export default Ember.Controller.extend({
     },
 
     importDeck: function () {
-      var cards = this.get('controllers.cards.model'),
-        deck = Deck.createDeck(this.get('importContents'), cards);
+      // var cards = this.get('controllers.cards.model');
+      var result = Deck.createFromImport(this.get('importContents'), this.store);
+      var deck = result.deck;
+      var errors = result.errors;
+      // TODO: maybe display these somehow?
+      if (errors.length) {
+        console.log(errors.join('\n'));
+      }
+
+      deck.set('owner', this.get('session.user.content'));
 
       this.send('closeModal');
       this.transitionToRoute('deck.build', deck);
