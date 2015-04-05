@@ -11,10 +11,13 @@ export default Ember.Route.extend({
 
   actions: {
     saveDeck: function (deck) {
+      var self = this;
       if (!deck.get('owner')) {
         deck.set('owner', this.get('session.user'));
       }
-      deck.save();
+      deck.save().then(function (deck) {
+        self.transitionTo('deck.build', deck.get('id'));
+      });
     },
 
     showCard: function (card) {
