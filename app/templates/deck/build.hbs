@@ -117,7 +117,7 @@
                   <td><strong>Sideboard</strong></td>
                 {{/x-tr}}
 
-                {{#if canShowMainDeck}}
+                {{#if canShowSideDeck}}
 
                   {{#each group in model.sideDeckGroupings itemController="deckTableItem"}}
                     {{#x-tr class="success cursor-pointer" action="showHide" param=group.model.superType}}
