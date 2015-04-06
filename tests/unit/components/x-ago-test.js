@@ -2,10 +2,11 @@ import {
   moduleForComponent,
   test
 } from 'ember-qunit';
+import Ember from 'ember';
 
 moduleForComponent('x-ago', {
   // specify the other units that are required for this test
-  // needs: ['component:foo', 'helper:bar']
+  needs: ['helper:from-now', 'component:paper-icon']
 });
 
 test('it renders', function(assert) {
@@ -13,9 +14,22 @@ test('it renders', function(assert) {
 
   // creates the component instance
   var component = this.subject();
+  Ember.run(function () {
+    component.set('date', new Date());
+  });
   assert.equal(component._state, 'preRender');
 
   // renders the component to the page
   this.render();
   assert.equal(component._state, 'inDOM');
+});
+
+test('it renders a time ago', function (assert) {
+  assert.expect(1);
+
+  var component = this.subject();
+  Ember.run(function () {
+    component.set('date', moment().subtract(1, 'days').toDate());
+  });
+  assert.equal(this.$().text().trim(), 'a day ago');
 });

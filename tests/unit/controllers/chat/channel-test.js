@@ -1,16 +1,15 @@
 import {
-  moduleForModel,
+  moduleFor,
   test
 } from 'ember-qunit';
 
-moduleForModel('deck', {
+moduleFor('controller:chat/channel', {
   // Specify the other units that are required for this test.
-  needs: ['model:card']
+  // needs: ['controller:foo']
 });
 
 // Replace this with your real tests.
 test('it exists', function(assert) {
-  var model = this.subject();
-  // var store = this.store();
-  assert.ok(!!model);
+  var controller = this.subject();
+  assert.ok(controller);
 });
