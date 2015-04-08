@@ -9,6 +9,18 @@ export default Ember.Route.extend({
     }
   },
 
+  /** Make sure all the cards for the deck are loaded before continuing */
+  afterModel: function (deck) {
+    var store = this.store;
+    var cardPromiseArray = [];
+
+    deck.get('cardGroups').forEach(function (cardGroup) {
+      cardPromiseArray.push(cardGroup.get('card'));
+    });
+
+    return Ember.RSVP.all(cardPromiseArray);
+  },
+
   actions: {
     saveDeck: function (deck) {
       var self = this;
