@@ -3,12 +3,11 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForModel('deck', {
+moduleForModel('card-group', {
   // Specify the other units that are required for this test.
-  needs: ['model:card', 'model:user', 'model:presence', 'model:cardGroup']
+  needs: ['model:card']
 });
 
-// Replace this with your real tests.
 test('it exists', function(assert) {
   var model = this.subject();
   // var store = this.store();

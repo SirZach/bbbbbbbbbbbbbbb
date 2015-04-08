@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 import $ from 'jquery';
 
 var FIREBASE_URL = 'https://dazzling-fire-7827.firebaseio.com';
@@ -12,8 +13,18 @@ var session = Ember.Object.extend({
 
     this.get('ref').onAuth(function (authData) {
       if (authData) {
-        this.updateOrCreateUser(authData).then(function (user) {
-          session.bindPresence(user);
+        // Set the 'user' property to be a promise proxy that resolves when we
+        // are done creating the user. Most people will just ignore the fact
+        // that it was once a promise, but routes, for example, may need to
+        // chain off of this so they know when the user is ready to use.
+        //
+        var promise = this.updateOrCreateUser(authData);
+        var userPromiseProxy = DS.PromiseObject.create({
+          promise: promise
+        });
+        this.set('user', userPromiseProxy);
+        userPromiseProxy.then(function () {
+          session.bindPresence();
         });
         session.set('isAuthenticated', true);
       } else {
@@ -48,7 +59,6 @@ var session = Ember.Object.extend({
     var avatarUrl = authData.github.cachedUserProfile.avatar_url;
     var displayName = authData.github.displayName;
     var email = authData.github.email;
-    var self = this;
     return store.find('user', {
       orderBy: 'username',
       equalTo: username
@@ -66,7 +76,6 @@ var session = Ember.Object.extend({
         email: email
       });
       user.incrementProperty('visits');
-      self.set('user', user);
       return user.save();
     });
   },
