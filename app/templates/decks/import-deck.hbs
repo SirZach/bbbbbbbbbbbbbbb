@@ -14,7 +14,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-default" {{action "closeModal"}}>Cancel</button>
-    <button class="btn btn-primary" {{action "importDeck"}}>Import</button>
+    {{#paper-button raised=true action="closeModal"}}Cancel{{/paper-button}}
+    {{#paper-button raised=true classNames="md-primary" action="importDeck"}}Import{{/paper-button}}
   </div>
 {{/x-modal}}
