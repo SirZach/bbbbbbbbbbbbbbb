@@ -62,6 +62,11 @@ var Deck = DS.Model.extend({
   sideCount: Ember.computed.sum('_sideCardGroupLengths'),
   _sideCardGroupLengths: Ember.computed.mapBy('sideCardGroups', 'count'),
 
+  /** @property {Number} - number of cards in the entire deck */
+  allCount: function () {
+    return this.get('sideCount') + this.get('mainCount');
+  }.property('sideCount', 'mainCount'),
+
   /** @property {Boolean} - true if the entire deck + sideboard is standard */
   isStandard: computeIsLegal('standard'),
 
