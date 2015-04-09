@@ -1,0 +1,19 @@
+.sidenav {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  li > a {
+    display: block;
+    font-size: 14px;
+    text-decoration: none;
+    color: #424242;
+    font-weight: 700;
+    padding: 1.1em 1.6em;
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }
+}

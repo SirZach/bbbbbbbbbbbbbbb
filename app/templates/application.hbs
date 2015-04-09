@@ -1,56 +1,49 @@
-<div id="navbar" class="navbar navbar-default navbar-static-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      {{#link-to 'application' class="navbar-brand"}}Webatrice{{/link-to}}
+{{#paper-nav-container classNames="ember-app"}}
+
+  {{#paper-sidenav classNames="md-sidenav-left md-whiteframe-z2" flex-layout="column" flex=true}}
+
+    {{#paper-toolbar}}
+    <div class="md-toolbar-tools">
+      <div><strong>Webatrice</strong></div>
     </div>
-    <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-right">
-        {{!-- Chat link --}}
-        {{#if session.isAuthenticated}}
+    {{/paper-toolbar}}
+
+    {{#paper-content}}
+      <nav class="sidenav">
+        <ul>
+          {{!--Logged in user--}}
+          {{#if session.isAuthenticated}}
+          <li class="cursor-pointer">
+            <img class="avatar avatar-text avatar-small avatar-list" src={{session.currentUser.github.cachedUserProfile.avatar_url}} />
+          </li>
+          <li>{{#link-to 'decks.list'}}Decks{{/link-to}}</li>
+          {{else}}
+          <li {{action "loginWithGithub"}}>{{fa-icon "github"}} Login with Github</li>
+          {{/if}}
+
+          {{!--Lobby link--}}
+          {{#if session.isAuthenticated}}
           <li>{{#link-to 'chat'}}Lobby{{/link-to}}</li>
-        {{/if}}
+          {{/if}}
 
-        {{!-- Cards browser --}}
-        <li>{{#link-to 'cards'}}Cards{{/link-to}}</li>
+          {{!--Cards browser--}}
+          <li>{{#link-to 'cards'}}Cards{{/link-to}}</li>
 
-        {{!-- Build a deck link --}}
-        <li>{{#link-to 'deck.build' 'new'}}Build a Deck{{/link-to}}</li>
+          {{!--Build a deck--}}
+          <li>{{#link-to 'deck.build' 'new'}}Build a deck{{/link-to}}</li>
 
-        {{!-- Github link --}}
-        <li class="dropdown cursor-pointer">
-          <a class="dropdown-toggle" data-toggle="dropdown">Contact {{fa-icon "caret-down"}}</a>
-          <ul class="dropdown-menu">
-            <li><a target="_blank" href="https://github.com/sirzach/bbbbbbbbbbbbbbb">{{fa-icon "github"}} Github</a></li>
-          </ul>
-        </li>
+          {{!--Github link--}}
+          <li><a target="_blank" href="https://github.com/sirzach/bbbbbbbbbbbbb">{{fa-icon "github"}} Report an issue</a></li>
 
-        {{!-- User dropdown area --}}
-        {{!-- Logged in user --}}
-        {{#if session.isAuthenticated}}
-          <li class="dropdown cursor-pointer">
-            <a class="dropdown-toggle nav-avatar-container" data-toggle="dropdown">
-              <img src={{session.currentUser.github.cachedUserProfile.avatar_url}} class="img img-circle"/>{{fa-icon "caret-down"}}
-            </a>
-            <ul class="dropdown-menu">
-              <li>{{#link-to 'user'}}Profile{{/link-to}}</li>
-              <li>{{#link-to 'decks.list'}}Decks{{/link-to}}</li>
-            </ul>
-          </li>
+        </ul>
+      </nav>
+    {{/paper-content}}
+    
+  {{/paper-sidenav}}
 
-        {{!-- User is not logged in --}}
-        {{else}}
-          <li class="dropdown cursor-pointer">
-            <a class="dropdown-toggle" data-toggle="dropdown">Login {{fa-icon "caret-down"}}</a>
-            <ul class="dropdown-menu">
-              <li><a {{action "loginWithGithub"}}>{{fa-icon "github"}} Login with Github</a></li>
-            </ul>
-          </li>
-        {{/if}}
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div>
-</div>
-<div class="container-fluid">
-  {{outlet}}
-</div>
+  {{#paper-content flex-layout="column" flex=true}}
+    {{outlet}}
+  {{/paper-content}}
+
+{{/paper-nav-container}}
 {{outlet "modal"}}

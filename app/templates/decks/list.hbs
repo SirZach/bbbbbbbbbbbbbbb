@@ -10,7 +10,7 @@
     {{#each model as |deck|}}
       {{#paper-item class="cursor-pointer" param=deck action="goToDeck"}}
         {{#paper-tile-left}}
-          <img src={{deck.owner.avatarUrl}} class="chat-avatar">
+          <img src={{deck.owner.avatarUrl}} class="avatar">
         {{/paper-tile-left}}
         {{#paper-tile-content}}
           <h3>{{deck.name}}</h3>
