@@ -36,9 +36,8 @@ export default Ember.Route.extend({
       }
       this.controller.set('says');
 
-      var name = this.get('session.currentUser.github.username');
-      var avatarUrl =
-        this.get('session.currentUser.github.cachedUserProfile.avatar_url');
+      var name = this.get('session.user.username');
+      var avatarUrl = this.get('session.user.avatarUrl');
       var when = new Date();
       var channel = this.get('channel');
       var chat = this.store.createRecord('chat', {

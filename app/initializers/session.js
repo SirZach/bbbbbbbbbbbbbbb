@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import $ from 'jquery';
+import NameGenerator from 'webatrice/utils/name-generator';
 
 var FIREBASE_URL = 'https://dazzling-fire-7827.firebaseio.com';
 var IDLE_MS = 60000;
@@ -101,8 +102,8 @@ var session = Ember.Object.extend({
       displayName = authData.github.displayName;
       email = authData.github.email;
     } else {
-      username = 'anon';
-      avatarUrl = 'http://identicon.org?t=1&s=256';
+      username = NameGenerator.name();
+      avatarUrl = NameGenerator.avatarUrl();
     }
     return store.find('user', {
       orderBy: 'username',
