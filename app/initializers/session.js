@@ -128,7 +128,7 @@ var session = Ember.Object.extend({
   },
 
   onPresenceStateChange: function (state) {
-    if (!this.get('isAuthenticated')) {
+    if (!this.get('user.isFulfilled')) {
       return;
     }
     this.get('user.presence').then(function (presence) {
