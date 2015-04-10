@@ -280,17 +280,39 @@ Deck.reopenClass({
    * @param {String} import - text form deck
    * @param {Store} store - store in which to create this deck
    *
-   * @return {Object} - {deck: Deck, errors: String[]}
+   * @return {Promise} - Resolves with {deck: Deck, errors: String[]}
    */
   createFromImport: function (importText, store) {
     var deck = store.createRecord('deck');
+
+    // Flag for indicating all further cards should belong to the sideboard.
+    // Sideboarded cards are either each preceeded by "SB: " (Cockatrice style)
+    // or by a "Sideboard:" line (Tapped Out style).
+    var sideboardReached = false;
     var lines = importText.split('\n');
     var errors = [];
+    var promises = [];
     lines.forEach(function (line) {
       try {
         line = line.trim();
-        var board = /^SB: /.test(line) ? 'side' : 'main';
-        var options = /^(SB: )?(\d+) (.+)$/.exec(line);
+        if (!line.length) {
+          return;
+        }
+        if (/^sideboard:/i.test(line)) {
+          sideboardReached = true;
+          return;
+        }
+
+        var board = sideboardReached || /^SB: /.test(line) ? 'side' : 'main';
+
+        // Regex description:
+        // Match an optional "SB: " string at the beginning.
+        // Match a number for card quantity.
+        // Allow an optional "x" after the number.
+        // Look for at least one whitespace character.
+        // match the rest of the line as the card name.
+        //
+        var options = /^(SB: )?(\d+)x?\s+(.+)$/.exec(line);
         var count = Number(options[options.length - 2]);
         if (isNaN(count)) {
           throw new Error(options[options.length - 2] + ' is not a number');
@@ -299,18 +321,23 @@ Deck.reopenClass({
         if (name.length === 0) {
           throw new Error('No card name specified');
         }
-        store.find('card', name).then(function (card) {
+        promises.push(store.find('card', name).then(function (card) {
           deck.addCard(card, board, count);
-        });
+        }, function () {
+          // The card could not be found. Add to the error list.
+          errors.push(line);
+        }));
       } catch (error) {
         console.log(error);
         errors.push(line);
       }
     });
-    return {
-      deck: deck,
-      errors: errors
-    };
+    return Ember.RSVP.all(promises).then(function () {
+      return {
+        deck: deck,
+        errors: errors
+      };
+    });
   }
 });
 

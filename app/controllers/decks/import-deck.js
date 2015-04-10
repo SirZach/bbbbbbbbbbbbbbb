@@ -10,19 +10,22 @@ export default Ember.Controller.extend({
     },
 
     importDeck: function () {
-      // var cards = this.get('controllers.cards.model');
-      var result = Deck.createFromImport(this.get('importContents'), this.store);
-      var deck = result.deck;
-      var errors = result.errors;
-      // TODO: maybe display these somehow?
-      if (errors.length) {
-        console.log(errors.join('\n'));
-      }
+      var importContents = this.get('importContents');
+      var self = this;
+      Deck.createFromImport(importContents, this.store).then(function (result) {
+        var deck = result.deck;
+        var errors = result.errors;
 
-      deck.set('owner', this.get('session.user.content'));
+        if (errors.length) {
+          console.log(errors.join('\n'));
+          deck.set('failedImports', errors);
+        }
 
-      this.send('closeModal');
-      this.transitionToRoute('deck.build', deck);
+        deck.set('owner', self.get('session.user.content'));
+
+        self.send('closeModal');
+        self.transitionToRoute('deck.build', deck);
+      });
     }
   }
 });
