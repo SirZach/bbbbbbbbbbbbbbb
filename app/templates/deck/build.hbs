@@ -64,6 +64,10 @@
         </div>
       </form>
 
+      {{#if model.failedImports}}
+        {{failed-imports lines=model.failedImports action="clearFailedImports"}}
+      {{/if}}
+
       {{#if canShowDeckTable}}
         <div class="table-responsive">
           <table class="table table-condensed">

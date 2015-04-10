@@ -45,6 +45,10 @@ export default Ember.Controller.extend({
       } else {
         doNotShowTypes.pushObject(superType);
       }
+    },
+
+    clearFailedImports: function () {
+      this.set('model.failedImports');
     }
   }
 });

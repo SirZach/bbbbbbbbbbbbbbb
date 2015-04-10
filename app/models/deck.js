@@ -328,7 +328,6 @@ Deck.reopenClass({
           errors.push(line);
         }));
       } catch (error) {
-        console.log(error);
         errors.push(line);
       }
     });

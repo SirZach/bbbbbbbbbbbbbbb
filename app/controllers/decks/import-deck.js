@@ -17,7 +17,6 @@ export default Ember.Controller.extend({
         var errors = result.errors;
 
         if (errors.length) {
-          console.log(errors.join('\n'));
           deck.set('failedImports', errors);
         }
 
