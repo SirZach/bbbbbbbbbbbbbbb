@@ -3,19 +3,15 @@
   {{#paper-button action="newGame" raised=true classNames="md-primary"}}New Game{{/paper-button}}
 {{/unless}}
 
-<div class="row">
-  <div class="col-md-6">
-    {{#if model.length}}
-      {{#paper-content classNames="md-whiteframe-z1"}}
-        {{#paper-list}}
-          {{#each model as |game|}}
-            {{game-listing game=game}}
-            {{paper-divider}}
-          {{/each}}
-        {{/paper-list}}
-      {{/paper-content}}
-    {{else}}
-      <h3>No games currently in progress.</h3>
-    {{/if}}
-  </div>
-</div>
+{{#if model.length}}
+  {{#paper-content classNames="md-whiteframe-z1"}}
+    {{#paper-list}}
+      {{#each model as |game|}}
+        {{game-listing game=game}}
+        {{paper-divider}}
+      {{/each}}
+    {{/paper-list}}
+  {{/paper-content}}
+{{else}}
+  <h3>No games currently in progress.</h3>
+{{/if}}
