@@ -2,6 +2,7 @@ import {
   moduleForComponent,
   test
 } from 'ember-qunit';
+import Ember from 'ember';
 
 moduleForComponent('game-listing', {
   // specify the other units that are required for this test
@@ -19,6 +20,12 @@ test('it renders', function(assert) {
 
   // creates the component instance
   var component = this.subject();
+  var game = Ember.Object.create({
+    gameParticipants: []
+  });
+  Ember.run(function () {
+    component.set('game', game);
+  });
   assert.equal(component._state, 'preRender');
 
   // renders the component to the page

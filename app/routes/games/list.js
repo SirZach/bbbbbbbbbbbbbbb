@@ -17,7 +17,7 @@ export default Ember.Route.extend({
       var gameParticipants = game.get('gameParticipants');
       var gameParticipant = this.store.createRecord('gameParticipant');
       gameParticipant.set('user', user.get('content'));
-      gameParticipant.set('isPlayer', true);
+      gameParticipant.set('isPlaying', true);
       gameParticipants.addObject(gameParticipant);
 
       game.save().then(function (game) {
