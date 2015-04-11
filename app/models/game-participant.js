@@ -6,5 +6,6 @@ export default DS.Model.extend({
   deckName: DS.attr('string'),
   deckId: DS.attr('string'),
   gameCards: DS.hasMany('gameCard', {embedded: true}),
-  isReady: DS.attr('boolean', {defaultValue: false})
+  isReady: DS.attr('boolean', {defaultValue: false}),
+  life: DS.attr('number')
 });
