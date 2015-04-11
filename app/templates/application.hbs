@@ -5,16 +5,8 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        {{!-- Games dropdown --}}
-        {{#if session.isAuthenticated}}
-          <li class="dropdown cursor-pointer">
-            <a class="dropdown-toggle" data-toggle="dropdown">Games {{fa-icon "caret-down"}}</a>
-            <ul class="dropdown-menu">
-              <li>{{#link-to 'games.list'}}Browse Games{{/link-to}}</li>
-              <li>{{#link-to 'games.new'}}Start New Game!{{/link-to}}</li>
-            </ul>
-          </li>
-        {{/if}}
+        {{!-- Games link --}}
+        <li>{{#link-to 'games.list'}}Games{{/link-to}}</li>
 
         {{!-- Chat link --}}
         <li>{{#link-to 'chat'}}Lobby{{/link-to}}</li>

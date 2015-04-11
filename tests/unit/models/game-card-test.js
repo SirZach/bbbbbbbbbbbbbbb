@@ -3,15 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForModel('game', {
+moduleForModel('game-card', {
   // Specify the other units that are required for this test.
-  needs: [
-    'model:gameParticipant',
-    'model:gameCard',
-    'model:user',
-    'model:presence',
-    'model:card'
-  ]
+  needs: ['model:card']
 });
 
 test('it exists', function(assert) {

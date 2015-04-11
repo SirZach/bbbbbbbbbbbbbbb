@@ -5,14 +5,17 @@ export default Ember.Component.extend({
   layout: layout,
 
   matchup: function () {
-    var players = this.get('game.players');
+    var gameParticipants = this.get('game.gameParticipants') || [];
+    var players = gameParticipants.filterBy('isPlayer');
     if (!players) {
-      return '';
+      return '? vs. ?';
     }
-    var names = players.mapBy('username');
+    var names = players.mapBy('user.username');
     if (names.length < 2) {
       names.push('?');
     }
     return names.join(' vs. ');
-  }.property('game.players.@each')
+  }.property(
+    'game.gameParticipants.@each.user.username',
+    'game.gameParticipants.@each.deckName')
 });
