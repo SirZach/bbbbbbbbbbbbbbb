@@ -9,8 +9,13 @@ var IDLE_MS = 60000;
 var session = Ember.Object.extend({
   ref: new Firebase(FIREBASE_URL),
 
+  store: function () {
+    return this.container.lookup('store:main');
+  }.property(),
+
   addFirebaseCallback: function () {
     var session = this;
+    var store = this.get('store');
 
     // Right away create an anonymous user for the session if it is obvious this
     // person is not logged in.
@@ -18,9 +23,9 @@ var session = Ember.Object.extend({
     if (!this.get('ref').getAuth()) {
       this.initializeUser().then(function () {
         // Prepare to tear down the anonymous user.
-        var userRef = session.refFor('user', session.get('user.content'));
+        var userRef = store.refFor('user', session.get('user.content'));
         userRef.onDisconnect().remove();
-        var presenceRef = session.refFor('presence',
+        var presenceRef = store.refFor('presence',
           session.get('user.content.presence.content'));
         presenceRef.onDisconnect().remove();
       });
@@ -150,7 +155,7 @@ var session = Ember.Object.extend({
     // The user is a promise object that has resolved by now.
     var user = this.get('user.content');
     var amOnline = new Firebase(FIREBASE_URL + '/.info/connected');
-    var store = this.container.lookup('store:main');
+    var store = this.get('store');
     var session = this;
     return user.get('presence').then(function (presence) {
       if (!presence) {
@@ -162,7 +167,7 @@ var session = Ember.Object.extend({
       }
       amOnline.on('value', function (snapshot) {
         if (snapshot.val()) {
-          var ref = session.refFor('presence', presence);
+          var ref = store.refFor('presence', presence);
           ref.child('state')
             .onDisconnect()
             .set('offline');
@@ -190,20 +195,7 @@ var session = Ember.Object.extend({
 
   currentUser: function () {
     return this.get('ref').getAuth();
-  }.property('isAuthenticated'),
-
-  /**
-   * Get the firebase ref for the given record of the given type.
-   *
-   * @param {String} type   E.g. 'presence'.
-   * @param {Model} record  A model instance.
-   */
-  refFor: function (type, record) {
-    var store = this.container.lookup('store:main');
-    var adapter = store.adapterFor(type);
-    var modelType = store.modelFor(type);
-    return adapter._getRef(modelType, record.get('id'));
-  }
+  }.property('isAuthenticated')
 });
 
 export default {

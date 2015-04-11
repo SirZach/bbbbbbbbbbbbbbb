@@ -9,7 +9,9 @@
   {{/paper-tile-left}}
 
   {{#paper-tile-content}}
-    {{#paper-button classNames="md-primary game-listing-join"}}Join Game{{/paper-button}}
+    {{#link-to 'game' game.id}}
+      {{#paper-button classNames="md-primary game-listing-join"}}Join Game{{/paper-button}}
+    {{/link-to}}
   {{/paper-tile-content}}
 
 {{/paper-item}}
