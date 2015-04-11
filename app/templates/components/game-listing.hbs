@@ -1,6 +1,13 @@
 {{#paper-item}}
+
+  {{#paper-tile-left classNames="game-listing-matchup"}}
+    {{game-listing-player player=playerOne}}
+    <span>vs.</span>
+    {{game-listing-player player=playerTwo}}
+  {{/paper-tile-left}}
+
   {{#paper-tile-content}}
-    <h3 class="game-listing-title">{{matchup}}</h3>
     {{#paper-button classNames="md-primary game-listing-join"}}Join Game{{/paper-button}}
   {{/paper-tile-content}}
+
 {{/paper-item}}

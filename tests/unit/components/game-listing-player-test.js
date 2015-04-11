@@ -3,14 +3,12 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('game-listing', {
+moduleForComponent('game-listing-player', {
   // specify the other units that are required for this test
   needs: [
     'component:paper-item',
     'component:paper-tile-left',
-    'component:paper-tile-content',
-    'component:paper-button',
-    'component:game-listing-player'
+    'component:paper-tile-content'
   ]
 });
 
