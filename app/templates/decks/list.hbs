@@ -9,8 +9,16 @@
   {{#paper-list}}
     {{#each model as |deck|}}
       {{#paper-item class="cursor-pointer" param=deck action="goToDeck"}}
+        {{#paper-tile-left}}
+          <img src={{deck.owner.avatarUrl}} class="chat-avatar">
+        {{/paper-tile-left}}
         {{#paper-tile-content}}
           <h3>{{deck.name}}</h3>
+          <ul class="pull-right paper-tile-content-right">
+            <li><strong>{{deck.allCount}}</strong> Cards</li>
+            <li>{{paper-icon icon="delete" size="lg" action="deleteDeck" param=deck title="Delete"}}</li>
+          </ul>
+          <p class="truncate">{{deck.comments}}</p>
         {{/paper-tile-content}}
       {{/paper-item}}
       {{paper-divider}}

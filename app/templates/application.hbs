@@ -17,9 +17,7 @@
         {{/if}}
 
         {{!-- Chat link --}}
-        {{#if session.isAuthenticated}}
-          <li>{{#link-to 'chat'}}Lobby{{/link-to}}</li>
-        {{/if}}
+        <li>{{#link-to 'chat'}}Lobby{{/link-to}}</li>
 
         {{!-- Cards browser --}}
         <li>{{#link-to 'cards'}}Cards{{/link-to}}</li>
@@ -40,7 +38,7 @@
         {{#if session.isAuthenticated}}
           <li class="dropdown cursor-pointer">
             <a class="dropdown-toggle nav-avatar-container" data-toggle="dropdown">
-              <img src={{session.currentUser.github.cachedUserProfile.avatar_url}} class="img img-circle"/>{{fa-icon "caret-down"}}
+              <img src={{session.user.avatarUrl}} class="img img-circle"/>{{fa-icon "caret-down"}}
             </a>
             <ul class="dropdown-menu">
               <li>{{#link-to 'user'}}Profile{{/link-to}}</li>

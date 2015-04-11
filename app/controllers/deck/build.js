@@ -29,8 +29,8 @@ export default Ember.Controller.extend({
   }.property('doNotShowTypes.@each'),
 
   canShowDeckTable: function () {
-    return this.get('model.cards.length') || this.get('model.sideboard.length');
-  }.property('model.cards.@each', 'model.sideboard.@each'),
+    return this.get('model.cardGroups.length');
+  }.property('model.cardGroups.@each'),
 
   actions: {
     toggleFiltersActive: function () {
@@ -45,6 +45,10 @@ export default Ember.Controller.extend({
       } else {
         doNotShowTypes.pushObject(superType);
       }
+    },
+
+    clearFailedImports: function () {
+      this.set('model.failedImports');
     }
   }
 });

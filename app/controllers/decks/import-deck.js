@@ -10,11 +10,21 @@ export default Ember.Controller.extend({
     },
 
     importDeck: function () {
-      var cards = this.get('controllers.cards.model'),
-        deck = Deck.createDeck(this.get('importContents'), cards);
+      var importContents = this.get('importContents');
+      var self = this;
+      Deck.createFromImport(importContents, this.store).then(function (result) {
+        var deck = result.deck;
+        var errors = result.errors;
 
-      this.send('closeModal');
-      this.transitionToRoute('deck.build', deck);
+        if (errors.length) {
+          deck.set('failedImports', errors);
+        }
+
+        deck.set('owner', self.get('session.user.content'));
+
+        self.send('closeModal');
+        self.transitionToRoute('deck.build', deck);
+      });
     }
   }
 });

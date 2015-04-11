@@ -9,10 +9,30 @@ export default Ember.Route.extend({
     }
   },
 
+  /** Make sure all the cards for the deck are loaded before continuing */
+  afterModel: function (deck) {
+    var cardPromiseArray = [];
+
+    deck.get('cardGroups').forEach(function (cardGroup) {
+      cardPromiseArray.push(cardGroup.get('card'));
+    });
+
+    return Ember.RSVP.all(cardPromiseArray);
+  },
+
   actions: {
+    deleteDeck: function (deck) {
+      //Delete the deck when the feature branch for setting actions on icons is merged into master
+    },
+
     saveDeck: function (deck) {
-      deck.set('owner', this.get('session.currentUser.github.username'));
-      deck.save();
+      var self = this;
+      if (!deck.get('owner')) {
+        deck.set('owner', this.get('session.user'));
+      }
+      deck.save().then(function (deck) {
+        self.transitionTo('deck.build', deck.get('id'));
+      });
     },
 
     showCard: function (card) {

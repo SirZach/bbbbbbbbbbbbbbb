@@ -6,5 +6,6 @@ export default DS.Model.extend({
     displayName: DS.attr('string'),
     email: DS.attr('string'),
     visits: DS.attr('number', {defaultValue: 0}),
-    presence: DS.belongsTo('presence', {async: true})
+    presence: DS.belongsTo('presence', {async: true}),
+    isAnonymous: DS.attr('boolean', {defaultValue: true})
 });

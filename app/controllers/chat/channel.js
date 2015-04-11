@@ -7,9 +7,9 @@ export default Ember.Controller.extend({
       return null;
     }
     return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
-      sortProperties: ['user.username', 'statePriority'],
+      sortProperties: ['statePriority', 'user.username'],
       sortAscending: true,
       content: presences.get('content')
     });
-  }.property('presences.@each.state', 'presences.@each.user')
+  }.property('presences.@each.state', 'presences.@each.user.username')
 });

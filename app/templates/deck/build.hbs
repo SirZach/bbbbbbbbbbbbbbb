@@ -64,6 +64,10 @@
         </div>
       </form>
 
+      {{#if model.failedImports}}
+        {{failed-imports lines=model.failedImports action="clearFailedImports"}}
+      {{/if}}
+
       {{#if canShowDeckTable}}
         <div class="table-responsive">
           <table class="table table-condensed">
@@ -77,28 +81,28 @@
               {{!-- Main Deck --}}
               {{#x-tr class="info cursor-pointer" action="showHide" param="mainDeck"}}
                 <td>
-                  <span>{{model.cards.length}}</span>
+                  <span>{{model.mainCount}}</span>
                   <i class="fa {{if canShowMainDeck 'fa-caret-down' 'fa-caret-up'}}"></i>
                 </td>
                 <td><strong>Maindeck</strong></td>
               {{/x-tr}}
               {{#if canShowMainDeck}}
 
-                {{#each group in model.mainDeckGroupings itemController="deckTableItem"}}
-                  {{#x-tr class="success cursor-pointer" action="showHide" param=group.model.superType}}
+                {{#each family in model.mainDeckFamilies itemController="deckTableItem"}}
+                  {{#x-tr class="success cursor-pointer" action="showHide" param=family.model.superType}}
                     <td>
-                      <span class="indent indent-1">{{group.model.numberOf}}</span>
-                      <i class="fa {{if group.canShow 'fa-caret-down' 'fa-caret-up'}} indent indent-1"></i>
+                      <span class="indent indent-1">{{family.model.totalCount}}</span>
+                      <i class="fa {{if family.canShow 'fa-caret-down' 'fa-caret-up'}} indent indent-1"></i>
                     </td>
-                    <td><strong>{{pluralize-string group.model.type}}</strong></td>
+                    <td><strong>{{pluralize-string family.model.type}}</strong></td>
                   {{/x-tr}}
-                  {{#if group.canShow}}
-                    {{#each cardObj in group.model.cardObjs}}
-                      {{#x-tr action="showCard" param=cardObj.card}}
+                  {{#if family.canShow}}
+                    {{#each cardGroup in family.model.cardGroups}}
+                      {{#x-tr action="showCard" param=cardGroup.card}}
                         <td>
-                          <span class="indent indent-2">{{cardObj.count}}</span>
+                          <span class="indent indent-2">{{cardGroup.count}}</span>
                         </td>
-                        <td class="cursor-pointer">{{cardObj.card.name}}</td>
+                        <td class="cursor-pointer">{{cardGroup.card.name}}</td>
                       {{/x-tr}}
                     {{/each}}
                   {{/if}}
@@ -107,11 +111,11 @@
               {{/if}}
 
               {{!-- Sideboard --}}
-              {{#if model.sideboard.length}}
+              {{#if model.sideCount}}
                 <tr></tr>
                 {{#x-tr class="info cursor-pointer" action="showHide" param="sideDeck"}}
                   <td>
-                    <span>{{model.sideboard.length}}</span>
+                    <span>{{model.sideCount}}</span>
                     <i class="fa {{if canShowSideDeck 'fa-caret-down' 'fa-caret-up'}}"></i>
                   </td>
                   <td><strong>Sideboard</strong></td>
@@ -119,21 +123,21 @@
 
                 {{#if canShowSideDeck}}
 
-                  {{#each group in model.sideDeckGroupings itemController="deckTableItem"}}
-                    {{#x-tr class="success cursor-pointer" action="showHide" param=group.model.superType}}
+                  {{#each family in model.sideDeckFamilies itemController="deckTableItem"}}
+                    {{#x-tr class="success cursor-pointer" action="showHide" param=family.model.superType}}
                       <td>
-                        <span class="indent indent-1">{{group.model.numberOf}}</span>
-                        <i {{bind-attr class=":fa group.canShow:fa-caret-down:fa-caret-up :indent :indent-1"}}></i>
+                        <span class="indent indent-1">{{family.model.totalCount}}</span>
+                        <i {{bind-attr class=":fa family.canShow:fa-caret-down:fa-caret-up :indent :indent-1"}}></i>
                       </td>
-                      <td><strong>{{pluralize-string group.model.type}}</strong></td>
+                      <td><strong>{{pluralize-string family.model.type}}</strong></td>
                     {{/x-tr}}
-                    {{#if group.canShow}}
-                      {{#each cardObj in group.model.cardObjs}}
-                        {{#x-tr action="showCard" param=cardObj.card}}
+                    {{#if family.canShow}}
+                      {{#each cardGroup in family.model.cardGroups}}
+                        {{#x-tr action="showCard" param=cardGroup.card}}
                           <td>
-                            <span class="indent indent-2">{{cardObj.count}}</span>
+                            <span class="indent indent-2">{{cardGroup.count}}</span>
                           </td>
-                          <td class="cursor-pointer">{{cardObj.card.name}}</td>
+                          <td class="cursor-pointer">{{cardGroup.card.name}}</td>
                         {{/x-tr}}
                       {{/each}}
                     {{/if}}
