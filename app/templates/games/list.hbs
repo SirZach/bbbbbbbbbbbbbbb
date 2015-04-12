@@ -1,5 +1,5 @@
 {{!-- Only allow game creation if you are not anonymous. --}}
-{{#paper-button action="newGame" raised=true classNames="md-primary" disabled=session.user.isAnonymous}}
+{{#paper-button action="newGame" raised=true classNames="md-primary" disabled=cannotCreateGame}}
   New Game
 {{/paper-button}}
 

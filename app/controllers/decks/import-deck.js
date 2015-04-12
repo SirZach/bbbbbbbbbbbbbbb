@@ -20,8 +20,6 @@ export default Ember.Controller.extend({
           deck.set('failedImports', errors);
         }
 
-        deck.set('owner', self.get('session.user.content'));
-
         self.send('closeModal');
         self.transitionToRoute('deck.build', deck);
       });

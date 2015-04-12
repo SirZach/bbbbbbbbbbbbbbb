@@ -26,13 +26,20 @@ export default Ember.Route.extend({
     },
 
     saveDeck: function (deck) {
-      var self = this;
       if (!deck.get('owner')) {
-        deck.set('owner', this.get('session.user'));
+        this.get('session.user').then((user) => {
+          deck.set('owner', user);
+          deck.save()
+            .then(() => user.get('decks'))
+            .then((decks) => {
+              decks.addObject(deck);
+              return user.save();
+            })
+            .then(() => this.transitionTo('deck.build', deck));
+        });
+      } else {
+        deck.save();
       }
-      deck.save().then(function (deck) {
-        self.transitionTo('deck.build', deck.get('id'));
-      });
     },
 
     showCard: function (card) {
