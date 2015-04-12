@@ -1,7 +1,7 @@
 {{!-- Only allow game creation if you are not anonymous. --}}
-{{#unless session.user.isAnonymous}}
-  {{#paper-button action="newGame" raised=true classNames="md-primary"}}New Game{{/paper-button}}
-{{/unless}}
+{{#paper-button action="newGame" raised=true classNames="md-primary" disabled=session.user.isAnonymous}}
+  New Game
+{{/paper-button}}
 
 {{#if model.length}}
   {{#paper-content classNames="md-whiteframe-z1"}}
