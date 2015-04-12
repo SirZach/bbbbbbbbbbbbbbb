@@ -16,6 +16,10 @@ export default Ember.Component.extend({
         }, 500);
       } else {
         this.set('didInitialScroll', true);
+        // Set a timeout to do this again to fix a problem with Chrome rendering.
+        Ember.run.later(this, function () {
+          this.$().scrollTop(this.$().prop('scrollHeight'));
+        }, 400);
         this.$().scrollTop(this.$().prop('scrollHeight'));
       }
     });
