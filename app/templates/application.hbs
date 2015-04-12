@@ -18,8 +18,7 @@
           </li>
           <li>{{#link-to 'decks.list'}}Decks{{/link-to}}</li>
           {{else}}
-          <li {{action "loginWithGithub"}}>{{fa-icon "github"}} Login with Github</li>
-          {{/if}}
+          <li {{action "loginWithGithub"}}><a>{{fa-icon "github"}} Login with Github</a></li> {{/if}}
 
           {{!--Lobby link--}}
           {{#if session.isAuthenticated}}
@@ -42,7 +41,16 @@
   {{/paper-sidenav}}
 
   {{#paper-content flex-layout="column" flex=true}}
-    {{outlet}}
+    {{#paper-toolbar}}
+      <h2 class="md-toolbar-tools">
+        {{#paper-sidenav-toggle}}
+          {{paper-icon icon="menu"}}
+        {{/paper-sidenav-toggle}}
+      </h2>
+    {{/paper-toolbar}}
+    <div class="container-fluid">
+      {{outlet}}
+    </div>
   {{/paper-content}}
 
 {{/paper-nav-container}}
