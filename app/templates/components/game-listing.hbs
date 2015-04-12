@@ -1,11 +1,11 @@
 {{#paper-item}}
 
   {{#paper-tile-left classNames="game-listing-matchup"}}
-    {{game-listing-player player=playerOne}}
+    {{game-listing-player player=game.playerOne}}
     <span>vs.</span>
-    {{game-listing-player player=playerTwo}}
+    {{game-listing-player player=game.playerTwo}}
 
-    <span>{{watchers.length}} watching</span>
+    <span>{{game.watchers.length}} watching</span>
   {{/paper-tile-left}}
 
   {{#paper-tile-content}}
