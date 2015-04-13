@@ -1,0 +1,15 @@
+{{#paper-item}}
+
+  {{#paper-tile-left classNames="game-listing-matchup"}}
+    {{game-listing-player player=playerOne}}
+    <span>vs.</span>
+    {{game-listing-player player=playerTwo}}
+
+    <span>{{watchers.length}} watching</span>
+  {{/paper-tile-left}}
+
+  {{#paper-tile-content}}
+    {{#paper-button classNames="md-primary game-listing-join"}}Join Game{{/paper-button}}
+  {{/paper-tile-content}}
+
+{{/paper-item}}

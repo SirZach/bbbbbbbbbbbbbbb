@@ -8,13 +8,7 @@ export default Ember.Route.extend({
   },
 
   model: function () {
-    var store = this.store;
-    return this.get('session.user').then(function (user) {
-      return store.find('deck', {
-        orderBy: 'owner',
-        equalTo: user.get('id')
-      });
-    });
+    return this.get('session.user').then((user) => user.get('decks'));
   },
 
   actions: {
