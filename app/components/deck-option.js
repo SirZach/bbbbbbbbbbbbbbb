@@ -5,6 +5,11 @@ export default Ember.Component.extend({
   layout: layout,
   tagName: 'li',
   classNameBindings: [':deck-option', 'isSelected:deck-option-selected'],
+  attributeBindings: ['style'],
+
+  style: function () {
+    return `background-image: url("${this.get('deck.defaultImageUrl')}")`;
+  }.property('deck.defaultImageUrl'),
 
   /** @property {Boolean} Is this the selected deck? */
   isSelected: function () {

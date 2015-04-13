@@ -9,6 +9,7 @@
 .game-board-top,
 .game-board-bottom {
   height: 50%;
+  overflow-y: auto;
 }
 
 .game-board-top {

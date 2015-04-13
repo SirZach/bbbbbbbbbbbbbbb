@@ -273,7 +273,15 @@ var Deck = DS.Model.extend({
   }.property('cardGroups.@each'),
 
   /** @property {Boolean} - is this deck game-ready? */
-  isGameReady: Ember.computed.gte('mainCount', 60)
+  isGameReady: Ember.computed.gte('mainCount', 60),
+
+  /** @property {String} - default image url; uses a card in the deck */
+  defaultImageUrl: function () {
+    var cardGroups = this.get('mainCardGroups');
+    return cardGroups.filterBy('card.mainType', 'Creature')
+      .sortBy('card.cmc')
+      .get('lastObject.card.imageUrl');
+  }.property('mainCardGroups.@each.cmc')
 });
 
 Deck.reopenClass({
