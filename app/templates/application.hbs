@@ -41,16 +41,18 @@
   {{/paper-sidenav}}
 
   {{#paper-content flex-layout="column" flex=true}}
-    {{#paper-toolbar}}
+    {{#paper-toolbar classNames="mb-10"}}
       <h2 class="md-toolbar-tools">
         {{#paper-sidenav-toggle}}
           {{paper-icon icon="menu"}}
         {{/paper-sidenav-toggle}}
       </h2>
     {{/paper-toolbar}}
+    {{#paper-content}}
     <div class="container-fluid">
       {{outlet}}
     </div>
+    {{/paper-content}}
   {{/paper-content}}
 
 {{/paper-nav-container}}
