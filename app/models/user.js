@@ -10,9 +10,14 @@ export default DS.Model.extend({
     isAnonymous: DS.attr('boolean', {defaultValue: true}),
     decks: DS.hasMany('deck', {async: true}),
 
+    /** @property {Array<Deck>} The decks that are legal for play. */
+    gameReadyDecks: function () {
+      var decks = this.get('decks');
+      return decks.filterBy('isGameReady');
+    }.property('decks.@each.isGameReady'),
+
     /** @property {Boolean} Does this user have a deck that is game-ready? */
     hasGameReadyDecks: function () {
-      var decks = this.get('decks');
-      return decks.filterBy('isGameReady').length > 0;
-    }.property('decks.@each.isGameReady')
+      return this.get('gameReadyDecks.length') > 0;
+    }.property('gameReadyDecks.@each')
 });

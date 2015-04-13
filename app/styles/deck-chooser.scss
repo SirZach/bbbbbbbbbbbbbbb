@@ -1,0 +1,29 @@
+.deck-chooser {
+  list-style: none;
+}
+
+.deck-option {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 5px;
+  background-position-x: 50%;
+  background-position-y: 19%;
+  float: left;
+  cursor: pointer;
+}
+
+.deck-option-selected {
+  // TODO: update with color palette.
+  box-shadow: 0 0 20px #007;
+}
+
+.deck-option-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0,0,0,0.3);
+  color: white;
+  padding: 10px 0 10px 15px;
+}

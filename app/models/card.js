@@ -45,6 +45,7 @@ import DS from 'ember-data';
 export default DS.Model.extend({
   name: DS.attr('string'),
   manaCostFormatted: DS.attr('string'),
+  cmc: DS.attr('number'),
   colors: DS.attr(),
   type: DS.attr('string'),
   mainType: DS.attr('string'),

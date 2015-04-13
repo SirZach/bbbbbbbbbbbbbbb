@@ -1,0 +1,6 @@
+{{#each decks as |deck|}}
+  {{deck-option
+      action="onSelect"
+      deck=deck
+      selectedDeckId=selectedDeckId}}
+{{/each}}
