@@ -1,6 +1,15 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  renderTemplate: function () {
+    this._super.apply(this, arguments);
+
+    this.render('nav-toolbars/games-list', {
+      into: 'application',
+      outlet: 'nav-toolbar'
+    });
+  },
+
   actions: {
     newGame: function () {
       // The user must not be anonymous.

@@ -45,11 +45,14 @@
 
   {{#paper-content flex-layout="column" flex=true}}
     {{#paper-toolbar classNames="mb-10"}}
-      <h2 class="md-toolbar-tools">
-        {{#paper-sidenav-toggle}}
-          {{paper-icon icon="menu"}}
-        {{/paper-sidenav-toggle}}
-      </h2>
+      <div class="md-toolbar-tools">
+        <h2>
+          {{#paper-sidenav-toggle}}
+            {{paper-icon icon="menu"}}
+          {{/paper-sidenav-toggle}}
+          {{outlet 'nav-toolbar'}}
+        </h2>
+      </div>
     {{/paper-toolbar}}
     {{#paper-content}}
     <div class="container-fluid">

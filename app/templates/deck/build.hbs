@@ -12,7 +12,6 @@
   </div>
   <div class="col-sm-12 col-lg-11">
     <div class="col-sm-5">
-      {{#paper-button raised=true classNames="md-primary sm-display" action="toggleFiltersActive"}}Toggle Filters{{/paper-button}}
       {{#full-height classNames="overflow-y-scroll scrollable-paper-item"}}
         {{paper-text label="Name" value=nameSearch}}
         {{partial "cards/material-of-cards"}}
@@ -33,32 +32,21 @@
       {{/if}}
     </div>
     <div class="col-sm-5">
-      <form class="form-horizontal">
+      <form class="form-horizontal form-horizontal-condensed">
         <div class="form-group">
-          <label class="col-sm-2"></label>
-          <div class="col-sm-10">
-            <div class="btn-group">
-              <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                {{fa-icon "cog"}}
-                {{fa-icon "caret-down"}}
-              </button>
-              <ul class="dropdown-menu">
-                <li><a {{action "openModal" "deck/export-modal" model}}>Export Deck</a></li>
-                <li><a {{action "saveDeck" model}}>Save Deck</a></li>
-              </ul>
-            </div>
-            <span>Deck Classification: <span>{{controllers.deck.model.classification}}</span></span>
+          <label class="col-sm-6 control-label" style="text-align: left;">Classification</label>
+          <div class="col-sm-6" style="padding-top: 7px;">
+            {{controllers.deck.model.classification}}
           </div>
         </div>
         <div class="form-group">
-          <label for="deck-name" class="col-sm-2 control-label">Deck name</label>
-          <div class="col-sm-10">
-            {{input class="form-control" id="deck-name" value=controllers.deck.model.name}}
+          <div style="padding-left: 15px;">
+            {{paper-text label="Deck Name" value=controllers.deck.model.name}}
           </div>
         </div>
         <div class="form-group">
           <label for="deck-comments" class="col-sm-2 control-label">Comments</label>
-          <div class="col-sm-10">
+          <div class="col-sm-12">
             {{textarea class="form-control" id="deck-comments" rows="3" value=controllers.deck.model.comments}}
           </div>
         </div>
