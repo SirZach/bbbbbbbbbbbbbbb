@@ -7,12 +7,15 @@ var Log = Ember.Object.extend({
     var store = this.container.lookup('store:main');
     var session = this.container.lookup('session:main');
     return session.get('user').then((user) => {
-      return store.createRecord('log', {
+      var logMessage = store.createRecord('log-message', {
         username: user.get('username'),
         userId: user.get('id'),
         message: message,
         level: level
-      }).save();
+      });
+      var logMessageId = logMessage.get('id');
+      logMessage.set('id', `${level}${logMessageId}`);
+      return logMessage.save();
     });
   },
 
