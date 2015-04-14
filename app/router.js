@@ -22,6 +22,12 @@ Router.map(function() {
   this.resource('chat', function () {
     this.resource('chat.channel', {path: '/:channel'});
   });
+
+  this.resource('games', function () {
+    this.resource('game', {path: '/:game_id'});
+    this.route('list');
+    this.route('new');
+  });
 });
 
 export default Router;

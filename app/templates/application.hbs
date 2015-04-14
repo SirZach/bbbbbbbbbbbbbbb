@@ -20,6 +20,9 @@
           {{else}}
           <li {{action "loginWithGithub"}}><a>{{fa-icon "github"}} Login with Github</a></li> {{/if}}
 
+          {{!-- Games link --}}
+          <li>{{#link-to 'games.list'}}Games{{/link-to}}</li>
+
           {{!--Lobby link--}}
           {{#if session.isAuthenticated}}
           <li>{{#link-to 'chat'}}Lobby{{/link-to}}</li>
@@ -37,7 +40,7 @@
         </ul>
       </nav>
     {{/paper-content}}
-    
+
   {{/paper-sidenav}}
 
   {{#paper-content flex-layout="column" flex=true}}

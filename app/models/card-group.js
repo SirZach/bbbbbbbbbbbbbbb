@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import DS from 'ember-data';
 
 export default DS.Model.extend({
@@ -15,5 +16,7 @@ export default DS.Model.extend({
     var board = this.get('board');
     var type = this.get('card.type');
     return board + type;
-  }.property('board', 'card.type')
+  }.property('board', 'card.type'),
+
+  cmc: Ember.computed.alias('card.cmc')
 });

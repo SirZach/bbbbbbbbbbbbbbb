@@ -23,9 +23,9 @@ export default Ember.Route.extend({
   setupController: function (controller, model) {
     controller.set('channel', this.get('channel'));
     controller.set('presences');
-    this.store.find('presence').then(function (presences) {
-      controller.set('presences', presences);
-    });
+    var presences = this.store.filter('presence', {},
+      (presence) => !!presence._data.user);
+    controller.set('presences', presences);
     return this._super(controller, model);
   },
 
@@ -36,9 +36,8 @@ export default Ember.Route.extend({
       }
       this.controller.set('says');
 
-      var name = this.get('session.currentUser.github.username');
-      var avatarUrl =
-        this.get('session.currentUser.github.cachedUserProfile.avatar_url');
+      var name = this.get('session.user.username');
+      var avatarUrl = this.get('session.user.avatarUrl');
       var when = new Date();
       var channel = this.get('channel');
       var chat = this.store.createRecord('chat', {

@@ -6,7 +6,7 @@ import Ember from 'ember';
 
 moduleForModel('presence', {
   // Specify the other units that are required for this test.
-  needs: ['model:user']
+  needs: ['model:user', 'model:deck']
 });
 
 test('it exists', function (assert) {

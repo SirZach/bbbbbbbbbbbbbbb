@@ -1,0 +1,31 @@
+<div class="game-board">
+  <div class="game-board-top">
+    {{#if isGameInProgress}}
+      {{!-- Game is in action! --}}
+    {{/if}}
+    {{#if isGameInPrep}}
+      {{!-- The game is still being set up. --}}
+    {{/if}}
+    {{#if isGameOver}}
+      {{!-- The game has ended. --}}
+    {{/if}}
+  </div>
+  <div class="game-board-bottom">
+    {{#if isGameInProgress}}
+      {{!-- Game is in action! --}}
+    {{/if}}
+    {{#if isGameInPrep}}
+      {{!-- The game is still being set up. --}}
+      {{deck-chooser
+          decks=session.user.gameReadyDecks
+          selectedDeckId=participant.deckId
+          action="selectDeck"}}
+    {{/if}}
+    {{#if isGameOver}}
+      {{!-- The game has ended. --}}
+    {{/if}}
+  </div>
+</div>
+
+
+

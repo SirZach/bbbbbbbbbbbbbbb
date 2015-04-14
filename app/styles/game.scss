@@ -1,0 +1,18 @@
+.game-board {
+  position: fixed;
+  top: 51px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.game-board-top,
+.game-board-bottom {
+  height: 50%;
+  overflow-y: auto;
+}
+
+.game-board-top {
+  // TODO: replace with color scheme.
+  border-bottom: 1px solid #CCC;
+}

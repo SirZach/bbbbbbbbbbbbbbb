@@ -6,9 +6,12 @@
 @import "color-palette";
 @import 'nav';
 @import 'avatar';
+@import "game-listing";
+@import "game";
+@import "failed-imports";
+@import "deck-chooser";
 
 $primary-color-palette: $color-orange;
-
 @import "ember-paper";
 
 body { background-color: #ececec; }

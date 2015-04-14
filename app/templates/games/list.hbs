@@ -1,0 +1,17 @@
+{{!-- Only allow game creation if you are not anonymous. --}}
+{{#paper-button action="newGame" raised=true classNames="md-primary" disabled=cannotCreateGame}}
+  New Game
+{{/paper-button}}
+
+{{#if model.length}}
+  {{#paper-content classNames="md-whiteframe-z1"}}
+    {{#paper-list}}
+      {{#each model as |game|}}
+        {{game-listing game=game}}
+        {{paper-divider}}
+      {{/each}}
+    {{/paper-list}}
+  {{/paper-content}}
+{{else}}
+  <h3>No games currently in progress.</h3>
+{{/if}}
