@@ -12,6 +12,9 @@ export default Ember.Route.extend({
   },
 
   actions: {
+    createNewDeck: function () {
+      this.transitionTo('deck.build', 'new');
+    },
     goToDeck: function (deck) {
       this.transitionTo('deck.build', deck);
     },

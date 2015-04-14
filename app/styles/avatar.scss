@@ -1,0 +1,19 @@
+.avatar {
+  margin: 16px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  width: 60px;
+
+  &.avatar-small {
+    width: 30px;
+  }
+
+  &.avatar-text {
+    display: inline-block;
+  }
+
+  &.avatar-list {
+    margin-bottom: 0px;
+    margin-left: 1.1em;
+  }
+}
