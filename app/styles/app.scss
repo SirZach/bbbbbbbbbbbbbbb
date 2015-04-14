@@ -10,12 +10,14 @@
 @import "game";
 @import "failed-imports";
 @import "deck-chooser";
+@import 'components/x-card';
 
 $primary-color-palette: $color-orange;
 @import "ember-paper";
 
-body { background-color: #ececec; }
-md-item-content {background: #fff; }
+body { background-color: #ececec;}
+md-item-content {background: #fff;}
+md-card-content {background: #fff;}
 
 .ember-app {
   width: 100%;
@@ -77,7 +79,6 @@ md-item-content {background: #fff; }
 }
 
 .list-demo .face {
-  border-radius: 30px;
   border: 1px solid #ddd;
   width: 48px;
   margin: 16px;

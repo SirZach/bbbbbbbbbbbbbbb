@@ -1,48 +1,18 @@
-{{x-card-image src=card.imageUrl}}
-<div class="row">
-  <div class="col-sm-6">
-    <span>Name</span>
-  </div>
-  <div class="col-sm-6">
-    <span>{{card.name}}</span>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-6">
-    <span>Mana cost</span>
-  </div>
-  <div class="col-sm-6">
-    <span>{{mana-formatted mana=card.manaCostFormatted}}</span>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-6">
-    <span>Card type</span>
-  </div>
-  <div class="col-sm-6">
-    <span>{{card.type}}</span>
-  </div>
-</div>
-{{#if card.powerToughnessFormatted}}
-  <div class="row">
-    <div class="col-sm-6">
-      <span>P/T</span>
-    </div>
-    <div class="col-sm-6">
-      <span>{{card.powerToughnessFormatted}}</span>
-    </div>
-  </div>
-{{/if}}
-<div class="row">
-  <div class="col-sm-12">
+{{#paper-card}}
+  {{x-card-image src=card.imageUrl}}
+  {{#paper-card-content}}
+    <h6>Name</h6>
+    <p>{{card.name}}</p>
+    <h6>Mana cost</h6>
+    <p>{{mana-formatted mana=card.manaCostFormatted}}</p>
+    <h6>Card type</h6>
+    <p>{{card.type}}</p>
+    {{#if card.powerToughnessFormatted}}
+      <h6>P/T</h6>
+      <p>{{card.powerToughnessFormatted}}</p>
+    {{/if}}
+    <h6>Price</h6>
+    <p>{{promise-spinner url=card.channelFireballPrice}}</p>
     <p>{{card.text}}</p>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-6">
-    <span>Price</span>
-  </div>
-  <div class="col-sm-6">
-    <span>{{promise-spinner url=card.channelFireballPrice}}</span>
-  </div>
-</div>
+  {{/paper-card-content}}
+{{/paper-card}}
