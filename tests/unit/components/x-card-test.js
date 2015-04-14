@@ -5,7 +5,13 @@ import {
 
 moduleForComponent('x-card', {
   // specify the other units that are required for this test
-  // needs: ['component:foo', 'helper:bar']
+  needs: [
+    'component:paper-card',
+    'component:x-card-image',
+    'component:paper-card-content',
+    'component:mana-formatted',
+    'component:promise-spinner'
+  ]
 });
 
 test('it renders', function(assert) {
