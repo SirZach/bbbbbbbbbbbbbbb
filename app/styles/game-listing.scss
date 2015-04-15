@@ -6,3 +6,12 @@
 .game-listing-join {
   margin-left: 20px;
 }
+
+.game-listing-deck-image {
+  @extend .avatar;
+  width: 100px;
+  height: 100px;
+  background-position-x: 50%;
+  background-position-y: 19%;
+  background-size: 200%;
+}
