@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import $ from 'jquery';
-import NameGenerator from 'webatrice/utils/name-generator';
 
 var FIREBASE_URL = 'https://dazzling-fire-7827.firebaseio.com';
 var IDLE_MS = 60000;
@@ -20,20 +19,6 @@ var session = Ember.Object.extend({
   addFirebaseCallback: function () {
     var session = this;
     var store = this.get('store');
-
-    // Right away create an anonymous user for the session if it is obvious this
-    // person is not logged in.
-    //
-    if (!this.get('ref').getAuth()) {
-      this.initializeUser().then(function () {
-        // Prepare to tear down the anonymous user.
-        var userRef = store.refFor('user', session.get('user.content'));
-        userRef.onDisconnect().remove();
-        var presenceRef = store.refFor('presence',
-          session.get('user.content.presence.content'));
-        presenceRef.onDisconnect().remove();
-      });
-    }
 
     this.get('ref').onAuth(function (authData) {
       if (authData) {
@@ -59,18 +44,6 @@ var session = Ember.Object.extend({
    * @return {Promise}
    */
   initializeUser: function (authData) {
-    var anonymousUser = this.get('user.content');
-    var anonymousPresensce = this.get('user.content.presence.content');
-    var isAnonymous = anonymousUser && anonymousUser.get('isAnonymous');
-    if (anonymousUser && isAnonymous) {
-      anonymousUser.destroyRecord();
-    } else if (anonymousUser && !isAnonymous) {
-      this.get('log').error('Almost deleted a valid user: ' +
-        JSON.stringify(anonymousUser.toJSON()));
-    }
-    if (anonymousPresensce && isAnonymous) {
-      anonymousPresensce.destroyRecord();
-    }
     var promise = this.updateOrCreateUser(authData);
     var userPromiseProxy = DS.PromiseObject.create({
       promise: promise
@@ -95,32 +68,29 @@ var session = Ember.Object.extend({
   /**
    * Updates an existing user profile or creates a new one.
    *
-   * @param {Object} authData   The object given to us from .onAuth(). If null,
-   *                            create an anonymous user.
+   * @param {Object} authData   The object given to us from .onAuth().
    *
    * @return {Promise}
    */
   updateOrCreateUser: function (authData) {
     var store = this.get('store');
-    var username;
-    var avatarUrl;
-    var displayName;
-    var email;
-    if (authData) {
-      username = authData.github.username;
-      avatarUrl = authData.github.cachedUserProfile.avatar_url;
-      displayName = authData.github.displayName;
-      email = authData.github.email;
-    } else {
-      username = NameGenerator.name();
-      avatarUrl = NameGenerator.avatarUrl();
-    }
+    var log = this.get('log');
+    var username = authData.github.username;
+    var avatarUrl = authData.github.cachedUserProfile.avatar_url;
+    var displayName = authData.github.displayName;
+    var email = authData.github.email;
+
     return store.find('user', {
       orderBy: 'username',
       equalTo: username
     }).then(function (records) {
+      var usersFound = records.get('length');
+      if (usersFound > 1) {
+        log.error(`More than one user found during login (${usersFound}). ` +
+          `Query: {equalTo: ${username}}`);
+      }
       var user;
-      if (records.get('length') === 1) {
+      if (usersFound === 1) {
         user = records.objectAt(0);
       } else {
         user = store.createRecord('user');
@@ -129,8 +99,7 @@ var session = Ember.Object.extend({
         username: username,
         avatarUrl: avatarUrl,
         displayName: displayName,
-        email: email,
-        isAnonymous: !authData
+        email: email
       });
       user.incrementProperty('visits');
       return user.save();

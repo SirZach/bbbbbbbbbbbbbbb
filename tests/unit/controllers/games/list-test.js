@@ -8,19 +8,10 @@ moduleFor('controller:games/list', {
   // needs: ['controller:foo']
 });
 
-test('canCreateGame - anon user', function(assert) {
-  var controller = this.subject();
-  controller.set('session', {
-    user: {isAnonymous: true}
-  });
-  assert.equal(controller.get('canCreateGame'), false);
-});
-
 test('canCreateGame - decks not ready', function(assert) {
   var controller = this.subject();
   controller.set('session', {
     user: {
-      isAnonymous: false,
       hasGameReadyDecks: false
     }
   });
@@ -31,7 +22,6 @@ test('canCreateGame - all good', function(assert) {
   var controller = this.subject();
   controller.set('session', {
     user: {
-      isAnonymous: false,
       hasGameReadyDecks: true
     }
   });

@@ -7,7 +7,6 @@ export default DS.Model.extend({
     email: DS.attr('string'),
     visits: DS.attr('number', {defaultValue: 0}),
     presence: DS.belongsTo('presence', {async: true}),
-    isAnonymous: DS.attr('boolean', {defaultValue: true}),
     decks: DS.hasMany('deck', {async: true}),
 
     /** @property {Array<Deck>} The decks that are legal for play. */

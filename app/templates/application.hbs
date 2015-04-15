@@ -21,7 +21,9 @@
           <li {{action "loginWithGithub"}}><a>{{fa-icon "github"}} Login with Github</a></li> {{/if}}
 
           {{!-- Games link --}}
+          {{#if session.isAuthenticated}}
           <li>{{#link-to 'games.list'}}Games{{/link-to}}</li>
+          {{/if}}
 
           {{!--Lobby link--}}
           {{#if session.isAuthenticated}}
@@ -32,7 +34,9 @@
           <li>{{#link-to 'cards'}}Cards{{/link-to}}</li>
 
           {{!--Build a deck--}}
+          {{#if session.isAuthenticated}}
           <li>{{#link-to 'deck.build' 'new'}}Build a deck{{/link-to}}</li>
+          {{/if}}
 
           {{!--Github link--}}
           <li><a target="_blank" href="https://github.com/SirZach/bbbbbbbbbbbbbbb/issues">{{fa-icon "github"}} Report an issue</a></li>
