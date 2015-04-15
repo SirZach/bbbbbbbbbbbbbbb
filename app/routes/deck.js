@@ -10,7 +10,7 @@ export default Ember.Route.extend({
   model: function (params) {
     if (params.deck_id === 'new') {
       var deck = this.store.createRecord('deck');
-      this.get('session.user').then((user) => {
+      return this.get('session.user').then((user) => {
         deck.set('owner', user);
         return deck;
       });
