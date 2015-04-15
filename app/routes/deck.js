@@ -9,7 +9,11 @@ export default Ember.Route.extend({
 
   model: function (params) {
     if (params.deck_id === 'new') {
-      return this.store.createRecord('deck');
+      var deck = this.store.createRecord('deck');
+      return this.get('session.user').then((user) => {
+        deck.set('owner', user);
+        return deck;
+      });
     } else {
       return this._super.apply(this, arguments);
     }
@@ -32,20 +36,29 @@ export default Ember.Route.extend({
     },
 
     saveDeck: function (deck) {
-      if (!deck.get('owner')) {
-        this.get('session.user').then((user) => {
-          deck.set('owner', user);
-          deck.save()
-            .then(() => user.get('decks'))
-            .then((decks) => {
-              decks.addObject(deck);
-              return user.save();
-            })
-            .then(() => this.transitionTo('deck.build', deck));
-        });
-      } else {
-        deck.save();
-      }
+      this.get('session.user').then((user) => {
+        deck.save()
+          .then(() => user.get('decks'))
+          .then((decks) => {
+            decks.addObject(deck);
+            return user.save();
+          })
+          .then(() => {
+            this.transitionTo('deck.build', deck);
+            this.notifications.addNotification({
+              message: 'Saved',
+              type: 'success',
+              autoClear: true,
+              clearDuration: 1200
+            });
+          })
+          .catch(() => {
+            this.notifications.addNotification({
+              message: 'Error',
+              type: 'error'
+            });
+          });
+      });
     },
 
     showCard: function (card) {
