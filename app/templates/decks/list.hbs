@@ -4,7 +4,9 @@
     {{#each model as |deck|}}
       {{#paper-item class="cursor-pointer" param=deck action="goToDeck"}}
         {{#paper-tile-left}}
-          <img src={{deck.owner.avatarUrl}} class="avatar">
+          <div class="game-listing-deck-image"
+               style="background-image: url('{{deck.defaultImageUrl}}')">
+          </div>
         {{/paper-tile-left}}
         {{#paper-tile-content}}
           <h3>{{deck.name}}</h3>
