@@ -13,6 +13,10 @@ var session = Ember.Object.extend({
     return this.container.lookup('store:main');
   }.property(),
 
+  log: function () {
+    return this.container.lookup('log:main');
+  }.property(),
+
   addFirebaseCallback: function () {
     var session = this;
     var store = this.get('store');
@@ -55,13 +59,16 @@ var session = Ember.Object.extend({
    * @return {Promise}
    */
   initializeUser: function (authData) {
-    var session = this;
     var anonymousUser = this.get('user.content');
     var anonymousPresensce = this.get('user.content.presence.content');
-    if (anonymousUser) {
+    var isAnonymous = anonymousUser && anonymousUser.get('isAnonymous');
+    if (anonymousUser && isAnonymous) {
       anonymousUser.destroyRecord();
+    } else if (anonymousUser && !isAnonymous) {
+      this.get('log').error('Almost deleted a valid user: ' +
+        JSON.stringify(anonymousUser.toJSON()));
     }
-    if (anonymousPresensce) {
+    if (anonymousPresensce && isAnonymous) {
       anonymousPresensce.destroyRecord();
     }
     var promise = this.updateOrCreateUser(authData);
@@ -69,9 +76,7 @@ var session = Ember.Object.extend({
       promise: promise
     });
     this.set('user', userPromiseProxy);
-    return userPromiseProxy.then(function () {
-      return session.bindPresence();
-    });
+    return userPromiseProxy.then(() => this.bindPresence());
   },
 
   trackActivity: function () {
@@ -96,7 +101,7 @@ var session = Ember.Object.extend({
    * @return {Promise}
    */
   updateOrCreateUser: function (authData) {
-    var store = this.container.lookup('store:main');
+    var store = this.get('store');
     var username;
     var avatarUrl;
     var displayName;
@@ -115,7 +120,7 @@ var session = Ember.Object.extend({
       equalTo: username
     }).then(function (records) {
       var user;
-      if (records.get('length')) {
+      if (records.get('length') === 1) {
         user = records.objectAt(0);
       } else {
         user = store.createRecord('user');
