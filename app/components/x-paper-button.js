@@ -5,7 +5,7 @@ export default PaperButton.extend({
   click: function () {
     //stolen from ember-paper
     var target = this.get('target');
-    var params = target ? ['action'] : [this.get('actions')];
+    var params = target ? [this.get('action')] : ['action'];
     params = params.concat(this.get('params'));
 
     if (target) {
