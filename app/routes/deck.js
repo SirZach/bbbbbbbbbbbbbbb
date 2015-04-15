@@ -1,6 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  beforeModel: function () {
+    if (!this.get('session.isAuthenticated')) {
+      this.replaceWith('/');
+    }
+  },
+
   model: function (params) {
     if (params.deck_id === 'new') {
       return this.store.createRecord('deck');
