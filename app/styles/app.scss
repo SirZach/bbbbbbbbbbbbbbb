@@ -30,6 +30,10 @@ md-card-content {background: #fff;}
   }
 }
 
+.form-horizontal.form-horizontal-condensed {
+  .form-group {margin-bottom: 0;}
+}
+
 .indent {
   position: relative;
   &.indent-1 {
