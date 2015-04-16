@@ -1,6 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  canParticipate: Ember.computed.readOnly('session.isAuthenticated'),
+
+  cannotParticipate: Ember.computed.not('canParticipate'),
+
   sortedPresences: function () {
     var presences = this.get('presences');
     if (!presences) {
