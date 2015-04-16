@@ -23,9 +23,15 @@
 .chat {
   position: fixed;
   top: 52px;
-  padding-left: 5px;
+  left: 10px;
   bottom: 0;
   right: 0;
+}
+
+@media screen and (min-width: $locked-breakpoint) {
+  .chat {
+    left: 264px;
+  }
 }
 
 .chat-title {
