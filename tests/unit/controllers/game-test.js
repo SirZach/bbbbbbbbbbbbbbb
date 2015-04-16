@@ -8,8 +8,19 @@ moduleFor('controller:game', {
   // needs: ['controller:foo']
 });
 
-// Replace this with your real tests.
-test('it exists', function(assert) {
+test('you can participate if you are logged in', function (assert) {
   var controller = this.subject();
-  assert.ok(controller);
+  controller.set('session', {
+    isAuthenticated: false
+  });
+  assert.equal(controller.get('canParticipate'), false);
 });
+
+test('you cannot participate if you are not logged in', function (assert) {
+  var controller = this.subject();
+  controller.set('session', {
+    isAuthenticated: true
+  });
+  assert.equal(controller.get('canParticipate'), true);
+});
+

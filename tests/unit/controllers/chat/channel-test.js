@@ -8,7 +8,6 @@ moduleFor('controller:chat/channel', {
   // needs: ['controller:foo']
 });
 
-// Replace this with your real tests.
 test('you can participate if you are logged in', function (assert) {
   var controller = this.subject();
   controller.set('session', {
