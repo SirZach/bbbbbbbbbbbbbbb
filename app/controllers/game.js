@@ -10,10 +10,6 @@ export default Ember.Controller.extend({
   /** @property {Boolean} Is the game over? */
   isGameOver: Ember.computed.equal('model.status', 'ended'),
 
-  canParticipate: Ember.computed.readOnly('session.isAuthenticated'),
-
-  cannotParticipate: Ember.computed.not('canParticipate'),
-
   /** @property {Boolean} Am I one of the players? */
   amIPlaying: function () {
     var playerUserIds = this.get('model.players').mapBy('user.id');

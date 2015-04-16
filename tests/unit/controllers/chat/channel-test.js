@@ -8,18 +8,8 @@ moduleFor('controller:chat/channel', {
   // needs: ['controller:foo']
 });
 
-test('you can participate if you are logged in', function (assert) {
+// Replace this with your real tests.
+test('it exists', function(assert) {
   var controller = this.subject();
-  controller.set('session', {
-    isAuthenticated: false
-  });
-  assert.equal(controller.get('canParticipate'), false);
-});
-
-test('you cannot participate if you are not logged in', function (assert) {
-  var controller = this.subject();
-  controller.set('session', {
-    isAuthenticated: true
-  });
-  assert.equal(controller.get('canParticipate'), true);
+  assert.ok(controller);
 });
