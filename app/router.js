@@ -7,6 +7,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('login');
+  this.route('disclaimer');
   this.resource('user', {path: '/u/:user_id'});
   this.resource('decks', function () {
     this.route('list');
