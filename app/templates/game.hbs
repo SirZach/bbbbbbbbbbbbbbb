@@ -1,16 +1,27 @@
 <div class="game-board">
   <div class="game-board-top">
+    <h3>
+      <img src={{playerTwoAvatarUrl}} class="avatar">
+      {{topBoardTitle}}
+    </h3>
     {{#if isGameInProgress}}
       {{!-- Game is in action! --}}
     {{/if}}
     {{#if isGameInPrep}}
       {{!-- The game is still being set up. --}}
+
+      {{#if isWaitingForOpponent}}
+      {{/if}}
     {{/if}}
     {{#if isGameOver}}
       {{!-- The game has ended. --}}
     {{/if}}
   </div>
   <div class="game-board-bottom">
+    <h3>
+      <img src={{playerOneAvatarUrl}} class="avatar">
+      {{bottomBoardTitle}}
+    </h3>
     {{#if isGameInProgress}}
       {{!-- Game is in action! --}}
     {{/if}}

@@ -6,10 +6,17 @@
   right: 0;
 }
 
+@media screen and (min-width: $locked-breakpoint) {
+  .game-board {
+    left: 254px;
+  }
+}
+
 .game-board-top,
 .game-board-bottom {
   height: 50%;
   overflow-y: auto;
+  padding: 0 10px;
 }
 
 .game-board-top {

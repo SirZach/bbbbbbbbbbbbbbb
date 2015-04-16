@@ -1,12 +1,13 @@
 .deck-chooser {
   list-style: none;
+  padding: 0;
 }
 
 .deck-option {
   position: relative;
   width: 200px;
   height: 200px;
-  margin: 5px;
+  margin: 0 10px 10px 0;
   background-position-x: 50%;
   background-position-y: 19%;
   float: left;
@@ -14,8 +15,7 @@
 }
 
 .deck-option-selected {
-  // TODO: update with color palette.
-  box-shadow: 0 0 20px #007;
+  box-shadow: 0 0 20px map-get($primary-color-palette, '900');
 }
 
 .deck-option-text {
