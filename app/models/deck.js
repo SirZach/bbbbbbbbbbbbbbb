@@ -12,6 +12,14 @@ var CardFamily = Ember.Object.extend({
   /** @property {String} - e.g. Creature */
   type: null,
 
+  /** @property {String} - e.g. main-Creature */
+  superType: function () {
+    var isMain = this.get('isMain');
+    var type = this.get('type');
+
+    return isMain ? `main-${type}` : `side-${type}`;
+  }.property('isMain', 'type'),
+
   /** @property {CardGroup} - cards within this family */
   cardGroups: null,
 
