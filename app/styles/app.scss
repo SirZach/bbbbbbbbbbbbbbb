@@ -1,9 +1,13 @@
+@import "color-palette";
+
+$primary-color-palette: $color-orange;
+$locked-breakpoint: 1700px;
+
 @import "chat";
 @import "offcanvas";
 @import "material-of-cards";
 @import "magic-font";
 @import "utils";
-@import "color-palette";
 @import 'nav';
 @import 'avatar';
 @import "game-listing";
@@ -12,7 +16,6 @@
 @import "deck-chooser";
 @import 'components/x-card';
 
-$primary-color-palette: $color-orange;
 @import "ember-paper";
 
 body { background-color: #ececec;}
