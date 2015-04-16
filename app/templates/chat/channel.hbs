@@ -2,5 +2,9 @@
   <h2 class="chat-title">#{{channel}}</h2>
   {{chat-pane chats=model title=channel class="chat-pane"}}
   {{active-user-list presences=sortedPresences}}
-  {{x-paper-text label="Say something!" value=says action="say" class="chat-input"}}
+  {{x-paper-text
+    label="Say something!"
+    value=says action="say"
+    class="chat-input"
+    disabled=session.doesNotHaveWriteAccess}}
 </div>

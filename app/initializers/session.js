@@ -169,7 +169,17 @@ var session = Ember.Object.extend({
 
   currentUser: function () {
     return this.get('ref').getAuth();
-  }.property('isAuthenticated')
+  }.property('isAuthenticated'),
+
+  /** @property {Boolean} A convenience property to see if the user can write to
+   *                      Firebase.
+   */
+  hasWriteAccess: Ember.computed.readOnly('isAuthenticated'),
+
+  /** @property {Boolean} A convenience property to see if the user can write to
+   *                      Firebase.
+   */
+  doesNotHaveWriteAccess: Ember.computed.not('hasWriteAccess'),
 });
 
 export default {

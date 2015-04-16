@@ -21,14 +21,10 @@
           <li {{action "loginWithGithub"}}><a>{{fa-icon "github"}} Login with Github</a></li> {{/if}}
 
           {{!-- Games link --}}
-          {{#if session.isAuthenticated}}
           <li>{{#link-to 'games.list'}}Games{{/link-to}}</li>
-          {{/if}}
 
           {{!--Lobby link--}}
-          {{#if session.isAuthenticated}}
           <li>{{#link-to 'chat'}}Lobby{{/link-to}}</li>
-          {{/if}}
 
           {{!--Cards browser--}}
           <li>{{#link-to 'cards'}}Cards{{/link-to}}</li>

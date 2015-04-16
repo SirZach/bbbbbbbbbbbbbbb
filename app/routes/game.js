@@ -2,6 +2,11 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   afterModel: function (model) {
+    // If you are not logged in, allow anonymous access to the game.
+    if (!this.get('session.isAuthenticated')) {
+      return;
+    }
+
     // By default, add yourself as a watcher unless you're already in the
     // participants list.
     //
@@ -45,6 +50,11 @@ export default Ember.Route.extend({
 
   actions: {
     willTransition: function () {
+      // If you are not logged in, there is no state to clean up.
+      if (!this.get('session.isAuthenticated')) {
+        return;
+      }
+
       // Set directly with the Firebase API so we don't mess up the rest of the
       // game state.
       this.get('gameParticipantRef').child('isPresent').set(false);
