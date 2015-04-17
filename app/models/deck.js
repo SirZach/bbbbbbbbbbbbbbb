@@ -56,15 +56,19 @@ var Deck = DS.Model.extend({
   /** @property {Array[CardGroup]} - individual card multiples */
   cardGroups: DS.hasMany('cardGroup', {embedded: true}),
 
+  sortedCardGroups: Ember.computed.sort('cardGroups', function (a, b) {
+    return a.get('card.name') < b.get('card.name') ? -1 : 1;
+  }),
+
   /** @property {Array[CardGroups]} - card groups only in the main board */
-  mainCardGroups: Ember.computed.filterBy('cardGroups', 'board', 'main'),
+  mainCardGroups: Ember.computed.filterBy('sortedCardGroups', 'board', 'main'),
 
   /** @property {Number} - number of cards in the main board */
   mainCount: Ember.computed.sum('_mainCardGroupLengths'),
   _mainCardGroupLengths: Ember.computed.mapBy('mainCardGroups', 'count'),
 
   /** @property {Array[CardGroups]} - card groups only in the sideboard */
-  sideCardGroups: Ember.computed.filterBy('cardGroups', 'board', 'side'),
+  sideCardGroups: Ember.computed.filterBy('sortedCardGroups', 'board', 'side'),
 
   /** @property {Number} - number of cards in the sideboard */
   sideCount: Ember.computed.sum('_sideCardGroupLengths'),
