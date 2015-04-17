@@ -1,4 +1,5 @@
 import DS from 'ember-data';
+import Ember from 'ember';
 
 export default DS.Model.extend({
   /** @property {User} Reference to the user record. */
@@ -23,5 +24,8 @@ export default DS.Model.extend({
   isReady: DS.attr('boolean', {defaultValue: false}),
 
   /** @property {Number} Life total. */
-  life: DS.attr('number')
+  life: DS.attr('number'),
+
+  /** @property {String} Convenience property for computed dependencies. */
+  userId: Ember.computed.alias('user.id')
 });

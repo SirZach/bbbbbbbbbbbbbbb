@@ -24,8 +24,9 @@ export default DS.Model.extend({
     }
     return players;
   }.property(
-    'gameParticipants.@each.user.username',
-    'gameParticipants.@each.deckName'),
+    'gameParticipants.@each.user',
+    'gameParticipants.@each.deckName',
+    'gameParticipants.@each.isPlaying'),
 
   /** @property {GameParticipant} The first player. */
   playerOne: function () {
