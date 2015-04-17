@@ -27,7 +27,7 @@ export default Ember.Controller.extend({
     var participants = this.get('model.gameParticipants');
     var myId = this.get('session.user.id');
     return participants.findBy('user.id', myId);
-  }.property('model.gameParticipants.@each.user', 'session.user.id'),
+  }.property('model.gameParticipants.@each.userId', 'session.user.id'),
 
   /**
    * @property {Array<GameParticipant>} The participants playing the game. The
