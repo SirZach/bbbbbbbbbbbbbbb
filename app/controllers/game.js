@@ -12,10 +12,15 @@ export default Ember.Controller.extend({
 
   /** @property {Boolean} Am I one of the players? */
   amIPlaying: function () {
-    var playerUserIds = this.get('model.players').mapBy('user.id');
+    var playerUserIds = this.get('model.gameParticipants')
+      .filterBy('isPlaying')
+      .mapBy('user.id')
+      .compact();
     var myId = this.get('session.user.id');
     return playerUserIds.contains(myId);
-  }.property('model.players.@each.user', 'session.user.id'),
+  }.property(
+    'model.gameParticipants.@each.{isPlaying,userId}',
+    'session.user.id'),
 
   /** @property {GameParticipant} The participant representing me. */
   participant: function () {
@@ -60,7 +65,7 @@ export default Ember.Controller.extend({
     } else {
       return 'http://www.gravatar.com/avatar/?s=256&default=mm';
     }
-  }.property('playerOne'),
+  }.property('playerOne.user.avatarUrl'),
 
   playerTwo: function () {
     return this.get('players')[1];
@@ -73,7 +78,7 @@ export default Ember.Controller.extend({
     } else {
       return 'http://www.gravatar.com/avatar/?s=256&default=mm';
     }
-  }.property('playerTwo'),
+  }.property('playerTwo.user.avatarUrl'),
 
   /** @property {Boolean} Is there at least one open seat? */
   isWaitingForOpponent: function () {
@@ -83,42 +88,58 @@ export default Ember.Controller.extend({
 
   /** @property {String} The title showing on the top half of the board. */
   topBoardTitle: function () {
-    var isWaitingForOpponent = this.get('isWaitingForOpponent');
     var isGameInPrep = this.get('isGameInPrep');
-    var isGameOver = this.get('isGameOver');
-    var isGameInProgress = this.get('isGameInProgress');
-    var username = this.get('playerTwo.username.name');
+    var playerTwoUsername = this.get('playerTwo.user.username');
+    var playerTwoIsReady = this.get('playerTwo.isReady');
 
-    if (isGameInPrep && isWaitingForOpponent) {
+    if (playerTwoUsername) {
+      if (isGameInPrep) {
+        if (playerTwoIsReady) {
+          return `${playerTwoUsername} is ready`;
+        } else {
+          return `Waiting for ${playerTwoUsername} to choose a deck`;
+        }
+      } else {
+        return playerTwoUsername;
+      }
+    } else {
       return 'Waiting for player...';
-    } else if (isGameInPrep && !isWaitingForOpponent) {
-      return `Waiting for ${username} to choose a deck.`;
     }
   }.property(
-    'isWaitingForOpponent',
     'isGameInPrep',
-    'isGameOver',
-    'isGameInProgress'),
+    'playerTwo.user.{username,isReady}'),
 
   /** @property {String} The title showing on the bottom half of the board. */
   bottomBoardTitle: function () {
-    var isWaitingForOpponent = this.get('isWaitingForOpponent');
     var isGameInPrep = this.get('isGameInPrep');
-    var isGameOver = this.get('isGameOver');
-    var isGameInProgress = this.get('isGameInProgress');
     var amIPlaying = this.get('amIPlaying');
-    var username = this.get('playerOne.user.username');
+    var playerOneUsername = this.get('playerOne.user.username');
+    var playerOneIsReady = this.get('playerOne.isReady');
 
-    if (isGameInPrep && amIPlaying) {
-      return 'Choose a deck';
-    } else if (isGameInPrep && !amIPlaying) {
-      return `Waiting for ${username} to choose a deck.`;
+    if (amIPlaying) {
+      if (isGameInPrep && !playerOneIsReady) {
+        return 'Choose a deck';
+      } else {
+        return 'You are ready';
+      }
+    } else {
+      if (playerOneUsername) {
+        if (isGameInPrep) {
+          if (playerOneIsReady) {
+            return `${playerOneUsername} is ready`;
+          } else {
+            return `Waiting for ${playerOneUsername} to choose a deck`;
+          }
+        } else {
+          return playerOneUsername;
+        }
+      } else {
+        return 'Waiting for player...';
+      }
     }
   }.property(
-    'isWaitingForOpponent',
     'isGameInPrep',
-    'isGameOver',
-    'isGameInProgress',
+    'playerOne.user.{username,isReady}',
     'amIPlaying'),
 
   actions: {
