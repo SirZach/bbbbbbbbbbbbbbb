@@ -44,11 +44,12 @@
   .chat {
     position: relative;
     height: 100%;
-    margin: 0 20px;
+    margin: 0;
     top: 64px;
+    left: 0;
     padding-bottom: 25px;
     .chat-header {
-      height: 30px;
+      height: 50px;
       padding: 10px 0;
       line-height: 30px;
       text-align: center;
@@ -59,7 +60,7 @@
   .chat-pane {
     width: 100%;
     float: none;
-    height: calc(100% - 190px);
+    height: calc(100% - 163px);
   }
 }
 

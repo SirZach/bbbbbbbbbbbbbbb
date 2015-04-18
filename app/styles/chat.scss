@@ -43,6 +43,18 @@
   height: calc(100% - 133px);
   overflow-y: auto;
   float: left;
+  &.compact {
+    .md-tile-left {
+      min-width: 38px;
+    }
+    .md-tile-content {
+      padding: 6px 16px;
+    }
+    .chat-avatar {
+      margin: 4px;
+      width: 30px;
+    }
+  }
 }
 
 .chat-input {
