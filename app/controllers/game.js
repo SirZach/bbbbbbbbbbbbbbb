@@ -142,6 +142,9 @@ export default Ember.Controller.extend({
     'playerOne.user.{username,isReady}',
     'amIPlaying'),
 
+  /** @property {Boolean} show or hide the chat channel */
+  showChat: true,
+
   actions: {
     /**
      * Respond to a deck selection event.
@@ -153,6 +156,10 @@ export default Ember.Controller.extend({
       participant.set('deckName', deck.get('name'));
       participant.set('deckId', deck.get('id'));
       this.get('model').save();
+    },
+
+    toggleChat: function () {
+      this.toggleProperty('showChat');
     }
   }
 });

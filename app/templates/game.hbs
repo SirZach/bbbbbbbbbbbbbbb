@@ -1,4 +1,11 @@
-<div class="game-board">
+<div class="game-board {{if showChat 'show-chat' 'hide-chat'}}">
+  {{#paper-button class="chat-chevron" action="toggleChat"}}
+    {{#if showChat}}
+      {{paper-icon icon="chevron-right"}}
+    {{else}}
+      {{paper-icon icon="chevron-left"}}
+    {{/if}}
+  {{/paper-button}}
   <div class="game-board-top">
     <h3>
       <img src={{playerTwoAvatarUrl}} class="avatar">
@@ -38,7 +45,7 @@
   </div>
 </div>
 
-<div class="game-right-column">
+<div class="game-right-column {{if showChat 'show-chat' 'hide-chat'}}">
   <div class="game-chat">
     <div class="chat">
       <div class="chat-header">
