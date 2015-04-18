@@ -38,5 +38,27 @@
   </div>
 </div>
 
+<div class="game-right-column">
+  <div class="game-chat">
+    <div class="chat">
+      <div class="chat-header">
+        {{playerOne.user.username}} vs {{playerTwo.user.username}}
+      </div>
+      {{chat-pane
+        chats=chats
+        title="title"
+        class="chat-pane"
+      }}
+      {{x-paper-text
+        label="Say something!"
+        value=says action="say"
+        channel=model.id
+        controllerName="game"
+        class="chat-input"
+        disabled=session.doesNotHaveWriteAccess
+      }}
+    </div>
+  </div>
+</div>
 
 

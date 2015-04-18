@@ -27,27 +27,5 @@ export default Ember.Route.extend({
       (presence) => !!presence._data.user);
     controller.set('presences', presences);
     return this._super(controller, model);
-  },
-
-  actions: {
-    say: function (says) {
-      if (says.trim().length === 0) {
-        return;
-      }
-      this.controller.set('says');
-
-      var name = this.get('session.user.username');
-      var avatarUrl = this.get('session.user.avatarUrl');
-      var when = new Date();
-      var channel = this.get('channel');
-      var chat = this.store.createRecord('chat', {
-        name: name,
-        avatarUrl: avatarUrl,
-        says: says,
-        when: when,
-        channel: channel
-      });
-      chat.save();
-    }
   }
 });

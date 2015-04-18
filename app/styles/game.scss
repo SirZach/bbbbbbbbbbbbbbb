@@ -4,6 +4,7 @@
   bottom: 0;
   left: 0;
   right: 0;
+  margin-right: 340px;
 }
 
 @media screen and (min-width: $locked-breakpoint) {
@@ -23,3 +24,42 @@
   // TODO: replace with color scheme.
   border-bottom: 1px solid #CCC;
 }
+
+.game-right-column {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 340px;
+  background: #f2f2f2;
+  border-left: 1px solid #ccc;
+}
+
+.game-chat {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background: #f2f2f2;
+  .chat {
+    position: relative;
+    height: 100%;
+    margin: 0 20px;
+    top: 64px;
+    padding-bottom: 25px;
+    .chat-header {
+      height: 30px;
+      padding: 10px 0;
+      line-height: 30px;
+      text-align: center;
+      font-size: 14px;
+      width: 100%;
+    }
+  }
+  .chat-pane {
+    width: 100%;
+    float: none;
+    height: calc(100% - 190px);
+  }
+}
+
