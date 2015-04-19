@@ -1,0 +1,9 @@
+.login-input input {
+  width: 100%;
+}
+
+.login-error,
+.signup-error {
+  margin-top: 20px;
+  color: map-get($primary-color-palette, '900');
+}

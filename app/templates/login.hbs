@@ -1,19 +1,35 @@
-<div class="panel panel-primary">
-  <div class="panel-heading">Sign in</div>
-  <div class="panel-body">
-    <form role="form">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input class="form-control" id="username">
-      </div>
-
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password">
-      </div>
-    </form>
-  </div>
-  <div class="panel-footer">
-    <p>Or <a {{action "loginAsGuest"}}>continue as a guest</a></p>
-  </div>
+<div class="col-md-6">
+  {{#paper-card}}
+    {{#paper-card-content}}
+      <h3>Log In</h3>
+      <form role="form" {{action "login" on="submit"}}>
+          {{paper-text classNames="login-input" type="email" label="Email" value=loginEmail}}
+          {{paper-text classNames="login-input" type="password" label="Password" value=loginPassword}}
+        {{#paper-button type="submit" classNames="md-primary" raised=true}}
+          Log In
+        {{/paper-button}}
+      </form>
+      {{#if loginError}}
+        <p class="login-error">
+          {{paper-icon icon="error"}}
+          {{loginError}}
+        </p>
+      {{/if}}
+    {{/paper-card-content}}
+  {{/paper-card}}
+</div>
+<div class="col-md-6">
+  {{#paper-card}}
+    {{#paper-card-content}}
+      <h3>Or Sign Up</h3>
+      <form role="form" {{action "signup" on="submit"}}>
+          {{paper-text classNames="login-input" type="text" label="Username" value=signupUsername}}
+          {{paper-text classNames="login-input" type="email" label="Email" value=signupEmail}}
+          {{paper-text classNames="login-input" type="password" label="Password" value=signupPassword}}
+        {{#paper-button type="submit" classNames="md-primary" raised=true}}
+          Sign Up
+        {{/paper-button}}
+      </form>
+    {{/paper-card-content}}
+  {{/paper-card}}
 </div>
