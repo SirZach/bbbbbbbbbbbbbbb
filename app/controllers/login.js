@@ -12,7 +12,7 @@ export default Ember.Controller.extend({
       this.set('loginError');
       this.session.loginWithPassword(email, password).then(
         () => this.transitionTo('/'),
-        () => this.set('loginError', error));
+        (error) => this.set('loginError', error));
     },
 
     signup: function () {
@@ -22,7 +22,7 @@ export default Ember.Controller.extend({
       this.set('signupError');
       this.session.signupWithPassword(username, email, password).then(
         () => this.transitionTo('/'),
-        () => this.set('signupError', error));
+        (error) => this.set('signupError', error));
     }
   }
 });
