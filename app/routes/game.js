@@ -42,6 +42,22 @@ export default Ember.Route.extend({
     });
   },
 
+  setupController: function (controller, game) {
+    this._super.apply(this, arguments);
+
+    var store = this.store;
+    store.find('chat', {
+      orderBy: 'channel',
+      equalTo: game.id
+    }).then(function () {
+      var gameChats = store.filter('chat', function (chat) {
+        return chat.get('channel') === game.id;
+      });
+
+      controller.set('chats', gameChats);
+    });
+  },
+
   gameParticipantRef: function () {
     return this.store.refFor('game', this.modelFor('game'))
       .child('gameParticipants')

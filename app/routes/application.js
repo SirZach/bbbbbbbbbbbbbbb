@@ -30,6 +30,31 @@ export default Ember.Route.extend({
         outlet: 'modal',
         parentView: 'application'
       });
+    },
+
+    /**
+     * @param says - message to send in the chat
+     * @param channel - what chat room should this message go in?
+     * This action handles all chat rooms
+     */
+    say: function (says, channel, controller) {
+      if (says.trim().length === 0) {
+        return;
+      }
+
+      this.controllerFor(controller).set('says');
+
+      var name = this.get('session.user.username');
+      var avatarUrl = this.get('session.user.avatarUrl');
+      var when = new Date();
+      var chat = this.store.createRecord('chat', {
+        name: name,
+        avatarUrl: avatarUrl,
+        says: says,
+        when: when,
+        channel: channel
+      });
+      chat.save();
     }
   }
 });

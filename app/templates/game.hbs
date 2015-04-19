@@ -1,4 +1,11 @@
-<div class="game-board">
+<div class="game-board {{if showChat 'show-chat' 'hide-chat'}}">
+  {{#paper-button class="chat-chevron" action="toggleChat"}}
+    {{#if showChat}}
+      {{paper-icon icon="chevron-right"}}
+    {{else}}
+      {{paper-icon icon="chevron-left"}}
+    {{/if}}
+  {{/paper-button}}
   <div class="game-board-top">
     <h3>
       <img src={{playerTwoAvatarUrl}} class="avatar">
@@ -38,5 +45,27 @@
   </div>
 </div>
 
+<div class="game-right-column {{if showChat 'show-chat' 'hide-chat'}}">
+  <div class="game-chat">
+    <div class="chat">
+      <div class="chat-header">
+        <strong>{{playerOne.user.username}} vs {{playerTwo.user.username}}</strong>
+      </div>
+      {{chat-pane
+        chats=chats
+        title="title"
+        classNames="chat-pane compact"
+      }}
+      {{x-paper-text
+        label="Say something!"
+        value=says action="say"
+        channel=model.id
+        controllerName="game"
+        class="chat-input"
+        disabled=session.doesNotHaveWriteAccess
+      }}
+    </div>
+  </div>
+</div>
 
 
