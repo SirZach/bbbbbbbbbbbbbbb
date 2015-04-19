@@ -41,6 +41,8 @@ export default DS.Model.extend({
   /** @property {Array<GameParticipant>} People watching the game. */
   watchers: function () {
     var gameParticipants = this.get('gameParticipants');
-    return gameParticipants.rejectBy('isPlaying');
+    return gameParticipants
+      .rejectBy('isPlaying')
+      .filterBy('isPresent');
   }.property('gameParticipants.@each.isPlaying')
 });
