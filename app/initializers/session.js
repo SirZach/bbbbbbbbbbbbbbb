@@ -51,7 +51,7 @@ var session = Ember.Object.extend({
    */
   initializeUser: function (authData) {
     var socialUserData;
-    if (authData.provider != 'password') {
+    if (authData.provider !== 'password') {
       socialUserData = this.parseSocialData(authData);
     }
     var promise = this.updateOrCreateUser(authData.uid, socialUserData);
