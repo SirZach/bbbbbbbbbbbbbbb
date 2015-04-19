@@ -6,17 +6,17 @@ var Log = Ember.Object.extend({
   createLogMessage: function (message, level) {
     var store = this.container.lookup('store:main');
     var session = this.container.lookup('session:main');
-    return session.get('user').then((user) => {
-      var logMessage = store.createRecord('log-message', {
-        username: user.get('username'),
-        userId: user.get('id'),
-        message: message,
-        level: level
-      });
-      var logMessageId = logMessage.get('id');
-      logMessage.set('id', `${level}${logMessageId}`);
-      return logMessage.save();
+    var user = session.get('user.content');
+    var logMessage = store.createRecord('log-message', {
+      username: user && user.get('username'),
+      userId: user && user.get('id'),
+      message: message,
+      level: level
     });
+    var logMessageId = logMessage.get('id');
+    logMessage.set('id', `${level}${logMessageId}`);
+    console.error(logMessage.toJSON());
+    return logMessage.save();
   },
 
   error: function (message) {

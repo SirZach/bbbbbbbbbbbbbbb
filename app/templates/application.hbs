@@ -14,11 +14,13 @@
           {{!--Logged in user--}}
           {{#if session.isAuthenticated}}
           <li class="cursor-pointer">
-            <img class="avatar avatar-text avatar-small avatar-list" src={{session.currentUser.github.cachedUserProfile.avatar_url}} />
+            <img class="avatar avatar-text avatar-small avatar-list" src={{session.user.avatarUrl}} />
           </li>
           <li>{{#link-to 'decks.list'}}Decks{{/link-to}}</li>
           {{else}}
-          <li {{action "loginWithGithub"}}><a>{{fa-icon "github"}} Login with Github</a></li> {{/if}}
+          <li><a href="#" {{action "loginWithGithub"}}>{{fa-icon "github"}} Log in with Github</a></li>
+          <li>{{#link-to 'login'}}Log in with password{{/link-to}}</li>
+          {{/if}}
 
           {{!-- Games link --}}
           <li>{{#link-to 'games.list'}}Games{{/link-to}}</li>
@@ -39,6 +41,10 @@
 
           {{!--Disclaimer link--}}
           <li>{{#link-to 'disclaimer'}}Disclaimer{{/link-to}}</li>
+
+          {{#if session.isAuthenticated}}
+          <li><a href="#" {{action "logout"}}>Log out</a></li>
+          {{/if}}
 
         </ul>
       </nav>

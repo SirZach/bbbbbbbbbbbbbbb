@@ -21,19 +21,25 @@ var session = Ember.Object.extend({
     var store = this.get('store');
 
     this.get('ref').onAuth(function (authData) {
-      if (authData) {
-        // Set the 'user' property to be a promise proxy that resolves when we
-        // are done creating the user. Most people will just ignore the fact
-        // that it was once a promise, but routes, for example, may need to
-        // chain off of this so they know when the user is ready to use.
-        //
-        session.initializeUser(authData);
-        session.set('isAuthenticated', true);
-      } else {
-        session.set('isAuthenticated', false);
-      }
+      Ember.run.next(function () {
+        if (authData) {
+          // Set the 'user' property to be a promise proxy that resolves when we
+          // are done creating the user. Most people will just ignore the fact
+          // that it was once a promise, but routes, for example, may need to
+          // chain off of this so they know when the user is ready to use.
+          //
+          session.initializeUser(authData);
+          session.set('isAuthenticated', true);
+        } else {
+          session.set('isAuthenticated', false);
+        }
+      });
     });
   }.on('init'),
+
+  logout: function () {
+    this.get('ref').unauth();
+  },
 
   /**
    * Initialize a user record, bind a new presence record to it, and set the
@@ -44,7 +50,11 @@ var session = Ember.Object.extend({
    * @return {Promise}
    */
   initializeUser: function (authData) {
-    var promise = this.updateOrCreateUser(authData);
+    var socialUserData;
+    if (authData.provider != 'password') {
+      socialUserData = this.parseSocialData(authData);
+    }
+    var promise = this.updateOrCreateUser(authData.uid, socialUserData);
     var userPromiseProxy = DS.PromiseObject.create({
       promise: promise
     });
@@ -68,39 +78,44 @@ var session = Ember.Object.extend({
   /**
    * Updates an existing user profile or creates a new one.
    *
-   * @param {Object} authData   The object given to us from .onAuth().
+   * @param {String} uid              Unique id of the user.
+   * @param {Object} socialUserData   Data provided from social provider.
    *
    * @return {Promise}
    */
-  updateOrCreateUser: function (authData) {
+  updateOrCreateUser: function (uid, socialUserData) {
+    if (!uid) {
+      log.error(`No uid passed for user: ${socialUserData}.`);
+      return;
+    }
+
     var store = this.get('store');
     var log = this.get('log');
-    var username = authData.github.username;
-    var avatarUrl = authData.github.cachedUserProfile.avatar_url;
-    var displayName = authData.github.displayName;
-    var email = authData.github.email;
 
-    return store.find('user', {
-      orderBy: 'username',
-      equalTo: username
-    }).then(function (records) {
-      var usersFound = records.get('length');
-      if (usersFound > 1) {
-        log.error(`More than one user found during login (${usersFound}). ` +
-          `Query: {equalTo: ${username}}`);
+    // Support old and new style user ids until all are transitioned.
+    var query = uid;
+    if (socialUserData && socialUserData.provider === 'github') {
+      if (!socialUserData || !socialUserData.username) {
+        var error = `No 3rd party auth data for ${uid}.`;
+        log.error(`No 3rd party auth data for ${uid}.`);
+        throw new Error(error);
       }
-      var user;
-      if (usersFound === 1) {
-        user = records.objectAt(0);
-      } else {
+      query = {
+        orderBy: 'username',
+        equalTo: socialUserData.username
+      };
+    }
+
+    return store.find('user', query).then(function (user) {
+      if (query.orderBy) {
+        user = user.objectAt(0);
+      }
+      if (!user) {
         user = store.createRecord('user');
       }
-      user.setProperties({
-        username: username,
-        avatarUrl: avatarUrl,
-        displayName: displayName,
-        email: email
-      });
+      if (socialUserData) {
+        user.setProperties(socialUserData);
+      }
       user.incrementProperty('visits');
       return user.save();
     });
@@ -167,9 +182,103 @@ var session = Ember.Object.extend({
     }.bind(this));
   },
 
+  /**
+   * Log in using email and password.
+   *
+   * @param {String} email
+   * @param {String} password
+   *
+   * @return {Promise}
+   */
+  loginWithPassword: function (email, password) {
+    return new Ember.RSVP.Promise((resolve, reject) => {
+      this.get('ref').authWithPassword({
+        email: email,
+        password: password
+      }, (error, userData) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(userData);
+        }
+      });
+    });
+  },
+
+  /**
+   * Create a new firebase user.
+   *
+   * @param {String} username
+   * @param {String} email
+   * @param {String} password
+   *
+   * @return {Promise}
+   */
+  signupWithPassword: function (username, email, password) {
+    return new Ember.RSVP.Promise((resolve, reject) => {
+      this.get('ref').createUser({
+        email: email,
+        password: password
+      }, (error, userData) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(this.createPasswordUser(Ember.merge(userData, {
+            username: username,
+            email: email,
+            password: password
+          })));
+        }
+      });
+    }).then(() => {
+      return this.loginWithPassword(email, password);
+    });
+  },
+
+  createPasswordUser: function (userData) {
+    var store = this.get('store');
+    var user = store.createRecord('user');
+    user.setProperties(userData);
+    user.set('id', userData.uid);
+    user.set('avatarUrl',
+      `https://www.gravatar.com/avatar/${md5(userData.email)}?s=250`);
+    return user.save();
+  },
+
   currentUser: function () {
     return this.get('ref').getAuth();
   }.property('isAuthenticated'),
+
+  /**
+   * Parse user info from a given provider out of the authData object passed
+   * back from Firebase.
+   *
+   * @param {Object} authData   The user info object given from Firebase auth.
+   *
+   * @return {Object} Parsed user info.
+   */
+  parseSocialData: function (authData) {
+    var log = this.get('log');
+    if (!authData) {
+      log.error('No authData provided to parseSocialData.');
+    }
+    var userData;
+
+    var provider = authData.provider;
+    if (provider === 'github') {
+      userData = {
+        username: authData.github.username,
+        avatarUrl: authData.github.cachedUserProfile.avatar_url,
+        displayName: authData.github.displayName,
+        email: authData.github.email,
+        provider: provider
+      };
+    } else {
+      provider = provider || '<null>';
+      log.error(`Cannot parse user data for provider ${provider}.`);
+    }
+    return userData;
+  },
 
   /** @property {Boolean} A convenience property to see if the user can write to
    *                      Firebase.

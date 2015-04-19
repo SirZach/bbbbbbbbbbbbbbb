@@ -16,6 +16,12 @@ export default Ember.Route.extend({
       });
     },
 
+    logout: function () {
+      this.get('session').logout();
+      this.transitionTo('/');
+      this.set('controller.drawerOpen', false);
+    },
+
     openModal: function (modalName, model) {
       return this.render(modalName, {
         controller: modalName,
