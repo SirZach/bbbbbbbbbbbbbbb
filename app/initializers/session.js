@@ -241,7 +241,7 @@ var session = Ember.Object.extend({
     user.setProperties(userData);
     user.set('id', userData.uid);
     user.set('avatarUrl',
-      `https://www.gravatar.com/avatar/${md5(userData.email)}?s=250`);
+      `https://www.gravatar.com/avatar/${md5(userData.email)}?s=250&d=retro`);
     return user.save();
   },
 
