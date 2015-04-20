@@ -57,6 +57,7 @@ export default Ember.Route.extend({
               message: 'Error',
               type: 'error'
             });
+            deck.rollback();
           });
       });
     },
