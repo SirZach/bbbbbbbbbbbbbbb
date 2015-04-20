@@ -31,10 +31,6 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    deleteDeck: function (deck) {
-      //Delete the deck when the feature branch for setting actions on icons is merged into master
-    },
-
     saveDeck: function (deck) {
       this.get('session.user').then((user) => {
         deck.save()
