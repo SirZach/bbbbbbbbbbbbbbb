@@ -20,11 +20,3 @@ script:
 
 node_js:
   - "0.12"
-
-deploy:
-  provider: heroku
-  api_key:
-    secure: Bt7t26dMCqf7yXZPWZd/e6hz6N9Fxg83A34lC7sNTaLvIKnM+g54MHjOlIpnZ9LmN3S7/icg/X+twk2ebWPlc7THUWAaBkU5YjXpyNf9UhG30UG7Ihjgcbhn/Qh/Px8NQX5OFIUHTVoLdJGOj68/Czv+jHwpmFQHDoB1xCY2paE=
-  app: webatrice
-  on:
-    repo: thomasjmwb/bbbbbbbbbbbbbbb
