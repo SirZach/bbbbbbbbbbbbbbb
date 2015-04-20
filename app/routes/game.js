@@ -74,6 +74,22 @@ export default Ember.Route.extend({
       // Set directly with the Firebase API so we don't mess up the rest of the
       // game state.
       this.get('gameParticipantRef').child('isPresent').set(false);
+    },
+
+    /**
+     * Join this game as a player if possible. Use the Firebase transaction API
+     * to atomically alter the list of playing participants.
+     */
+    joinAsPlayer: function () {
+      var user = this.get('session.user');
+      var gameParticipantsRef = this.store.refFor('game', this.modelFor('game'))
+        .child('gameParticipants');
+      gameParticipantsRef.transaction((gameParticipants) => {
+        debugger;
+      }, (error, committed) => {
+        debugger;
+      });
+
     }
   }
 });

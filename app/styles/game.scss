@@ -32,6 +32,10 @@
   border-bottom: 1px solid #CCC;
 }
 
+.game-board-bottom {
+  position: relative;
+}
+
 .game-right-column {
   position: fixed;
   right: 0;
@@ -73,3 +77,9 @@
   }
 }
 
+button.game-join {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+}

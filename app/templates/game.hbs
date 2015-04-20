@@ -34,10 +34,15 @@
     {{/if}}
     {{#if isGameInPrep}}
       {{!-- The game is still being set up. --}}
-      {{deck-chooser
-          decks=session.user.gameReadyDecks
-          selectedDeckId=participant.deckId
-          action="selectDeck"}}
+      {{#if amIPlaying}}
+        {{deck-chooser
+            decks=session.user.gameReadyDecks
+            selectedDeckId=participant.deckId
+            action="selectDeck"}}
+      {{/if}}
+      {{#if canIJoinAsPlayer}}
+        {{#paper-button raised=true classNames="md-primary game-join" action="joinAsPlayer"}}Join Game{{/paper-button}}
+      {{/if}}
     {{/if}}
     {{#if isGameOver}}
       {{!-- The game has ended. --}}
