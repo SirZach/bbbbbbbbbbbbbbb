@@ -5,15 +5,18 @@ export default PaperButton.extend({
   click: function () {
     //stolen from ember-paper
     var target = this.get('target');
-    var params = target ? [this.get('action')] : ['action'];
-    params = params.concat(this.get('params'));
+    var parameters = target ? [this.get('action')] : ['action'];
+    var params = this.get('params');
+    var paramsAsArray = Ember.isArray(params) ? params : [params];
+    
+    parameters = parameters.concat(paramsAsArray);
 
     if (target) {
-      target.send.apply(target, params);
+      target.send.apply(target, parameters);
     } else {
-      this.sendAction.apply(this, params);
+      this.sendAction.apply(this, parameters);
     }
 
-    return typeof this.get('bubble') === 'undefined' || this.get('bubbles') === true;
+    return typeof this.get('bubbles') === 'undefined' || this.get('bubbles') === true;
   }
 });

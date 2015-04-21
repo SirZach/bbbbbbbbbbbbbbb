@@ -1,0 +1,7 @@
+<span {{bind-attr type=type disabled=disabled}}>
+  {{#if template}}
+    {{yield showTimer}}
+  {{else}}
+    {{label}}
+  {{/if}}
+</span>

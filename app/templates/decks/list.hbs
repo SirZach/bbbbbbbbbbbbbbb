@@ -12,7 +12,14 @@
           <h3>{{deck.name}}</h3>
           <ul class="pull-right paper-tile-content-right">
             <li><strong>{{deck.allCount}}</strong> Cards</li>
-            <li>{{paper-icon icon="delete" size="lg" action="deleteDeck" param=deck title="Delete"}}</li>
+            <li>
+              {{#x-paper-button-delayed action="deleteDeck" params=deck bubbles=false as |showTimer|}}
+                {{paper-icon icon="delete" size="lg" title="Delete"}}
+                {{#if showTimer}}
+                  {{donut-timer}}
+                {{/if}}
+              {{/x-paper-button-delayed}}
+            </li>
           </ul>
           <p class="truncate">{{deck.comments}}</p>
         {{/paper-tile-content}}

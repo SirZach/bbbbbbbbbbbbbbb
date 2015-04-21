@@ -12,6 +12,24 @@ export default Ember.Route.extend({
   },
 
   actions: {
+    deleteDeck: function (deck) {
+      deck.destroyRecord()
+        .then(() => {
+          this.notifications.addNotification({
+            message: 'Deleted',
+            type: 'success',
+            autoClear: true,
+            clearDuration: 1200
+          });
+        })
+        .catch(() => {
+          this.notifications.addNotification({
+            message: 'Error',
+            type: 'error'
+          });
+        });
+    },
+    
     createNewDeck: function () {
       this.transitionTo('deck.build', 'new');
     },

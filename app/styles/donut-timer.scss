@@ -1,0 +1,81 @@
+@import 'mixins/box-sizing';
+
+.donut-wrapper {
+  position: absolute;
+  top: 0px;
+  right: 1px;
+}
+
+@mixin donut-timer($item, $duration, $size, $bgBorder, $timerBorder, $hover: running) {
+  #{$item}, #{$item} * { @include box-sizing(border-box); }
+
+  #{$item} {
+    width: $size;
+    height: $size;
+  }
+
+  #{$item} .timer {
+    width: 50%;
+    height: 100%;
+    transform-origin: 100% 50%;
+    position: absolute;
+    border: #{$timerBorder};
+  }
+
+  #{$item} .spinner {
+    border-radius: 100% 0 0 100% / 50% 0 0 50%;
+    z-index: 200;
+    border-right: none;
+    animation: rota $duration + s linear infinite;
+  }
+
+  #{$item}:hover .spinner,
+  #{$item}:hover .filler,
+  #{$item}:hover .mask {
+    animation-play-state: $hover;
+  }
+
+  #{$item} .filler {
+    border-radius: 0 100% 100% 0 / 0 50% 50% 0;
+    left: 50%;
+    opacity: 0;
+    z-index: 100;
+    animation: opa $duration + s steps(1,end) infinite reverse;
+    border-left: none;
+  }
+
+  #{$item} .timer-background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: none;
+    border: #{$bgBorder};
+    border-radius: 100%;
+    z-index: 100;
+  }
+
+  #{$item} .mask {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    background: inherit;
+    border: #{$bgBorder};
+    border-radius: 100% 0 0 100% / 50% 0 0 50%;
+    border-right: none;
+    opacity: 1;
+    z-index: 300;
+    animation: opa $duration + s steps(1,end) infinite;
+  }
+
+  @keyframes rota {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes opa {
+    0% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+}
+
+@include donut-timer('.donut-wrapper', 2, 35px, '7px solid #75A0FF', '7px solid #D4110B');
