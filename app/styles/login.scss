@@ -7,3 +7,9 @@
   margin-top: 20px;
   color: map-get($primary-color-palette, '900');
 }
+
+.btn-social {
+  & + & {
+    margin-top: 10px;
+  }
+}
