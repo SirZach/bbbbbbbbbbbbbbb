@@ -3,6 +3,8 @@ import Ember from 'ember';
 var PromiseController = Ember.Controller.extend(Ember.PromiseProxyMixin);
 
 export default Ember.Component.extend({
+  promiseSpinnerUrls: Ember.inject.service('promise-spinner-urls'),
+
   /** @property {PromiseController} houses the promise */
   promiseController: null,
 
@@ -12,9 +14,24 @@ export default Ember.Component.extend({
 
   retrieveData: function () {
     var url = this.get('url');
-    var promiseController = PromiseController.create({
-      promise: Ember.$.getJSON(url)
-    });
+    var promiseSpinnerUrls = this.get('promiseSpinnerUrls');
+    var dataFound = promiseSpinnerUrls.hasData(url);
+    var promiseController;
+
+    if (dataFound) {
+      promiseController = PromiseController.create({
+        promise: new Ember.RSVP.Promise(function (resolve, reject) {
+          resolve(dataFound);
+        })
+      });
+    } else {
+      promiseController = PromiseController.create({
+        promise: Ember.$.getJSON(url).then(function (data) {
+          promiseSpinnerUrls.get('store').set(url, data);
+          return data;
+        })
+      });
+    }
 
     this.set('promiseController', promiseController);
   },
