@@ -28,6 +28,9 @@
     <h3>
       <img src={{playerOneAvatarUrl}} class="avatar">
       {{bottomBoardTitle}}
+      {{#if canIJoinAsPlayer}}
+        {{#paper-button raised=true classNames="md-primary game-join" action="joinAsPlayer"}}Join Game{{/paper-button}}
+      {{/if}}
     </h3>
     {{#if isGameInProgress}}
       {{!-- Game is in action! --}}
@@ -40,9 +43,7 @@
             selectedDeckId=participant.deckId
             action="selectDeck"}}
       {{/if}}
-      {{#if canIJoinAsPlayer}}
-        {{#paper-button raised=true classNames="md-primary game-join" action="joinAsPlayer"}}Join Game{{/paper-button}}
-      {{/if}}
+
     {{/if}}
     {{#if isGameOver}}
       {{!-- The game has ended. --}}
