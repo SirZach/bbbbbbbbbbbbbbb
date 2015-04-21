@@ -12,7 +12,23 @@
       <p>{{card.powerToughnessFormatted}}</p>
     {{/if}}
     <h6>Price</h6>
-    <p>{{promise-spinner url=card.channelFireballPrice}}</p>
+    <p>
+      {{#promise-spinner url=card.channelFireballPrice as |promise|}}
+        {{#if promise.isPending}}
+          {{fa-icon "refresh" spin=true}}
+        {{/if}}
+        {{#if promise.isFulfilled}}
+          {{#if promise.model.price}}
+            {{promise.model.price}}
+          {{else}}
+            No price found.
+          {{/if}}
+        {{/if}}
+        {{#if promise.isRejected}}
+          :(
+        {{/if}}
+      {{/promise-spinner}}
+    </p>
     <p>{{card.text}}</p>
   {{/paper-card-content}}
 {{/paper-card}}

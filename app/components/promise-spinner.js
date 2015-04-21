@@ -1,9 +1,12 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
-  isPending: true,
+var PromiseController = Ember.Controller.extend(Ember.PromiseProxyMixin);
 
-  promiseValue: null,
+export default Ember.Component.extend({
+  promiseSpinnerUrls: Ember.inject.service('promise-spinner-urls'),
+
+  /** @property {PromiseController} houses the promise */
+  promiseController: null,
 
   fetchOnBeginning: function () {
     this.retrieveData();
@@ -11,23 +14,26 @@ export default Ember.Component.extend({
 
   retrieveData: function () {
     var url = this.get('url');
-    var self = this;
-    this.set('isPending', true);
-    Ember.$.ajax({
-      url: url
-    }).then(function (data) {
-      self.setProperties({
-        isPending: false,
-        promiseValue: data ? data : "No price found"
+    var promiseSpinnerUrls = this.get('promiseSpinnerUrls');
+    var dataFound = promiseSpinnerUrls.hasData(url);
+    var promiseController;
+
+    if (dataFound) {
+      promiseController = PromiseController.create({
+        promise: new Ember.RSVP.Promise(function (resolve, reject) {
+          resolve(dataFound);
+        })
       });
-    }, function (error) {
-      console.log('error');
-      console.log(error);
-      self.setProperties({
-        isPending: false,
-        promiseValue: ":("
+    } else {
+      promiseController = PromiseController.create({
+        promise: Ember.$.getJSON(url).then(function (data) {
+          promiseSpinnerUrls.get('store').set(url, data);
+          return data;
+        })
       });
-    });
+    }
+
+    this.set('promiseController', promiseController);
   },
 
   //Why do I need this?

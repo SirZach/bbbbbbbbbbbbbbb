@@ -10,10 +10,12 @@ moduleForComponent('x-card', {
     'component:x-card-image',
     'component:paper-card-content',
     'component:mana-formatted',
-    'component:promise-spinner'
+    'component:promise-spinner',
+    'service:promise-spinner-urls'
   ]
 });
 
+/**
 test('it renders', function(assert) {
   assert.expect(2);
 
@@ -25,3 +27,4 @@ test('it renders', function(assert) {
   this.render();
   assert.equal(component._state, 'inDOM');
 });
+*/
