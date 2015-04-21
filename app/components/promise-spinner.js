@@ -1,9 +1,13 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
-  isPending: true,
+var PromiseController = Ember.Controller.extend(Ember.PromiseProxyMixin);
 
-  promiseValue: null,
+export default Ember.Component.extend({
+  /** @property {String} the message to display if the ajax request succeeded but there was no data return */
+  successsWithNoData: '',
+
+  /** @property {PromiseController} houses the promise */
+  promiseController: null,
 
   fetchOnBeginning: function () {
     this.retrieveData();
@@ -11,23 +15,11 @@ export default Ember.Component.extend({
 
   retrieveData: function () {
     var url = this.get('url');
-    var self = this;
-    this.set('isPending', true);
-    Ember.$.ajax({
-      url: url
-    }).then(function (data) {
-      self.setProperties({
-        isPending: false,
-        promiseValue: data ? data : "No price found"
-      });
-    }, function (error) {
-      console.log('error');
-      console.log(error);
-      self.setProperties({
-        isPending: false,
-        promiseValue: ":("
-      });
+    var promiseController = PromiseController.create({
+      promise: Ember.$.getJSON(url)
     });
+
+    this.set('promiseController', promiseController);
   },
 
   //Why do I need this?
