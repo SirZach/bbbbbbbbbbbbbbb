@@ -40,7 +40,7 @@ export default Ember.Route.extend({
             return user.save();
           })
           .then(() => {
-            this.transitionTo('deck.build', deck);
+            this.replaceWith('deck.build', deck.get('id'));
             this.notifications.addNotification({
               message: 'Saved',
               type: 'success',
