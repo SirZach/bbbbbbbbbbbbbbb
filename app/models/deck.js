@@ -45,7 +45,7 @@ function computeIsLegal(style) {
 
 var Deck = DS.Model.extend({
   /** @property {User} - owner of the deck */
-  owner: DS.belongsTo('user'),
+  owner: DS.belongsTo('user', {async: true}),
 
   /** @property {String} - the deck name */
   name: DS.attr('string'),

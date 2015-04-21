@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   tagName: 'span',
 
   time: function () {
-    return this.get('date').getTime();
+    return this.get('date');
   }.property('date'),
 
   startTimer: function () {

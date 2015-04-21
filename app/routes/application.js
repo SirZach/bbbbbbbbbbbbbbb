@@ -51,7 +51,7 @@ export default Ember.Route.extend({
         name: name,
         avatarUrl: avatarUrl,
         says: says,
-        when: when,
+        when: when.getTime(),
         channel: channel
       });
       chat.save();
