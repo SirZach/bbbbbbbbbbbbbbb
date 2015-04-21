@@ -10,8 +10,8 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    loginWithGithub: function () {
-      this.get('session').login().then(() => {
+    loginWithSocial: function (provider) {
+      this.get('session').loginWithSocial(provider).then(() => {
         this.transitionTo('/');
       });
     },

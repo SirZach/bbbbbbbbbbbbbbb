@@ -23,8 +23,11 @@
   {{#paper-card}}
     {{#paper-card-content}}
       <h3>Social Login</h3>
-      <button class="btn btn-block btn-social btn-github" {{action "loginWithGithub"}}>
+      <button class="btn btn-block btn-social btn-github" {{action "loginWithSocial" "github"}}>
         {{fa-icon "github"}} Log in with Github
+      </button>
+      <button class="btn btn-block btn-social btn-twitter" {{action "loginWithSocial" "twitter"}}>
+        {{fa-icon "twitter"}} Log in with Twitter
       </button>
     {{/paper-card-content}}
   {{/paper-card}}

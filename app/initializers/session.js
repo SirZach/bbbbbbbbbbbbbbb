@@ -106,19 +106,22 @@ var session = Ember.Object.extend({
       };
     }
 
-    return store.find('user', query).then(function (user) {
+    function afterFind(user) {
       if (query.orderBy) {
         user = user.objectAt(0);
       }
-      if (!user) {
+      if (!user || user instanceof Error) {
         user = store.createRecord('user');
+        user.set('id', uid);
       }
       if (socialUserData) {
         user.setProperties(socialUserData);
       }
       user.incrementProperty('visits');
       return user.save();
-    });
+    }
+    // The firebase adapter throws an error if a singular record is not found.
+    return store.find('user', query).then(afterFind, afterFind);
   },
 
   onPresenceStateChange: function (state) {
@@ -170,9 +173,9 @@ var session = Ember.Object.extend({
     });
   },
 
-  login: function () {
+  loginWithSocial: function (provider) {
     return new Ember.RSVP.Promise(function (resolve, reject) {
-      this.get('ref').authWithOAuthPopup('github', function (error, user) {
+      this.get('ref').authWithOAuthPopup(provider, function (error, user) {
         if (user) {
           resolve(user);
         } else {
@@ -271,6 +274,13 @@ var session = Ember.Object.extend({
         avatarUrl: authData.github.cachedUserProfile.avatar_url,
         displayName: authData.github.displayName,
         email: authData.github.email,
+        provider: provider
+      };
+    } else if (provider === 'twitter') {
+      userData = {
+        username: authData.twitter.username,
+        avatarUrl: `http://avatars.io/twitter/${authData.twitter.username}?size=large`,
+        displayName: authData.twitter.displayName,
         provider: provider
       };
     } else {
