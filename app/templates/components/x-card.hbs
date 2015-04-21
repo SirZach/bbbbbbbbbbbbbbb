@@ -16,8 +16,16 @@
       {{#promise-spinner url=card.channelFireballPrice as |promise|}}
         {{#if promise.isPending}}
           {{fa-icon "refresh" spin=true}}
-        {{else}}
-          {{promise.model.price}}
+        {{/if}}
+        {{#if promise.isFulfilled}}
+          {{#if promise.model.price}}
+            {{promise.model.price}}
+          {{else}}
+            No price found.
+          {{/if}}
+        {{/if}}
+        {{#if promise.isRejected}}
+          :(
         {{/if}}
       {{/promise-spinner}}
     </p>

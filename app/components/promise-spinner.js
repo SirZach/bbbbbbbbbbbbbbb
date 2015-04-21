@@ -3,9 +3,6 @@ import Ember from 'ember';
 var PromiseController = Ember.Controller.extend(Ember.PromiseProxyMixin);
 
 export default Ember.Component.extend({
-  /** @property {String} the message to display if the ajax request succeeded but there was no data return */
-  successsWithNoData: '',
-
   /** @property {PromiseController} houses the promise */
   promiseController: null,
 
