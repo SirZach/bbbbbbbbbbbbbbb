@@ -31,10 +31,6 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    deleteDeck: function (deck) {
-      //Delete the deck when the feature branch for setting actions on icons is merged into master
-    },
-
     saveDeck: function (deck) {
       this.get('session.user').then((user) => {
         deck.save()
@@ -44,7 +40,7 @@ export default Ember.Route.extend({
             return user.save();
           })
           .then(() => {
-            this.transitionTo('deck.build', deck);
+            this.replaceWith('deck.build', deck.get('id'));
             this.notifications.addNotification({
               message: 'Saved',
               type: 'success',
@@ -57,6 +53,7 @@ export default Ember.Route.extend({
               message: 'Error',
               type: 'error'
             });
+            deck.rollback();
           });
       });
     },

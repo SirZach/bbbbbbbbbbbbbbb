@@ -11,8 +11,8 @@ export default Ember.Route.extend({
 
   actions: {
     loginWithGithub: function () {
-      this.get('session').login().then(function (/* user */) {
-      }, function (/* error */) {
+      this.get('session').login().then(() => {
+        this.transitionTo('/');
       });
     },
 
@@ -57,7 +57,7 @@ export default Ember.Route.extend({
         name: name,
         avatarUrl: avatarUrl,
         says: says,
-        when: when,
+        when: when.getTime(),
         channel: channel
       });
       chat.save();
