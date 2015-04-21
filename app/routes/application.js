@@ -11,9 +11,15 @@ export default Ember.Route.extend({
 
   actions: {
     loginWithGithub: function () {
-      this.get('session').login().then(function (/* user */) {
-      }, function (/* error */) {
+      this.get('session').login().then(() => {
+        this.transitionTo('/');
       });
+    },
+
+    logout: function () {
+      this.get('session').logout();
+      this.transitionTo('/');
+      this.set('controller.drawerOpen', false);
     },
 
     openModal: function (modalName, model) {

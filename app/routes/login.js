@@ -2,14 +2,21 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
 
-  actions: {
-    loginAsGuest: function () {
-      this.controllerFor('session').setProperties({
-        isAuthenticated: true,
-        authenticationType: 'guest'
-      });
+  beforeModel: function () {
+    if (this.get('session.isAuthenticated')) {
+      this.replaceWith('/');
+    }
+  },
 
-      this.transitionTo('decks');
+  actions: {
+    willTransition: function (transition) {
+      this.controller.setProperties({
+        signupUsername: null,
+        signupEmail: null,
+        signupPassword: null,
+        loginEmail: null,
+        loginPassword: null
+      });
     }
   }
 });

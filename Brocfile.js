@@ -25,8 +25,10 @@ var app = new EmberApp({
 // please specify an object with the list of modules as keys
 // along with the exports of each module as its value.
 app.import('bower_components/bootstrap/dist/css/bootstrap.css');
+app.import('bower_components/bootstrap-social/bootstrap-social.css');
 app.import('bower_components/bootstrap/dist/js/bootstrap.js');
 app.import('bower_components/momentjs/moment.js');
 app.import('bower_components/jquery-idletimer/src/idle-timer.js');
+app.import('bower_components/JavaScript-MD5/js/md5.js');
 
 module.exports = app.toTree();

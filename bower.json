@@ -18,7 +18,9 @@
     "firebase": "^2.1.0",
     "momentjs": "~2.9.0",
     "jquery-idletimer": "~1.0.1",
-    "bootstrap": "~3.3.4"
+    "bootstrap": "~3.3.4",
+    "JavaScript-MD5": "~1.1.0",
+    "bootstrap-social": "~4.9.0"
   },
   "resolutions": {
     "bootstrap": "~3.3.4"
