@@ -9,13 +9,14 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    loginAsGuest: function () {
-      this.controllerFor('session').setProperties({
-        isAuthenticated: true,
-        authenticationType: 'guest'
+    willTransition: function (transition) {
+      this.controller.setProperties({
+        signupUsername: null,
+        signupEmail: null,
+        signupPassword: null,
+        loginEmail: null,
+        loginPassword: null
       });
-
-      this.transitionTo('decks');
     }
   }
 });
