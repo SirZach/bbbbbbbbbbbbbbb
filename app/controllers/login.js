@@ -1,8 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  loginError: null,
-
   actions: {
     login: function () {
       var email = this.get('loginEmail');
@@ -10,7 +8,12 @@ export default Ember.Controller.extend({
       this.set('loginError');
       this.session.loginWithPassword(email, password).then(
         () => this.transitionTo('/'),
-        (error) => this.set('loginError', error));
+        (error) => {
+          this.notifications.addNotification({
+            message: error.message,
+            type: 'error'
+          });
+        });
     },
 
     signup: function () {
