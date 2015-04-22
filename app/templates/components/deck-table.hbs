@@ -1,0 +1,55 @@
+<div class="table-responsive">
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th class="col-sm-3">Number</th>
+        <th class="col-sm-9">Card</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{!-- Main Deck --}}
+      {{#x-tr class="info cursor-pointer" action="showHide" param="mainDeck"}}
+        <td>
+          <span>{{deck.mainCount}}</span>
+          <i class="fa {{if canShowMainDeck 'fa-caret-down' 'fa-caret-up'}}"></i>
+        </td>
+        <td><strong>Maindeck</strong></td>
+      {{/x-tr}}
+      {{#if canShowMainDeck}}
+
+        {{#each family in deck.mainDeckFamilies}}
+          {{deck-table-item
+            family=family
+            doNotShowTypes=doNotShowTypes
+            showCard="showCard"
+            showHide="showHide"}}
+        {{/each}}
+
+      {{/if}}
+
+      {{!-- Sideboard --}}
+      {{#if deck.sideCount}}
+        <tr></tr>
+        {{#x-tr class="info cursor-pointer" action="showHide" param="sideDeck"}}
+          <td>
+            <span>{{deck.sideCount}}</span>
+            <i class="fa {{if canShowSideDeck 'fa-caret-down' 'fa-caret-up'}}"></i>
+          </td>
+          <td><strong>Sideboard</strong></td>
+        {{/x-tr}}
+
+        {{#if canShowSideDeck}}
+
+          {{#each family in deck.sideDeckFamilies}}
+            {{deck-table-item
+              family=family
+              doNotShowTypes=doNotShowTypes
+              showCard="showCard"
+              showHide="showHide"}}
+          {{/each}}
+
+        {{/if}}
+      {{/if}}
+    </tbody>
+  </table>
+</div>
