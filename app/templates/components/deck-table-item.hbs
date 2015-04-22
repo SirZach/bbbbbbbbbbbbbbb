@@ -1,0 +1,17 @@
+{{#x-tr class="success cursor-pointer" action="showHide" param=family.superType}}
+  <td>
+    <span class="indent indent-1">{{family.totalCount}}</span>
+    <i class="fa {{if canShow 'fa-caret-down' 'fa-caret-up'}} indent indent-1"></i>
+  </td>
+  <td><strong>{{pluralize-string family.type}}</strong></td>
+{{/x-tr}}
+{{#if canShow}}
+  {{#each cardGroup in family.cardGroups}}
+    {{#x-tr action="showCard" param=cardGroup.card}}
+      <td>
+        <span class="indent indent-2">{{cardGroup.count}}</span>
+      </td>
+      <td class="cursor-pointer">{{cardGroup.card.name}}</td>
+    {{/x-tr}}
+  {{/each}}
+{{/if}}
