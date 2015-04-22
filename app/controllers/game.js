@@ -142,6 +142,14 @@ export default Ember.Controller.extend({
     'playerOne.user.{username,isReady}',
     'amIPlaying'),
 
+  /** @property {Boolean} Is there no player one playing yet? */
+  noPlayerOnePresent: Ember.computed.not('playerOne'),
+
+  /** @property {Boolean} Is the bottom seat open and am I eligible to join? */
+  canIJoinAsPlayer: Ember.computed.and(
+    'noPlayerOnePresent',
+    'session.user.hasGameReadyDecks'),
+
   /** @property {Boolean} show or hide the chat channel */
   showChat: true,
 

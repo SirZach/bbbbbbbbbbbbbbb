@@ -74,6 +74,51 @@ export default Ember.Route.extend({
       // Set directly with the Firebase API so we don't mess up the rest of the
       // game state.
       this.get('gameParticipantRef').child('isPresent').set(false);
+    },
+
+    /**
+     * Join this game as a player if possible. Use the Firebase transaction API
+     * to atomically alter the list of playing participants.
+     */
+    joinAsPlayer: function () {
+      var user = this.get('session.user');
+      var gameParticipantsRef = this.store.refFor('game', this.modelFor('game'))
+        .child('gameParticipants');
+      gameParticipantsRef.transaction((gameParticipants) => {
+        // Try to add myself as a player. Check first that there are not two
+        // players already present.
+        //
+        var numPlayers = 0;
+        var myParticipant;
+        for (var id in gameParticipants) {
+          if (gameParticipants.hasOwnProperty(id)) {
+            var participant = gameParticipants[id];
+            if (participant.isPlaying) {
+              numPlayers++;
+            }
+            if (participant.user === user.get('id')) {
+              myParticipant = participant;
+            }
+          }
+        }
+        if (numPlayers > 1 || !myParticipant) {
+          // We cannot join. Enough players already exist or we messed up.
+          return;
+        }
+        myParticipant.isPlaying = true;
+        return gameParticipants;
+      }, (error, committed) => {
+        if (error) {
+          this.log.error(`Error joining game: ${error}`);
+          this.notifications.addNotification({
+            message: 'Error joining game.',
+            type: 'error',
+            autoClear: true,
+            clearDuration: 3000
+          });
+        }
+      });
+
     }
   }
 });
