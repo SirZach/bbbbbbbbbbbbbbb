@@ -16,5 +16,15 @@ export default Ember.Route.extend({
       into: 'application',
       outlet: 'nav-toolbar'
     });
+  },
+
+  actions: {
+    willTransition: function (transition) {
+      var deck = this.get('controller.model');
+
+      if (deck.get('isNew')) {
+        deck.destroyRecord();
+      }
+    }
   }
 });
