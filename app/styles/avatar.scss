@@ -4,6 +4,10 @@
   border: 1px solid #ccc;
   width: 60px;
 
+  &.avatar-medium {
+    width: 45px;
+  }
+
   &.avatar-small {
     width: 30px;
   }
