@@ -29,7 +29,10 @@
       <img src={{playerOneAvatarUrl}} class="avatar">
       {{bottomBoardTitle}}
       {{#if canIJoinAsPlayer}}
-        {{#paper-button raised=true classNames="md-primary game-join" action="joinAsPlayer"}}Join Game{{/paper-button}}
+        {{#paper-button raised=true classNames="md-primary ml-15" action="joinAsPlayer"}}Join Game{{/paper-button}}
+      {{/if}}
+      {{#if amIPlaying}}
+        {{#paper-button raised=true classNames="md-primary ml-15" action="iAmReady" disabled=haveNotChosenDeck}}Ready!{{/paper-button}}
       {{/if}}
     </h3>
     {{#if isGameInProgress}}
@@ -51,27 +54,4 @@
   </div>
 </div>
 
-<div class="game-right-column {{if showChat 'show-chat' 'hide-chat'}}">
-  <div class="game-chat">
-    <div class="chat">
-      <div class="chat-header">
-        <strong>{{playerOne.user.username}} vs {{playerTwo.user.username}}</strong>
-      </div>
-      {{chat-pane
-        chats=chats
-        title="title"
-        classNames="chat-pane compact"
-      }}
-      {{x-paper-text
-        label="Say something!"
-        value=says action="say"
-        channel=model.id
-        controllerName="game"
-        class="chat-input"
-        disabled=session.doesNotHaveWriteAccess
-      }}
-    </div>
-  </div>
-</div>
-
-
+{{partial "game/chat"}}

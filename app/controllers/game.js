@@ -152,6 +152,11 @@ export default Ember.Controller.extend({
 
   /** @property {Boolean} show or hide the chat channel */
   showChat: true,
+  
+  /** @property {Boolean} has participant chosen a deck? */
+  hasChosenDeck: Ember.computed.and('particpant.deckName', 'participant.deckId'),
+
+  hasNotChosenDeck: Ember.computed.not('haveChosenDeck'),
 
   actions: {
     /**
@@ -163,6 +168,15 @@ export default Ember.Controller.extend({
       var participant = this.get('participant');
       participant.set('deckName', deck.get('name'));
       participant.set('deckId', deck.get('id'));
+      this.get('model').save();
+    },
+
+    /**
+     * Set the participant in the ready state
+     */
+    iAmReady: function () {
+      var participant = this.get('participant');
+      participant.set('isReady', true);
       this.get('model').save();
     },
 

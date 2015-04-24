@@ -11,6 +11,9 @@ export default DS.Model.extend({
   /** @property {Boolean} Is this person online and in the game room? */
   isPresent: DS.attr('boolean', {defaultValue: true}),
 
+  /** @property {Boolean} Is this person ready to play? */
+  isReady: DS.attr('boolean', {defaultValue: false}),
+
   /** @property {String} The name of the deck being used. */
   deckName: DS.attr('string'),
 
@@ -19,9 +22,6 @@ export default DS.Model.extend({
 
   /** @property {Array<GameCard>} Embedded array of game card objects. */
   gameCards: DS.hasMany('gameCard', {embedded: true}),
-
-  /** @property {Boolean} Is the player ready to play the game? */
-  isReady: DS.attr('boolean', {defaultValue: false}),
 
   /** @property {Number} Life total. */
   life: DS.attr('number'),
