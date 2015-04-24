@@ -20,14 +20,6 @@ export default Ember.Controller.extend({
 
   filteredCards: Ember.computed.alias('controllers.cards.model'),
 
-  canShowMainDeck: function () {
-    return !this.get('doNotShowTypes').contains('mainDeck');
-  }.property('doNotShowTypes.@each'),
-
-  canShowSideDeck: function () {
-    return !this.get('doNotShowTypes').contains('sideDeck');
-  }.property('doNotShowTypes.@each'),
-
   canShowDeckTable: function () {
     return this.get('model.cardGroups.length');
   }.property('model.cardGroups.@each'),
@@ -35,16 +27,6 @@ export default Ember.Controller.extend({
   actions: {
     toggleFiltersActive: function () {
       this.toggleProperty('filtersActive');
-    },
-
-    showHide: function (superType) {
-      var doNotShowTypes = this.get('doNotShowTypes');
-
-      if (doNotShowTypes.contains(superType)) {
-        doNotShowTypes.removeAt(doNotShowTypes.indexOf(superType));
-      } else {
-        doNotShowTypes.pushObject(superType);
-      }
     },
 
     clearFailedImports: function () {

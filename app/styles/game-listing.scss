@@ -9,6 +9,7 @@
 
 .game-listing-deck-image {
   @extend .avatar;
+  display: inline-block;
   width: 100px;
   height: 100px;
   background-position-x: 50%;

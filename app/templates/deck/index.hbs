@@ -1,0 +1,18 @@
+{{#paper-item classNames="deck-header"}}
+  {{#paper-tile-left}}
+    <div class="game-listing-deck-image"
+         style="background-image: url('{{model.defaultImageUrl}}')">
+    </div>
+  {{/paper-tile-left}}
+  {{#paper-tile-content}}
+    <h2>{{model.name}}</h2>
+    <div>
+      <img class="avatar avatar-medium" src={{model.owner.avatarUrl}} />
+      {{model.owner.username}}
+    </div>
+  {{/paper-tile-content}}
+{{/paper-item}}
+
+{{deck-table
+  deck=model
+  showCard="showCard"}}

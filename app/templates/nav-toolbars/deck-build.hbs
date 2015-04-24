@@ -3,3 +3,7 @@
 {{#x-paper-button action="saveDeck" params=controllers.deck.saveParams}}Save{{/x-paper-button}}
 
 {{#x-paper-button action="openModal" params=controllers.deck.exportParams}}Export{{/x-paper-button}}
+
+{{#link-to "deck.index" model}}
+  {{#paper-button}}Analyze{{/paper-button}}
+{{/link-to}}

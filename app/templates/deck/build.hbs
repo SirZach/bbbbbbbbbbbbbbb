@@ -57,85 +57,9 @@
       {{/if}}
 
       {{#if canShowDeckTable}}
-        <div class="table-responsive">
-          <table class="table table-condensed">
-            <thead>
-              <tr>
-                <th class="col-sm-3">Number</th>
-                <th class="col-sm-9">Card</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{!-- Main Deck --}}
-              {{#x-tr class="info cursor-pointer" action="showHide" param="mainDeck"}}
-                <td>
-                  <span>{{model.mainCount}}</span>
-                  <i class="fa {{if canShowMainDeck 'fa-caret-down' 'fa-caret-up'}}"></i>
-                </td>
-                <td><strong>Maindeck</strong></td>
-              {{/x-tr}}
-              {{#if canShowMainDeck}}
-
-                {{#each family in model.mainDeckFamilies itemController="deckTableItem"}}
-                  {{#x-tr class="success cursor-pointer" action="showHide" param=family.model.superType}}
-                    <td>
-                      <span class="indent indent-1">{{family.model.totalCount}}</span>
-                      <i class="fa {{if family.canShow 'fa-caret-down' 'fa-caret-up'}} indent indent-1"></i>
-                    </td>
-                    <td><strong>{{pluralize-string family.model.type}}</strong></td>
-                  {{/x-tr}}
-                  {{#if family.canShow}}
-                    {{#each cardGroup in family.model.cardGroups}}
-                      {{#x-tr action="showCard" param=cardGroup.card}}
-                        <td>
-                          <span class="indent indent-2">{{cardGroup.count}}</span>
-                        </td>
-                        <td class="cursor-pointer">{{cardGroup.card.name}}</td>
-                      {{/x-tr}}
-                    {{/each}}
-                  {{/if}}
-                {{/each}}
-
-              {{/if}}
-
-              {{!-- Sideboard --}}
-              {{#if model.sideCount}}
-                <tr></tr>
-                {{#x-tr class="info cursor-pointer" action="showHide" param="sideDeck"}}
-                  <td>
-                    <span>{{model.sideCount}}</span>
-                    <i class="fa {{if canShowSideDeck 'fa-caret-down' 'fa-caret-up'}}"></i>
-                  </td>
-                  <td><strong>Sideboard</strong></td>
-                {{/x-tr}}
-
-                {{#if canShowSideDeck}}
-
-                  {{#each family in model.sideDeckFamilies itemController="deckTableItem"}}
-                    {{#x-tr class="success cursor-pointer" action="showHide" param=family.model.superType}}
-                      <td>
-                        <span class="indent indent-1">{{family.model.totalCount}}</span>
-                        <i {{bind-attr class=":fa family.canShow:fa-caret-down:fa-caret-up :indent :indent-1"}}></i>
-                      </td>
-                      <td><strong>{{pluralize-string family.model.type}}</strong></td>
-                    {{/x-tr}}
-                    {{#if family.canShow}}
-                      {{#each cardGroup in family.model.cardGroups}}
-                        {{#x-tr action="showCard" param=cardGroup.card}}
-                          <td>
-                            <span class="indent indent-2">{{cardGroup.count}}</span>
-                          </td>
-                          <td class="cursor-pointer">{{cardGroup.card.name}}</td>
-                        {{/x-tr}}
-                      {{/each}}
-                    {{/if}}
-                  {{/each}}
-
-                {{/if}}
-              {{/if}}
-            </tbody>
-          </table>
-        </div>
+        {{deck-table
+          deck=model
+          showCard="showCard"}}
       {{/if}}
     </div>
   </div>
