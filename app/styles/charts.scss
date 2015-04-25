@@ -13,7 +13,7 @@
       width: 150px;
     }
 
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 992px) {
       left: -250px;
       top: -40px;
       transform: none;
@@ -53,14 +53,18 @@
 
 .lil-card {
   position: relative;
-  $width: 20px;
-  width: $width;
-  height: $width * (88 / 63);
+  width: 16px;
+  height: 22px;
   margin: -15px auto;
   border: 1px solid map-get($color-grey, '800');
   transform: rotateX(40deg) rotateZ(30deg) skewX(-20deg);
   // Hack to make firefox antialias rotated elements.
   outline: 1px solid transparent;
+
+  @media screen and (min-width: 768px) {
+    width: 20px;
+    height: 28px;
+  }
 }
 
 //
@@ -92,6 +96,11 @@
 
 .lil-card-multicolored {
   background-color: map-get($color-amber, '300');
+}
+
+.titled-card {
+  max-width: 600px;
+  margin: auto;
 }
 
 .chart-card-title {

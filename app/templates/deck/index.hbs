@@ -15,7 +15,7 @@
 
 <div class="row">
   {{!-- Main column for deck list --}}
-  <div class="col-sm-8">
+  <div class="col-md-8">
     {{#paper-card}}
       {{#paper-card-content}}
         {{deck-table
@@ -26,7 +26,7 @@
   </div>
 
   {{!-- Side column for charts --}}
-  <div class="col-sm-4">
+  <div class="col-md-4">
     {{#titled-card title="Mana Curve"}}
       {{mana-curve-chart deck=model}}
     {{/titled-card}}
