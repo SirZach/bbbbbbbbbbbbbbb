@@ -5,7 +5,7 @@ import {
 
 moduleForComponent('titled-card', {
   // specify the other units that are required for this test
-  // needs: ['component:foo', 'helper:bar']
+  needs: ['component:paper-card', 'component:paper-card-content']
 });
 
 test('it renders', function(assert) {

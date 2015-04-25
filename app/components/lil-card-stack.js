@@ -41,7 +41,7 @@ export default Ember.Component.extend({
   totalCardsInCardGroups: function () {
     return this.get('cardGroups')
       .mapBy('count')
-      .reduce((acc, cur) => acc + cur);
+      .reduce((acc, cur) => { return acc + cur; }, 0);
   }.property('cardGroups.@each.count'),
 
   /** @property {Number} the z-index to start at for proper overlapping */
