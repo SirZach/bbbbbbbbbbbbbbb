@@ -6,23 +6,19 @@ export default Ember.Component.extend({
 
   classNameBindings: [':lil-card', 'color'],
 
-  attributeBindings: ['style'],
+  attributeBindings: ['style', 'title'],
 
   /** @property {String} color class */
   color: function () {
-    var colors = this.get('cardInfo.card.colors');
-    if (!colors || !colors.length) {
-      return 'lil-card-colorless';
-    }
-    if (colors.length === 1) {
-      return `lil-card-${colors[0].toLowerCase()}`;
-    }
-    return `lil-card-multicolored`;
-  }.property('cardInfo.card.colors'),
+    var color = this.get('cardInfo.card.displayColor');
+    return `lil-card-${color}`;
+  }.property('cardInfo.card.displayColor'),
 
   /** @property {String} z-index for proper stacking */
   style: function () {
     var zIndex = this.get('cardInfo.zIndex');
     return `z-index: ${zIndex};`;
-  }.property('cardInfo.zIndex')
+  }.property('cardInfo.zIndex'),
+
+  title: Ember.computed.oneWay('cardInfo.card.name')
 });

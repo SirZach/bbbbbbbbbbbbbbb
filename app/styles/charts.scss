@@ -14,6 +14,11 @@
 }
 
 .lil-card-stack {
+  &:hover, &:active {
+    .lil-card {
+      box-shadow: 0 0 8px 4px map-get($primary-color-palette, '300');
+    }
+  }
 }
 
 .lil-card {
@@ -22,7 +27,7 @@
   width: $width;
   height: $width * (88 / 63);
   margin: -15px auto;
-  border: 1px solid map-get($color-grey, '500');
+  border: 1px solid map-get($color-grey, '800');
   transform: rotateX(40deg) rotateZ(30deg) skewX(-20deg);
 }
 
