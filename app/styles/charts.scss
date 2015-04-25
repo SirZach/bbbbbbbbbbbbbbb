@@ -63,3 +63,12 @@
 .lil-card-multicolored {
   background-color: map-get($color-amber, '300');
 }
+
+.chart-card-title {
+  margin-left: -16px;
+  margin-right: -16px;
+  margin-bottom: -16px;
+  padding: 16px;
+  background-color: map-get($primary-color-palette, '500');
+  color: white;
+}
