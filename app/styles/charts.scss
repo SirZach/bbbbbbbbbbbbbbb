@@ -5,7 +5,9 @@
 
 .mana-curve-chart-bar {
   width: 60px;
+  margin-top: 20px;
   text-align: center;
+  flex-grow: 1
 }
 
 .mana-curve-chart-label {
@@ -14,7 +16,7 @@
 }
 
 .lil-card-stack {
-  &:hover, &:active {
+  &:hover, &:focus {
     .lil-card {
       box-shadow: 0 0 8px 4px map-get($primary-color-palette, '300');
     }

@@ -13,8 +13,22 @@
   {{/paper-tile-content}}
 {{/paper-item}}
 
-{{deck-table
-  deck=model
-  showCard="showCard"}}
+<div class="row">
+  {{!-- Main column for deck list --}}
+  <div class="col-sm-8">
+    {{#paper-card}}
+      {{#paper-card-content}}
+        {{deck-table
+          deck=model
+          showCard="showCard"}}
+      {{/paper-card-content}}
+    {{/paper-card}}
+  </div>
 
-{{mana-curve-chart deck=model}}
+  {{!-- Side column for charts --}}
+  <div class="col-sm-4">
+    {{#titled-card title="Mana Curve"}}
+      {{mana-curve-chart deck=model}}
+    {{/titled-card}}
+  </div>
+</div>
