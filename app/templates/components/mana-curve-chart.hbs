@@ -1,7 +1,7 @@
 {{#each costGroups as |costGroup|}}
   <div class="mana-curve-chart-bar">
     {{#each costGroup.content as |cardGroup|}}
-      {{lil-card-stack cardGroup=cardGroup}}
+      {{lil-card-stack cardGroup=cardGroup cardGroups=costGroup.content}}
     {{/each}}
     <div class="mana-curve-chart-label">
     {{costGroup.cmc}}

@@ -1,22 +1,58 @@
 .mana-curve-chart {
-
+  display: flex;
+  align-items: flex-end;
 }
 
 .mana-curve-chart-bar {
-  display: inline-block;
-  width: 20px;
-  margin: 0 -2px;
+  width: 60px;
   text-align: center;
 }
 
 .mana-curve-chart-label {
-  border-top: 1px solid map-get($primary-color-palette, '900');
+  margin-top: 20px;
+  border-top: 1px solid map-get($primary-color-palette, '500');
 }
 
 .lil-card-stack {
-
 }
 
 .lil-card {
+  position: relative;
+  $width: 20px;
+  width: $width;
+  height: $width * (88 / 63);
+  margin: -15px auto;
+  border: 1px solid map-get($color-grey, '500');
+  transform: rotateX(40deg) rotateZ(30deg) skewX(-20deg);
+}
 
+//
+// Colors for lil-card
+//
+.lil-card-white {
+  background-color: map-get($color-yellow, '50');
+}
+
+.lil-card-green {
+  background-color: map-get($color-green, '300');
+}
+
+.lil-card-blue {
+  background-color: map-get($color-blue, '300');
+}
+
+.lil-card-black {
+  background-color: map-get($color-grey, '700');
+}
+
+.lil-card-red {
+  background-color: map-get($color-red, '300');
+}
+
+.lil-card-colorless {
+  background-color: map-get($color-grey, '300');
+}
+
+.lil-card-multicolored {
+  background-color: map-get($color-amber, '300');
 }
