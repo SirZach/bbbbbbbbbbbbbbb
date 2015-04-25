@@ -154,9 +154,15 @@ export default Ember.Controller.extend({
   showChat: true,
   
   /** @property {Boolean} has participant chosen a deck? */
-  hasChosenDeck: Ember.computed.and('particpant.deckName', 'participant.deckId'),
+  hasChosenDeck: Ember.computed.and('participant.deckName', 'participant.deckId'),
 
-  hasNotChosenDeck: Ember.computed.not('haveChosenDeck'),
+  /** @property {Boolean} participant can mark themselves ready */
+  participantCanReady: function () {
+    var amIPlaying = this.get('amIPlaying');
+    if (!amIPlaying) return false;
+
+    return this.get('hasChosenDeck') && !this.get('participant.isReady');
+  }.property('amIPlaying', 'participant.isReady', 'hasChosenDeck'),
 
   actions: {
     /**

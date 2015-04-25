@@ -31,8 +31,8 @@
       {{#if canIJoinAsPlayer}}
         {{#paper-button raised=true classNames="md-primary ml-15" action="joinAsPlayer"}}Join Game{{/paper-button}}
       {{/if}}
-      {{#if amIPlaying}}
-        {{#paper-button raised=true classNames="md-primary ml-15" action="iAmReady" disabled=haveNotChosenDeck}}Ready!{{/paper-button}}
+      {{#if participantCanReady}}
+        {{#paper-button raised=true classNames="md-primary ml-15" action="iAmReady"}}Ready!{{/paper-button}}
       {{/if}}
     </h3>
     {{#if isGameInProgress}}

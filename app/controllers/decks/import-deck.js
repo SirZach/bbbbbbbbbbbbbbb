@@ -11,17 +11,21 @@ export default Ember.Controller.extend({
 
     importDeck: function () {
       var importContents = this.get('importContents');
-      var self = this;
-      Deck.createFromImport(importContents, this.store).then(function (result) {
-        var deck = result.deck;
-        var errors = result.errors;
+      
+      this.get('session.user').then((user) => {
+        Deck.createFromImport(importContents, this.store).then((result) => {
+          var deck = result.deck;
+          deck.set('owner', user);
+          var errors = result.errors;
 
-        if (errors.length) {
-          deck.set('failedImports', errors);
-        }
+          if (errors.length) {
+            deck.set('failedImports', errors);
+          }
 
-        self.send('closeModal');
-        self.transitionToRoute('deck.build', deck);
+          this.send('closeModal');
+          this.set('importContents');
+          this.transitionToRoute('deck.build', deck);
+        });
       });
     }
   }
