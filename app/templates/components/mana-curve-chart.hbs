@@ -1,10 +1,17 @@
 {{#each costGroups as |costGroup|}}
   <div class="mana-curve-chart-bar">
     {{#each costGroup.content as |cardGroup|}}
-      {{lil-card-stack cardGroup=cardGroup cardGroups=costGroup.content}}
+      {{lil-card-stack
+        cardGroup=cardGroup
+        cardGroups=costGroup.content
+        cardFocusIn="cardFocusIn"
+        cardFocusOut="cardFocusOut"}}
     {{/each}}
     <div class="mana-curve-chart-label">
     {{costGroup.cmc}}
     </div>
   </div>
 {{/each}}
+<div class="card-spoiler {{if cardSpoilerHidden 'hidden'}}">
+  <img src={{spoilerCard.imageUrl}} />
+</div>

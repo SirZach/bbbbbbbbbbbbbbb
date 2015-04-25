@@ -54,5 +54,25 @@ export default Ember.Component.extend({
 
     // Sort cost groups by converted mana cost.
     return grouped.sortBy('cmc');
-  }.property('deck.mainCardGroups.[]')
+  }.property('deck.mainCardGroups.[]'),
+
+  /** @property {Boolean} flag to hide or show the card spoiler */
+  cardSpoilerHidden: 'hidden',
+
+  actions: {
+    /**
+     * Show this card image.
+     */
+    cardFocusIn: function (card) {
+      this.set('spoilerCard', card);
+      this.set('cardSpoilerHidden', false);
+    },
+
+    /**
+     * Hide this card image.
+     */
+    cardFocusOut: function (card) {
+      this.set('cardSpoilerHidden', true);
+    }
+  }
 });

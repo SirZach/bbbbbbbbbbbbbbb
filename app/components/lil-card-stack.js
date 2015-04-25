@@ -6,6 +6,22 @@ export default Ember.Component.extend({
 
   classNames: ['lil-card-stack'],
 
+  /**
+   * Handles the mouse/focus enter event for showing the related card image.
+   */
+  mouseEnter: function () {
+    var card = this.get('cardGroup.card');
+    this.sendAction('cardFocusIn', card);
+  },
+
+  /**
+   * Handles the mouse/focus leave event for hiding the related card image.
+   */
+  mouseLeave: function () {
+    var card = this.get('cardGroup.card');
+    this.sendAction('cardFocusOut', card);
+  },
+
   /** @property {Array<Card>} a list of card copies (identical cards) */
   copies: function () {
     var card = this.get('cardGroup.card');

@@ -6,7 +6,7 @@ export default Ember.Component.extend({
 
   classNameBindings: [':lil-card', 'color'],
 
-  attributeBindings: ['style', 'title'],
+  attributeBindings: ['style'],
 
   /** @property {String} color class */
   color: function () {
@@ -18,7 +18,5 @@ export default Ember.Component.extend({
   style: function () {
     var zIndex = this.get('cardInfo.zIndex');
     return `z-index: ${zIndex};`;
-  }.property('cardInfo.zIndex'),
-
-  title: Ember.computed.oneWay('cardInfo.card.name')
+  }.property('cardInfo.zIndex')
 });
