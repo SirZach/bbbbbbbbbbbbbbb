@@ -50,7 +50,13 @@ export default Ember.Component.extend({
       offsetY = Math.max(minY, offsetY);
       offsetY = Math.min(maxY, offsetY);
       var spoilerCardStyle = `top: ${offsetY}px;`;
+
+      // Calculate where to put the arrow such that it points at the midpoint of
+      // the row hovered. 10 is half the height of the arrow.
+      var rowMidpoint = $target.position().top + $target.height() / 2 - 10;
+      var spoilerCardPointerStyle = `top: ${rowMidpoint}px;`;
       this.set('spoilerCardStyle', spoilerCardStyle);
+      this.set('spoilerCardPointerStyle', spoilerCardPointerStyle);
       this.set('spoilerCard', card);
     },
 
