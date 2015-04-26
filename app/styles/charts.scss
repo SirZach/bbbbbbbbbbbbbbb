@@ -1,0 +1,113 @@
+.mana-curve-chart {
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+
+  .card-spoiler {
+    position: absolute;
+    left: 50%;
+    top: -220px;
+    transform: translateX(-50%);
+
+    img {
+      width: 150px;
+    }
+
+    @media screen and (min-width: 992px) {
+      left: -250px;
+      top: -40px;
+      transform: none;
+
+      img {
+        width: 225px;
+      }
+    }
+  }
+}
+
+.card-spoiler {
+  img {
+    border-radius: 5px;
+  }
+}
+
+.mana-curve-chart-bar {
+  width: 60px;
+  margin-top: 20px;
+  text-align: center;
+  flex-grow: 1
+}
+
+.mana-curve-chart-label {
+  margin-top: 20px;
+  border-top: 1px solid map-get($primary-color-palette, '500');
+}
+
+.lil-card-stack {
+  &:hover, &:focus {
+    .lil-card {
+      box-shadow: 0 0 8px 4px map-get($primary-color-palette, '300');
+    }
+  }
+}
+
+.lil-card {
+  position: relative;
+  width: 16px;
+  height: 22px;
+  margin: -15px auto;
+  border: 1px solid map-get($color-grey, '800');
+  transform: rotateX(40deg) rotateZ(30deg) skewX(-20deg);
+  // Hack to make firefox antialias rotated elements.
+  outline: 1px solid transparent;
+
+  @media screen and (min-width: 768px) {
+    width: 20px;
+    height: 28px;
+  }
+}
+
+//
+// Colors for lil-card
+//
+.lil-card-white {
+  background-color: map-get($color-yellow, '50');
+}
+
+.lil-card-green {
+  background-color: map-get($color-green, '300');
+}
+
+.lil-card-blue {
+  background-color: map-get($color-blue, '300');
+}
+
+.lil-card-black {
+  background-color: map-get($color-grey, '700');
+}
+
+.lil-card-red {
+  background-color: map-get($color-red, '300');
+}
+
+.lil-card-colorless {
+  background-color: map-get($color-grey, '300');
+}
+
+.lil-card-multicolored {
+  background-color: map-get($color-amber, '300');
+}
+
+.titled-card {
+  max-width: 600px;
+  margin: auto;
+}
+
+.chart-card-title {
+  margin-left: -16px;
+  margin-right: -16px;
+  margin-bottom: -16px;
+  padding: 16px;
+  background-color: map-get($primary-color-palette, '500');
+  color: white;
+}

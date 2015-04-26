@@ -77,5 +77,17 @@ export default DS.Model.extend({
     } else {
       return "https://big-furry-monster.herokuapp.com/prices/" + this.get('name');
     }
-  }.property('name')
+  }.property('name'),
+
+  /** @property {String} display color - e.g. blue; colorless; multicolored */
+  displayColor: function () {
+    var colors = this.get('colors');
+    if (!colors || !colors.length) {
+      return 'colorless';
+    }
+    if (colors.length === 1) {
+      return colors[0].toLowerCase();
+    }
+    return 'multicolored';
+  }.property('colors')
 });
