@@ -21,6 +21,14 @@ export default Ember.Component.extend({
 
     showHide: function (section) {
       this.sendAction('showHide', section);
+    },
+
+    hoverOn: function ($event, card) {
+      this.sendAction('hoverOn', $event, card);
+    },
+
+    hoverOff: function ($event, card) {
+      this.sendAction('hoverOff', $event, card);
     }
   }
 });

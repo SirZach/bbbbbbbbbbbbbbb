@@ -1,3 +1,24 @@
+.card-spoiler {
+  img {
+    width: 150px;
+  }
+
+  @media screen and (min-width: 768px) {
+    img {
+      width: 225px;
+    }
+  }
+}
+
+.deck-table {
+  position: relative;
+
+  .card-spoiler {
+    position: absolute;
+    right: 0;
+  }
+}
+
 .mana-curve-chart {
   display: flex;
   align-items: flex-end;
@@ -9,18 +30,10 @@
     top: -220px;
     transform: translateX(-50%);
 
-    img {
-      width: 150px;
-    }
-
-    @media screen and (min-width: 992px) {
+    @media screen and (min-width: 768px) {
       left: -250px;
       top: -40px;
       transform: none;
-
-      img {
-        width: 225px;
-      }
     }
   }
 }

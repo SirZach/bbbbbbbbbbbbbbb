@@ -22,7 +22,9 @@
             family=family
             doNotShowTypes=doNotShowTypes
             showCard="showCard"
-            showHide="showHide"}}
+            showHide="showHide"
+            hoverOn="hoverOn"
+            hoverOff="hoverOff"}}
         {{/each}}
 
       {{/if}}
@@ -52,4 +54,8 @@
       {{/if}}
     </tbody>
   </table>
+</div>
+
+<div class="card-spoiler {{unless spoilerCard 'hidden'}}" style="{{spoilerCardStyle}}">
+  <img src="{{spoilerCard.imageUrl}}" />
 </div>

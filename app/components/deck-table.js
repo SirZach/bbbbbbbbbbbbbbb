@@ -4,6 +4,8 @@ import layout from '../templates/components/deck-table';
 export default Ember.Component.extend({
   layout: layout,
 
+  classNames: ['deck-table'],
+
   /**
    * @property {Array} List of hidden deck sections.
    * Instantiate per-component.
@@ -36,6 +38,17 @@ export default Ember.Component.extend({
 
     showCard: function (card) {
       this.sendAction('showCard', card);
+    },
+
+    hoverOn: function ($event, card) {
+      this.set('spoilerCard', card);
+      var offsetY = Ember.$($event.target).position().top;
+      var spoilerCardStyle = `top: ${offsetY}px;`;
+      this.set('spoilerCardStyle', spoilerCardStyle);
+    },
+
+    hoverOff: function ($event, card) {
+      this.set('spoilerCard');
     }
   }
 });
