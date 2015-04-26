@@ -41,10 +41,17 @@ export default Ember.Component.extend({
     },
 
     hoverOn: function ($event, card) {
-      this.set('spoilerCard', card);
-      var offsetY = Ember.$($event.target).position().top;
+      var $element = Ember.$(this.element);
+      var minY = 10;
+      var maxY = $element.height() - 325;
+      var $target = Ember.$($event.currentTarget);
+      var offsetY = $target.position().top;
+      offsetY -= (160 - $target.height() / 2);
+      offsetY = Math.max(minY, offsetY);
+      offsetY = Math.min(maxY, offsetY);
       var spoilerCardStyle = `top: ${offsetY}px;`;
       this.set('spoilerCardStyle', spoilerCardStyle);
+      this.set('spoilerCard', card);
     },
 
     hoverOff: function ($event, card) {
