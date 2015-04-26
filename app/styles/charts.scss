@@ -36,9 +36,9 @@
       position: absolute;
       width: 0;
       height: 0;
-      border-top: 10px solid transparent;
-      border-bottom: 10px solid transparent;
-      border-right:10px solid black;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-right:6px solid black;
       right: -10px;
       top: 50%;
       transition: top 0.25s;
@@ -58,19 +58,50 @@
     top: -220px;
     transform: translateX(-50%);
 
+    // By default, show a little arrow on the bottom pointing at the chart.
+    &:before {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 6px solid black;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -6px;
+      z-index: 99;
+    }
+
     @media screen and (min-width: 768px) {
       left: -250px;
       top: -40px;
       transform: none;
+
+      // Adjust the arrow to point right.
+      &:before {
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+        border-right: 0;
+        border-left: 6px solid black;
+        top: 50%;
+        bottom: auto;
+        left: auto;
+        right: -6px;
+        transform: translateY(-50%);
+      }
     }
   }
 }
 
 .card-spoiler {
   border-radius: 5px;
-  overflow: hidden;
   // Include this so we don't get a blank outline while an image loads.
   background-color: black;
+
+  img {
+    border-radius: 5px;
+  }
 }
 
 .mana-curve-chart-bar {

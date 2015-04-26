@@ -52,8 +52,8 @@ export default Ember.Component.extend({
       var spoilerCardStyle = `top: ${offsetY}px;`;
 
       // Calculate where to put the arrow such that it points at the midpoint of
-      // the row hovered. 10 is half the height of the arrow.
-      var rowMidpoint = $target.position().top + $target.height() / 2 - 10;
+      // the row hovered. 6 is half the height of the arrow.
+      var rowMidpoint = $target.position().top + $target.height() / 2 - 6;
       var spoilerCardPointerStyle = `top: ${rowMidpoint}px;`;
       this.set('spoilerCardStyle', spoilerCardStyle);
       this.set('spoilerCardPointerStyle', spoilerCardPointerStyle);
