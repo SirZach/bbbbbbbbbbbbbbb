@@ -29,6 +29,7 @@ Router.map(function() {
     this.route('list');
     this.route('new');
   });
+  this.route('four-oh-four', {path: '*path'});
 });
 
 export default Router;
