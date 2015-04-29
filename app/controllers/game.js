@@ -3,8 +3,11 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   /** @property {Boolean} Is the game going? */
   isGameInProgress: function () {
-    return this.get('players').every((player) => player.get('isReady'));
+    var players = this.get('players');
+    return players.get('length') === 2 && players.every((player) => player && player.get('isReady'));
   }.property('players.@each.isReady'),
+
+  isGameInPrep: Ember.computed.not('isGameInProgress'),
 
   /** @property {Boolean} Is the game over? */
   isGameOver: Ember.computed.equal('model.status', 'ended'),
