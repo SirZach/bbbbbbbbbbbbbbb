@@ -25,6 +25,11 @@
                 {{paper-icon icon="share" size="lg" title="Explore"}}
               {{/x-paper-button}}
             </li>
+            <li>
+              {{#x-paper-button action="goToDeckBuilder" params=deck}}
+                {{paper-icon icon="translate" size="lg" title="Edit"}}
+              {{/x-paper-button}}
+            </li>
           </ul>
           <p class="truncate">{{deck.comments}}</p>
           {{#if isExpanded}}
