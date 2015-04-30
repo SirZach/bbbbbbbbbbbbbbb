@@ -36,6 +36,10 @@ md-card-content {background: #fff;}
   height: 100%;
 }
 
+.md-tile-left {
+  align-self: flex-start;
+}
+
 .sm-display {
   @media screen and (min-width: 1680px) {
     display: none;
