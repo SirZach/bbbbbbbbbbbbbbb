@@ -23,7 +23,12 @@ $locked-breakpoint: 1700px;
 @import "ember-paper";
 
 body { background-color: #ececec;}
-md-item-content {background: #fff;}
+md-item-content {
+  background: #fff;
+  &.is-expanded {
+    height: auto;
+  }
+}
 md-card-content {background: #fff;}
 
 .ember-app {
