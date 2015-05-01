@@ -3,6 +3,8 @@
 $primary-color-palette: $color-orange;
 $locked-breakpoint: 1700px;
 
+@import "ember-paper";
+
 @import "chat";
 @import "offcanvas";
 @import "material-of-cards";
@@ -19,8 +21,6 @@ $locked-breakpoint: 1700px;
 @import "login";
 @import "deck";
 @import "charts";
-
-@import "ember-paper";
 
 body { background-color: #ececec;}
 md-item-content {
