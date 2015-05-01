@@ -57,6 +57,7 @@
     left: 50%;
     top: -220px;
     transform: translateX(-50%);
+    z-index: 1;
 
     // By default, show a little arrow on the bottom pointing at the chart.
     &:before {
@@ -176,9 +177,10 @@
   margin: auto;
 }
 
-.chart-card-title {
+h3.chart-card-title {
   margin-left: -16px;
   margin-right: -16px;
+  margin-top: 16px;
   margin-bottom: -16px;
   padding: 16px;
   background-color: map-get($primary-color-palette, '500');

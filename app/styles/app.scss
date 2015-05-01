@@ -3,6 +3,8 @@
 $primary-color-palette: $color-orange;
 $locked-breakpoint: 1700px;
 
+@import "ember-paper";
+
 @import "chat";
 @import "offcanvas";
 @import "material-of-cards";
@@ -20,15 +22,22 @@ $locked-breakpoint: 1700px;
 @import "deck";
 @import "charts";
 
-@import "ember-paper";
-
 body { background-color: #ececec;}
-md-item-content {background: #fff;}
+md-item-content {
+  background: #fff;
+  &.is-expanded {
+    height: auto;
+  }
+}
 md-card-content {background: #fff;}
 
 .ember-app {
   width: 100%;
   height: 100%;
+}
+
+.md-tile-left {
+  align-self: flex-start;
 }
 
 .sm-display {

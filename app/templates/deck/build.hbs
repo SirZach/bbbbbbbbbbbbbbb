@@ -57,9 +57,13 @@
       {{/if}}
 
       {{#if canShowDeckTable}}
-        {{deck-table
-          deck=model
-          showCard="showCard"}}
+        {{#paper-card}}
+          {{#paper-card-content}}
+            {{deck-table
+              deck=model
+              showCard="showCard"}}
+          {{/paper-card-content}}
+        {{/paper-card}}
       {{/if}}
     </div>
   </div>
