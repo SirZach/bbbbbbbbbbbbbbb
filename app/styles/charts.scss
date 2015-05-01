@@ -185,4 +185,8 @@ h3.chart-card-title {
   padding: 16px;
   background-color: map-get($primary-color-palette, '500');
   color: white;
+
+  a {
+    color: white;
+  }
 }
