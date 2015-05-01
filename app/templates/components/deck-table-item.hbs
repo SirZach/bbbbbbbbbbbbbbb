@@ -7,7 +7,7 @@
 {{/x-tr}}
 {{#if canShow}}
   {{#each cardGroup in family.cardGroups}}
-    {{#x-tr action="showCard" param=cardGroup.card}}
+    {{#x-tr action="showCard" focusIn="hoverOn" focusOut="hoverOff" param=cardGroup.card}}
       <td>
         <span class="indent indent-2">{{cardGroup.count}}</span>
       </td>

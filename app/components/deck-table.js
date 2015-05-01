@@ -4,6 +4,8 @@ import layout from '../templates/components/deck-table';
 export default Ember.Component.extend({
   layout: layout,
 
+  classNames: ['deck-table'],
+
   /**
    * @property {Array} List of hidden deck sections.
    * Instantiate per-component.
@@ -36,6 +38,30 @@ export default Ember.Component.extend({
 
     showCard: function (card) {
       this.sendAction('showCard', card);
+    },
+
+    hoverOn: function ($event, card) {
+      var $element = Ember.$(this.element);
+      var minY = 10;
+      var maxY = $element.height() - 325;
+      var $target = Ember.$($event.currentTarget);
+      var offsetY = $target.position().top;
+      offsetY -= (160 - $target.height() / 2);
+      offsetY = Math.max(minY, offsetY);
+      offsetY = Math.min(maxY, offsetY);
+      var spoilerCardStyle = `top: ${offsetY}px;`;
+
+      // Calculate where to put the arrow such that it points at the midpoint of
+      // the row hovered. 6 is half the height of the arrow.
+      var rowMidpoint = $target.position().top + $target.height() / 2 - 6;
+      var spoilerCardPointerStyle = `top: ${rowMidpoint}px;`;
+      this.set('spoilerCardStyle', spoilerCardStyle);
+      this.set('spoilerCardPointerStyle', spoilerCardPointerStyle);
+      this.set('spoilerCard', card);
+    },
+
+    hoverOff: function ($event, card) {
+      this.set('spoilerCard');
     }
   }
 });
