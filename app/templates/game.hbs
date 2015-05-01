@@ -7,38 +7,34 @@
     {{/if}}
   {{/paper-button}}
   <div class="game-board-top">
-    <h3>
-      <img src={{playerTwoAvatarUrl}} class="avatar">
-      {{topBoardTitle}}
-    </h3>
     {{#if isGameInProgress}}
-      {{!-- Game is in action! --}}
-    {{/if}}
-    {{#if isGameInPrep}}
-      {{!-- The game is still being set up. --}}
-
-      {{#if isWaitingForOpponent}}
-      {{/if}}
-    {{/if}}
-    {{#if isGameOver}}
-      {{!-- The game has ended. --}}
+      {{partial "game/in-progress-opponent"}}
+    {{else}}
+      {{!-- Let user know of the opponent's game readiness level --}}
+      <h3>
+        <img src={{playerTwoAvatarUrl}} class="avatar">
+        {{topBoardTitle}}
+      </h3>
     {{/if}}
   </div>
   <div class="game-board-bottom">
-    <h3>
-      <img src={{playerOneAvatarUrl}} class="avatar">
-      {{bottomBoardTitle}}
-      {{#if canIJoinAsPlayer}}
-        {{#paper-button raised=true classNames="md-primary ml-15" action="joinAsPlayer"}}Join Game{{/paper-button}}
-      {{/if}}
-      {{#if participantCanReady}}
-        {{#paper-button raised=true classNames="md-primary ml-15" action="iAmReady"}}Ready!{{/paper-button}}
-      {{/if}}
-    </h3>
     {{#if isGameInProgress}}
-      {{!-- Game is in action! --}}
-    {{/if}}
-    {{#if isGameInPrep}}
+      {{partial "game/in-progress-me"}}
+    {{else}}
+      <h3>
+        <img src={{playerOneAvatarUrl}} class="avatar">
+        {{bottomBoardTitle}}
+
+        {{!-- Button to join the game --}}
+        {{#if canIJoinAsPlayer}}
+          {{#paper-button raised=true classNames="md-primary ml-15" action="joinAsPlayer"}}Join Game{{/paper-button}}
+        {{/if}}
+
+        {{!-- Button to acknowledge that it's game on! --}}
+        {{#if participantCanReady}}
+          {{#paper-button raised=true classNames="md-primary ml-15" action="iAmReady"}}Ready!{{/paper-button}}
+        {{/if}}
+      </h3>
       {{!-- The game is still being set up. --}}
       {{#if amIPlaying}}
         {{deck-chooser
@@ -47,9 +43,6 @@
             action="selectDeck"}}
       {{/if}}
 
-    {{/if}}
-    {{#if isGameOver}}
-      {{!-- The game has ended. --}}
     {{/if}}
   </div>
 </div>

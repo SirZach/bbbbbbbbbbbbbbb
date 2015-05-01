@@ -2,6 +2,7 @@ import {
   moduleFor,
   test
 } from 'ember-qunit';
+import Ember from 'ember';
 
 moduleFor('controller:game', {
   // Specify the other units that are required for this test.
@@ -11,7 +12,6 @@ moduleFor('controller:game', {
 test('top title is waiting for player when no players', function (assert) {
   var controller = this.subject({
     model: {
-      status: 'preparing',
       gameParticipants: []
     }
   });
@@ -21,7 +21,6 @@ test('top title is waiting for player when no players', function (assert) {
 test('bottom title is waiting for player when no players', function (assert) {
   var controller = this.subject({
     model: {
-      status: 'preparing',
       gameParticipants: []
     }
   });
@@ -31,7 +30,6 @@ test('bottom title is waiting for player when no players', function (assert) {
 test('top title is waiting for so-and-so to choose when one other player', function (assert) {
   var controller = this.subject({
     model: {
-      status: 'preparing',
       gameParticipants: [{
         user: {id: 'him', username: 'SirZach'},
         isPlaying: true
@@ -44,11 +42,10 @@ test('top title is waiting for so-and-so to choose when one other player', funct
 test('bottom title is choose a deck when you are preparing', function (assert) {
   var controller = this.subject({
     model: {
-      status: 'preparing',
-      gameParticipants: [{
+      gameParticipants: [Ember.Object.create({
         user: {id: 'me'},
         isPlaying: true
-      }]
+      })]
     },
     session: {
       user: {id: 'me'}
@@ -60,12 +57,11 @@ test('bottom title is choose a deck when you are preparing', function (assert) {
 test('top title is he\'s ready when ready', function (assert) {
   var controller = this.subject({
     model: {
-      status: 'preparing',
-      gameParticipants: [{
+      gameParticipants: [Ember.Object.create({
         user: {id: 'him', username: 'SirZach'},
         isPlaying: true,
         isReady: true
-      }]
+      })]
     }
   });
   assert.equal(controller.get('topBoardTitle'), 'SirZach is ready');
@@ -74,15 +70,14 @@ test('top title is he\'s ready when ready', function (assert) {
 test('bottom title is he\s ready when ready', function (assert) {
   var controller = this.subject({
     model: {
-      status: 'preparing',
-      gameParticipants: [{
+      gameParticipants: [Ember.Object.create({
         user: {id: 'him', username: 'SirZach'},
         isPlaying: true,
         isReady: true
-      }, {
+      }), Ember.Object.create({
         user: {id: 'other-him', username: 'thomasjmwb'},
         isPlaying: true
-      }]
+      })]
     }
   });
   assert.equal(controller.get('bottomBoardTitle'), 'SirZach is ready');
@@ -91,7 +86,6 @@ test('bottom title is he\s ready when ready', function (assert) {
 test('bottom title is you are ready when I\'m ready', function (assert) {
   var controller = this.subject({
     model: {
-      status: 'preparing',
       gameParticipants: [{
         user: {id: 'me', username: 'ahaurw01'},
         isPlaying: true,

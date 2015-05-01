@@ -8,7 +8,7 @@ export default DS.Model.extend({
   gameParticipants: DS.hasMany('gameParticipant', {embedded: true}),
 
   /** @property {String} One of 'preparing', 'in-play', 'ended'. */
-  status: DS.attr('string', {defaultValue: 'preparing'}),
+  status: DS.attr('string'),
 
   /** @property {Array<GameParticipant>} People playing the game. */
   players: function () {
