@@ -188,7 +188,7 @@ var Deck = DS.Model.extend({
    * @return {CardGroup|null}
    */
   getCardGroup: function (name, board) {
-    var cardGroups = this.get(board + 'CardGroups');
+    var cardGroups = this.getWithDefault(board + 'CardGroups', []);
     return cardGroups.filterBy('card.name', name)[0];
   },
 

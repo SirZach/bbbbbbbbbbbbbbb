@@ -3,9 +3,11 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   afterModel: function (deck) {
     return deck.get('owner').then((owner) => {
-      if (owner.get('id') !== this.get('session.user.id')) {
-        this.transitionTo('/');
-      }
+      return this.get('session.user').then((user) => {
+        if (owner.get('id') !== user.get('id')) {
+          this.transitionTo('/');
+        }
+      });
     });
   },
 

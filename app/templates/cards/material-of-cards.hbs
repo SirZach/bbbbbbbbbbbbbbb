@@ -1,21 +1,29 @@
 {{#paper-content classNames="md-whiteframe-z1 list-demo"}}
   {{#paper-list}}
     {{#each card in filteredCards}}
-      {{#paper-item class="cursor-pointer" param=card action="showCard"}}
+      {{#x-paper-item class="cursor-pointer" param=card action="showCard" as |isExpanded|}}
         {{#paper-tile-left}}
           {{x-card-image src=card.imageUrl class="face"}}
         {{/paper-tile-left}}
 
         {{#paper-tile-content}}
           <h3>{{card.name}}</h3>
-          <h4>{{card.recentSet}}</h4>
           <ul class="pull-right paper-tile-content-right">
             <li>{{card.powerToughnessFormatted}}</li>
             <li class="ml-10">{{mana-formatted mana=card.manaCostFormatted}}</li>
+            <li>
+              {{#x-paper-button action="addToMain" params=card bubbles=false}}
+                {{paper-icon icon="add-circle" size="lg" title="Add to Deck"}}
+              {{/x-paper-button}}
+            </li>
           </ul>
           <p class="truncate" {{bind-attr title=card.text}}>{{card.text}}</p>
+          {{#if isExpanded}}
+            <h4>{{card.recentSet}}</h4>
+            {{x-card card=card}}
+          {{/if}}
         {{/paper-tile-content}}
-      {{/paper-item}}
+      {{/x-paper-item}}
       {{paper-divider}} {{! OR {{paper-divider inset=true}}
     {{/each}}
   {{/paper-list}}

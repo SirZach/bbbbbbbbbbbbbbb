@@ -31,6 +31,10 @@ export default Ember.Route.extend({
   },
 
   actions: {
+    addToMain: function (card) {
+      this.get('controller.model').addCard(card);
+    },
+
     saveDeck: function (deck) {
       this.get('session.user').then((user) => {
         deck.save()

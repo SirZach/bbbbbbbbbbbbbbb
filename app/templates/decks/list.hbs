@@ -2,7 +2,7 @@
 {{#paper-content classNames="md-whiteframe-z1"}}
   {{#paper-list}}
     {{#each model as |deck|}}
-      {{#x-paper-item class="cursor-pointer" param=deck action="goToDeck" as |isExpanded|}}
+      {{#x-paper-item class="cursor-pointer" as |isExpanded|}}
         {{#paper-tile-left}}
           <div class="game-listing-deck-image"
                style="background-image: url('{{deck.defaultImageUrl}}')">
