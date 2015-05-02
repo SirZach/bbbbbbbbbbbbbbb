@@ -96,6 +96,7 @@
 }
 
 .card-spoiler {
+  display: inline-block;
   border-radius: 5px;
   // Include this so we don't get a blank outline while an image loads.
   background-color: black;
@@ -188,5 +189,25 @@ h3.chart-card-title {
 
   a {
     color: white;
+  }
+}
+
+.sample-draw-chart-hand {
+  position: relative;
+  max-width: 500px;
+  height: 513px;
+  margin: auto;
+}
+
+.card-spoiler-sample-hand {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}
+
+@for $i from 0 through 6 {
+  .card-spoiler-sample-hand-#{$i} {
+    top: 32px * $i;
+    left: calc((100% - 225px) * #{$i} / 6);
   }
 }

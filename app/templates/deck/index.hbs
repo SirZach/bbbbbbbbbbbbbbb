@@ -31,22 +31,7 @@
       {{mana-curve-chart deck=model}}
     {{/titled-card}}
 
-    {{#paper-card}}
-      {{#paper-card-content}}
-        {{sample-draw-chart deck=model}}
-        <h3 class="chart-card-title">
-          Sample Draw
-          <div class="pull-right">
-            <a href="#" action="refresh">
-              {{paper-icon icon="refresh" size="lg"}}
-            </a>
-            <a href="#" action="fullscreen">
-              {{paper-icon icon="fullscreen" size="lg"}}
-            </a>
-          </div>
-        </h3>
-      {{/paper-card-content}}
-    {{/paper-card}}
+    {{sample-draw-chart deck=model}}
   </div>
 
 </div>
