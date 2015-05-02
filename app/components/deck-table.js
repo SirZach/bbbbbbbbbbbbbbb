@@ -66,6 +66,10 @@ export default Ember.Component.extend({
 
     remove: function (cardGroup) {
       this.get('deck').removeCard(cardGroup.get('card'), cardGroup.get('board'));
+    },
+
+    add: function (cardGroup) {
+      this.get('deck').addCard(cardGroup.get('card'), cardGroup.get('board'));
     }
   }
 });

@@ -33,6 +33,10 @@ export default Ember.Component.extend({
 
     remove: function (cardGroup) {
       this.sendAction('remove', cardGroup);
+    },
+
+    add: function (cardGroup) {
+      this.sendAction('add', cardGroup);
     }
   }
 });

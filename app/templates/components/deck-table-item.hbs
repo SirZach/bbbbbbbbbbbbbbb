@@ -17,6 +17,9 @@
       <td class="cursor-pointer">{{cardGroup.card.name}}</td>
       {{#if canEdit}}
         <td>
+          {{#x-paper-button action="add" params=cardGroup}}
+            {{paper-icon icon="add-circle"}}
+          {{/x-paper-button}}
           {{#x-paper-button action="remove" params=cardGroup}}
             {{paper-icon icon="remove-circle"}}
           {{/x-paper-button}}
