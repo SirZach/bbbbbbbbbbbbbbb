@@ -32,7 +32,11 @@ export default Ember.Route.extend({
 
   actions: {
     addToMain: function (card) {
-      this.get('controller.model').addCard(card);
+      this.get('controller.model').addCard(card, 'main');
+    },
+
+    addToSide: function (card) {
+      this.get('controller.model').addCard(card, 'side');
     },
 
     saveDeck: function (deck) {

@@ -1,7 +1,7 @@
 {{#paper-content classNames="md-whiteframe-z1 list-demo"}}
   {{#paper-list}}
     {{#each card in filteredCards}}
-      {{#x-paper-item class="cursor-pointer" param=card action="showCard" as |isExpanded|}}
+      {{#x-paper-item class="cursor-pointer has-hidden-hover" param=card action="showCard" as |isExpanded|}}
         {{#paper-tile-left}}
           {{x-card-image src=card.imageUrl class="face"}}
         {{/paper-tile-left}}
@@ -11,9 +11,14 @@
           <ul class="pull-right paper-tile-content-right">
             <li>{{card.powerToughnessFormatted}}</li>
             <li class="ml-10">{{mana-formatted mana=card.manaCostFormatted}}</li>
-            <li>
+            <li class="on-hover">
               {{#x-paper-button action="addToMain" params=card bubbles=false}}
                 {{paper-icon icon="add-circle" size="lg" title="Add to Deck"}}
+              {{/x-paper-button}}
+            </li>
+            <li class="on-hover">
+              {{#x-paper-button action="addToSide" params=card bubbles=false}}
+                {{paper-icon icon="add" size="lg" title="Add to Sideboard"}}
               {{/x-paper-button}}
             </li>
           </ul>

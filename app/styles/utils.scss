@@ -8,3 +8,10 @@
 .pl-15 {padding-left: 15px!important;}
 
 .ta-l {text-align: left!important;}
+
+.has-hidden-hover {
+  .on-hover { display: none;}
+  &:hover {
+    .on-hover { display: initial;}
+  }
+}
