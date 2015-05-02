@@ -6,7 +6,11 @@ import Ember from 'ember';
 
 moduleForComponent('sample-draw-chart', {
   // specify the other units that are required for this test
-  needs: ['component:paper-card-content', 'component:paper-icon']
+  needs: [
+    'component:paper-card-content',
+    'component:paper-icon',
+    'component:x-paper-button'
+  ]
 });
 
 test('it renders', function(assert) {
