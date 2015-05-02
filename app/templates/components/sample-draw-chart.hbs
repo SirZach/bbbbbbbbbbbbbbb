@@ -1,11 +1,13 @@
 {{#paper-card-content}}
   {{!-- The cards --}}
-  <div class="sample-draw-chart-hand">
-    {{#each sortedHand as |card index|}}
-      <div class="card-spoiler card-spoiler-sample-hand card-spoiler-sample-hand-{{index}}">
-        <img src={{card.imageUrl}} />
-      </div>
-    {{/each}}
+  <div class="sample-draw-chart-card-filler">
+    <div class="sample-draw-chart-fullscreen-wrapper {{if fullscreen 'is-fullscreen'}}">
+      {{#each sortedHand as |card index|}}
+        <div class="card-spoiler card-spoiler-sample-hand card-spoiler-sample-hand-{{index}}">
+          <img src={{card.imageUrl}} />
+        </div>
+      {{/each}}
+    </div>
   </div>
   <h3 class="chart-card-title">
     Sample Draw
