@@ -4,6 +4,9 @@
     <i class="fa {{if canShow 'fa-caret-down' 'fa-caret-up'}} indent indent-1"></i>
   </td>
   <td><strong>{{pluralize-string family.type}}</strong></td>
+  {{#if canEdit}}
+    <td></td>
+  {{/if}}
 {{/x-tr}}
 {{#if canShow}}
   {{#each cardGroup in family.cardGroups}}
@@ -12,6 +15,13 @@
         <span class="indent indent-2">{{cardGroup.count}}</span>
       </td>
       <td class="cursor-pointer">{{cardGroup.card.name}}</td>
+      {{#if canEdit}}
+        <td>
+          {{#x-paper-button action="remove" params=cardGroup}}
+            {{paper-icon icon="remove-circle"}}
+          {{/x-paper-button}}
+        </td>
+      {{/if}}
     {{/x-tr}}
   {{/each}}
 {{/if}}

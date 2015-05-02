@@ -62,6 +62,10 @@ export default Ember.Component.extend({
 
     hoverOff: function ($event, card) {
       this.set('spoilerCard');
+    },
+
+    remove: function (cardGroup) {
+      this.get('deck').removeCard(cardGroup.get('card'), cardGroup.get('board'));
     }
   }
 });

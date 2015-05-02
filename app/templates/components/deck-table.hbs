@@ -3,7 +3,10 @@
     <thead>
       <tr>
         <th class="col-sm-3">Number</th>
-        <th class="col-sm-9">Card</th>
+        <th class="{{if canEdit 'col-sm-8' 'col-sm-9'}}">Card</th>
+        {{#if canEdit}}
+          <th class="col-sm-1">Actions</th>
+        {{/if}}
       </tr>
     </thead>
     <tbody>
@@ -14,13 +17,18 @@
           <i class="fa {{if canShowMainDeck 'fa-caret-down' 'fa-caret-up'}}"></i>
         </td>
         <td><strong>Maindeck</strong></td>
+        {{#if canEdit}}
+          <td></td>
+        {{/if}}
       {{/x-tr}}
       {{#if canShowMainDeck}}
 
         {{#each family in deck.mainDeckFamilies}}
           {{deck-table-item
             family=family
+            canEdit=canEdit
             doNotShowTypes=doNotShowTypes
+            remove="remove"
             showCard="showCard"
             showHide="showHide"
             hoverOn="hoverOn"
@@ -38,6 +46,9 @@
             <i class="fa {{if canShowSideDeck 'fa-caret-down' 'fa-caret-up'}}"></i>
           </td>
           <td><strong>Sideboard</strong></td>
+          {{#if canEdit}}
+            <td></td>
+          {{/if}}
         {{/x-tr}}
 
         {{#if canShowSideDeck}}
@@ -45,7 +56,9 @@
           {{#each family in deck.sideDeckFamilies}}
             {{deck-table-item
               family=family
+              canEdit=canEdit
               doNotShowTypes=doNotShowTypes
+              remove="remove"
               showCard="showCard"
               showHide="showHide"}}
           {{/each}}

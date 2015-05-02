@@ -14,7 +14,7 @@
       {{/paper-card-content}}
     {{/paper-card}}
   </div>
-  <div class="col-sm-12 col-lg-11">
+  <div>
     <div class="col-sm-7">
       {{#full-height classNames="overflow-y-scroll"}}
         {{#paper-card}}
@@ -74,6 +74,7 @@
           {{#paper-card-content}}
             {{deck-table
               deck=model
+              canEdit=true
               showCard="showCard"}}
           {{/paper-card-content}}
         {{/paper-card}}
