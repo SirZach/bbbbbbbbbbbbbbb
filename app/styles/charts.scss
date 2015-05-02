@@ -179,6 +179,7 @@
 }
 
 h3.chart-card-title {
+  position: relative;
   margin-left: -16px;
   margin-right: -16px;
   margin-top: 16px;
@@ -187,8 +188,17 @@ h3.chart-card-title {
   background-color: map-get($primary-color-palette, '500');
   color: white;
 
-  a {
-    color: white;
+  .chart-card-title-actions {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 16px;
+  }
+
+  .chart-card-title-action {
+    height: 100%;
+    padding: 8px 0;
+    float: right;
   }
 }
 

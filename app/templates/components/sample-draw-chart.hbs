@@ -9,13 +9,12 @@
   </div>
   <h3 class="chart-card-title">
     Sample Draw
-    <div class="pull-right">
-      <a href="#" {{action "refresh"}}>
-        {{paper-icon icon="refresh" size="lg"}}
-      </a>
-      {{!-- <a href="#" {{action "fullscreen"}}>
-        {{paper-icon icon="fullscreen" size="lg"}}
-      </a> --}}
+    <div class="chart-card-title-actions">
+      <div class="chart-card-title-action">
+        {{#x-paper-button action="refresh"}}
+          {{paper-icon icon="refresh" size="lg" title="New Hand"}}
+        {{/x-paper-button}}
+      </div>
     </div>
   </h3>
 {{/paper-card-content}}
