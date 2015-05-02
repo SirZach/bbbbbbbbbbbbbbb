@@ -1,7 +1,7 @@
 {{#paper-card-content}}
   {{!-- The cards --}}
   <div class="sample-draw-chart-hand">
-    {{#each hand as |card index|}}
+    {{#each sortedHand as |card index|}}
       <div class="card-spoiler card-spoiler-sample-hand card-spoiler-sample-hand-{{index}}">
         <img src={{card.imageUrl}} />
       </div>

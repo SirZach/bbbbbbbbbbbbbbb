@@ -12,6 +12,12 @@ export default PaperCard.extend({
     this.send('refresh');
   },
 
+  /** @property {Array<Card>} The hand sorted by cmc and name. */
+  sortedHand: function () {
+    var hand = this.get('hand') || [];
+    return hand.sortBy('cmc', 'name');
+  }.property('hand'),
+
   actions: {
     /**
      * "Draw" a new hand by choosing 7 random cards from the deck.
