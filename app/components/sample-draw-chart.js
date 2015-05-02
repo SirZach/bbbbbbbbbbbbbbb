@@ -6,8 +6,6 @@ import shuffle from '../utils/shuffle';
 export default PaperCard.extend({
   layout,
 
-  fullscreen: false,
-
   willInsertElement: function () {
     this.send('refresh');
   },
@@ -35,10 +33,6 @@ export default PaperCard.extend({
       this.set('hand', cards.slice(0, 7));
       // The library is the 8th card to the end of the array.
       this.set('library', cards.slice(7));
-    },
-
-    fullscreen: function () {
-      this.toggleProperty('fullscreen');
     }
   }
 });
