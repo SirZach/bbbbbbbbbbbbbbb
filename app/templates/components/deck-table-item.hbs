@@ -10,19 +10,21 @@
 {{/x-tr}}
 {{#if canShow}}
   {{#each cardGroup in family.cardGroups}}
-    {{#x-tr action="showCard" focusIn="hoverOn" focusOut="hoverOff" param=cardGroup.card}}
+    {{#x-tr action="showCard" class="has-hidden-hover" focusIn="hoverOn" focusOut="hoverOff" param=cardGroup.card}}
       <td>
         <span class="indent indent-2">{{cardGroup.count}}</span>
       </td>
       <td class="cursor-pointer">{{cardGroup.card.name}}</td>
       {{#if canEdit}}
         <td>
-          {{#x-paper-button action="add" params=cardGroup}}
-            {{paper-icon icon="add-circle"}}
-          {{/x-paper-button}}
-          {{#x-paper-button action="remove" params=cardGroup}}
-            {{paper-icon icon="remove-circle"}}
-          {{/x-paper-button}}
+          <div class="on-hover">
+            {{#x-paper-button action="add" params=cardGroup bubbles=false}}
+              {{paper-icon icon="add-circle"}}
+            {{/x-paper-button}}
+            {{#x-paper-button action="remove" params=cardGroup bubbles=false}}
+              {{paper-icon icon="remove-circle"}}
+            {{/x-paper-button}}
+          </div>
         </td>
       {{/if}}
     {{/x-tr}}
