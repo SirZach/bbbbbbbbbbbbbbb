@@ -67,7 +67,7 @@ export default Ember.Route.extend({
     },
 
     showCard: function (card) {
-      this.controllerFor('deck.build').set('selectedCard', card);
+      this.controllerFor('deck.build').set('nameSearch', card.get('name'));
     },
 
     typesChanged: function () {
