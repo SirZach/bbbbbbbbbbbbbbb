@@ -29,6 +29,11 @@
       right: -235px;
       transition: top 0.25s;
       z-index: 99;
+
+      &.opposite {
+        right: auto;
+        left: -235px;
+      }
     }
 
     .card-spoiler-pointer {
@@ -38,11 +43,18 @@
       height: 0;
       border-top: 6px solid transparent;
       border-bottom: 6px solid transparent;
-      border-right:6px solid black;
+      border-right: 6px solid black;
       right: -10px;
       top: 50%;
       transition: top 0.25s;
       z-index: 99;
+
+      &.opposite {
+        right: auto;
+        left: -10px;
+        border-right: none;
+        border-left: 6px solid black;
+      }
     }
   }
 }
