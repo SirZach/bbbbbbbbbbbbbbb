@@ -25,22 +25,7 @@
         {{/paper-card}}
       {{/full-height}}
     </div>
-    {{!--
-    <div class="col-sm-2">
-      {{#if selectedCard}}
-        {{x-card card=selectedCard}}
-        {{x-card-deck card=selectedCard
-          deck=model
-          addToMain="addToMain"
-          addToSide="addToSide"
-          removeOneFromMain="removeOneFromMain"
-          removeAllFromMain="removeAllFromMain"
-          removeOneFromSide="removeOneFromSide"
-          removeAllFromSide="removeAllFromSide"
-        }}
-      {{/if}}
-    </div>
-    --}}
+
     <div class="col-sm-5">
       {{#paper-card}}
         {{#paper-card-content}}
@@ -74,8 +59,7 @@
           {{#paper-card-content}}
             {{deck-table
               deck=model
-              canEdit=true
-              showCard="showCard"}}
+              canEdit=true}}
           {{/paper-card-content}}
         {{/paper-card}}
       {{/if}}

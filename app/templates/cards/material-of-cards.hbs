@@ -1,7 +1,7 @@
 {{#paper-content classNames="md-whiteframe-z1 list-demo"}}
   {{#paper-list}}
     {{#each card in filteredCards}}
-      {{#x-paper-item class="cursor-pointer has-hidden-hover" param=card action="showCard" as |isExpanded|}}
+      {{#x-paper-item class="cursor-pointer has-hidden-hover" as |isExpanded|}}
         {{#paper-tile-left}}
           {{x-card-image src=card.imageUrl class="face"}}
         {{/paper-tile-left}}

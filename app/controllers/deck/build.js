@@ -7,9 +7,6 @@ export default Ember.Controller.extend({
 
   doNotShowTypes: [],
 
-  /** @property {Card} card selected to be viewed in more detail */
-  selectedCard: null,
-
   nameSearch: Ember.computed.alias('controllers.cards.nameSearch'),
 
   nameSearchDidChange: function () {
