@@ -25,10 +25,18 @@
     {{/paper-card}}
   </div>
 
-  {{!-- Side column for charts --}}
+  {{!-- Side column 1 for charts --}}
   <div class="col-md-4 col-sm-6">
     {{#titled-card title="Mana Curve"}}
       {{mana-curve-chart deck=model}}
     {{/titled-card}}
   </div>
+
+  {{!-- Side column 2 for charts --}}
+  <div class="col-md-4 col-sm-6">
+    {{sample-draw-chart deck=model}}
+  </div>
+
+
+
 </div>

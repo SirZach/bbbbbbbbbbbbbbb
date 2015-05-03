@@ -8,14 +8,13 @@ export default Ember.Component.extend({
 
   /**
    * @property {Array} List of hidden deck sections.
-   * Instantiate per-component.
+   * Instantiate per component.
    */
   doNotShowTypes: null,
 
-  init: function () {
-    this._super.apply(this, arguments);
+  initNoShowTypes: function () {
     this.set('doNotShowTypes', []);
-  },
+  }.on('init'),
 
   canShowMainDeck: function () {
     return !this.get('doNotShowTypes').contains('mainDeck');
@@ -24,6 +23,11 @@ export default Ember.Component.extend({
   canShowSideDeck: function () {
     return !this.get('doNotShowTypes').contains('sideDeck');
   }.property('doNotShowTypes.@each'),
+
+  /** @property {Boolean} Render spoiler on left side? */
+  isSpoilerOpposite: function () {
+    return this.get('spoilerPosition') === 'left';
+  }.property('spoilerPosition'),
 
   actions: {
     showHide: function (superType) {

@@ -71,7 +71,12 @@
   </table>
 </div>
 
-<div class="card-spoiler-pointer {{unless spoilerCard 'invisible'}}" style="{{spoilerCardPointerStyle}}"></div>
-<div class="card-spoiler {{unless spoilerCard 'invisible'}}" style="{{spoilerCardStyle}}">
+<div
+  class="card-spoiler-pointer {{if isSpoilerOpposite 'opposite'}} {{unless spoilerCard 'invisible'}}"
+  style="{{spoilerCardPointerStyle}}">
+</div>
+<div
+  class="card-spoiler {{if isSpoilerOpposite 'opposite'}} {{unless spoilerCard 'invisible'}}"
+  style="{{spoilerCardStyle}}">
   <img src="{{spoilerCard.imageUrl}}" />
 </div>
