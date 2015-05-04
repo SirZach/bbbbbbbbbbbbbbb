@@ -5,6 +5,12 @@ export default Ember.Route.extend({
     if (!this.get('session.isAuthenticated')) {
       this.replaceWith('/');
     }
+
+    var cardsController = this.controllerFor('cards');
+    return this.store.find('card').then(function (cards) {
+      cardsController.set('model', cards);
+      return;
+    });
   },
 
   model: function (params) {

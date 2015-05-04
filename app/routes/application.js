@@ -1,14 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  beforeModel: function () {
-    var cardsController = this.controllerFor('cards');
-    return this.store.find('card').then(function (cards) {
-      cardsController.set('model', cards);
-      return;
-    });
-  },
-
   actions: {
     loginWithSocial: function (provider) {
       this.get('session').loginWithSocial(provider).then(() => {
