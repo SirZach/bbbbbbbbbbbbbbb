@@ -1,56 +1,48 @@
 <div class="row row-offcanvas row-offcanvas-left {{if filtersActive 'active'}}">
 
   <div class="col-sm-3 col-lg-1 sidebar-offcanvas" id="sidebar">
-    {{card-filters
-      typesSelected=controllers.cards.types
-      colorsSelected=controllers.cards.colors
-      legalitiesSelected=controllers.cards.legalities
-      typesChanged="typesChanged"
-      colorsChanged="colorsChanged"
-      legalitiesChanged="legalitiesChanged"
-    }}
+    {{#paper-card}}
+      {{#paper-card-content}}
+        {{card-filters
+          typesSelected=controllers.cards.types
+          colorsSelected=controllers.cards.colors
+          legalitiesSelected=controllers.cards.legalities
+          typesChanged="typesChanged"
+          colorsChanged="colorsChanged"
+          legalitiesChanged="legalitiesChanged"
+        }}
+      {{/paper-card-content}}
+    {{/paper-card}}
   </div>
-  <div class="col-sm-12 col-lg-11">
-    <div class="col-sm-5">
-      {{#full-height classNames="overflow-y-scroll scrollable-paper-item"}}
-        {{paper-text label="Name" value=nameSearch}}
+  <div>
+    <div class="col-sm-7">
+      {{#full-height classNames="overflow-y-scroll pl-10 pr-10"}}
+        {{#paper-card class="mr-0 ml-0"}}
+          {{#paper-card-content}}
+            {{paper-text class="width-100" label="Name" value=nameSearch}}
+          {{/paper-card-content}}
+        {{/paper-card}}
         {{partial "cards/material-of-cards"}}
       {{/full-height}}
     </div>
-    <div class="col-sm-2">
-      {{#if selectedCard}}
-        {{x-card card=selectedCard}}
-        {{x-card-deck card=selectedCard
-          deck=model
-          addToMain="addToMain"
-          addToSide="addToSide"
-          removeOneFromMain="removeOneFromMain"
-          removeAllFromMain="removeAllFromMain"
-          removeOneFromSide="removeOneFromSide"
-          removeAllFromSide="removeAllFromSide"
-        }}
-      {{/if}}
-    </div>
+
     <div class="col-sm-5">
-      <form class="form-horizontal form-horizontal-condensed">
-        <div class="form-group">
-          <label class="col-sm-6 control-label" style="text-align: left;">Classification</label>
-          <div class="col-sm-6" style="padding-top: 7px;">
-            {{controllers.deck.model.classification}}
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="pl-15">
-            {{paper-text label="Deck Name" value=controllers.deck.model.name}}
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="deck-comments" class="col-sm-2 control-label">Comments</label>
-          <div class="col-sm-12">
-            {{textarea class="form-control" id="deck-comments" rows="3" value=controllers.deck.model.comments}}
-          </div>
-        </div>
-      </form>
+      {{#paper-card}}
+        {{#paper-card-content}}
+          <form class="form-horizontal form-horizontal-condensed">
+            <div class="form-group">
+              <label class="control-label">Classification</label>
+              {{controllers.deck.model.classification}}
+            </div>
+            <div class="form-group">
+              {{paper-text class="width-100" label="Deck Name" value=controllers.deck.model.name}}
+            </div>
+            <div class="form-group">
+              {{paper-text class="width-100" label="Comments" value=controllers.deck.model.comments}}
+            </div>
+          </form>
+        {{/paper-card-content}}
+      {{/paper-card}}
 
       {{#if model.failedImports}}
         {{failed-imports lines=model.failedImports action="clearFailedImports"}}
@@ -62,6 +54,7 @@
             {{deck-table
               deck=model
               showCard="showCard"
+              canEdit=true
               spoilerPosition="left"}}
           {{/paper-card-content}}
         {{/paper-card}}

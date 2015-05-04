@@ -7,5 +7,9 @@ export default Ember.Route.extend({
     }, function () {
       return true;
     });
+  },
+
+  redirect: function () {
+    this.transitionTo('games.list');
   }
 });

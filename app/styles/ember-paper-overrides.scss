@@ -1,0 +1,19 @@
+md-item-content {
+  background: #fff;
+  &.is-expanded {
+    height: auto;
+  }
+}
+md-card-content {background: #fff;}
+
+md-input-group {
+  &.width-100 {
+    input {
+      width: 100%;
+    }
+  }
+}
+
+.md-tile-left {
+  align-self: flex-start;
+}

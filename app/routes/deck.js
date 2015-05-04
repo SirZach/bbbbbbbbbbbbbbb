@@ -31,6 +31,14 @@ export default Ember.Route.extend({
   },
 
   actions: {
+    addToMain: function (card) {
+      this.get('controller.model').addCard(card, 'main');
+    },
+
+    addToSide: function (card) {
+      this.get('controller.model').addCard(card, 'side');
+    },
+
     saveDeck: function (deck) {
       this.get('session.user').then((user) => {
         deck.save()
@@ -59,7 +67,7 @@ export default Ember.Route.extend({
     },
 
     showCard: function (card) {
-      this.controllerFor('deck.build').set('selectedCard', card);
+      this.controllerFor('deck.build').set('nameSearch', card.get('name'));
     },
 
     typesChanged: function () {

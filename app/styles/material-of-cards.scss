@@ -1,5 +1,8 @@
 .paper-tile-content-right {
-  position: relative;
-  top: -25px;
-  li {display: inline-block;}
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  li {
+    display: inline-block;
+  }
 }

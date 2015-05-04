@@ -2,6 +2,8 @@ import Ember from 'ember';
 import PaperButton from 'ember-paper/components/paper-button';
 
 export default PaperButton.extend({
+  attributeBindings: ['target', 'action', 'title'],
+
   click: function () {
     //stolen from ember-paper
     var target = this.get('target');
