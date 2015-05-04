@@ -1,34 +1,22 @@
-{{#paper-card}}
-  {{x-card-image src=card.imageUrl}}
-  {{#paper-card-content}}
-    <h6>Name</h6>
-    <p>{{card.name}}</p>
-    <h6>Mana cost</h6>
-    <p>{{mana-formatted mana=card.manaCostFormatted}}</p>
-    <h6>Card type</h6>
-    <p>{{card.type}}</p>
-    {{#if card.powerToughnessFormatted}}
-      <h6>P/T</h6>
-      <p>{{card.powerToughnessFormatted}}</p>
+<h6>Card type</h6>
+<p>{{card.type}}</p>
+<h6>Price</h6>
+<p>
+  {{#promise-spinner url=card.channelFireballPrice as |promise|}}
+    {{#if promise.isPending}}
+      {{fa-icon "refresh" spin=true}}
     {{/if}}
-    <h6>Price</h6>
-    <p>
-      {{#promise-spinner url=card.channelFireballPrice as |promise|}}
-        {{#if promise.isPending}}
-          {{fa-icon "refresh" spin=true}}
-        {{/if}}
-        {{#if promise.isFulfilled}}
-          {{#if promise.model.price}}
-            {{promise.model.price}}
-          {{else}}
-            No price found.
-          {{/if}}
-        {{/if}}
-        {{#if promise.isRejected}}
-          :(
-        {{/if}}
-      {{/promise-spinner}}
-    </p>
-    <p>{{card.text}}</p>
-  {{/paper-card-content}}
-{{/paper-card}}
+    {{#if promise.isFulfilled}}
+      {{#if promise.model.price}}
+        {{promise.model.price}}
+      {{else}}
+        No price found.
+      {{/if}}
+    {{/if}}
+    {{#if promise.isRejected}}
+      :(
+    {{/if}}
+  {{/promise-spinner}}
+</p>
+<h6>Recent Set</h6>
+<p>{{card.recentSet}}</p>

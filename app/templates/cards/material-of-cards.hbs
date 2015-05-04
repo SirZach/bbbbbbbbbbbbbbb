@@ -12,19 +12,18 @@
             <li>{{card.powerToughnessFormatted}}</li>
             <li class="ml-10">{{mana-formatted mana=card.manaCostFormatted}}</li>
             <li class="on-hover">
-              {{#x-paper-button action="addToMain" params=card bubbles=false}}
-                {{paper-icon icon="add-circle" size="lg" title="Add to Deck"}}
+              {{#x-paper-button raised=true classNames="md-primary" title="Add to Deck" action="addToMain" params=card bubbles=false}}
+                Deck
               {{/x-paper-button}}
             </li>
             <li class="on-hover">
-              {{#x-paper-button action="addToSide" params=card bubbles=false}}
-                {{paper-icon icon="add" size="lg" title="Add to Sideboard"}}
+              {{#x-paper-button raised=true title="Add to Sideboard" action="addToSide" params=card bubbles=false}}
+                Sideboard
               {{/x-paper-button}}
             </li>
           </ul>
           <p class="truncate" {{bind-attr title=card.text}}>{{card.text}}</p>
           {{#if isExpanded}}
-            <h4>{{card.recentSet}}</h4>
             {{x-card card=card}}
           {{/if}}
         {{/paper-tile-content}}
