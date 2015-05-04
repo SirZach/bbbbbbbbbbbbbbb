@@ -16,13 +16,13 @@
   </div>
   <div>
     <div class="col-sm-7">
-      {{#full-height classNames="overflow-y-scroll"}}
-        {{#paper-card}}
+      {{#full-height classNames="overflow-y-scroll pl-10 pr-10"}}
+        {{#paper-card class="mr-0 ml-0"}}
           {{#paper-card-content}}
-            {{paper-text label="Name" value=nameSearch}}
-            {{partial "cards/material-of-cards"}}
+            {{paper-text class="width-100" label="Name" value=nameSearch}}
           {{/paper-card-content}}
         {{/paper-card}}
+        {{partial "cards/material-of-cards"}}
       {{/full-height}}
     </div>
 
@@ -31,20 +31,14 @@
         {{#paper-card-content}}
           <form class="form-horizontal form-horizontal-condensed">
             <div class="form-group">
-              <label class="col-sm-6 control-label" style="text-align: left;">Classification</label>
-              <div class="col-sm-6" style="padding-top: 7px;">
-                {{controllers.deck.model.classification}}
-              </div>
+              <label class="control-label">Classification</label>
+              {{controllers.deck.model.classification}}
             </div>
             <div class="form-group">
-              <div class="pl-15">
-                {{paper-text label="Deck Name" value=controllers.deck.model.name}}
-              </div>
+              {{paper-text class="width-100" label="Deck Name" value=controllers.deck.model.name}}
             </div>
             <div class="form-group">
-              <div class="pl-15">
-                {{paper-text label="Comments" value=controllers.deck.model.comments}}
-              </div>
+              {{paper-text class="width-100" label="Comments" value=controllers.deck.model.comments}}
             </div>
           </form>
         {{/paper-card-content}}
