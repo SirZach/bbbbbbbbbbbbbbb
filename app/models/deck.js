@@ -200,21 +200,18 @@ var Deck = DS.Model.extend({
    * @param {Number} count - (optional) number of cards to add
    */
   addCard: function (card, board, count) {
-    var cardGroup;
-    if (this.canAddToDeck(card.get('name'), board)) {
-      cardGroup = this.getCardGroup(card.get('name'), board);
-      if (!cardGroup) {
-        cardGroup = this.store.createRecord('cardGroup', {
-          board: board,
-          count: 0,
-          card: card
-        });
-        this.get('cardGroups').pushObject(cardGroup);
-      }
-      cardGroup.incrementProperty('count');
-      if (--count) {
-        this.addCard(card, board, count);
-      }
+    var cardGroup = this.getCardGroup(card.get('name'), board);
+    if (!cardGroup) {
+      cardGroup = this.store.createRecord('cardGroup', {
+        board: board,
+        count: 0,
+        card: card
+      });
+      this.get('cardGroups').pushObject(cardGroup);
+    }
+    cardGroup.incrementProperty('count');
+    if (--count) {
+      this.addCard(card, board, count);
     }
   },
 
