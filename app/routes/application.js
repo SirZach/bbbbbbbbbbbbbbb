@@ -30,6 +30,10 @@ export default Ember.Route.extend({
       });
     },
 
+    createNewDeck: function () {
+      this.transitionTo('deck.build', 'new');
+    },
+
     /**
      * @param says - message to send in the chat
      * @param channel - what chat room should this message go in?

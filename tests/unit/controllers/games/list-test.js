@@ -8,22 +8,16 @@ moduleFor('controller:games/list', {
   // needs: ['controller:foo']
 });
 
-test('canCreateGame - decks not ready', function(assert) {
+test('canCreateGame - no logged in user', function(assert) {
   var controller = this.subject();
-  controller.set('session', {
-    user: {
-      hasGameReadyDecks: false
-    }
-  });
+  controller.set('session', {});
   assert.equal(controller.get('canCreateGame'), false);
 });
 
-test('canCreateGame - all good', function(assert) {
+test('canCreateGame - user is logged in', function(assert) {
   var controller = this.subject();
   controller.set('session', {
-    user: {
-      hasGameReadyDecks: true
-    }
+    user: {}
   });
   assert.equal(controller.get('canCreateGame'), true);
 });
