@@ -21,7 +21,7 @@ var session = Ember.Object.extend({
     var store = this.get('store');
 
     this.get('ref').onAuth(function (authData) {
-      // Ember.run.next(function () {
+      Ember.run(function () {
         if (authData) {
           // Set the 'user' property to be a promise proxy that resolves when we
           // are done creating the user. Most people will just ignore the fact
@@ -33,7 +33,7 @@ var session = Ember.Object.extend({
         } else {
           session.set('isAuthenticated', false);
         }
-      // });
+      });
     });
   }.on('init'),
 
@@ -125,16 +125,18 @@ var session = Ember.Object.extend({
   },
 
   onPresenceStateChange: function (state) {
-    if (!this.get('user.isFulfilled')) {
-      return;
-    }
-    this.get('user.presence').then(function (presence) {
-      presence.set('state', state);
-      if (state === 'idle') {
-        presence.set('lastSeen',
-          moment().subtract(IDLE_MS, 'milliseconds').toDate());
+    Ember.run(() => {
+      if (!this.get('user.isFulfilled')) {
+        return;
       }
-      presence.save();
+      this.get('user.presence').then(function (presence) {
+        presence.set('state', state);
+        if (state === 'idle') {
+          presence.set('lastSeen',
+            moment().subtract(IDLE_MS, 'milliseconds').toDate());
+        }
+        presence.save();
+      });
     });
   },
 
@@ -158,17 +160,19 @@ var session = Ember.Object.extend({
         user.save();
       }
       amOnline.on('value', function (snapshot) {
-        if (snapshot.val()) {
-          var ref = store.refFor('presence', presence);
-          ref.child('state')
-            .onDisconnect()
-            .set('offline');
-          ref.child('lastSeen')
-            .onDisconnect()
-            .set(Firebase.ServerValue.TIMESTAMP);
-          presence.set('state', 'online');
-          presence.save();
-        }
+        Ember.run(() => {
+          if (snapshot.val()) {
+            var ref = store.refFor('presence', presence);
+            ref.child('state')
+              .onDisconnect()
+              .set('offline');
+            ref.child('lastSeen')
+              .onDisconnect()
+              .set(Firebase.ServerValue.TIMESTAMP);
+            presence.set('state', 'online');
+            presence.save();
+          }
+        });
       });
     });
   },
@@ -177,9 +181,9 @@ var session = Ember.Object.extend({
     return new Ember.RSVP.Promise(function (resolve, reject) {
       this.get('ref').authWithOAuthPopup(provider, function (error, user) {
         if (user) {
-          resolve(user);
+          Ember.run(() => resolve(user));
         } else {
-          reject(error);
+          Ember.run(() => reject(error));
         }
       });
     }.bind(this));
@@ -200,9 +204,9 @@ var session = Ember.Object.extend({
         password: password
       }, (error, userData) => {
         if (error) {
-          reject(error);
+          Ember.run(() => reject(error));
         } else {
-          resolve(userData);
+          Ember.run(() => resolve(userData));
         }
       });
     });
@@ -224,13 +228,15 @@ var session = Ember.Object.extend({
         password: password
       }, (error, userData) => {
         if (error) {
-          reject(error);
+          Ember.run(() => reject(error));
         } else {
-          resolve(this.createPasswordUser(Ember.merge(userData, {
-            username: username,
-            email: email,
-            password: password
-          })));
+          Ember.run(() => {
+            resolve(this.createPasswordUser(Ember.merge(userData, {
+              username: username,
+              email: email,
+              password: password
+            })));
+          });
         }
       });
     }).then(() => {
