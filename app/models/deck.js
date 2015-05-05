@@ -282,7 +282,7 @@ var Deck = DS.Model.extend({
   }.property('cardGroups.@each'),
 
   /** @property {Boolean} - is this deck game-ready? */
-  isGameReady: Ember.computed.gte('mainCount', 60),
+  isGameReady: Ember.computed.gt('mainCount', 0),
 
   /** @property {String} - default image url; uses a card in the deck */
   defaultImageUrl: function () {
