@@ -21,7 +21,7 @@ var session = Ember.Object.extend({
     var store = this.get('store');
 
     this.get('ref').onAuth(function (authData) {
-      Ember.run.next(function () {
+      // Ember.run.next(function () {
         if (authData) {
           // Set the 'user' property to be a promise proxy that resolves when we
           // are done creating the user. Most people will just ignore the fact
@@ -33,7 +33,7 @@ var session = Ember.Object.extend({
         } else {
           session.set('isAuthenticated', false);
         }
-      });
+      // });
     });
   }.on('init'),
 
