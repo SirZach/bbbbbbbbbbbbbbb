@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import shuffle from '../utils/shuffle';
 
 export default Ember.Controller.extend({
   /** @property {Boolean} Is the game going? */
@@ -168,6 +169,38 @@ export default Ember.Controller.extend({
     return this.get('hasChosenDeck') && !this.get('participant.isReady');
   }.property('amIPlaying', 'participant.isReady', 'hasChosenDeck'),
 
+  /**
+   * Prepare the deck for play. Create game card models for each card in the
+   * main deck, shuffle. By default, cards are put in the library.
+   */
+  initializeGameCards: function () {
+    if (!this.get('hasChosenDeck')) {
+      return;
+    }
+    var deckId = this.get('participant.deckId');
+    var deck = this.get('session.user.gameReadyDecks').findBy('id', deckId);
+    var gameCards = [];
+
+    deck.get('mainCardGroups').forEach((cardGroup) => {
+      var card = cardGroup.get('card');
+      var count = cardGroup.get('count');
+      var i, gameCard;
+      for (i = 0; i < count; i++) {
+        gameCard = this.store.createRecord('gameCard');
+        gameCard.set('card', card);
+        gameCards.pushObject(gameCard);
+      }
+    });
+    gameCards = shuffle(gameCards);
+    // Initialize the order. The id of firebase records influences the order in
+    // which it is saved in the database. If we don't give it an order, they'll
+    // come back next time in the order the records were created.
+    //
+    var count = 0;
+    gameCards.forEach((gameCard) => gameCard.set('order', count++));
+    this.get('participant.gameCards').pushObjects(gameCards);
+  },
+
   actions: {
     /**
      * Respond to a deck selection event.
@@ -187,6 +220,7 @@ export default Ember.Controller.extend({
     iAmReady: function () {
       var participant = this.get('participant');
       participant.set('isReady', true);
+      this.initializeGameCards();
       this.get('model').save();
     },
 
