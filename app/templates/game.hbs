@@ -23,7 +23,11 @@
     {{else}}
       <h3>
         <img src={{playerOneAvatarUrl}} class="avatar">
-        {{bottomBoardTitle}}
+        {{#if playerOne.user.hasGameReadyDecks}}
+          {{bottomBoardTitle}}
+        {{else}}
+          {{#paper-button raised=true class="md-primary" action="createNewDeck"}}Create Deck{{/paper-button}}
+        {{/if}}
 
         {{!-- Button to join the game --}}
         {{#if canIJoinAsPlayer}}

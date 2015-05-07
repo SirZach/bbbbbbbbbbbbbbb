@@ -39,6 +39,7 @@ var session = Ember.Object.extend({
 
   logout: function () {
     this.get('ref').unauth();
+    this.set('user', null);
   },
 
   /**
