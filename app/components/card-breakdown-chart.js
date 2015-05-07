@@ -38,7 +38,7 @@ export default Ember.Component.extend({
     cardGroups
       .filterBy('board', 'main')
       .forEach((group) => {
-        var stat = stats[group.get('card.mainType')]
+        var stat = stats[group.get('card.mainType')];
         var count = group.get('count');
         stat.count += count;
         stat.width += (100 / mainCount) * count;
