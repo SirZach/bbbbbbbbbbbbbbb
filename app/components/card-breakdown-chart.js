@@ -40,8 +40,6 @@ export default Ember.Component.extend({
         stat.width += (100 / mainCount) * count;
       });
 
-    debugger;
-
     return [
       {label: 'Creature', count: stats.Creature.count, width: `${stats.Creature.width}%`},
       {label: 'Artifact', count: stats.Artifact.count, width: `${stats.Artifact.width}%`},
