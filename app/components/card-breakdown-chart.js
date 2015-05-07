@@ -28,6 +28,10 @@ export default Ember.Component.extend({
       Land: {
         count: 0,
         width: 0
+      },
+      Enchantment: {
+        count: 0,
+        width: 0
       }
     };
 
@@ -45,7 +49,8 @@ export default Ember.Component.extend({
       {label: 'Artifact', count: stats.Artifact.count, width: `${stats.Artifact.width}%`},
       {label: 'Sorcery', count: stats.Sorcery.count, width: `${stats.Sorcery.width}%`},
       {label: 'Instant', count: stats.Instant.count, width: `${stats.Instant.width}%`},
-      {label: 'Land', count: stats.Land.count, width: `${stats.Land.width}%`}
+      {label: 'Land', count: stats.Land.count, width: `${stats.Land.width}%`},
+      {label: 'Enchantment', count: stats.Enchantment.count, width: `${stats.Enchantment.width}%`}
     ];
   }.property('deck')
 });

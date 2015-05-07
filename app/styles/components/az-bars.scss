@@ -1,5 +1,5 @@
 az-bars {
-  width: calc(100% - 60px);
+  width: calc(100% - 96px);
   div {
     text-align: right;
     padding: 5px;
@@ -13,6 +13,7 @@ az-bars {
       &.Land {background-color: map-get($color-green, '300');}
       &.Sorcery {background-color: map-get($color-blue, '300');}
       &.Instant {background-color: map-get($color-yellow, '300');}
+      &.Enchantment {background-color: map-get($color-cyan, '300');}
     }
   }
 }
