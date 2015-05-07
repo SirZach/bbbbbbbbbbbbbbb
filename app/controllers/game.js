@@ -169,6 +169,13 @@ export default Ember.Controller.extend({
     return this.get('hasChosenDeck') && !this.get('participant.isReady');
   }.property('amIPlaying', 'participant.isReady', 'hasChosenDeck'),
 
+  /** @property {Deck} the deck used by the participant */
+  gameDeck: function () {
+    var deckId = this.get('participant.deckId');
+    var deck = this.get('session.user.gameReadyDecks').findBy('id', deckId);
+    return deck;
+  }.property('session.user.gameReadyDecks.[]', 'participant.deckId'),
+
   /**
    * Prepare the deck for play. Create game card models for each card in the
    * main deck, shuffle. By default, cards are put in the library.
@@ -177,8 +184,7 @@ export default Ember.Controller.extend({
     if (!this.get('hasChosenDeck')) {
       return;
     }
-    var deckId = this.get('participant.deckId');
-    var deck = this.get('session.user.gameReadyDecks').findBy('id', deckId);
+    var deck = this.get('gameDeck');
     var gameCards = [];
 
     deck.get('mainCardGroups').forEach((cardGroup) => {
