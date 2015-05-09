@@ -59,6 +59,11 @@ export default Ember.Component.extend({
   /** @property {Boolean} flag to hide or show the card spoiler */
   cardSpoilerHidden: 'hidden',
 
+  /** @property {Boolean} Render spoiler on right side? */
+  isSpoilerOpposite: function () {
+    return this.get('spoilerPosition') === 'right';
+  }.property('spoilerPosition'),
+
   actions: {
     /**
      * Show this card image.
