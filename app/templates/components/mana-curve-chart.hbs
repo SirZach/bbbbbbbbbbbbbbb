@@ -12,6 +12,6 @@
     </div>
   </div>
 {{/each}}
-<div class="card-spoiler {{if cardSpoilerHidden 'hidden'}}">
+<div class="card-spoiler {{if cardSpoilerHidden 'hidden'}} {{if isSpoilerOpposite 'opposite'}}">
   <img src={{spoilerCard.imageUrl}} />
 </div>

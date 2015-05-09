@@ -103,6 +103,18 @@
         right: -6px;
         transform: translateY(-50%);
       }
+
+      &.opposite {
+        left: auto;
+        right: -250px;
+
+        &:before {
+          border-right: 6px solid black;
+          border-left: 0;
+          left: -6px;
+          right: auto;
+        }
+      }
     }
   }
 }
