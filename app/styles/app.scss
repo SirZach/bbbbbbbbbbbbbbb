@@ -26,8 +26,9 @@ $locked-breakpoint: 1700px;
 @import "deck";
 @import "charts";
 @import "ember-paper-overrides";
+@import "decks/list";
 
-body { background-color: #ececec;}
+body { background-color: map-get($color-grey, '300');}
 
 .ember-app {
   width: 100%;
@@ -61,15 +62,6 @@ body { background-color: #ececec;}
   cursor: pointer;
 }
 
-.table-ellipsible {
-  table-layout: fixed;
-  td, th {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-
 .overflow-y-scroll {
   overflow-y: scroll;
 }
@@ -100,4 +92,32 @@ body { background-color: #ececec;}
   left: auto;
   top: auto;
   bottom: 10px;
+}
+
+@mixin deck-card {
+  height: 100px;
+  width: 70px;
+  border: 2px solid map-get($color-orange, '500');
+  background-color: map-get($color-grey, '300');
+  position: absolute;
+}
+
+.three-card-deck {
+  position: relative;
+  margin: 0 auto;
+  height: 100px;
+  width: 100px;
+  .card-one {
+    @include deck-card;
+  }
+  .card-two {
+    @include deck-card;
+    right: 15px;
+    top: 15px;
+  }
+  .card-three {
+    @include deck-card;
+    left: 30px;
+    top: 30px;
+  }
 }
