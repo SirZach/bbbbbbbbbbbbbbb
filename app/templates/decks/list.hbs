@@ -33,9 +33,20 @@
           </ul>
           <p class="truncate">{{deck.comments}}</p>
           {{#if isExpanded}}
-            {{#titled-card title="Mana Curve"}}
-              {{mana-curve-chart deck=deck}}
-            {{/titled-card}}
+
+            <div class="row">
+              <div class="col-sm-6">
+                {{#titled-card title="Mana Curve"}}
+                  {{mana-curve-chart deck=deck}}
+                {{/titled-card}}
+              </div>
+
+              <div class="col-sm-6">
+                {{#titled-card title="Card Breakdown"}}
+                  {{card-breakdown-chart deck=deck}}
+                {{/titled-card}}
+              </div>
+            </div>
           {{/if}}
         {{/paper-tile-content}}
       {{/x-paper-item}}
