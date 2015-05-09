@@ -3,8 +3,8 @@
     {{#if character.isNumber}}
       <span>{{character.value}}</span>
     {{else}}
-      <span {{bind-attr data-magic-icon=character.symbol
-        title=character.description}}></span>
+      <span data-magic-icon={{character.symbol}}
+        title={{character.description}}></span>
     {{/if}}
   {{/each}}
 </span>
