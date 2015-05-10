@@ -36,6 +36,12 @@ export default Ember.Route.extend({
       // Simply mark as not present. We don't want to destroy participants if
       // they happen to actually be playing.
       participantRef.child('isPresent').onDisconnect().set(false);
+      model.on('didDelete', () => {
+        // Don't set not present if the model was deleted. Otherwise we'll end
+        // up with a zombie game record in firebase.
+        //
+        participantRef.child('isPresent').onDisconnect().remove();
+      });
 
       // Save the model with the new participant state.
       return model.save();
