@@ -1,11 +1,17 @@
 {{#each chats as |chat|}}
-  {{#chat-message}}
+  {{#chat-message classNameBindings="chat.isMe:chat-mine"}}
     {{#paper-tile-left}}
-      <img src={{chat.avatarUrl}} class="chat-avatar">
+      <img src={{chat.avatarUrl}} class="chat-avatar-md">
     {{/paper-tile-left}}
+
     {{#paper-tile-content}}
-      <h3 class="chat-message-by">{{chat.name}} <small>{{x-ago date=chat.when}}</small></h3>
-      <h3 class="chat-message-text">{{chat.says}}</h3>
+      {{#each chat.messages as |message|}}
+        <h3 class="chat-message-text">{{message}}</h3>
+      {{/each}}
     {{/paper-tile-content}}
   {{/chat-message}}
+  <h3 class="chat-message-by {{if chat.isMe 'chat-mine'}}">
+    {{chat.name}}&nbsp;
+    <small>{{x-ago date=chat.when}}</small>
+  </h3>
 {{/each}}

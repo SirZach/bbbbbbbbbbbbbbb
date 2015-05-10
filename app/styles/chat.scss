@@ -9,6 +9,11 @@
   width: 60px;
 }
 
+.chat-avatar-md {
+  @include avatar;
+  width: 50px;
+}
+
 @media screen and (min-width: 850px) {
   .chat {
     left: 257px;
@@ -68,7 +73,8 @@
 }
 
 .chat-message-by {
-  color: #999;
+  color: map-get($color-grey, '500');
+  padding-left: 82px;
 }
 
 .active-user-list {
@@ -97,4 +103,12 @@
 
 .user-offline {
   color: #AAA;
+}
+
+.chat-mine {
+  .md-tile-left {
+    // Display on the right side.
+    order: 1;
+    margin-right: 0;
+  }
 }
