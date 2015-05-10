@@ -94,14 +94,23 @@ body { background-color: map-get($color-grey, '300');}
   bottom: 10px;
 }
 
-@mixin deck-card {
-  height: 100px;
-  width: 70px;
-  border: 2px solid map-get($color-orange, '500');
-  background-color: map-get($color-grey, '300');
+@mixin deck-card ($height:100px, $width:70px, $borderColor:map-get($color-orange, '500'), $backgroundColor:map-get($color-grey, '300')){
+  height: $height;
+  width: $width;
+  border: 2px solid $borderColor;
+  background-color: $backgroundColor;
   position: absolute;
 }
 
+.brand {
+  .three-card-deck {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  strong {
+    display: inline-block;
+  }
+}
 .three-card-deck {
   position: relative;
   margin: 0 auto;
@@ -119,5 +128,22 @@ body { background-color: map-get($color-grey, '300');}
     @include deck-card;
     left: 30px;
     top: 30px;
+  }
+  &.brand {
+    height: 20px;
+    width: 20px;
+    .card-one {
+      @include deck-card(20px, 14px, #fff, map-get($color-orange, '500'));
+    }
+    .card-two {
+      @include deck-card(20px, 14px, #fff, map-get($color-orange, '500'));
+      right: 0px;
+      top: 5px;
+    }
+    .card-three {
+      @include deck-card(20px, 14px, #fff, map-get($color-orange, '500'));
+      left: 12px;
+      top: 10px;
+    }
   }
 }
