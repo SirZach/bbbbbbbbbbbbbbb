@@ -4,7 +4,7 @@
       {{#each model as |game|}}
         {{game-listing
           game=game
-          currentUser=session.user.id
+          currentUserId=session.user.id
           deleteGame="deleteGame"}}
         {{paper-divider}}
       {{/each}}
