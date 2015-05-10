@@ -2,7 +2,10 @@
   {{#paper-content classNames="md-whiteframe-z1"}}
     {{#paper-list}}
       {{#each model as |game|}}
-        {{game-listing game=game}}
+        {{game-listing
+          game=game
+          currentUser=session.user.id
+          deleteGame="deleteGame"}}
         {{paper-divider}}
       {{/each}}
     {{/paper-list}}

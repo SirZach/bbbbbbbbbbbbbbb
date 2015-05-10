@@ -11,7 +11,10 @@ moduleForComponent('game-listing', {
     'component:paper-tile-left',
     'component:paper-tile-content',
     'component:paper-button',
-    'component:game-listing-player'
+    'component:game-listing-player',
+    'component:x-paper-button-delayed',
+    'component:donut-timer',
+    'component:paper-icon'
   ]
 });
 
@@ -21,7 +24,8 @@ test('it renders', function (assert) {
   // creates the component instance
   var component = this.subject();
   var game = Ember.Object.create({
-    gameParticipants: []
+    gameParticipants: [],
+    playerOne: Ember.Object.create()
   });
   Ember.run(function () {
     component.set('game', game);
