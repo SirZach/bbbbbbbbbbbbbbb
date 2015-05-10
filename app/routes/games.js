@@ -41,14 +41,14 @@ export default Ember.Route.extend({
                 type: 'error'
               });
             });
-        })
+        });
       })
       .catch((error) => {
         notifications.addNotification({
           message: error.message,
           type: 'error'
         });
-      });;
+      });
     }
   }
 });
