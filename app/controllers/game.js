@@ -10,9 +10,6 @@ export default Ember.Controller.extend({
 
   isGameInPrep: Ember.computed.not('isGameInProgress'),
 
-  /** @property {Boolean} Is the game over? */
-  isGameOver: Ember.computed.equal('model.status', 'ended'),
-
   /** @property {Boolean} Am I one of the players? */
   amIPlaying: function () {
     var playerUserIds = this.get('model.gameParticipants')
@@ -83,12 +80,6 @@ export default Ember.Controller.extend({
     }
   }.property('playerTwo.user.avatarUrl'),
 
-  /** @property {Boolean} Is there at least one open seat? */
-  isWaitingForOpponent: function () {
-    var players = this.get('model.gameParticipants').filterBy('isPlaying');
-    return players.length < 2;
-  }.property('model.gameParticipants.@each.isPlaying'),
-
   /** @property {String} The title showing on the top half of the board. */
   topBoardTitle: function () {
     var isGameInPrep = this.get('isGameInPrep');
@@ -156,6 +147,11 @@ export default Ember.Controller.extend({
   /** @property {Boolean} show or hide the chat channel */
   showChat: true,
 
+  /** @property {String} class name for the show/hide chat icon */
+  showChatClass: Ember.computed('showChat', function () {
+    return this.get('showChat') ? 'chevron-right' : 'chevron-left';
+  }),
+
   /** @property {Boolean} has participant chosen a deck? */
   hasChosenDeck: Ember.computed.and('participant.deckName', 'participant.deckId'),
 
@@ -215,8 +211,10 @@ export default Ember.Controller.extend({
      */
     selectDeck: function (deck) {
       var participant = this.get('participant');
-      participant.set('deckName', deck.get('name'));
-      participant.set('deckId', deck.get('id'));
+      participant.setProperties({
+        deckName: deck.get('name'),
+        deckId: deck.get('id')
+      });
       this.get('model').save();
     },
 

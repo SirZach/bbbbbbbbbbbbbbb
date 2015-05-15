@@ -9,12 +9,12 @@
 
   {{#game-zones}}
 
-    {{game-zone title="Hand" class="right"}}
+    {{game-zone title="Hand" cards=playerTwo.cardsInHand class="right"}}
 
-    {{game-zone title="Library" class="right"}}
+    {{game-zone title="Library" cards=playerTwo.cardsInLibrary class="right"}}
 
-    {{game-zone title="Graveyard" class="right"}}
+    {{game-zone title="Graveyard" cards=playerTwo.cardsInGraveyard class="right"}}
 
-    {{game-zone title="Exile" class="right bottom"}}
+    {{game-zone title="Exile" cards=playerTwo.cardsInExile class="right bottom"}}
   {{/game-zones}}
 {{/game-board-container}}

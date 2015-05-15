@@ -1,12 +1,12 @@
 {{#game-board-container}}
   {{#game-zones}}
-    {{game-zone title="Exile"}}
+    {{game-zone title="Exile" cards=playerOne.cardsInExile}}
 
-    {{game-zone title="Graveyard"}}
+    {{game-zone title="Graveyard" cards=playerOne.cardsInGraveyard}}
 
-    {{game-zone title="Library"}}
+    {{game-zone title="Library" cards=playerOne.cardsInLibrary}}
 
-    {{game-zone title="Hand" class="bottom"}}
+    {{game-zone title="Hand" class="bottom" cards=playerOne.cardsInHand}}
   {{/game-zones}}
 
   {{#battle-field}}
