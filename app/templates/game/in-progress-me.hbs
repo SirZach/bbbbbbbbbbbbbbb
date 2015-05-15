@@ -1,28 +1,19 @@
-<div class="game-board-container">
-  <div class="game-zones">
-    <div class="zone exile">
-      <h5>Exile</h5>
-    </div>
+{{#game-board-container}}
+  {{#game-zones}}
+    {{game-zone title="Exile"}}
 
-    <div class="zone graveyard">
-      <h5>Graveyard</h5>
-    </div>
+    {{game-zone title="Graveyard"}}
 
-    <div class="zone library">
-      <h5>Library</h5>
-    </div>
+    {{game-zone title="Library"}}
 
-    <div class="zone hand">
-      <h5>Hand</h5>
-    </div>
-  </div>
+    {{game-zone title="Hand" class="bottom"}}
+  {{/game-zones}}
 
-  <div class="battlefield">
+  {{#battle-field}}
 
-    <div class="non-land">
-    </div>
+    {{battle-field-non-land}}
 
-    <div class="land">
-    </div>
-  </div>
-</div>
+    {{battle-field-land}}
+
+  {{/battle-field}}
+{{/game-board-container}}
