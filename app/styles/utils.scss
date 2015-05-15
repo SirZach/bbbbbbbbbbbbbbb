@@ -22,9 +22,9 @@
 
 .link {
   cursor: pointer;
-  color: map-get($color-light-blue, '300');
+  color: map-get($color-light-blue, '800');
   &:hover {
-    color: map-get($color-light-blue, '500');
+    color: map-get($color-light-blue, '900');
   }
 }
 
