@@ -1,0 +1,14 @@
+.table {
+  > tbody {
+    > tr.success {
+      td {
+        background-color: map-get($color-green, '300');
+      }
+    }
+    > tr.info {
+      td {
+        background-color: map-get($color-blue, '300');
+      }
+    }
+  }
+}

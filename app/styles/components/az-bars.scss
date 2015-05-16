@@ -2,11 +2,10 @@ az-bars {
   width: calc(100% - 96px);
   div {
     text-align: right;
-    padding: 5px;
+    padding: 5px 0;
     height: 30px;
-    span {
+    .bar {
       width: 100%;
-      padding-right: 5px;
       display: inline-block;
       background-color: map-get($color-grey, '300');
       &.no-count {background: none;}
@@ -16,6 +15,13 @@ az-bars {
       &.Sorcery {background-color: map-get($color-blue, '300');}
       &.Instant {background-color: map-get($color-yellow, '300');}
       &.Enchantment {background-color: map-get($color-cyan, '300');}
+      .count {
+        position: relative;
+        left: 19px;
+        width: 16px;
+        text-align: left;
+        display: inline-block;
+      }
     }
   }
 }

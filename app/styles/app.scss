@@ -26,6 +26,7 @@ $locked-breakpoint: 1700px;
 @import "deck";
 @import "charts";
 @import "ember-paper-overrides";
+@import "bootstrap-overrides";
 @import "decks/list";
 
 body { background-color: map-get($color-grey, '300');}
@@ -56,6 +57,13 @@ body { background-color: map-get($color-grey, '300');}
   &.indent-2 {
     left: 40%;
   }
+}
+
+//lines up the family counts on the deck-table
+.family-count {
+  width: 15px;
+  display: inline-block;
+  text-align: right;
 }
 
 .cursor-pointer {
