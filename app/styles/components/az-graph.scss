@@ -1,3 +1,5 @@
+@import "../mixins/flex";
+
 az-graph {
-  display: flex;
+  @include flex();
 }

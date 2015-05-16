@@ -1,6 +1,9 @@
+@import "mixins/flex";
+@import 'variables';
+
 .game-board {
   position: fixed;
-  top: 51px;
+  top: 64px;
   bottom: 0;
   left: 0;
   right: 0;
@@ -24,12 +27,40 @@
 .game-board-bottom {
   height: 50%;
   overflow-y: auto;
-  padding: 0 10px;
 }
 
 .game-board-top {
   // TODO: replace with color scheme.
-  border-bottom: 1px solid #CCC;
+  border-bottom: 1px solid $grey-divider;
+}
+
+game-board-container {
+  @include flex();
+  height: 100%;
+  game-zones {
+    width: 100px;
+    height: 100%;
+    game-zone {
+      border-right: 1px dashed $grey-divider;
+      border-bottom: 1px dashed $grey-divider;
+      height: 25%;
+      padding: 8px;
+      display: block;
+      h5 {
+        margin: 0 0 8px 0;
+      }
+      &.bottom {
+        border-bottom: none;
+      }
+      &.right {
+        border-right: none;
+        border-left: 1px dashed $grey-divider;
+      }
+    }
+  }
+  battle-field {
+    width: calc(100% - 100px);
+  }
 }
 
 .game-board-bottom {
@@ -42,7 +73,7 @@
   top: 0;
   bottom: 0;
   background: #f2f2f2;
-  border-left: 1px solid #ccc;
+  border-left: 1px solid map-get($color-grey, '400');
   transition: width 0.5s;
   &.show-chat {width: 340px;}
   &.hide-chat {width: 0px;}

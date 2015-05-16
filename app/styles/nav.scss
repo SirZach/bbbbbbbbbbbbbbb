@@ -13,7 +13,7 @@
     font-weight: 700;
     padding: 1.1em 1.6em;
     &:hover {
-      background-color: #e0e0e0;
+      background-color: map-get($color-grey, '300');
     }
   }
 }

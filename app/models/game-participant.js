@@ -27,5 +27,25 @@ export default DS.Model.extend({
   life: DS.attr('number'),
 
   /** @property {String} Convenience property for computed dependencies. */
-  userId: Ember.computed.alias('user.id')
+  userId: Ember.computed.alias('user.id'),
+
+  /** @property {Array<GameCard>} all the cards in hand */
+  cardsInHand: Ember.computed('gameCards.[].zone', function () {
+    return this.get('gameCards').filterBy('zone', 'hand');
+  }),
+
+  /** @property {Array<GameCard>} all the cards in library */
+  cardsInLibrary: Ember.computed('gameCards.[].zone', function () {
+    return this.get('gameCards').filterBy('zone', 'library');
+  }),
+
+  /** @property {Array<GameCard>} all the cards in graveyard */
+  cardsInGraveyard: Ember.computed('gameCards.[].zone', function () {
+    return this.get('gameCards').filterBy('zone', 'graveyard');
+  }),
+
+  /** @property {Array<GameCard>} all the cards in exile */
+  cardsInExile: Ember.computed('gameCards.[].zone', function () {
+    return this.get('gameCards').filterBy('zone', 'exile');
+  }),
 });

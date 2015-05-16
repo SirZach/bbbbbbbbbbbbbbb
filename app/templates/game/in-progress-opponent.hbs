@@ -1,1 +1,20 @@
-in progress
+{{#game-board-container}}
+  {{#battle-field}}
+
+    {{battle-field-non-land}}
+
+    {{battle-field-land}}
+
+  {{/battle-field}}
+
+  {{#game-zones}}
+
+    {{game-zone title="Hand" cards=playerTwo.cardsInHand class="right"}}
+
+    {{game-zone title="Library" cards=playerTwo.cardsInLibrary class="right"}}
+
+    {{game-zone title="Graveyard" cards=playerTwo.cardsInGraveyard class="right"}}
+
+    {{game-zone title="Exile" cards=playerTwo.cardsInExile class="right bottom"}}
+  {{/game-zones}}
+{{/game-board-container}}

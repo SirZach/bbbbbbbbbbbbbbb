@@ -9,8 +9,10 @@ export default Ember.Route.extend({
     });
   },
 
-  redirect: function () {
-    this.transitionTo('games.list');
+  redirect: function (model, transition) {
+    if (transition.targetName === 'games.index') {
+      this.transitionTo('games.list');
+    }
   },
 
   actions: {

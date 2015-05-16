@@ -1,4 +1,5 @@
 import DS from 'ember-data';
+import Ember from 'ember';
 
 export default DS.Model.extend({
   /** @property {Date} When this game was created. */
@@ -44,5 +45,14 @@ export default DS.Model.extend({
     return gameParticipants
       .rejectBy('isPlaying')
       .filterBy('isPresent');
+  }.property('gameParticipants.@each.isPlaying'),
+
+  /** @property {Boolean} Is the game over? */
+  isGameOver: Ember.computed.equal('status', 'ended'),
+
+  /** @property {Boolean} Is there at least one open seat? */
+  isWaitingForOpponent: function () {
+    var players = this.get('gameParticipants').filterBy('isPlaying');
+    return players.length < 2;
   }.property('gameParticipants.@each.isPlaying')
 });
