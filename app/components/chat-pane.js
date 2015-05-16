@@ -27,7 +27,7 @@ export default Ember.Component.extend({
 
   actions: {
     messageInserted: function () {
-      Ember.run.debounce(this, this._messageInserted, 150);
+      Ember.run.debounce(this, '_messageInserted', 150);
     }
   }
 });

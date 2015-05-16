@@ -1,33 +1,34 @@
-@import "color-palette";
+@import 'color-palette';
 
 $primary-color-palette: $color-orange;
 $locked-breakpoint: 1700px;
 
-@import "ember-paper";
+@import 'ember-paper';
 
-@import "chat";
-@import "offcanvas";
-@import "material-of-cards";
-@import "magic-font";
-@import "utils";
+@import 'chat';
+@import 'offcanvas';
+@import 'material-of-cards';
+@import 'magic-font';
+@import 'utils';
 @import 'nav';
 @import 'avatar';
-@import "game-listing";
-@import "game";
-@import "failed-imports";
-@import "deck-chooser";
+@import 'game-listing';
+@import 'game';
+@import 'failed-imports';
+@import 'deck-chooser';
 @import 'components/x-card';
 @import 'components/x-loading';
 @import 'components/az-graph';
 @import 'components/az-bars';
 @import 'components/az-y';
+@import 'components/infinity-loader';
 @import 'donut-timer';
-@import "login";
-@import "deck";
-@import "charts";
-@import "ember-paper-overrides";
-@import "bootstrap-overrides";
-@import "decks/list";
+@import 'login';
+@import 'deck';
+@import 'charts';
+@import 'ember-paper-overrides';
+@import 'bootstrap-overrides';
+@import 'decks/list';
 
 body { background-color: map-get($color-grey, '300');}
 

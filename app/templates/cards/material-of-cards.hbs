@@ -33,8 +33,8 @@
   {{/paper-list}}
 {{/paper-content}}
 
-{{!-- disabling infinite scroll for now :(
-{{#infinite-scroll content=model hasMore=true}}
-  <span>Loading...</span>
-{{/infinite-scroll}}
---}}
+{{#infinity-loader
+  classNames="infinity-loader"
+  infinityModel=filteredCards
+  scrollable="#infinity-window"}}
+{{/infinity-loader}}
