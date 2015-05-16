@@ -4,6 +4,6 @@
   {{/paper-tile-left}}
   {{#paper-tile-content}}
     <h3>{{player.user.username}}</h3>
-    <h4>{{player.deckName}}</h4>
+    {{#link-to 'deck.index' player.deckId tagName="h4" class="link"}}{{player.deckName}}{{/link-to}}
   {{/paper-tile-content}}
 {{/paper-item}}
