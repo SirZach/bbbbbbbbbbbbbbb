@@ -12,6 +12,11 @@
     {{#x-paper-button action="changeLife" params=5}}+5{{/x-paper-button}}
     {{#x-paper-button action="changeLife" params=-1}}-1{{/x-paper-button}}
     {{#x-paper-button action="changeLife" params=-5}}-5{{/x-paper-button}}
-    {{#x-paper-button action="endGame" class="md-warn"}}End Game{{/x-paper-button}}
+    {{#x-paper-button-delayed class="md-warn" action="endGame" title="End Game" bubbles=false as |showTimer|}}
+      {{paper-icon icon="warning" size="lg"}}
+      {{#if showTimer}}
+        {{donut-timer}}
+      {{/if}}
+    {{/x-paper-button-delayed}}
   {{/if}}
 </div>

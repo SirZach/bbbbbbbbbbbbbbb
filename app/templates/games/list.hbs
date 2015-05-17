@@ -1,7 +1,7 @@
-{{#if model.length}}
+{{#if joinableGames.length}}
   {{#paper-content classNames="md-whiteframe-z1"}}
     {{#paper-list}}
-      {{#each model as |game|}}
+      {{#each joinableGames as |game|}}
         {{game-listing
           game=game
           currentUserId=session.user.id

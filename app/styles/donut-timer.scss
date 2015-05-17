@@ -3,7 +3,7 @@
 .donut-wrapper {
   position: absolute;
   top: 0px;
-  right: 1px;
+  right: 0px;
 }
 
 @mixin donut-timer($item, $duration, $size, $bgBorder, $timerBorder, $hover: running) {
@@ -20,6 +20,7 @@
     transform-origin: 100% 50%;
     position: absolute;
     border: #{$timerBorder};
+    border-color: map-get($color-red, '500');
   }
 
   #{$item} .spinner {
@@ -50,6 +51,7 @@
     position: absolute;
     background: none;
     border: #{$bgBorder};
+    border-color: map-get($color-light-blue, '500');
     border-radius: 100%;
     z-index: 100;
   }
@@ -60,6 +62,7 @@
     position: absolute;
     background: inherit;
     border: #{$bgBorder};
+    border-color: map-get($color-light-blue, '500');
     border-radius: 100% 0 0 100% / 50% 0 0 50%;
     border-right: none;
     opacity: 1;
@@ -78,4 +81,4 @@
   }
 }
 
-@include donut-timer('.donut-wrapper', 2, 35px, '7px solid #75A0FF', '7px solid #D4110B');
+@include donut-timer('.donut-wrapper', 2, 35px, '7px solid', '7px solid');

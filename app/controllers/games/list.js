@@ -6,5 +6,10 @@ export default Ember.Controller.extend({
     return !Ember.isNone(this.get('session.user'));
   }.property('session.user'),
 
-  cannotCreateGame: Ember.computed.not('canCreateGame')
+  cannotCreateGame: Ember.computed.not('canCreateGame'),
+
+  /** @property {Array<Game>} all the games that haven't been ended */
+  joinableGames: Ember.computed('model.[].status', function () {
+    return this.get('model').filter((game) => game.get('status') !== 'ended');
+  })
 });
