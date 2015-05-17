@@ -9,6 +9,10 @@ export default Ember.Route.extend({
     var cardsController = this.controllerFor('cards');
     return this.store.find('card').then(function (cards) {
       cardsController.set('model', cards);
+      // A hack to not show the spinner. Not sure it even makes sense to show
+      // this subset of cards on load.
+      //
+      cardsController.set('model.reachedInfinity', true);
       return;
     });
   },
@@ -86,25 +90,6 @@ export default Ember.Route.extend({
 
     legalitiesChanged: function () {
       this.send('getNewCards');
-    },
-
-    getNewCards: function () {
-      var cardsController = this.controllerFor('cards');
-      var page = cardsController.get('page');
-      var colors = cardsController.get('colors');
-      var legalities = cardsController.get('legalities');
-      var types = cardsController.get('types');
-      var nameSearch = cardsController.get('nameSearch');
-
-      this.store.findQuery('card', {
-        page: page,
-        colors: colors,
-        legalities: legalities,
-        types: types,
-        nameSearch: nameSearch
-      }).then(function (cards) {
-        cardsController.set('model', cards);
-      });
     }
   }
 });
