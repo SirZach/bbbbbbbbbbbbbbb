@@ -21,7 +21,7 @@
     {{else}}
       <h3>
         <img src={{playerOneAvatarUrl}} class="avatar">
-        {{#if playerOne.user.hasGameReadyDecks}}
+        {{#if participant.user.hasGameReadyDecks}}
           {{bottomBoardTitle}}
         {{else}}
           {{#paper-button raised=true class="md-primary" action="createNewDeck"}}Create Deck{{/paper-button}}
@@ -47,7 +47,7 @@
 
     {{/if}}
   </div>
-  
+
 </div>
 
 {{partial "game/chat"}}

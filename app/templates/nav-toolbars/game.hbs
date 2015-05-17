@@ -1,0 +1,17 @@
+<div class="pull-right">
+  <span>{{playerOne.user.username}} - {{playerOne.life}}</span>
+  <span>vs</span>
+  {{#if playerTwo}}
+    <span>{{playerTwo.user.username}} - {{playerTwo.life}}</span>
+  {{else}}
+    <span>...</span>
+  {{/if}}
+
+  {{#if amIPlaying}}
+    {{#x-paper-button action="changeLife" params=1}}+1{{/x-paper-button}}
+    {{#x-paper-button action="changeLife" params=5}}+5{{/x-paper-button}}
+    {{#x-paper-button action="changeLife" params=-1}}-1{{/x-paper-button}}
+    {{#x-paper-button action="changeLife" params=-5}}-5{{/x-paper-button}}
+    {{#x-paper-button action="endGame" class="md-warn"}}End Game{{/x-paper-button}}
+  {{/if}}
+</div>
