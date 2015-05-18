@@ -32,7 +32,7 @@ export default DS.Model.extend({
   /** @property {Array<GameCard>} all the cards in hand */
   cardsInHand: Ember.computed('gameCards.@each.zone', function () {
     return this.get('gameCards').filterBy('zone', 'hand');
-  }.property('gameCards.[].zone'),
+  }),
 
   /** @property {Array<GameCard>} all the cards in library */
   cardsInLibrary: Ember.computed('gameCards.@each.zone', function () {
