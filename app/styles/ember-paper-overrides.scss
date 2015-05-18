@@ -17,3 +17,9 @@ md-input-group {
 .md-tile-left {
   align-self: flex-start;
 }
+
+.md-toolbar-tools {
+  h2 {
+    width: 100%;
+  }
+}

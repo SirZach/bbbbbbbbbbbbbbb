@@ -22,7 +22,10 @@ export default Ember.Route.extend({
       var userIds = users.mapBy('id');
       if (!userIds.contains(user.get('id'))) {
         gameParticipant = store.createRecord('gameParticipant');
-        gameParticipant.set('user', user);
+        gameParticipant.setProperties({
+          user: user,
+          life: 20
+        });
         gameParticipants.pushObject(gameParticipant);
       } else {
         gameParticipant = gameParticipants.find((participant) => {
@@ -45,6 +48,15 @@ export default Ember.Route.extend({
 
       // Save the model with the new participant state.
       return model.save();
+    });
+  },
+
+  renderTemplate: function () {
+    this._super.apply(this, arguments);
+
+    this.render('nav-toolbars/game', {
+      into: 'application',
+      outlet: 'nav-toolbar'
     });
   },
 

@@ -203,6 +203,15 @@ export default Ember.Controller.extend({
     this.get('participant.gameCards').pushObjects(gameCards);
   },
 
+  /**
+    * If a player selects End Game, redirect everyone back to the games list
+    */
+  statusChanged: Ember.observer('model.status', function () {
+    if (this.get('model.status') === 'ended') {
+      this.transitionToRoute('games.list');
+    }
+  }),
+
   actions: {
     /**
      * Respond to a deck selection event.
@@ -230,6 +239,25 @@ export default Ember.Controller.extend({
 
     toggleChat: function () {
       this.toggleProperty('showChat');
+    },
+
+    /**
+      * Increment or decrement life
+      */
+    changeLife: function (delta) {
+      var participant = this.get('participant');
+      var life = participant.get('life');
+      participant.set('life', life += delta);
+      this.get('model').save();
+    },
+
+    /**
+      * A player has called it quits!
+      */
+    endGame: function () {
+      var game = this.get('model');
+      game.set('status', 'ended');
+      game.save();
     }
   }
 });
