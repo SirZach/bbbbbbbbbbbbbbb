@@ -10,7 +10,7 @@ export default Ember.Component.extend({
     var players = this.get('game.gameParticipants').filterBy('isPlaying');
 
     return players.get('length') < 2 && playerOneId === currentUserId;
-  }.property('game.playerOne.user.id', 'currentUserId', 'game.gameParticipants.[].isPlaying'),
+  }.property('game.playerOne.user.id', 'currentUserId', 'game.gameParticipants.@each.isPlaying'),
 
   actions: {
     deleteGame: function (game) {

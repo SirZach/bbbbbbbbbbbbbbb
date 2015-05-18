@@ -257,7 +257,7 @@ export default Ember.Controller.extend({
     endGame: function () {
       var game = this.get('model');
       game.set('status', 'ended');
-      game.save().then(() => this.transitionToRoute('games.list'));
+      game.save();
     }
   }
 });

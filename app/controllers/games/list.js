@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
   cannotCreateGame: Ember.computed.not('canCreateGame'),
 
   /** @property {Array<Game>} all the games that haven't been ended */
-  joinableGames: Ember.computed('model.[].status', function () {
+  joinableGames: Ember.computed('model.@each.status', function () {
     return this.get('model').filter((game) => game.get('status') !== 'ended');
   })
 });
