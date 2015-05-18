@@ -1,0 +1,13 @@
+context-menu {
+  md-item-content {
+    &:hover {
+      background-color: map-get($color-grey, '300');
+    }
+  }
+  .paper-content {
+    z-index: 1;
+  }
+  .md-tile-content {
+    padding: 0 3px;
+  }
+}

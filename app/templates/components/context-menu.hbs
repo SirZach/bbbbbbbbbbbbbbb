@@ -1,0 +1,7 @@
+{{#if isOpen}}
+  {{yield}}
+{{else}}
+  {{#paper-button action="toggle"}}
+    {{paper-icon icon="more-vert" size="lg"}}
+  {{/paper-button}}
+{{/if}}

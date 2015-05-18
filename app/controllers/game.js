@@ -22,6 +22,13 @@ export default Ember.Controller.extend({
     'model.gameParticipants.@each.{isPlaying,userId}',
     'session.user.id'),
 
+  amIPlayerOne: Ember.computed('participant.user.id', 'playerOne.user.id', function () {
+    var participant = this.get('participant');
+    var playerOne = this.get('playerOne');
+
+    return participant.get('user.id') === playerOne.get('user.id');
+  }),
+
   /** @property {GameParticipant} The participant representing me. */
   participant: function () {
     var participants = this.get('model.gameParticipants');
@@ -230,6 +237,36 @@ export default Ember.Controller.extend({
 
     toggleChat: function () {
       this.toggleProperty('showChat');
+    },
+
+    drawHand: function () {
+      var library = this.get('participant.cardsInLibrary').toArray();
+      if (library.get('length') > 7) {
+        for (var i = 0; i < 7; i++) {
+          var card = library.objectAt(i);
+          card.set('zone', 'hand');
+
+        }
+      } else {
+        library.setEach('zone', 'hand');
+      }
+      this.get('model').save();
+    },
+
+    drawCard: function () {
+
+    },
+
+    shuffle: function () {
+
+    },
+
+    search: function () {
+
+    },
+
+    returnAllCards: function () {
+
     }
   }
 });

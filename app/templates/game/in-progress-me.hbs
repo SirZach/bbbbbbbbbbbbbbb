@@ -4,7 +4,46 @@
 
     {{game-zone title="Graveyard" cards=playerOne.cardsInGraveyard}}
 
-    {{game-zone title="Library" cards=playerOne.cardsInLibrary}}
+    {{#game-zone title="Library" cards=playerOne.cardsInLibrary}}
+      {{#if amIPlayerOne}}
+        {{#context-menu}}
+          {{#paper-content classNames="md-whiteframe-z1 cursor-pointer"}}
+            {{#paper-list}}
+              {{#paper-item action="drawHand"}}
+                {{#paper-tile-content}}
+                  <p>Draw Hand</p>
+                {{/paper-tile-content}}
+              {{/paper-item}}
+
+              {{#paper-item action="drawCard"}}
+                {{#paper-tile-content}}
+                  <p>Draw Card</p>
+                {{/paper-tile-content}}
+              {{/paper-item}}
+
+              {{#paper-item action="search"}}
+                {{#paper-tile-content}}
+                  <p>Search</p>
+                {{/paper-tile-content}}
+              {{/paper-item}}
+
+              {{#paper-item action="shuffle"}}
+                {{#paper-tile-content}}
+                  <p>Shuffle</p>
+                {{/paper-tile-content}}
+              {{/paper-item}}
+
+              {{#paper-item action="returnAllCards"}}
+                {{#paper-tile-content}}
+                  <p>Return All Cards</p>
+                {{/paper-tile-content}}
+              {{/paper-item}}
+
+            {{/paper-list}}
+          {{/paper-content}}
+        {{/context-menu}}
+      {{/if}}
+    {{/game-zone}}
 
     {{game-zone title="Hand" class="bottom" cards=playerOne.cardsInHand}}
   {{/game-zones}}
