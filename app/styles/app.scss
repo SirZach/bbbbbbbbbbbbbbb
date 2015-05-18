@@ -104,12 +104,39 @@ body { background-color: map-get($color-grey, '300');}
   bottom: 10px;
 }
 
+@mixin deck-card-player ($borderColor) {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  display: inline-block;
+  border: 1px solid $borderColor;
+  position: absolute;
+  top: 13px;
+}
+
 @mixin deck-card ($height:100px, $width:70px, $borderColor:map-get($primary-color-palette, '500'), $backgroundColor:map-get($color-grey, '300')){
   height: $height;
   width: $width;
   border: 2px solid $borderColor;
   background-color: $backgroundColor;
   position: absolute;
+  .p1 {
+    @include deck-card-player($borderColor);
+    left: 8px;
+  }
+  .p2 {
+    @include deck-card-player($borderColor);
+    right: 8px;
+  }
+  .flavor {
+    color: $borderColor;
+    left: 48px;
+    top: 24px;
+    position: absolute;
+    font-weight: bold;
+    width: 44px;
+    text-align: center;
+  }
 }
 
 .brand {
@@ -121,6 +148,27 @@ body { background-color: map-get($color-grey, '300');}
     display: inline-block;
   }
 }
+
+.three-card-game {
+  position: relative;
+  margin: 0 auto;
+  height: 70px;
+  width: 140px;
+  .card-one {
+    @include deck-card(70px, 140px);
+  }
+  .card-two {
+    @include deck-card(70px, 140px);
+    left: 15px;
+    top: 15px;
+  }
+  .card-three {
+    @include deck-card(70px, 140px);
+    left: 30px;
+    top: 30px;
+  }
+}
+
 .three-card-deck {
   position: relative;
   margin: 0 auto;

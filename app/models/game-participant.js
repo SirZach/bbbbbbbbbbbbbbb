@@ -30,22 +30,22 @@ export default DS.Model.extend({
   userId: Ember.computed.alias('user.id'),
 
   /** @property {Array<GameCard>} all the cards in hand */
-  cardsInHand: function () {
+  cardsInHand: Ember.computed('gameCards.@each.zone', function () {
     return this.get('gameCards').filterBy('zone', 'hand');
   }.property('gameCards.[].zone'),
 
   /** @property {Array<GameCard>} all the cards in library */
-  cardsInLibrary: Ember.computed('gameCards.[].zone', function () {
+  cardsInLibrary: Ember.computed('gameCards.@each.zone', function () {
     return this.get('gameCards').filterBy('zone', 'library');
   }),
 
   /** @property {Array<GameCard>} all the cards in graveyard */
-  cardsInGraveyard: Ember.computed('gameCards.[].zone', function () {
+  cardsInGraveyard: Ember.computed('gameCards.@each.zone', function () {
     return this.get('gameCards').filterBy('zone', 'graveyard');
   }),
 
   /** @property {Array<GameCard>} all the cards in exile */
-  cardsInExile: Ember.computed('gameCards.[].zone', function () {
+  cardsInExile: Ember.computed('gameCards.@each.zone', function () {
     return this.get('gameCards').filterBy('zone', 'exile');
   }),
 });
