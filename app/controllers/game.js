@@ -262,7 +262,12 @@ export default Ember.Controller.extend({
     },
 
     shuffle: function () {
+      var library = this.get('participant.cardsInLibrary');
+      var count = 0;
 
+      shuffle(library);
+      library.forEach((gameCard) => gameCard.set('order', count++));
+      this.get('model').save();
     },
 
     search: function () {
