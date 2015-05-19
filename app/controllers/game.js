@@ -248,22 +248,17 @@ export default Ember.Controller.extend({
       this.toggleProperty('showChat');
     },
 
-    drawHand: function () {
+    drawCards: function (numCards) {
       var library = this.get('participant.cardsInLibrary').toArray();
-      if (library.get('length') > 7) {
-        for (var i = 0; i < 7; i++) {
+      if (library.get('length') > numCards) {
+        for (var i = 0; i < numCards; i++) {
           var card = library.objectAt(i);
           card.set('zone', 'hand');
-
         }
       } else {
         library.setEach('zone', 'hand');
       }
       this.get('model').save();
-    },
-
-    drawCard: function () {
-
     },
 
     shuffle: function () {
