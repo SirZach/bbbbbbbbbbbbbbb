@@ -1,13 +1,21 @@
 context-menu {
-  md-item-content {
-    &:hover {
-      background-color: map-get($color-grey, '300');
-    }
+  .is-open {
+    background-color: map-get($color-grey, '400');
   }
-  .paper-content {
+  ul {
+    padding: 3px;
+    list-style: none;
     z-index: 1;
-  }
-  .md-tile-content {
-    padding: 0 3px;
+    background-color: #fff;
+    position: absolute;
+    left: 0;
+    cursor: pointer;
+    width: 115px;
+    li {
+      padding: 3px;
+      &:hover {
+        background-color: map-get($color-grey, '300');
+      }
+    }
   }
 }

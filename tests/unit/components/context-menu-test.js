@@ -5,7 +5,7 @@ import {
 
 moduleForComponent('context-menu', {
   // specify the other units that are required for this test
-  needs: ['component:paper-button']
+  needs: ['component:paper-button', 'component:paper-icon']
 });
 
 test('it renders', function(assert) {

@@ -275,7 +275,8 @@ export default Ember.Controller.extend({
     },
 
     returnAllCards: function () {
-
+      this.get('participant.gameCards').setEach('zone', 'library');
+      this.get('model').save();
     },
     /**
       * Increment or decrement life
