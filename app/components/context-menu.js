@@ -15,19 +15,23 @@ export default Ember.Component.extend({
     }
   },
 
-  clickHandler: function (event) {
-    if (this.get('isOpen')) {
-      if (!$(event.target).closest(`#${this.get('id')}`).length) {
-        this.send('toggle');
+  createClickHandler: function () {
+    var contextMenu = this;
+    function clickHandler(event) {
+      if (contextMenu.get('isOpen')) {
+        if (!$(event.target).closest(`#${contextMenu.get('elementId')}`).length) {
+          contextMenu.send('toggle');
+        }
       }
     }
+    return clickHandler;
   },
 
   attachCloseout: function () {
-    $(document).on(`click.context-menu-${this.get('id')}`, this.clickHandler.bind(this));
+    $(document).on(`click.context-menu-${this.get('elementId')}`, this.createClickHandler());
   }.on('didInsertElement'),
 
   removeDocListener: function () {
-    $(document).off(`click.context-menu-${this.get('id')}`);
+    $(document).off(`click.context-menu-${this.get('elementId')}`);
   }.on('willDestroyElement')
 });

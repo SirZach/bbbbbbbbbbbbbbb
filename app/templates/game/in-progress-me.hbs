@@ -6,7 +6,7 @@
 
     {{#game-zone title="Library" cards=playerOne.cardsInLibrary}}
       {{#if amIPlayerOne}}
-        {{#context-menu id="library-context" as |menu|}}
+        {{#context-menu as |menu|}}
           <ul>
             <li {{action 'drawCards' 7}}>Draw 7</li>
             <li {{action 'drawCards' 1}}>Draw Card</li>
