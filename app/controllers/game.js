@@ -22,6 +22,13 @@ export default Ember.Controller.extend({
     'model.gameParticipants.@each.{isPlaying,userId}',
     'session.user.id'),
 
+  amIPlayerOne: Ember.computed('participant.user.id', 'playerOne.user.id', function () {
+    var participant = this.get('participant');
+    var playerOne = this.get('playerOne');
+
+    return participant.get('user.id') === playerOne.get('user.id');
+  }),
+
   /** @property {GameParticipant} The participant representing me. */
   participant: function () {
     var participants = this.get('model.gameParticipants');
@@ -241,6 +248,36 @@ export default Ember.Controller.extend({
       this.toggleProperty('showChat');
     },
 
+    drawCards: function (numCards) {
+      var library = this.get('participant.cardsInLibrary').toArray();
+      if (library.get('length') > numCards) {
+        for (var i = 0; i < numCards; i++) {
+          var card = library.objectAt(i);
+          card.set('zone', 'hand');
+        }
+      } else {
+        library.setEach('zone', 'hand');
+      }
+      this.get('model').save();
+    },
+
+    shuffle: function () {
+      var library = this.get('participant.cardsInLibrary');
+      var count = 0;
+
+      shuffle(library);
+      library.forEach((gameCard) => gameCard.set('order', count++));
+      this.get('model').save();
+    },
+
+    search: function () {
+
+    },
+
+    returnAllCards: function () {
+      this.get('participant.gameCards').setEach('zone', 'library');
+      this.get('model').save();
+    },
     /**
       * Increment or decrement life
       */
