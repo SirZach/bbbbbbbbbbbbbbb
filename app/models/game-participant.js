@@ -38,7 +38,11 @@ export default DS.Model.extend({
     }
 
     // getter
-    return JSON.parse(this.get('gameCardsRaw')).map((r) => GameCard.create(r));
+    var gameCardsRaw = this.get('gameCardsRaw');
+
+    if (!gameCardsRaw) { return [];}
+
+    return JSON.parse(gameCardsRaw).map((r) => GameCard.create(r));
   }),
 
   /** @property {Array<GameCard>} all the cards in hand */

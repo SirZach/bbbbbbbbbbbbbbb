@@ -59,6 +59,6 @@ export default DS.Model.extend({
   save: function () {
     var participants = this.get('gameParticipants');
     participants.invoke('setGameCardsRaw');
-    this._super.apply(this, arguments);
+    return this._super.apply(this, arguments);
   }
 });
