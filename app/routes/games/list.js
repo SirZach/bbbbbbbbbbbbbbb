@@ -1,6 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  model: function () {
+    return this.store.filter('game', {orderBy: 'createdDate'}, () => true);
+  },
+
   renderTemplate: function () {
     this._super.apply(this, arguments);
 
