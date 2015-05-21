@@ -1,14 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  model: function () {
-    return this.store.filter('game', {
-      orderBy: 'createdDate'
-    }, function () {
-      return true;
-    });
-  },
-
   redirect: function (model, transition) {
     if (transition.targetName === 'games.index') {
       this.transitionTo('games.list');
