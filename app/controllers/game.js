@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import shuffle from '../utils/shuffle';
+import GameCard from '../models/game-card';
 
 export default Ember.Controller.extend({
   /** @property {Boolean} Is the game going? */
@@ -195,8 +196,8 @@ export default Ember.Controller.extend({
       var count = cardGroup.get('count');
       var i, gameCard;
       for (i = 0; i < count; i++) {
-        gameCard = this.store.createRecord('gameCard');
-        gameCard.set('card', card);
+        gameCard = GameCard.create();
+        gameCard.set('cardId', card.get('id'));
         gameCards.pushObject(gameCard);
       }
     });
@@ -207,7 +208,7 @@ export default Ember.Controller.extend({
     //
     var count = 0;
     gameCards.forEach((gameCard) => gameCard.set('order', count++));
-    this.get('participant.gameCards').pushObjects(gameCards);
+    this.set('participant.gameCards', gameCards);
   },
 
   /**

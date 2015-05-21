@@ -54,5 +54,11 @@ export default DS.Model.extend({
   isWaitingForOpponent: function () {
     var players = this.get('gameParticipants').filterBy('isPlaying');
     return players.length < 2;
-  }.property('gameParticipants.@each.isPlaying')
+  }.property('gameParticipants.@each.isPlaying'),
+
+  save: function () {
+    var participants = this.get('gameParticipants');
+    participants.invoke('setGameCardsRaw');
+    this._super.apply(this, arguments);
+  }
 });
