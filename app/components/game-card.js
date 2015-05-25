@@ -1,0 +1,24 @@
+import Ember from 'ember';
+import layout from '../templates/components/game-card';
+
+export default Ember.Component.extend({
+  layout: layout,
+
+  tagName: 'li',
+
+  classNames: 'game-card',
+
+  /** @property {DS.Model GameCard} */
+  gameCard: null,
+
+  /** @property {DS.Model Card} */
+  card: function () {
+    var gameCardId = this.get('gameCard.cardId');
+    var cards = this.get('cards');
+
+    return cards.findBy('id', gameCardId);
+  }.property('cards', 'gameCard.cardId'),
+
+  /** @property {Array<DS.Model Card>} */
+  cards: []
+});
