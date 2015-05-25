@@ -8,7 +8,13 @@ export default Ember.Route.extend({
   },
 
   model: function () {
-    return this._createFetchPromise();
+    // If we've already loaded some, just return the existing model.
+    var model = this.currentModel;
+    if (model && model.length) {
+      return model;
+    } else {
+      return this._createFetchPromise();
+    }
   },
 
   _createFetchPromise: function () {
