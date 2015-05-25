@@ -54,6 +54,11 @@
       {{/each}}
     {{/paper-list}}
   {{/paper-content}}
+
+  {{az-infinity-loader
+    classNames="infinity-loader"
+    scrollable="#infinity-window"
+    infinityModel=model}}
 {{else}}
   <div class="no-decks-container">
     <div class="three-card-deck">
