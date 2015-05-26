@@ -4,6 +4,6 @@ export default Ember.Service.extend({
   store: Ember.Object.create(),
 
   hasData: function (url) {
-    return this.get(`store.${url}`);
+    return this.get('store').get(url.replace(/\./g, '-'));
   }
 });
