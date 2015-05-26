@@ -3,7 +3,8 @@
   padding-left: 4px;
   white-space: nowrap;
   position: absolute;
-  height: 25%;
+  height: 100%;
   overflow: auto;
-  width: calc(100% - 100px);
+  left: 100px;
+  top: 0;
 }
