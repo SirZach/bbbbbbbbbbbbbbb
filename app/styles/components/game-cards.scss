@@ -4,7 +4,11 @@
   white-space: nowrap;
   position: absolute;
   height: 100%;
-  overflow: auto;
+  overflow-x: auto;
   left: 100px;
   top: 0;
+  &.top {
+    right: 100px;
+    left: auto;
+  }
 }
