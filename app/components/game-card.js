@@ -16,7 +16,7 @@ export default Ember.Component.extend({
     var gameCardId = this.get('gameCard.cardId');
     var cards = this.get('cards');
 
-    return cards.findBy('id', gameCardId);
+    return cards ? cards.findBy('id', gameCardId) : null;
   }.property('cards', 'gameCard.cardId'),
 
   /** @property {Array<DS.Model Card>} */

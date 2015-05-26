@@ -67,6 +67,7 @@ game-board-container {
   }
   battle-field {
     width: calc(100% - 100px);
+    overflow-x: auto;
   }
 }
 
