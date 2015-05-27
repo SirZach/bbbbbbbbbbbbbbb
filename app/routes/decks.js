@@ -18,18 +18,26 @@ export default Ember.Route.extend({
   },
 
   _createFetchPromise: function () {
-    // Adding a space to the last deck id is a hack to tell firebase to start
-    // AFTER the last id we saw.
+    var lastDeckId = this.get('_lastDeckId');
+    var endAt = lastDeckId ? lastDeckId : null;
+    var model = this.currentModel || [];
+    // OMG what a hack. Firebase doesn't support exclusive queries, so ask for
+    // one more than we want if we have already loaded some records.
     //
-    var startAt = (this.get('_lastDeckId') || '') + ' ';
-    var limitToFirst = 5;
+    var limitToLast = 10;
+    var paddedLimitToLast = model.length ? limitToLast + 1 : limitToLast;
     return this.store.find('deck', {
-      startAt,
-      limitToFirst
+      endAt,
+      limitToLast: paddedLimitToLast
     }).then((decks) => {
-      var model = this.currentModel || [];
-      decks = decks.toArray();
-      if (decks.length === 0 || decks.length < limitToFirst) {
+      decks = decks.toArray().reverseObjects();
+      // If we are doing this hack to fake an exclusive query, drop the last
+      // record we loaded.
+      //
+      if (model.length) {
+        decks.shift();
+      }
+      if (decks.length === 0 || decks.length < limitToLast) {
         // Setting `reachedInfinity` on the model tells the infinity loader to
         // style itself propertly. It doesn't, however, stop it from firing load
         // events.
