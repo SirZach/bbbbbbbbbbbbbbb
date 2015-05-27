@@ -1,10 +1,20 @@
 {{#game-board-container}}
   {{#game-zones}}
-    {{game-zone title="Exile" cards=playerOne.cardsInExile}}
+    {{game-zone
+      title="Exile"
+      gameCards=playerOne.cardsInExile
+      cards=cardsInDecks}}
 
-    {{game-zone title="Graveyard" cards=playerOne.cardsInGraveyard}}
+    {{game-zone
+      title="Graveyard"
+      gameCards=playerOne.cardsInGraveyard
+      cards=cardsInDecks}}
 
-    {{#game-zone title="Library" cards=playerOne.cardsInLibrary}}
+    {{#game-zone
+      canOpen=false
+      title="Library"
+      gameCards=playerOne.cardsInLibrary
+      cards=cardsInDecks}}
       {{#if amIPlayerOne}}
         {{#context-menu as |menu|}}
           <ul>
@@ -18,7 +28,11 @@
       {{/if}}
     {{/game-zone}}
 
-    {{game-zone title="Hand" class="bottom" cards=playerOne.cardsInHand}}
+    {{game-zone
+      title="Hand"
+      class="bottom"
+      gameCards=playerOne.cardsInHand
+      cards=cardsInDecks}}
   {{/game-zones}}
 
   {{#battle-field}}
