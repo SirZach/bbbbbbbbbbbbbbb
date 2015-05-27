@@ -5,6 +5,10 @@
 {{/paper-tile-left}}
 {{#paper-tile-content}}
   <h3>{{deck.name}}</h3>
+  <div>
+    <img class="avatar avatar-medium" src={{deck.owner.avatarUrl}} />
+    {{deck.owner.username}}
+  </div>
   <ul class="pull-right paper-tile-content-right">
     <li><strong>{{deck.allCount}}</strong> Cards</li>
     {{#if canEdit}}
