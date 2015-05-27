@@ -54,7 +54,8 @@ export default Ember.Route.extend({
       //load all the real card models into the store for future use
       var players = game.get('players');
       var promises = players.reduce((prev, p) => {
-        prev = prev.concat(p.get('gameCards').map((card) => store.find('card', card.cardId)));
+        var gameCards = Ember.get(p, 'gameCards') || [];
+        prev = prev.concat(gameCards.map((card) => store.find('card', card.cardId)));
         return prev;
       }, []);
 

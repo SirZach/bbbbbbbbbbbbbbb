@@ -3,18 +3,18 @@
     {{game-zone
       title="Exile"
       gameCards=playerOne.cardsInExile
-      cards=cardsInDeck}}
+      cards=cardsInDecks}}
 
     {{game-zone
       title="Graveyard"
       gameCards=playerOne.cardsInGraveyard
-      cards=cardsInDeck}}
+      cards=cardsInDecks}}
 
     {{#game-zone
       canOpen=false
       title="Library"
       gameCards=playerOne.cardsInLibrary
-      cards=cardsInDeck}}
+      cards=cardsInDecks}}
       {{#if amIPlayerOne}}
         {{#context-menu as |menu|}}
           <ul>
