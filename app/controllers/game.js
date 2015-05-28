@@ -271,10 +271,6 @@ export default Ember.Controller.extend({
       this.get('model').save();
     },
 
-    search: function () {
-
-    },
-
     returnAllCards: function () {
       this.get('participant.gameCards').setEach('zone', 'library');
       this.get('model').save();

@@ -14,13 +14,14 @@
       canOpen=false
       title="Library"
       gameCards=playerOne.cardsInLibrary
+      canOpen=false
       cards=cardsInDecks}}
       {{#if amIPlayerOne}}
         {{#context-menu as |menu|}}
           <ul>
             <li {{action 'drawCards' 7}}>Draw 7</li>
             <li {{action 'drawCards' 1}}>Draw Card</li>
-            {{!-- <li {{action 'search'}}>Search</li> --}}
+            <li {{action 'search'}}>Search</li>
             <li {{action 'shuffle'}}>Shuffle</li>
             <li {{action 'returnAllCards'}}>Return All Cards</li>
           </ul>

@@ -22,13 +22,15 @@ export default Ember.Component.extend({
   classNameBindings: 'canOpen:cursor-pointer',
 
   click: function () {
-    this.toggleProperty('isOpen');
+    if (this.get('canOpen')) {
+      this.toggleProperty('isOpen');
 
-    //in a run later because the isOpen hasn't expanded the DOM yet
-    Ember.run.later(this, function () {
-      if (this.get('isOpen')) {
-        this.$('.game-cards').width($('game-board-container').width() - 100);
-      }
-    });
+      //in a run later because the isOpen hasn't expanded the DOM yet
+      Ember.run.later(this, function () {
+        if (this.get('isOpen')) {
+          this.$('.game-cards').width($('game-board-container').width() - 100);
+        }
+      });
+    }
   }
 });

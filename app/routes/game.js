@@ -12,7 +12,6 @@ export default Ember.Route.extend({
     //
     var gameParticipants = model.get('gameParticipants');
     var user = this.get('session.user');
-    var controller = this.controllerFor('game');
     var store = this.store;
     var gameParticipant;
     // Fetch all users to see if we are one of them.
@@ -49,22 +48,6 @@ export default Ember.Route.extend({
 
       // Save the model with the new participant state.
       return model.save();
-    })
-    .then((game) => {
-      //load all the real card models into the store for future use
-      var players = game.get('players');
-      var promises = players.reduce((prev, p) => {
-        var gameCards = Ember.get(p, 'gameCards') || [];
-        prev = prev.concat(gameCards.map((card) => store.find('card', card.cardId)));
-        return prev;
-      }, []);
-
-      return Ember.RSVP.all(promises);
-    })
-    .then((cards) => {
-      //doing this to prevent putting the store into components to get a hold
-      //of real card models
-      controller.set('cardsInDecks', cards.uniq());
     });
   },
 
@@ -100,6 +83,10 @@ export default Ember.Route.extend({
   }.property('gameParticipant'),
 
   actions: {
+    search: function (player, cards) {
+      
+    },
+
     willTransition: function () {
       // If you are not logged in, there is no state to clean up.
       if (!this.get('session.isAuthenticated')) {
