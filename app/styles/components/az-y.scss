@@ -1,0 +1,9 @@
+az-y {
+  width: 96px;
+  border-right: 1px solid map-get($primary-color-palette, '500');
+  margin-right: 3px;
+  div {
+    padding: 5px 5px 5px 0;
+    height: 30px;
+  }
+}

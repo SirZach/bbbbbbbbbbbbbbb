@@ -1,21 +1,15 @@
-import DS from 'ember-data';
+import Ember from 'ember';
 
-export default DS.Model.extend({
-  /** @property {Card} Reference to the card definition. */
-  card: DS.belongsTo('card', {async: true}),
+export default Ember.Object.extend({
+  /** @property {String} Card identifier. */
+  cardId: null,
 
   /** @property {Number} Sort order within the zone. */
-  order: DS.attr('number'),
+  order: null,
 
   /** @property {Boolean} Is the card tapped? */
-  isTapped: DS.attr('boolean', {defaultValue: false}),
-
-  /** @property {Number} Relative x position on the battlefield. */
-  x: DS.attr('number'),
-
-  /** @property {Number} Relative y position on the battlefield. */
-  y: DS.attr('number'),
+  isTapped: false,
 
   /** @property {String} 'hand', 'library', 'graveyard', 'exile', 'battlefield' */
-  zone: DS.attr('string', {defaultValue: 'library'})
+  zone: 'library'
 });

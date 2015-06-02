@@ -20,9 +20,21 @@
 
 .ta-l {text-align: left!important;}
 
+.link {
+  cursor: pointer;
+  color: map-get($color-light-blue, '800');
+  &:hover {
+    color: map-get($color-light-blue, '900');
+  }
+}
+
 .has-hidden-hover {
   .on-hover { display: none;}
   &:hover {
     .on-hover { display: initial;}
   }
+}
+
+.bg-transparent {
+  background-color: transparent;
 }

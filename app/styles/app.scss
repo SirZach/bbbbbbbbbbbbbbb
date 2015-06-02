@@ -1,30 +1,31 @@
-@import "color-palette";
+@import 'color-palette';
 
 $primary-color-palette: $color-orange;
 $locked-breakpoint: 1700px;
 
-@import "ember-paper";
+@import 'ember-paper';
 
-@import "chat";
-@import "offcanvas";
-@import "material-of-cards";
-@import "magic-font";
-@import "utils";
+@import 'chat';
+@import 'offcanvas';
+@import 'material-of-cards';
+@import 'magic-font';
+@import 'utils';
 @import 'nav';
 @import 'avatar';
-@import "game-listing";
-@import "game";
-@import "failed-imports";
-@import "deck-chooser";
-@import 'components/x-card';
-@import 'components/x-loading';
+@import 'game-listing';
+@import 'game';
+@import 'failed-imports';
+@import 'deck-chooser';
+@import 'components/index';
 @import 'donut-timer';
-@import "login";
-@import "deck";
-@import "charts";
-@import "ember-paper-overrides";
+@import 'login';
+@import 'deck';
+@import 'charts';
+@import 'ember-paper-overrides';
+@import 'bootstrap-overrides';
+@import 'decks/list';
 
-body { background-color: #ececec;}
+body { background-color: map-get($color-grey, '300');}
 
 .ember-app {
   width: 100%;
@@ -54,17 +55,15 @@ body { background-color: #ececec;}
   }
 }
 
-.cursor-pointer {
-  cursor: pointer;
+//lines up the family counts on the deck-table
+.family-count {
+  width: 15px;
+  display: inline-block;
+  text-align: right;
 }
 
-.table-ellipsible {
-  table-layout: fixed;
-  td, th {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .overflow-y-scroll {
@@ -97,4 +96,106 @@ body { background-color: #ececec;}
   left: auto;
   top: auto;
   bottom: 10px;
+}
+
+@mixin deck-card-player ($borderColor) {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  display: inline-block;
+  border: 1px solid $borderColor;
+  position: absolute;
+  top: 13px;
+}
+
+@mixin deck-card ($height:100px, $width:70px, $borderColor:map-get($primary-color-palette, '500'), $backgroundColor:map-get($color-grey, '300')){
+  height: $height;
+  width: $width;
+  border: 2px solid $borderColor;
+  background-color: $backgroundColor;
+  position: absolute;
+  .p1 {
+    @include deck-card-player($borderColor);
+    left: 8px;
+  }
+  .p2 {
+    @include deck-card-player($borderColor);
+    right: 8px;
+  }
+  .flavor {
+    color: $borderColor;
+    left: 48px;
+    top: 24px;
+    position: absolute;
+    font-weight: bold;
+    width: 44px;
+    text-align: center;
+  }
+}
+
+.brand {
+  .three-card-deck {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  strong {
+    display: inline-block;
+  }
+}
+
+.three-card-game {
+  position: relative;
+  margin: 0 auto;
+  height: 70px;
+  width: 140px;
+  .card-one {
+    @include deck-card(70px, 140px);
+  }
+  .card-two {
+    @include deck-card(70px, 140px);
+    left: 15px;
+    top: 15px;
+  }
+  .card-three {
+    @include deck-card(70px, 140px);
+    left: 30px;
+    top: 30px;
+  }
+}
+
+.three-card-deck {
+  position: relative;
+  margin: 0 auto;
+  height: 100px;
+  width: 100px;
+  .card-one {
+    @include deck-card;
+  }
+  .card-two {
+    @include deck-card;
+    right: 15px;
+    top: 15px;
+  }
+  .card-three {
+    @include deck-card;
+    left: 30px;
+    top: 30px;
+  }
+  &.brand {
+    height: 20px;
+    width: 20px;
+    .card-one {
+      @include deck-card(20px, 14px, #fff, map-get($primary-color-palette, '500'));
+    }
+    .card-two {
+      @include deck-card(20px, 14px, #fff, map-get($primary-color-palette, '500'));
+      right: 0px;
+      top: 5px;
+    }
+    .card-three {
+      @include deck-card(20px, 14px, #fff, map-get($primary-color-palette, '500'));
+      left: 12px;
+      top: 10px;
+    }
+  }
 }

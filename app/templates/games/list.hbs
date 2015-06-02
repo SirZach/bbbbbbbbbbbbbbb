@@ -1,12 +1,42 @@
-{{#if model.length}}
+{{#if joinableGames.length}}
   {{#paper-content classNames="md-whiteframe-z1"}}
     {{#paper-list}}
-      {{#each model as |game|}}
-        {{game-listing game=game}}
+      {{#each joinableGames as |game|}}
+        {{game-listing
+          game=game
+          currentUserId=session.user.id
+          deleteGame="deleteGame"}}
         {{paper-divider}}
       {{/each}}
     {{/paper-list}}
   {{/paper-content}}
 {{else}}
-  <h3>No games currently in progress.</h3>
+<div class="no-decks-container">
+  <div class="three-card-game">
+    <div class="card-one">
+      <div class="p1"></div>
+      <div class="flavor">vs</div>
+      <div class="p2"></div>
+    </div>
+    <div class="card-two">
+      <div class="p1"></div>
+      <div class="flavor">vs</div>
+      <div class="p2"></div>
+    </div>
+    <div class="card-three">
+      <div class="p1"></div>
+      <div class="flavor">vs</div>
+      <div class="p2"></div>
+    </div>
+  </div>
+  <h2 class="main-message">There aren't any games here.</h2>
+  <p class="message">
+    {{#if cannotCreateGame}}
+      {{#link-to 'login'}}Log in{{/link-to}} to start a game!
+    {{else}}
+      {{paper-button raised=true class="md-primary" label="Create" action="newGame"}}
+      a new game!
+    {{/if}}
+  </p>
+</div>
 {{/if}}

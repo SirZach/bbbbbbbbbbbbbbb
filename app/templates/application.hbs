@@ -4,7 +4,14 @@
 
     {{#paper-toolbar}}
     <div class="md-toolbar-tools">
-      <div><strong>Webatrice</strong></div>
+      <div class="brand">
+        <div class="three-card-deck brand">
+          <div class="card-one"></div>
+          <div class="card-two"></div>
+          <div class="card-three"></div>
+        </div>
+        <strong>Webatrice</strong>
+      </div>
     </div>
     {{/paper-toolbar}}
 
@@ -59,10 +66,10 @@
         </h2>
       </div>
     {{/paper-toolbar}}
-    {{#paper-content}}
-    <div class="container-fluid">
-      {{outlet}}
-    </div>
+    {{#paper-content id="infinity-window"}}
+      <div class="container-fluid">
+        {{outlet}}
+      </div>
     {{/paper-content}}
   {{/paper-content}}
 

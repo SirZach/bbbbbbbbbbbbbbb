@@ -27,7 +27,7 @@ export default Ember.Component.extend({
     } else {
       promiseController = PromiseController.create({
         promise: Ember.$.getJSON(url).then(function (data) {
-          promiseSpinnerUrls.get('store').set(url, data);
+          promiseSpinnerUrls.get('store').set(url.replace(/\./g, '-'), data);
           return data;
         })
       });

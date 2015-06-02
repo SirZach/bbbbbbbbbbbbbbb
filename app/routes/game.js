@@ -12,6 +12,7 @@ export default Ember.Route.extend({
     //
     var gameParticipants = model.get('gameParticipants');
     var user = this.get('session.user');
+    var controller = this.controllerFor('game');
     var store = this.store;
     var gameParticipant;
     // Fetch all users to see if we are one of them.
@@ -22,7 +23,10 @@ export default Ember.Route.extend({
       var userIds = users.mapBy('id');
       if (!userIds.contains(user.get('id'))) {
         gameParticipant = store.createRecord('gameParticipant');
-        gameParticipant.set('user', user);
+        gameParticipant.setProperties({
+          user: user,
+          life: 20
+        });
         gameParticipants.pushObject(gameParticipant);
       } else {
         gameParticipant = gameParticipants.find((participant) => {
@@ -36,9 +40,40 @@ export default Ember.Route.extend({
       // Simply mark as not present. We don't want to destroy participants if
       // they happen to actually be playing.
       participantRef.child('isPresent').onDisconnect().set(false);
+      model.on('didDelete', () => {
+        // Don't set not present if the model was deleted. Otherwise we'll end
+        // up with a zombie game record in firebase.
+        //
+        participantRef.child('isPresent').onDisconnect().remove();
+      });
 
       // Save the model with the new participant state.
       return model.save();
+    })
+    .then((game) => {
+      //load all the real card models into the store for future use
+      var players = game.get('players');
+      var promises = players.reduce((prev, p) => {
+        var gameCards = Ember.get(p, 'gameCards') || [];
+        prev = prev.concat(gameCards.map((card) => store.find('card', card.cardId)));
+        return prev;
+      }, []);
+
+      return Ember.RSVP.all(promises);
+    })
+    .then((cards) => {
+      //doing this to prevent putting the store into components to get a hold
+      //of real card models
+      controller.set('cardsInDecks', cards.uniq());
+    });
+  },
+
+  renderTemplate: function () {
+    this._super.apply(this, arguments);
+
+    this.render('nav-toolbars/game', {
+      into: 'application',
+      outlet: 'nav-toolbar'
     });
   },
 

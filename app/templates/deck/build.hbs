@@ -15,15 +15,13 @@
     {{/paper-card}}
   </div>
   <div>
-    <div class="col-sm-7">
-      {{#full-height classNames="overflow-y-scroll pl-10 pr-10"}}
-        {{#paper-card class="mr-0 ml-0"}}
-          {{#paper-card-content}}
-            {{paper-text class="width-100" label="Name" value=nameSearch}}
-          {{/paper-card-content}}
-        {{/paper-card}}
-        {{partial "cards/material-of-cards"}}
-      {{/full-height}}
+    <div class="col-sm-7 col-lg-6">
+      {{#paper-card class="mr-0 ml-0"}}
+        {{#paper-card-content}}
+          {{paper-text class="width-100" label="Search by card name" value=nameSearch}}
+        {{/paper-card-content}}
+      {{/paper-card}}
+      {{partial "cards/material-of-cards"}}
     </div>
 
     <div class="col-sm-5">

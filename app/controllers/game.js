@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import shuffle from '../utils/shuffle';
+import GameCard from '../models/game-card';
 
 export default Ember.Controller.extend({
   /** @property {Boolean} Is the game going? */
@@ -9,9 +10,6 @@ export default Ember.Controller.extend({
   }.property('players.@each.isReady'),
 
   isGameInPrep: Ember.computed.not('isGameInProgress'),
-
-  /** @property {Boolean} Is the game over? */
-  isGameOver: Ember.computed.equal('model.status', 'ended'),
 
   /** @property {Boolean} Am I one of the players? */
   amIPlaying: function () {
@@ -24,6 +22,13 @@ export default Ember.Controller.extend({
   }.property(
     'model.gameParticipants.@each.{isPlaying,userId}',
     'session.user.id'),
+
+  amIPlayerOne: Ember.computed('participant.user.id', 'playerOne.user.id', function () {
+    var participant = this.get('participant');
+    var playerOne = this.get('playerOne');
+
+    return participant.get('user.id') === playerOne.get('user.id');
+  }),
 
   /** @property {GameParticipant} The participant representing me. */
   participant: function () {
@@ -82,12 +87,6 @@ export default Ember.Controller.extend({
       return 'http://www.gravatar.com/avatar/?s=256&default=mm';
     }
   }.property('playerTwo.user.avatarUrl'),
-
-  /** @property {Boolean} Is there at least one open seat? */
-  isWaitingForOpponent: function () {
-    var players = this.get('model.gameParticipants').filterBy('isPlaying');
-    return players.length < 2;
-  }.property('model.gameParticipants.@each.isPlaying'),
 
   /** @property {String} The title showing on the top half of the board. */
   topBoardTitle: function () {
@@ -156,6 +155,11 @@ export default Ember.Controller.extend({
   /** @property {Boolean} show or hide the chat channel */
   showChat: true,
 
+  /** @property {String} class name for the show/hide chat icon */
+  showChatClass: Ember.computed('showChat', function () {
+    return this.get('showChat') ? 'chevron-right' : 'chevron-left';
+  }),
+
   /** @property {Boolean} has participant chosen a deck? */
   hasChosenDeck: Ember.computed.and('participant.deckName', 'participant.deckId'),
 
@@ -192,8 +196,8 @@ export default Ember.Controller.extend({
       var count = cardGroup.get('count');
       var i, gameCard;
       for (i = 0; i < count; i++) {
-        gameCard = this.store.createRecord('gameCard');
-        gameCard.set('card', card);
+        gameCard = GameCard.create();
+        gameCard.set('cardId', card.get('id'));
         gameCards.pushObject(gameCard);
       }
     });
@@ -204,8 +208,17 @@ export default Ember.Controller.extend({
     //
     var count = 0;
     gameCards.forEach((gameCard) => gameCard.set('order', count++));
-    this.get('participant.gameCards').pushObjects(gameCards);
+    this.set('participant.gameCards', gameCards);
   },
+
+  /**
+    * If a player selects End Game, redirect everyone back to the games list
+    */
+  statusChanged: Ember.observer('model.status', function () {
+    if (this.get('model.status') === 'ended') {
+      this.transitionToRoute('games.list');
+    }
+  }),
 
   actions: {
     /**
@@ -215,8 +228,10 @@ export default Ember.Controller.extend({
      */
     selectDeck: function (deck) {
       var participant = this.get('participant');
-      participant.set('deckName', deck.get('name'));
-      participant.set('deckId', deck.get('id'));
+      participant.setProperties({
+        deckName: deck.get('name'),
+        deckId: deck.get('id')
+      });
       this.get('model').save();
     },
 
@@ -232,6 +247,55 @@ export default Ember.Controller.extend({
 
     toggleChat: function () {
       this.toggleProperty('showChat');
+    },
+
+    drawCards: function (numCards) {
+      var library = this.get('participant.cardsInLibrary').toArray();
+      if (library.get('length') > numCards) {
+        for (var i = 0; i < numCards; i++) {
+          var card = library.objectAt(i);
+          card.set('zone', 'hand');
+        }
+      } else {
+        library.setEach('zone', 'hand');
+      }
+      this.get('model').save();
+    },
+
+    shuffle: function () {
+      var library = this.get('participant.cardsInLibrary');
+      var count = 0;
+
+      shuffle(library);
+      library.forEach((gameCard) => gameCard.set('order', count++));
+      this.get('model').save();
+    },
+
+    search: function () {
+
+    },
+
+    returnAllCards: function () {
+      this.get('participant.gameCards').setEach('zone', 'library');
+      this.get('model').save();
+    },
+    /**
+      * Increment or decrement life
+      */
+    changeLife: function (delta) {
+      var participant = this.get('participant');
+      var life = participant.get('life');
+      participant.set('life', life += delta);
+      this.get('model').save();
+    },
+
+    /**
+      * A player has called it quits!
+      */
+    endGame: function () {
+      var game = this.get('model');
+      game.set('status', 'ended');
+      game.save();
     }
   }
 });

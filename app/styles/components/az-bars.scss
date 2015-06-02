@@ -1,0 +1,27 @@
+az-bars {
+  width: calc(100% - 96px);
+  div {
+    text-align: right;
+    padding: 5px 0;
+    height: 30px;
+    .bar {
+      width: 100%;
+      display: inline-block;
+      background-color: map-get($color-grey, '300');
+      &.no-count {background: none;}
+      &.Creature {background-color: map-get($color-red, '300');}
+      &.Artifact {background-color: map-get($color-amber, '300');}
+      &.Land {background-color: map-get($color-green, '300');}
+      &.Sorcery {background-color: map-get($color-blue, '300');}
+      &.Instant {background-color: map-get($color-yellow, '300');}
+      &.Enchantment {background-color: map-get($color-cyan, '300');}
+      .count {
+        position: relative;
+        left: 19px;
+        width: 16px;
+        text-align: left;
+        display: inline-block;
+      }
+    }
+  }
+}

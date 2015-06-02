@@ -10,8 +10,25 @@
 
   {{#paper-tile-content}}
     {{#link-to 'game' game.id}}
-      {{#paper-button classNames="md-primary game-listing-join"}}Join Game{{/paper-button}}
+      {{paper-button classNames="md-primary game-listing-join" label="Join Game"}}
     {{/link-to}}
+
+    {{#if canDeleteGame}}
+      <ul class="pull-right paper-tile-content-right">
+        <li>
+          {{#x-paper-button-delayed
+            action="deleteGame"
+            params=game
+            bubbles=false
+            as |showTimer|}}
+            {{paper-icon icon="delete" size="lg" title="Delete"}}
+            {{#if showTimer}}
+              {{donut-timer}}
+            {{/if}}
+          {{/x-paper-button-delayed}}
+        </li>
+      </ul>
+    {{/if}}
   {{/paper-tile-content}}
 
 {{/paper-item}}

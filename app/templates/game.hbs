@@ -1,11 +1,8 @@
 <div class="game-board {{if showChat 'show-chat' 'hide-chat'}}">
   {{#paper-button class="chat-chevron" action="toggleChat"}}
-    {{#if showChat}}
-      {{paper-icon icon="chevron-right"}}
-    {{else}}
-      {{paper-icon icon="chevron-left"}}
-    {{/if}}
+    {{paper-icon icon=showChatClass}}
   {{/paper-button}}
+
   <div class="game-board-top">
     {{#if isGameInProgress}}
       {{partial "game/in-progress-opponent"}}
@@ -17,13 +14,14 @@
       </h3>
     {{/if}}
   </div>
+
   <div class="game-board-bottom">
     {{#if isGameInProgress}}
       {{partial "game/in-progress-me"}}
     {{else}}
       <h3>
         <img src={{playerOneAvatarUrl}} class="avatar">
-        {{#if playerOne.user.hasGameReadyDecks}}
+        {{#if participant.user.hasGameReadyDecks}}
           {{bottomBoardTitle}}
         {{else}}
           {{#paper-button raised=true class="md-primary" action="createNewDeck"}}Create Deck{{/paper-button}}
@@ -49,6 +47,7 @@
 
     {{/if}}
   </div>
+
 </div>
 
 {{partial "game/chat"}}

@@ -1,0 +1,11 @@
+{{#each data as |bar|}}
+  <div style="width: {{bar.width}};">
+    {{#if bar.count}}
+      <span class="bar {{bar.label}}">
+        <span class="count">{{bar.count}}</span>
+      </span>
+    {{else}}
+      <span class="bar no-count">{{bar.count}}</span>
+    {{/if}}
+  </div>
+{{/each}}

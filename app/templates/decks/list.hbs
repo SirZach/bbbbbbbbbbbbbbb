@@ -1,46 +1,34 @@
-<div>
-{{#paper-content classNames="md-whiteframe-z1"}}
-  {{#paper-list}}
-    {{#each model as |deck|}}
-      {{#x-paper-item class="cursor-pointer" as |isExpanded|}}
-        {{#paper-tile-left}}
-          <div class="game-listing-deck-image"
-               style="background-image: url('{{deck.defaultImageUrl}}')">
-          </div>
-        {{/paper-tile-left}}
-        {{#paper-tile-content}}
-          <h3>{{deck.name}}</h3>
-          <ul class="pull-right paper-tile-content-right">
-            <li><strong>{{deck.allCount}}</strong> Cards</li>
-            <li>
-              {{#x-paper-button-delayed action="deleteDeck" params=deck bubbles=false as |showTimer|}}
-                {{paper-icon icon="delete" size="lg" title="Delete"}}
-                {{#if showTimer}}
-                  {{donut-timer}}
-                {{/if}}
-              {{/x-paper-button-delayed}}
-            </li>
-            <li>
-              {{#x-paper-button action="goToDeck" params=deck}}
-                {{paper-icon icon="share" size="lg" title="Explore"}}
-              {{/x-paper-button}}
-            </li>
-            <li>
-              {{#x-paper-button action="goToDeckBuilder" params=deck}}
-                {{paper-icon icon="translate" size="lg" title="Edit"}}
-              {{/x-paper-button}}
-            </li>
-          </ul>
-          <p class="truncate">{{deck.comments}}</p>
-          {{#if isExpanded}}
-            {{#titled-card title="Mana Curve"}}
-              {{mana-curve-chart deck=deck}}
-            {{/titled-card}}
-          {{/if}}
-        {{/paper-tile-content}}
-      {{/x-paper-item}}
-      {{paper-divider}}
-    {{/each}}
-  {{/paper-list}}
-{{/paper-content}}
-</div>
+{{#if model.length}}
+  {{#paper-content classNames="md-whiteframe-z1"}}
+    {{#paper-list}}
+      {{#each model as |deck|}}
+        {{deck-listing
+          class="cursor-pointer"
+          deck=deck
+          currentUser=session.user
+          goToDeck="goToDeck"
+          deleteDeck="deleteDeck"
+          goToDeckBuilder="goToDeckBuilder"}}
+        {{paper-divider}}
+      {{/each}}
+    {{/paper-list}}
+  {{/paper-content}}
+
+  {{az-infinity-loader
+    classNames="infinity-loader"
+    scrollable="#infinity-window"
+    infinityModel=model}}
+{{else}}
+  <div class="no-decks-container">
+    <div class="three-card-deck">
+      <div class="card-one"></div>
+      <div class="card-two"></div>
+      <div class="card-three"></div>
+    </div>
+    <h2 class="main-message">There aren't any decks here.</h2>
+    <p class="message">
+      {{paper-button raised=true class="md-primary" label="Create" action="createNewDeck"}}
+      a new deck or {{paper-button raised=true label="Import" action="importDeck"}} a deck to get started.
+    </p>
+  </div>
+{{/if}}

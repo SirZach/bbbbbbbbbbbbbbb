@@ -1,0 +1,10 @@
+<h5>{{title}}</h5>
+<h3>{{gameCards.length}}</h3>
+{{yield}}
+{{#if isOpen}}
+  {{#game-cards class=top}}
+    {{#each gameCards as |gameCard|}}
+      {{game-card gameCard=gameCard cards=cards}}
+    {{/each}}
+  {{/game-cards}}
+{{/if}}

@@ -1,1 +1,45 @@
-in progress
+{{#game-board-container}}
+  {{#game-zones}}
+    {{game-zone
+      title="Exile"
+      gameCards=playerOne.cardsInExile
+      cards=cardsInDecks}}
+
+    {{game-zone
+      title="Graveyard"
+      gameCards=playerOne.cardsInGraveyard
+      cards=cardsInDecks}}
+
+    {{#game-zone
+      canOpen=false
+      title="Library"
+      gameCards=playerOne.cardsInLibrary
+      cards=cardsInDecks}}
+      {{#if amIPlayerOne}}
+        {{#context-menu as |menu|}}
+          <ul>
+            <li {{action 'drawCards' 7}}>Draw 7</li>
+            <li {{action 'drawCards' 1}}>Draw Card</li>
+            {{!-- <li {{action 'search'}}>Search</li> --}}
+            <li {{action 'shuffle'}}>Shuffle</li>
+            <li {{action 'returnAllCards'}}>Return All Cards</li>
+          </ul>
+        {{/context-menu}}
+      {{/if}}
+    {{/game-zone}}
+
+    {{game-zone
+      title="Hand"
+      class="bottom"
+      gameCards=playerOne.cardsInHand
+      cards=cardsInDecks}}
+  {{/game-zones}}
+
+  {{#battle-field}}
+
+    {{battle-field-non-land}}
+
+    {{battle-field-land}}
+
+  {{/battle-field}}
+{{/game-board-container}}

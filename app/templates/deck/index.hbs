@@ -1,4 +1,4 @@
-{{#paper-item classNames="deck-header"}}
+{{#paper-item classNames="deck-header bg-transparent"}}
   {{#paper-tile-left}}
     <div class="game-listing-deck-image"
          style="background-image: url('{{model.defaultImageUrl}}')">
@@ -30,13 +30,16 @@
     {{#titled-card title="Mana Curve"}}
       {{mana-curve-chart deck=model}}
     {{/titled-card}}
+
+    {{#titled-card title="Card Breakdown"}}
+      {{card-breakdown-chart deck=model}}
+    {{/titled-card}}
   </div>
 
   {{!-- Side column 2 for charts --}}
   <div class="col-md-4 col-sm-6">
     {{sample-draw-chart deck=model}}
   </div>
-
 
 
 </div>

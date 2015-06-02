@@ -9,10 +9,12 @@ export default Ember.Controller.extend({
 
   nameSearch: Ember.computed.alias('controllers.cards.nameSearch'),
 
+  _triggerCardLookup: function () {
+    this.send('getNewCards');
+  },
+
   nameSearchDidChange: function () {
-    Ember.run.later(this, function () {
-      this.send('getNewCards');
-    });
+    Ember.run.debounce(this, '_triggerCardLookup', 500);
   }.observes('nameSearch'),
 
   filteredCards: Ember.computed.alias('controllers.cards.model'),
