@@ -1,12 +1,14 @@
 @import "mixins/flex";
 @import 'variables';
 
-.game-container {
-  @include flex();
-}
-
 .game-board {
-  width: 100%;
+  position: fixed;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  &.show-chat {margin-right: 340px;}
+  &.hide-chat {margin-right: 0;}
   transition: margin 0.5s;
   .chat-chevron {
     position: absolute;
@@ -72,6 +74,10 @@ game-board-container {
 }
 
 .game-right-column {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
   background: #f2f2f2;
   border-left: 1px solid map-get($color-grey, '400');
   transition: width 0.5s;
@@ -80,6 +86,10 @@ game-board-container {
 }
 
 .game-chat {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
   background: #f2f2f2;
   .chat {
     position: relative;

@@ -160,8 +160,6 @@ export default Ember.Controller.extend({
     return this.get('showChat') ? 'chevron-right' : 'chevron-left';
   }),
 
-  showGameZone: false,
-
   /** @property {Boolean} has participant chosen a deck? */
   hasChosenDeck: Ember.computed.and('participant.deckName', 'participant.deckId'),
 
@@ -276,10 +274,6 @@ export default Ember.Controller.extend({
     returnAllCards: function () {
       this.get('participant.gameCards').setEach('zone', 'library');
       this.get('model').save();
-    },
-
-    search: function () {
-      this.toggleProperty('showGameZone');
     },
     /**
       * Increment or decrement life
