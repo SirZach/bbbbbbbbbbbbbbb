@@ -39,11 +39,11 @@
     "ember-cli-selectize": "0.3.0",
     "ember-cli-uglify": "1.0.1",
     "ember-cli-version-checker": "^1.0.2",
-    "ember-data": "1.0.0-beta.15",
+    "ember-data": "1.0.0-beta.18",
     "ember-export-application-global": "^1.0.2",
     "ember-infinity": "0.0.5",
     "ember-paper": "0.0.21",
-    "emberfire": "1.4.3",
+    "emberfire": "1.4.5",
     "express": "^4.8.5",
     "glob": "^4.0.5"
   }

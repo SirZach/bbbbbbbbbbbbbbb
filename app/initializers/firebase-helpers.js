@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import DS from 'ember-data';
 
 /**
  * Get the firebase ref for the given record of the given type.
@@ -13,10 +13,9 @@ function refFor(type, record) {
 }
 
 export default {
-  name: "Firebase Helpers",
+  name: 'Firebase Helpers',
 
-  initialize: function (container, app) {
-    var store = container.lookup('store:main');
-    store.refFor = refFor;
+  initialize: function () {
+    DS.Store.reopen({refFor});
   }
 };
