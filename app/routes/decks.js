@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   queryParams: {
-    owner: {
+    mine: {
       refreshModel: true
     }
   },
@@ -10,23 +10,37 @@ export default Ember.Route.extend({
   beforeModel: function () {
     if (!this.get('session.isAuthenticated')) {
       this.replaceWith('/');
+    } else {
+      // Wait for the user record to load.
+      return this.get('session.user');
     }
   },
 
-  model: function () {
-    // If we've already loaded some, just return the existing model.
-    var model = this.currentModel;
-    if (model && model.length) {
-      return model;
-    } else {
-      return this._createFetchPromise();
+  model: function ({mine}) {
+    if (mine) {
+      return this.get('session.user.decks').then(decks => {
+        // Show last created first.
+        var model = decks.toArray().reverseObjects();
+        // We don't want to lazy load any more models.
+        model.set('loadsLazily', false);
+        return model;
+      });
     }
+
+    // Load all decks, not just mine.
+    var unfilteredDecks = this.get('_unfilteredDecks');
+    if (unfilteredDecks && unfilteredDecks.length) {
+      return unfilteredDecks;
+    }
+    return this._createFetchPromise();
   },
 
   _createFetchPromise: function () {
     var lastDeckId = this.get('_lastDeckId');
     var endAt = lastDeckId ? lastDeckId : null;
-    var model = this.currentModel || [];
+    var model = this.get('_unfilteredDecks') || [];
+    model.set('loadsLazily', true);
+
     // OMG what a hack. Firebase doesn't support exclusive queries, so ask for
     // one more than we want if we have already loaded some records.
     //
@@ -54,6 +68,7 @@ export default Ember.Route.extend({
         this.set('_lastDeckId', decks.get('lastObject.id'));
       }
       model.pushObjects(decks);
+      this.set('_unfilteredDecks', model);
       return model;
     });
   },
@@ -87,16 +102,6 @@ export default Ember.Route.extend({
 
     importDeck: function () {
       this.send('openModal', 'decks/import-deck');
-    },
-
-    /**
-     * Search for decks using the given filters.
-     *
-     * @param {Object} filters
-     * @option filters {String} owner
-     */
-    search: function (filters) {
-      // don't do this. use routed query params instead.
     },
 
     infinityLoad: function () {

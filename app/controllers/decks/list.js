@@ -7,19 +7,7 @@ export default Ember.Controller.extend({
   filtersActive: false,
 
   /** @property {Boolean} Showing only my decks? */
-  mineOnly: Ember.computed('controllers.decks.owner', 'session.user.username',
-    function (key, val) {
-      var me = this.get('session.user.username');
-      var owner = this.get('controllers.decks.owner');
-
-      if (arguments.length === 1) {
-        // Getter; check to see if I am the owner being filtered.
-        return owner === me;
-      } else {
-        // Setter; set the deck controller's owner property.
-        this.set('controllers.decks.owner', val ? me : null);
-      }
-    }),
+  filterMineOnly: Ember.computed.alias('controllers.decks.mine'),
 
   actions: {
     toggleFiltersActive: function () {

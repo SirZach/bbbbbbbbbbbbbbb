@@ -5,7 +5,7 @@
       {{#paper-card}}
         {{#paper-card-content}}
           {{#if session.isAuthenticated}}
-            {{paper-switch checked=mineOnly label="Mine Only"}}
+            {{paper-switch checked=filterMineOnly label="Mine Only"}}
           {{/if}}
         {{/paper-card-content}}
       {{/paper-card}}
@@ -26,10 +26,12 @@
         {{/paper-list}}
       {{/paper-content}}
 
-      {{az-infinity-loader
-        classNames="infinity-loader"
-        scrollable="#infinity-window"
-        infinityModel=model}}
+      {{#if model.loadsLazily}}
+        {{az-infinity-loader
+          classNames="infinity-loader"
+          scrollable="#infinity-window"
+          infinityModel=model}}
+      {{/if}}
     </div>
   </div>
 {{else}}

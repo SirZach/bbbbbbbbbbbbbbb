@@ -1,8 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
-  queryParams: ['owner'],
+  queryParams: ['mine'],
 
-  /** @property {String} Query param - whose decks by which we filter. */
-  owner: null
+  /** @property {Boolean} Query param - filter by my decks only? */
+  mine: false
 });
