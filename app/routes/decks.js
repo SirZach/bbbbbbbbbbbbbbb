@@ -1,6 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  queryParams: {
+    owner: {
+      refreshModel: true
+    }
+  },
+
   beforeModel: function () {
     if (!this.get('session.isAuthenticated')) {
       this.replaceWith('/');
@@ -81,6 +87,16 @@ export default Ember.Route.extend({
 
     importDeck: function () {
       this.send('openModal', 'decks/import-deck');
+    },
+
+    /**
+     * Search for decks using the given filters.
+     *
+     * @param {Object} filters
+     * @option filters {String} owner
+     */
+    search: function (filters) {
+      // don't do this. use routed query params instead.
     },
 
     infinityLoad: function () {

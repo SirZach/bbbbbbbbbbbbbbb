@@ -1,23 +1,37 @@
 {{#if model.length}}
-  {{#paper-content classNames="md-whiteframe-z1"}}
-    {{#paper-list}}
-      {{#each model as |deck|}}
-        {{deck-listing
-          class="cursor-pointer"
-          deck=deck
-          currentUser=session.user
-          goToDeck="goToDeck"
-          deleteDeck="deleteDeck"
-          goToDeckBuilder="goToDeckBuilder"}}
-        {{paper-divider}}
-      {{/each}}
-    {{/paper-list}}
-  {{/paper-content}}
+  <div class="row row-offcanvas row-offcanvas-left {{if filtersActive 'active'}}">
 
-  {{az-infinity-loader
-    classNames="infinity-loader"
-    scrollable="#infinity-window"
-    infinityModel=model}}
+    <div class="col-sm-4 col-lg-2 sidebar-offcanvas" id="sidebar">
+      {{#paper-card}}
+        {{#paper-card-content}}
+          {{#if session.isAuthenticated}}
+            {{paper-switch checked=mineOnly label="Mine Only"}}
+          {{/if}}
+        {{/paper-card-content}}
+      {{/paper-card}}
+    </div>
+    <div class="col-sm-12 col-lg-10">
+      {{#paper-content classNames="md-whiteframe-z1"}}
+        {{#paper-list}}
+          {{#each model as |deck|}}
+            {{deck-listing
+              class="cursor-pointer"
+              deck=deck
+              currentUser=session.user
+              goToDeck="goToDeck"
+              deleteDeck="deleteDeck"
+              goToDeckBuilder="goToDeckBuilder"}}
+            {{paper-divider}}
+          {{/each}}
+        {{/paper-list}}
+      {{/paper-content}}
+
+      {{az-infinity-loader
+        classNames="infinity-loader"
+        scrollable="#infinity-window"
+        infinityModel=model}}
+    </div>
+  </div>
 {{else}}
   <div class="no-decks-container">
     <div class="three-card-deck">
