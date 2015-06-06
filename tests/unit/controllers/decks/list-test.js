@@ -5,7 +5,7 @@ import {
 
 moduleFor('controller:decks/list', {
   // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+  needs: ['controller:decks']
 });
 
 // Replace this with your real tests.
