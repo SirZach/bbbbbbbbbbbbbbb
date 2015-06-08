@@ -101,7 +101,24 @@ export default Ember.Route.extend({
 
   actions: {
     search: function (player, cards) {
+      var self = this;
+      this.set('controller.showLeftColumn', true);
+      setTimeout(function () {
+        self.render('game/left-column', {
+          outlet: 'left-column',
+          into: 'game',
+          controller: 'game/left-column',
+          model: cards
+        });
+      }, 500);
+    },
 
+    closeLeftColumn: function () {
+      this.set('controller.showLeftColumn', false);
+      this.disconnectOutlet({
+        outlet: 'left-column',
+        parentView: 'game'
+      });
     },
 
     willTransition: function () {

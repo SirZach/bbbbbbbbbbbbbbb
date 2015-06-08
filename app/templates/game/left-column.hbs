@@ -1,0 +1,10 @@
+<div class="game-left-column">
+  <h3>Sirzach - Library</h3>
+  {{#paper-button class="close-column" action="closeLeftColumn"}}
+    {{paper-icon icon="close"}}
+  {{/paper-button}}
+
+  {{#each model as |card|}}
+    {{game-card tagName="div" cards=controllers.game.cardsInDecks gameCard=card}}
+  {{/each}}
+</div>
