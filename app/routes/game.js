@@ -100,8 +100,13 @@ export default Ember.Route.extend({
   }.property('gameParticipant'),
 
   actions: {
-    search: function (player, cards) {
+    openLeftColumn: function (player, cards, zone) {
       var self = this;
+      var leftController = this.controllerFor('game/left-column');
+      leftController.setProperties({
+        player: player,
+        zone: zone
+      });
       this.set('controller.showLeftColumn', true);
       setTimeout(function () {
         self.render('game/left-column', {

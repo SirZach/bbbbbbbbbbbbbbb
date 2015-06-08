@@ -3,12 +3,14 @@
     {{game-zone
       title="Exile"
       gameCards=playerOne.cardsInExile
-      cards=cardsInDecks}}
+      open="openLeftColumn"
+      player=playerOne}}
 
     {{game-zone
       title="Graveyard"
       gameCards=playerOne.cardsInGraveyard
-      cards=cardsInDecks}}
+      open="openLeftColumn"
+      player=playerOne}}
 
     {{#game-zone
       canOpen=false
@@ -21,7 +23,7 @@
           <ul>
             <li {{action 'drawCards' 7}}>Draw 7</li>
             <li {{action 'drawCards' 1}}>Draw Card</li>
-            <li {{action 'search' playerOne playerOne.cardsInLibrary}}>Search</li>
+            <li {{action 'openLeftColumn' playerOne playerOne.cardsInLibrary 'Library'}}>Search</li>
             <li {{action 'shuffle'}}>Shuffle</li>
             <li {{action 'returnAllCards'}}>Return All Cards</li>
           </ul>
@@ -32,8 +34,9 @@
     {{game-zone
       title="Hand"
       class="bottom"
-      gameCards=playerOne.cardsInHand
-      cards=cardsInDecks}}
+      open="openLeftColumn"
+      player=playerOne
+      gameCards=playerOne.cardsInHand}}
   {{/game-zones}}
 
   {{#battle-field}}
