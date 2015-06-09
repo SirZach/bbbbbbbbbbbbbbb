@@ -4,8 +4,6 @@ import layout from '../templates/components/game-card';
 export default Ember.Component.extend({
   layout: layout,
 
-  tagName: 'li',
-
   classNames: 'game-card',
 
   /** @property {DS.Model GameCard} */

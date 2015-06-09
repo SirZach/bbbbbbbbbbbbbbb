@@ -100,6 +100,32 @@ export default Ember.Route.extend({
   }.property('gameParticipant'),
 
   actions: {
+    openLeftColumn: function (player, cards, zone) {
+      var self = this;
+      var leftController = this.controllerFor('game/left-column');
+      leftController.setProperties({
+        player: player,
+        zone: zone
+      });
+      this.set('controller.showLeftColumn', true);
+      setTimeout(function () {
+        self.render('game/left-column', {
+          outlet: 'left-column',
+          into: 'game',
+          controller: 'game/left-column',
+          model: cards
+        });
+      }, 500);
+    },
+
+    closeLeftColumn: function () {
+      this.set('controller.showLeftColumn', false);
+      this.disconnectOutlet({
+        outlet: 'left-column',
+        parentView: 'game'
+      });
+    },
+
     willTransition: function () {
       // If you are not logged in, there is no state to clean up.
       if (!this.get('session.isAuthenticated')) {

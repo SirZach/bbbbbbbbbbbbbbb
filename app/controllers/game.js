@@ -160,6 +160,8 @@ export default Ember.Controller.extend({
     return this.get('showChat') ? 'chevron-right' : 'chevron-left';
   }),
 
+  showLeftColumn: false,
+
   /** @property {Boolean} has participant chosen a deck? */
   hasChosenDeck: Ember.computed.and('participant.deckName', 'participant.deckId'),
 
@@ -269,10 +271,6 @@ export default Ember.Controller.extend({
       shuffle(library);
       library.forEach((gameCard) => gameCard.set('order', count++));
       this.get('model').save();
-    },
-
-    search: function () {
-
     },
 
     returnAllCards: function () {
