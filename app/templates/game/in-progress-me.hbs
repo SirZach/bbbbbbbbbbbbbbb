@@ -10,13 +10,13 @@
       title="Graveyard"
       gameCards=playerOne.cardsInGraveyard
       open="openLeftColumn"
+      cardIsDragging=cardIsDragging
       player=playerOne}}
 
     {{#game-zone
       canOpen=false
       title="Library"
-      gameCards=playerOne.cardsInLibrary
-      cards=cardsInDecks}}
+      gameCards=playerOne.cardsInLibrary}}
       {{#if amIPlayerOne}}
         {{#context-menu as |menu|}}
           <ul>

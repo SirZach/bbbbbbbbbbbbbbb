@@ -14,7 +14,15 @@ export default Ember.Component.extend({
 
   canOpen: true,
 
-  classNameBindings: 'canOpen:cursor-pointer',
+  classNameBindings: ['canOpen:cursor-pointer', 'cardIsDragging:show-drop'],
+
+  drop: function (event) {
+    debugger;
+  },
+
+  dragOver: function (event) {
+    event.preventDefault();
+  },
 
   click: function () {
     if (this.get('canOpen')) {

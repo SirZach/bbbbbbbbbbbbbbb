@@ -9,7 +9,7 @@
   right: 0;
   &.show-chat {margin-right: 340px;}
   &.hide-chat {margin-right: 0;}
-  &.show-left-column { left: 230px;}
+  &.show-left-column { left: 245px;}
   transition: margin, left 0.5s;
   .chat-chevron {
     position: absolute;
@@ -36,7 +36,7 @@
 }
 
 .game-left-column {
-  width: 230px;
+  width: 245px;
   position: fixed;
   left: 0;
   height: 100%;
@@ -64,6 +64,9 @@ game-board-container {
       padding: 8px;
       display: block;
       position: relative;
+      &.show-drop {
+        background-color: red;
+      }
       h5 {
         margin: 0 0 8px 0;
       }

@@ -160,7 +160,11 @@ export default Ember.Controller.extend({
     return this.get('showChat') ? 'chevron-right' : 'chevron-left';
   }),
 
+  /** @property {Boolean} display the left column */
   showLeftColumn: false,
+
+  /** @property {Boolean} a card is being dragged */
+  cardIsDragging: false,
 
   /** @property {Boolean} has participant chosen a deck? */
   hasChosenDeck: Ember.computed.and('participant.deckName', 'participant.deckId'),

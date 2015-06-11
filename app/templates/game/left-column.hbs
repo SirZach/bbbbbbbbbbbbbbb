@@ -5,6 +5,11 @@
   {{/paper-button}}
 
   {{#each model as |card|}}
-    {{game-card tagName="div" cards=controllers.game.cardsInDecks gameCard=card}}
+    {{game-card
+      cards=controllers.game.cardsInDecks
+      gameCard=card
+      dragStarted="dragStarted"
+      dragEnded="dragEnded"
+    }}
   {{/each}}
 </div>

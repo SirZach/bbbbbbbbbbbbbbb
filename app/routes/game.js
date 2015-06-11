@@ -100,6 +100,14 @@ export default Ember.Route.extend({
   }.property('gameParticipant'),
 
   actions: {
+    dragStarted: function () {
+      this.set('controller.cardIsDragging', true);
+    },
+
+    dragEnded: function () {
+      this.set('controller.cardIsDragging', false);
+    },
+
     openLeftColumn: function (player, cards, zone) {
       var self = this;
       var leftController = this.controllerFor('game/left-column');
