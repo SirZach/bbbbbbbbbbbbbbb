@@ -1,4 +1,5 @@
-<div class="game-board {{if showChat 'show-chat' 'hide-chat'}}">
+{{outlet "left-column"}}
+<div class="game-board {{if showChat 'show-chat' 'hide-chat'}} {{if showLeftColumn 'show-left-column'}}">
   {{#paper-button class="chat-chevron" action="toggleChat"}}
     {{paper-icon icon=showChatClass}}
   {{/paper-button}}
