@@ -17,10 +17,15 @@ export default Ember.Component.extend({
   classNameBindings: ['canOpen:cursor-pointer', 'cardIsDragging:show-drop'],
 
   drop: function (event) {
+    event.preventDefault();
     debugger;
   },
 
   dragOver: function (event) {
+    event.preventDefault();
+  },
+
+  dragEnter: function (event) {
     event.preventDefault();
   },
 
