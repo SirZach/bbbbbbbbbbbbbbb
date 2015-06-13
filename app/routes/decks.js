@@ -75,8 +75,15 @@ export default Ember.Route.extend({
 
   actions: {
     deleteDeck: function (deck) {
+      // Remove the record from the listing so we don't trigger weird 'null'
+      // image lookups.
+      //
+      var deckIndex = this.currentModel.indexOf(deck);
+      this.currentModel.removeObject(deck);
+
       deck.destroyRecord()
         .then(() => {
+          // Show a cute success toast.
           this.notifications.addNotification({
             message: 'Deleted',
             type: 'success',
@@ -85,6 +92,10 @@ export default Ember.Route.extend({
           });
         })
         .catch(() => {
+          // Add the deck back and show an error.
+          this.currentModel.insertAt(deckIndex, deck);
+
+          // Show a cute error toast.
           this.notifications.addNotification({
             message: 'Error',
             type: 'error'
