@@ -27,11 +27,9 @@ export default Ember.Route.extend({
       });
     }
 
-    // Load all decks, not just mine.
-    var unfilteredDecks = this.get('_unfilteredDecks');
-    if (unfilteredDecks && unfilteredDecks.length) {
-      return unfilteredDecks;
-    }
+    // Load all decks, not just mine. Ensure we don't have old stuff cached.
+    this.set('_lastDeckId');
+    this.set('_unfilteredDecks');
     return this._createFetchPromise();
   },
 
