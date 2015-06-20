@@ -10,7 +10,7 @@
           <h3>{{card.name}}</h3>
           <ul class="pull-right paper-tile-content-right">
             <li>{{card.powerToughnessFormatted}}</li>
-            <li class="ml-10">{{mana-formatted mana=card.manaCostFormatted}}</li>
+            <li class="ml-10">{{!mana-formatted mana=card.manaCostFormatted}}</li>
             <li class="on-hover">
               {{#x-paper-button classNames="md-primary" title="Add to Deck" action="addToMain" params=card bubbles=false}}
                 Deck

@@ -1,5 +1,5 @@
 <span style="inline-block;">
-  {{#each character in formattedCharacters}}
+  {{#each formattedCharacters as |character|}}
     {{#if character.isNumber}}
       <span>{{character.value}}</span>
     {{else}}
