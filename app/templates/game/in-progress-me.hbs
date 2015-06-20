@@ -4,6 +4,8 @@
       title="Exile"
       gameCards=playerOne.cardsInExile
       open="openLeftColumn"
+      cardIsDragging=cardIsDragging
+      droppedOn="droppedCard"
       player=playerOne}}
 
     {{game-zone
@@ -11,12 +13,16 @@
       gameCards=playerOne.cardsInGraveyard
       open="openLeftColumn"
       cardIsDragging=cardIsDragging
+      droppedOn="droppedCard"
       player=playerOne}}
 
     {{#game-zone
       canOpen=false
       title="Library"
-      gameCards=playerOne.cardsInLibrary}}
+      gameCards=playerOne.cardsInLibrary
+      cardIsDragging=cardIsDragging
+      droppedOn="droppedCard"
+      player=playerOne}}
       {{#if amIPlayerOne}}
         {{#context-menu as |menu|}}
           <ul>
@@ -34,6 +40,8 @@
       title="Hand"
       class="bottom"
       open="openLeftColumn"
+      cardIsDragging=cardIsDragging
+      droppedOn="droppedCard"
       player=playerOne
       gameCards=playerOne.cardsInHand}}
   {{/game-zones}}

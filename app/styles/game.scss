@@ -65,7 +65,10 @@ game-board-container {
       display: block;
       position: relative;
       &.show-drop {
-        background-color: red;
+        background-color: map-get($color-amber, '100');
+        &.is-dragged-over {
+          background-color: map-get($color-amber, '500');
+        }
       }
       h5 {
         margin: 0 0 8px 0;

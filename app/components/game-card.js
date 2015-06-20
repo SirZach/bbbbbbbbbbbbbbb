@@ -26,8 +26,12 @@ export default Ember.Component.extend({
 
   dragStart: function(event) {
     var gameCard = this.get('gameCard');
+    var dragData = JSON.stringify({
+      cardId: gameCard.get('cardId'),
+      order: gameCard.get('order')
+    });
 
-    event.dataTransfer.setData('text/data', gameCard.get('id'));
+    event.dataTransfer.setData('text/plain', dragData);
     this.sendAction('dragStarted');
   },
 

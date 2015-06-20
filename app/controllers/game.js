@@ -291,6 +291,13 @@ export default Ember.Controller.extend({
       this.get('model').save();
     },
 
+    droppedCard: function (cardData, player, zone) {
+      var gameCard = player.get('gameCards').findBy('order', cardData.order);
+
+      gameCard.set('zone', zone);
+      this.get('model').save();
+    },
+
     /**
       * A player has called it quits!
       */
