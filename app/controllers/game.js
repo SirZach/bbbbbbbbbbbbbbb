@@ -255,6 +255,21 @@ export default Ember.Controller.extend({
       this.toggleProperty('showChat');
     },
 
+    /**
+     * Open the left column for zone-card interaction
+     * @param player
+     * @param cards
+     * @param zone
+     */
+    openLeftColumn: function (player, cards, zone) {
+      this.setProperties({
+        leftColumnPlayer: player,
+        leftColumnZone: zone,
+        leftColumnCards: cards,
+        showLeftColumn: true
+      });
+    },
+
     drawCards: function (numCards) {
       var library = this.get('participant.cardsInLibrary').toArray();
       if (library.get('length') > numCards) {

@@ -1,0 +1,16 @@
+{{#if isOpen}}
+
+  <h3>{{player.user.username}} - {{zone}}</h3>
+  {{#paper-button class="close-column" action="close"}}
+    {{paper-icon icon="close"}}
+  {{/paper-button}}
+
+  {{#each gameCards as |card|}}
+    {{game-card
+      cards=cardsInDecks
+      gameCard=card
+      dragStarted="dragStarted"
+      dragEnded="dragEnded"}}
+  {{/each}}
+
+{{/if}}
