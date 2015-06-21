@@ -100,6 +100,10 @@ game-board-container {
       &.can-open {
         background-color: #ffffff;
         cursor: pointer;
+        box-shadow: 2px 2px 2px 0 map-get($color-grey, '500');
+        &:hover {
+          background-color: map-get($color-grey, '300');
+        }
         &.show-drop {
           background-color: map-get($color-amber, '100');
           &.is-dragged-over {
