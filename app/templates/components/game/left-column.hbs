@@ -1,16 +1,24 @@
 {{#if isOpen}}
 
-  <h3>{{player.user.username}} - {{zone}}</h3>
-  {{#paper-button class="close-column" action="close"}}
-    {{paper-icon icon="close"}}
-  {{/paper-button}}
+  <div class="column-container">
+    <div class="column-inner">
 
-  {{#each gameCards as |card|}}
-    {{game-card
-      cards=cards
-      gameCard=card
-      dragStarted="dragStarted"
-      dragEnded="dragEnded"}}
-  {{/each}}
+      <div class="column-header">
+        <strong>{{player.user.username}} - {{zone}}</strong>
+      </div>
 
+      {{#paper-button class="close-column" action="close"}}
+        {{paper-icon icon="chevron-left"}}
+      {{/paper-button}}
+
+      {{#each gameCards as |card|}}
+        {{game-card
+          cards=cards
+          gameCard=card
+          dragStarted="dragStarted"
+          dragEnded="dragEnded"}}
+      {{/each}}
+
+    </div>
+  </div>
 {{/if}}

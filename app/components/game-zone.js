@@ -12,6 +12,7 @@ export default Ember.Component.extend({
   /** @property {Array<DS.Model GameCard>} */
   gameCards: [],
 
+  /** @property {Boolean} can populate the left column */
   canOpen: true,
 
   /** @property {DS.GameParticipant} */
@@ -23,7 +24,7 @@ export default Ember.Component.extend({
   /** @property {Boolean} this game-zone is currently the drop target */
   isDraggedOver: false,
 
-  classNameBindings: ['canOpen:cursor-pointer', 'cardIsDragging:show-drop', 'isDraggedOver'],
+  classNameBindings: ['canOpen', 'cardIsDragging:show-drop', 'isDraggedOver'],
 
   drop: function (event) {
     event.preventDefault();
