@@ -11,6 +11,7 @@ context-menu {
     left: 0;
     cursor: pointer;
     width: 115px;
+    box-shadow: 2px 2px 2px 0 map-get($color-grey, '500');
     li {
       padding: 3px;
       &:hover {
