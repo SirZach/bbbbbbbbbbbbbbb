@@ -45,24 +45,29 @@ export default DS.Model.extend({
     return JSON.parse(gameCardsRaw).map((r) => GameCard.create(r));
   }),
 
-  /** @property {Array<GameCard>} all the cards in hand */
+  /** @property {Array<DS.GameCard>} all the cards in hand */
   cardsInHand: Ember.computed('gameCards.@each.zone', function () {
     return this.get('gameCards').filterBy('zone', GameCard.HAND);
   }),
 
-  /** @property {Array<GameCard>} all the cards in library */
+  /** @property {Array<DS.GameCard>} all the cards in library */
   cardsInLibrary: Ember.computed('gameCards.@each.zone', function () {
     return this.get('gameCards').filterBy('zone', GameCard.LIBRARY).sortBy('order');
   }),
 
-  /** @property {Array<GameCard>} all the cards in graveyard */
+  /** @property {Array<DS.GameCard>} all the cards in graveyard */
   cardsInGraveyard: Ember.computed('gameCards.@each.zone', function () {
     return this.get('gameCards').filterBy('zone', GameCard.GRAVEYARD);
   }),
 
-  /** @property {Array<GameCard>} all the cards in exile */
+  /** @property {Array<DS.GameCard>} all the cards in exile */
   cardsInExile: Ember.computed('gameCards.@each.zone', function () {
     return this.get('gameCards').filterBy('zone', GameCard.EXILE);
+  }),
+
+  /** @property {Array<DS.GameCard>} all the cards on the battlefield */
+  cardsInBattlefield: Ember.computed('gameCards.@each.zone', function () {
+    return this.get('gameCards').filterBy('zone', GameCard.BATTLEFIELD);
   }),
 
   setGameCardsRaw: function () {

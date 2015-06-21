@@ -50,11 +50,14 @@
       gameCards=playerOne.cardsInHand}}
   {{/game-zones}}
 
-  {{#battle-field}}
+  {{game/battle-field
+    gameCards=playerOne.cardsInBattlefield
+    droppedOn="droppedCard"
+    dragEnded="dragEnded"
+    cardIsDragging=cardIsDragging
+    player=playerOne
+    cards=cardsInDecks
+    canDrop=true
+  }}
 
-    {{battle-field-non-land}}
-
-    {{battle-field-land}}
-
-  {{/battle-field}}
 {{/game-board-container}}

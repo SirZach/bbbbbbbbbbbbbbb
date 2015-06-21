@@ -130,6 +130,12 @@ game-board-container {
   }
   battle-field {
     width: calc(100% - 100px);
+    &.show-drop {
+      background-color: map-get($color-purple, '100');
+      &.is-dragged-over {
+        background-color: map-get($color-purple, '500');
+      }
+    }
   }
 }
 
