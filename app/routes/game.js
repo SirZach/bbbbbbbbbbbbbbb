@@ -117,7 +117,6 @@ export default Ember.Route.extend({
       controller.setProperties({
         leftColumnPlayer: null,
         leftColumnZone: null,
-        leftColumnCards: null,
         showLeftColumn: false
       });
     },

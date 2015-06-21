@@ -30,6 +30,9 @@ export default Ember.Component.extend({
     var dragData = JSON.parse(event.dataTransfer.getData('text/plain'));
 
     this.sendAction('droppedOn', dragData, this.get('player'), this.get('title').toLowerCase());
+
+    //For some reason when this guy handles the drop, the dragEnd event is not fired. Le sigh.
+    this.sendAction('dragEnded');
   },
 
   dragOver: function (event) {

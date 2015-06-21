@@ -2,9 +2,11 @@
   player=leftColumnPlayer
   gameCards=leftColumnCards
   zone=leftColumnZone
-  cardsInDeck=cardsInDeck
+  cards=cardsInDecks
   isOpen=showLeftColumn
   close="closeLeftColumn"
+  dragStarted="dragStarted"
+  dragEnded="dragEnded"
 }}
 <div class="game-board {{if showChat 'show-chat' 'hide-chat'}} {{if showLeftColumn 'show-left-column'}}">
   {{#paper-button class="chat-chevron" action="toggleChat"}}

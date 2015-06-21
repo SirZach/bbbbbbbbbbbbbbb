@@ -22,6 +22,14 @@ export default Ember.Component.extend({
   actions: {
     close: function () {
       this.sendAction('close');
+    },
+
+    dragStarted: function () {
+      this.sendAction('dragStarted');
+    },
+
+    dragEnded: function () {
+      this.sendAction('dragEnded');
     }
   }
 });

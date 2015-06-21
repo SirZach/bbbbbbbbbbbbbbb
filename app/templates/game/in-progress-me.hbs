@@ -6,6 +6,7 @@
       open="openLeftColumn"
       cardIsDragging=cardIsDragging
       droppedOn="droppedCard"
+      dragEnded="dragEnded"
       player=playerOne}}
 
     {{game-zone
@@ -14,6 +15,7 @@
       open="openLeftColumn"
       cardIsDragging=cardIsDragging
       droppedOn="droppedCard"
+      dragEnded="dragEnded"
       player=playerOne}}
 
     {{#game-zone
@@ -22,6 +24,7 @@
       gameCards=playerOne.cardsInLibrary
       cardIsDragging=cardIsDragging
       droppedOn="droppedCard"
+      dragEnded="dragEnded"
       player=playerOne}}
       {{#if amIPlayerOne}}
         {{#context-menu as |menu|}}
@@ -43,6 +46,7 @@
       cardIsDragging=cardIsDragging
       droppedOn="droppedCard"
       player=playerOne
+      dragEnded="dragEnded"
       gameCards=playerOne.cardsInHand}}
   {{/game-zones}}
 

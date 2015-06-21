@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.Object.extend({
+var GameCard = Ember.Object.extend({
   /** @property {String} Card identifier. */
   cardId: null,
 
@@ -13,3 +13,13 @@ export default Ember.Object.extend({
   /** @property {String} 'hand', 'library', 'graveyard', 'exile', 'battlefield' */
   zone: 'library'
 });
+
+GameCard.reopenClass({
+  LIBRARY: 'library',
+  HAND: 'hand',
+  GRAVEYARD: 'graveyard',
+  EXILE: 'exile',
+  BATTLEFIELD: 'battlefield'
+});
+
+export default GameCard;

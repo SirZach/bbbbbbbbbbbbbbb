@@ -88,6 +88,9 @@ export default Ember.Controller.extend({
     }
   }.property('playerTwo.user.avatarUrl'),
 
+  /** @property {Array<DS.Card>} array of DS.Cards composing the two decks */
+  cardsInDecks: [],
+
   /** @property {String} The title showing on the top half of the board. */
   topBoardTitle: function () {
     var isGameInPrep = this.get('isGameInPrep');
@@ -162,6 +165,20 @@ export default Ember.Controller.extend({
 
   /** @property {Boolean} display the left column */
   showLeftColumn: false,
+
+  /** @property {DS.GameParticipant} */
+  leftColumnPlayer: null,
+
+  /** @property {String} */
+  leftColumnZone: null,
+
+  /** @property {Array<DS.GameCard>} */
+  leftColumnCards: Ember.computed('leftColumnPlayer', 'leftColumnZone', 'playerOne.gameCards.@each.zone', 'playerTwo.gameCards.@each.zone', function () {
+    var player = this.get('leftColumnPlayer');
+    var zone = this.get('leftColumnZone');
+
+    return player ? player.get('cardsIn' + zone.capitalize()) : [];
+  }),
 
   /** @property {Boolean} a card is being dragged */
   cardIsDragging: false,
@@ -265,7 +282,6 @@ export default Ember.Controller.extend({
       this.setProperties({
         leftColumnPlayer: player,
         leftColumnZone: zone,
-        leftColumnCards: cards,
         showLeftColumn: true
       });
     },
@@ -278,7 +294,7 @@ export default Ember.Controller.extend({
           card.set('zone', 'hand');
         }
       } else {
-        library.setEach('zone', 'hand');
+        library.setEach('zone', GameCard.HAND);
       }
       this.get('model').save();
     },
@@ -293,7 +309,7 @@ export default Ember.Controller.extend({
     },
 
     returnAllCards: function () {
-      this.get('participant.gameCards').setEach('zone', 'library');
+      this.get('participant.gameCards').setEach('zone', GameCard.LIBRARY);
       this.get('model').save();
     },
     /**

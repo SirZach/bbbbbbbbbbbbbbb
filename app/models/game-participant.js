@@ -47,22 +47,22 @@ export default DS.Model.extend({
 
   /** @property {Array<GameCard>} all the cards in hand */
   cardsInHand: Ember.computed('gameCards.@each.zone', function () {
-    return this.get('gameCards').filterBy('zone', 'hand');
+    return this.get('gameCards').filterBy('zone', GameCard.HAND);
   }),
 
   /** @property {Array<GameCard>} all the cards in library */
   cardsInLibrary: Ember.computed('gameCards.@each.zone', function () {
-    return this.get('gameCards').filterBy('zone', 'library').sortBy('order');
+    return this.get('gameCards').filterBy('zone', GameCard.LIBRARY).sortBy('order');
   }),
 
   /** @property {Array<GameCard>} all the cards in graveyard */
   cardsInGraveyard: Ember.computed('gameCards.@each.zone', function () {
-    return this.get('gameCards').filterBy('zone', 'graveyard');
+    return this.get('gameCards').filterBy('zone', GameCard.GRAVEYARD);
   }),
 
   /** @property {Array<GameCard>} all the cards in exile */
   cardsInExile: Ember.computed('gameCards.@each.zone', function () {
-    return this.get('gameCards').filterBy('zone', 'exile');
+    return this.get('gameCards').filterBy('zone', GameCard.EXILE);
   }),
 
   setGameCardsRaw: function () {
