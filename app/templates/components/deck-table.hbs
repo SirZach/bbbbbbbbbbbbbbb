@@ -23,7 +23,7 @@
       {{/x-tr}}
       {{#if canShowMainDeck}}
 
-        {{#each family in deck.mainDeckFamilies}}
+        {{#each deck.mainDeckFamilies as |family|}}
           {{deck-table-item
             family=family
             canEdit=canEdit
@@ -54,7 +54,7 @@
 
         {{#if canShowSideDeck}}
 
-          {{#each family in deck.sideDeckFamilies}}
+          {{#each deck.sideDeckFamilies as |family|}}
             {{deck-table-item
               family=family
               canEdit=canEdit
