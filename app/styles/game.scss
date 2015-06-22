@@ -9,7 +9,7 @@
   right: 0;
   &.show-chat {margin-right: 340px;}
   &.hide-chat {margin-right: 0;}
-  &.show-left-column { left: 230px;}
+  &.show-left-column { left: 245px;}
   transition: margin, left 0.5s;
   .chat-chevron {
     position: absolute;
@@ -36,13 +36,40 @@
 }
 
 .game-left-column {
-  width: 230px;
+  width: 0;
   position: fixed;
   left: 0;
-  height: 100%;
+  top: 0;
+  bottom: 0;
   overflow-y: auto;
   transition: width 0.5s;
-  padding: 0 8px 8px 8px;
+  border-right: 1px solid map-get($color-grey, '400');
+  background: #f2f2f2;
+  &.is-open {
+    width: 245px;
+  }
+  .column-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    .column-inner {
+      position: relative;
+      height: 100%;
+      top: 64px;
+      left: 0;
+      margin: 0;
+      padding: 8px;
+      .column-header {
+        height: 50px;
+        padding: 10px 0;
+        line-height: 30px;
+        text-align: center;
+        font-size: 14px;
+        width: 100%;
+      }
+    }
+  }
   .close-column {
     position: absolute;
     top: 10px;
@@ -58,12 +85,32 @@ game-board-container {
     width: 100px;
     height: 100%;
     game-zone {
-      border-right: 1px dashed $grey-divider;
-      border-bottom: 1px dashed $grey-divider;
+      border-right: 1px solid $grey-divider;
+      border-bottom: 1px solid $grey-divider;
       height: 25%;
       padding: 8px;
       display: block;
       position: relative;
+      &.show-drop {
+        background-color: map-get($color-amber, '100');
+        &.is-dragged-over {
+          background-color: map-get($color-amber, '500');
+        }
+      }
+      &.can-open {
+        background-color: #ffffff;
+        cursor: pointer;
+        box-shadow: 2px 2px 2px 0 map-get($color-grey, '500');
+        &:hover {
+          background-color: map-get($color-grey, '300');
+        }
+        &.show-drop {
+          background-color: map-get($color-amber, '100');
+          &.is-dragged-over {
+            background-color: map-get($color-amber, '500');
+          }
+        }
+      }
       h5 {
         margin: 0 0 8px 0;
       }
@@ -77,12 +124,18 @@ game-board-container {
       }
       &.right {
         border-right: none;
-        border-left: 1px dashed $grey-divider;
+        border-left: 1px solid $grey-divider;
       }
     }
   }
   battle-field {
     width: calc(100% - 100px);
+    &.show-drop {
+      background-color: map-get($color-purple, '100');
+      &.is-dragged-over {
+        background-color: map-get($color-purple, '500');
+      }
+    }
   }
 }
 

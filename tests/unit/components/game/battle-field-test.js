@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('battle-field-land', {
+moduleForComponent('game/battle-field', 'Unit | Component | game/battle field', {
   // specify the other units that are required for this test
   // needs: ['component:foo', 'helper:bar']
 });

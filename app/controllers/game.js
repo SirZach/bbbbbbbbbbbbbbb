@@ -88,6 +88,9 @@ export default Ember.Controller.extend({
     }
   }.property('playerTwo.user.avatarUrl'),
 
+  /** @property {Array<DS.Card>} array of DS.Cards composing the two decks */
+  cardsInDecks: [],
+
   /** @property {String} The title showing on the top half of the board. */
   topBoardTitle: function () {
     var isGameInPrep = this.get('isGameInPrep');
@@ -160,7 +163,25 @@ export default Ember.Controller.extend({
     return this.get('showChat') ? 'chevron-right' : 'chevron-left';
   }),
 
+  /** @property {Boolean} display the left column */
   showLeftColumn: false,
+
+  /** @property {DS.GameParticipant} */
+  leftColumnPlayer: null,
+
+  /** @property {String} */
+  leftColumnZone: null,
+
+  /** @property {Array<DS.GameCard>} */
+  leftColumnCards: Ember.computed('leftColumnPlayer', 'leftColumnZone', 'playerOne.gameCards.@each.zone', 'playerTwo.gameCards.@each.zone', function () {
+    var player = this.get('leftColumnPlayer');
+    var zone = this.get('leftColumnZone');
+
+    return player ? player.get('cardsIn' + zone.capitalize()) : [];
+  }),
+
+  /** @property {Boolean} a card is being dragged */
+  cardIsDragging: false,
 
   /** @property {Boolean} has participant chosen a deck? */
   hasChosenDeck: Ember.computed.and('participant.deckName', 'participant.deckId'),
@@ -251,6 +272,20 @@ export default Ember.Controller.extend({
       this.toggleProperty('showChat');
     },
 
+    /**
+     * Open the left column for zone-card interaction
+     * @param player
+     * @param cards
+     * @param zone
+     */
+    openLeftColumn: function (player, cards, zone) {
+      this.setProperties({
+        leftColumnPlayer: player,
+        leftColumnZone: zone,
+        showLeftColumn: true
+      });
+    },
+
     drawCards: function (numCards) {
       var library = this.get('participant.cardsInLibrary').toArray();
       if (library.get('length') > numCards) {
@@ -259,7 +294,7 @@ export default Ember.Controller.extend({
           card.set('zone', 'hand');
         }
       } else {
-        library.setEach('zone', 'hand');
+        library.setEach('zone', GameCard.HAND);
       }
       this.get('model').save();
     },
@@ -274,7 +309,7 @@ export default Ember.Controller.extend({
     },
 
     returnAllCards: function () {
-      this.get('participant.gameCards').setEach('zone', 'library');
+      this.get('participant.gameCards').setEach('zone', GameCard.LIBRARY);
       this.get('model').save();
     },
     /**
@@ -284,6 +319,13 @@ export default Ember.Controller.extend({
       var participant = this.get('participant');
       var life = participant.get('life');
       participant.set('life', life += delta);
+      this.get('model').save();
+    },
+
+    droppedCard: function (cardData, player, zone) {
+      var gameCard = player.get('gameCards').findBy('order', cardData.order);
+
+      gameCard.set('zone', zone);
       this.get('model').save();
     },
 

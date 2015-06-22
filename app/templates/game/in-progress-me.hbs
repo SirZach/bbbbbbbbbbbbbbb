@@ -4,19 +4,28 @@
       title="Exile"
       gameCards=playerOne.cardsInExile
       open="openLeftColumn"
+      cardIsDragging=cardIsDragging
+      droppedOn="droppedCard"
+      dragEnded="dragEnded"
       player=playerOne}}
 
     {{game-zone
       title="Graveyard"
       gameCards=playerOne.cardsInGraveyard
       open="openLeftColumn"
+      cardIsDragging=cardIsDragging
+      droppedOn="droppedCard"
+      dragEnded="dragEnded"
       player=playerOne}}
 
     {{#game-zone
       canOpen=false
       title="Library"
       gameCards=playerOne.cardsInLibrary
-      cards=cardsInDecks}}
+      cardIsDragging=cardIsDragging
+      droppedOn="droppedCard"
+      dragEnded="dragEnded"
+      player=playerOne}}
       {{#if amIPlayerOne}}
         {{#context-menu as |menu|}}
           <ul>
@@ -34,15 +43,22 @@
       title="Hand"
       class="bottom"
       open="openLeftColumn"
+      cardIsDragging=cardIsDragging
+      droppedOn="droppedCard"
       player=playerOne
+      dragEnded="dragEnded"
       gameCards=playerOne.cardsInHand}}
   {{/game-zones}}
 
-  {{#battle-field}}
+  {{game/battle-field
+    gameCards=playerOne.cardsInBattlefield
+    droppedOn="droppedCard"
+    dragEnded="dragEnded"
+    dragStarted="dragStarted"
+    cardIsDragging=cardIsDragging
+    player=playerOne
+    cards=cardsInDecks
+    canDrop=true
+  }}
 
-    {{battle-field-non-land}}
-
-    {{battle-field-land}}
-
-  {{/battle-field}}
 {{/game-board-container}}

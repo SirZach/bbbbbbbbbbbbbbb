@@ -1,4 +1,13 @@
-{{outlet "left-column"}}
+{{game/left-column
+  player=leftColumnPlayer
+  gameCards=leftColumnCards
+  zone=leftColumnZone
+  cards=cardsInDecks
+  isOpen=showLeftColumn
+  close="closeLeftColumn"
+  dragStarted="dragStarted"
+  dragEnded="dragEnded"
+}}
 <div class="game-board {{if showChat 'show-chat' 'hide-chat'}} {{if showLeftColumn 'show-left-column'}}">
   {{#paper-button class="chat-chevron" action="toggleChat"}}
     {{paper-icon icon=showChatClass}}

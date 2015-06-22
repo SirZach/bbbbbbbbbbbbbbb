@@ -4,7 +4,9 @@ import layout from '../templates/components/game-card';
 export default Ember.Component.extend({
   layout: layout,
 
-  classNames: 'game-card',
+  attributeBindings: ['draggable'],
+
+  classNames: ['game-card', 'cursor-move'],
 
   /** @property {DS.Model GameCard} */
   gameCard: null,
@@ -18,5 +20,22 @@ export default Ember.Component.extend({
   }.property('cards', 'gameCard.cardId'),
 
   /** @property {Array<DS.Model Card>} */
-  cards: []
+  cards: [],
+
+  draggable: true,
+
+  dragStart: function(event) {
+    var gameCard = this.get('gameCard');
+    var dragData = JSON.stringify({
+      cardId: gameCard.get('cardId'),
+      order: gameCard.get('order')
+    });
+
+    event.dataTransfer.setData('text/plain', dragData);
+    this.sendAction('dragStarted');
+  },
+
+  dragEnd: function (event) {
+    this.sendAction('dragEnded');
+  }
 });

@@ -12,9 +12,44 @@ export default Ember.Component.extend({
   /** @property {Array<DS.Model GameCard>} */
   gameCards: [],
 
+  /** @property {Boolean} can populate the left column */
   canOpen: true,
 
-  classNameBindings: 'canOpen:cursor-pointer',
+  /** @property {DS.GameParticipant} */
+  player: null,
+
+  /** @property {Boolean} a card is being dragged on the screen */
+  cardIsDragging: false,
+
+  /** @property {Boolean} this game-zone is currently the drop target */
+  isDraggedOver: false,
+
+  classNameBindings: ['canOpen', 'cardIsDragging:show-drop', 'isDraggedOver'],
+
+  drop: function (event) {
+    event.preventDefault();
+    var dragData = JSON.parse(event.dataTransfer.getData('text/plain'));
+
+    this.sendAction('droppedOn', dragData, this.get('player'), this.get('title').toLowerCase());
+
+    //For some reason when this guy handles the drop, the dragEnd event is not fired. Le sigh.
+    this.sendAction('dragEnded');
+  },
+
+  dragOver: function (event) {
+    event.preventDefault();
+    this.set('isDraggedOver', true);
+  },
+
+  dragEnter: function (event) {
+    event.preventDefault();
+    this.set('isDraggedOver', true);
+  },
+
+  dragLeave: function (event) {
+    event.preventDefault();
+    this.set('isDraggedOver', false);
+  },
 
   click: function () {
     if (this.get('canOpen')) {

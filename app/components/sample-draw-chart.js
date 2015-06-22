@@ -2,6 +2,7 @@ import Ember from 'ember';
 import layout from '../templates/components/sample-draw-chart';
 import PaperCard from 'ember-paper/components/paper-card';
 import shuffle from '../utils/shuffle';
+import GameCard from '../models/game-card';
 
 export default PaperCard.extend({
   layout,
@@ -30,9 +31,9 @@ export default PaperCard.extend({
       });
       cards = shuffle(cards);
       // The hand is the first 7 cards.
-      this.set('hand', cards.slice(0, 7));
+      this.set(GameCard.HAND, cards.slice(0, 7));
       // The library is the 8th card to the end of the array.
-      this.set('library', cards.slice(7));
+      this.set(GameCard.LIBRARY, cards.slice(7));
     }
   }
 });
