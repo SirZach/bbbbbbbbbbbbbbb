@@ -10,6 +10,56 @@ export default Ember.Component.extend({
   /** @property {Array<DS.Model GameCard>} */
   gameCards: [],
 
+  /** @property {Array<DS.GameCard>} non-land cards */
+  nonLandCards: Ember.computed('gameCards.[]', 'cards.[]', function () {
+    return this.get('gameCards').filter(gameCard => {
+      var card = this.get('cards').findBy('id', gameCard.get('cardId'));
+
+      return card.get('mainType') !== 'Land';
+    }).sort((gameCardA, gameCardB) => {
+      var cardAType = this.get('cards').findBy('id', gameCardA.get('cardId')).get('mainType');
+      var cardBType = this.get('cards').findBy('id', gameCardB.get('cardId')).get('mainType');
+
+      if (cardAType > cardBType) {
+        return 1;
+      } else if (cardAType < cardBType) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+  }),
+
+  /** @property {Array<DS.GameCard>} land cards */
+  landCards: Ember.computed('gameCards.[]', 'cards.[]', function () {
+    return this.get('gameCards').filter(gameCard => {
+      var card = this.get('cards').findBy('id', gameCard.get('cardId'));
+
+      return card.get('mainType') === 'Land';
+    });
+  }),
+
+  /** @property {Array<DS.GameCard>} cards to be rendered at the top of the battlefield */
+  topCards: Ember.computed('bottomBattlefield', 'landCards.[]', 'nonLandCards.[]', function () {
+    if (this.get('bottomBattlefield')) {
+      return this.get('nonLandCards');
+    } else {
+      return this.get('landCards');
+    }
+  }),
+
+  /** @property {Array<DS.GameCard>} cards to be rendered at the bottom of the battlefield */
+  bottomCards: Ember.computed('bottomBattlefield', 'landCards.[]', 'nonLandCards.[]', function () {
+    if (this.get('bottomBattlefield')) {
+      return this.get('landCards');
+    } else {
+      return this.get('nonLandCards');
+    }
+  }),
+
+  /** @property {Boolean} location of the battlefield */
+  bottomBattlefield: true,
+
   /** @property {DS.GameParticipant} */
   player: null,
 
@@ -32,6 +82,7 @@ export default Ember.Component.extend({
       event.preventDefault();
       var dragData = JSON.parse(event.dataTransfer.getData('text/plain'));
 
+      this.set('isDraggedOver', false);
       this.sendAction('droppedOn', dragData, this.get('player'), GameCard.BATTLEFIELD);
 
       //For some reason when this guy handles the drop, the dragEnd event is not fired. Le sigh.

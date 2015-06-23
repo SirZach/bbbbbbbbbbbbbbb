@@ -1,6 +1,11 @@
 {{#game-board-container}}
 
-  {{game/battle-field}}
+  {{game/battle-field
+    gameCards=playerTwo.cardsInBattlefield
+    player=playerTwo
+    cards=cardsInDecks
+    bottomBattlefield=false
+    }}
 
   {{#game-zones}}
 

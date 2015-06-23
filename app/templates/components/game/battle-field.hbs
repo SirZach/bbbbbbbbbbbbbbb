@@ -1,7 +1,19 @@
-{{#each gameCards as |gameCard|}}
-  {{game-card
+<div class="cards top-row">
+  {{#each topCards as |gameCard|}}
+    {{game-card
     cards=cards
     gameCard=gameCard
     dragStarted="dragStarted"
     dragEnded="dragEnded"}}
-{{/each}}
+  {{/each}}
+</div>
+
+<div class="cards bottom-row">
+  {{#each bottomCards as |gameCard|}}
+    {{game-card
+    cards=cards
+    gameCard=gameCard
+    dragStarted="dragStarted"
+    dragEnded="dragEnded"}}
+  {{/each}}
+</div>
