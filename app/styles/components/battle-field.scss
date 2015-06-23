@@ -1,0 +1,13 @@
+battle-field {
+  position: relative;
+  .cards {
+    padding: 4px;
+    position: absolute;
+  }
+  .top-row {
+    top: 0;
+  }
+  .bottom-row {
+    bottom: 0;
+  }
+}
