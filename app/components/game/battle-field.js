@@ -16,6 +16,17 @@ export default Ember.Component.extend({
       var card = this.get('cards').findBy('id', gameCard.get('cardId'));
 
       return card.get('mainType') !== 'Land';
+    }).sort((gameCardA, gameCardB) => {
+      var cardAType = this.get('cards').findBy('id', gameCardA.get('cardId')).get('mainType');
+      var cardBType = this.get('cards').findBy('id', gameCardB.get('cardId')).get('mainType');
+
+      if (cardAType > cardBType) {
+        return 1;
+      } else if (cardAType < cardBType) {
+        return -1;
+      } else {
+        return 0;
+      }
     });
   }),
 
@@ -71,6 +82,7 @@ export default Ember.Component.extend({
       event.preventDefault();
       var dragData = JSON.parse(event.dataTransfer.getData('text/plain'));
 
+      this.set('isDraggedOver', false);
       this.sendAction('droppedOn', dragData, this.get('player'), GameCard.BATTLEFIELD);
 
       //For some reason when this guy handles the drop, the dragEnd event is not fired. Le sigh.
