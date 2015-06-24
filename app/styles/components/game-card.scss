@@ -1,10 +1,15 @@
 .game-card {
   display: inline-block;
-  margin: 3px;
+  margin: 3px 20px;
   height: 139px;
   box-shadow: 3px 3px 2px 0 map-get($color-grey, '500');
+  transition: 0.15s ease-in-out;
   img {
     width: 100px;
     height: 100%;
   }
+}
+
+.tapped {
+  transform: rotateZ(90deg);
 }
