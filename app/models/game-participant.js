@@ -30,19 +30,32 @@ export default DS.Model.extend({
   /** @property {String} Convenience property for computed dependencies. */
   userId: Ember.computed.alias('user.id'),
 
-  gameCards: Ember.computed('gameCardsRaw', function (key, value) {
-    // setter
-    if (arguments.length > 1) {
+  gameCards: Ember.computed('gameCardsRaw', {
+    get() {
+      var gameCardsRaw = this.get('gameCardsRaw');
+      var gameCards = this.get('_gameCards');
+
+      if (!gameCardsRaw) {
+        return [];
+      }
+
+      if (gameCards) {
+        // Merge the given properties instead of creating new objects.
+        JSON.parse(gameCardsRaw).forEach((raw, i) => {
+          gameCards.objectAt(i).setProperties(raw);
+        });
+      } else {
+        // Create new objects.
+        gameCards = JSON.parse(gameCardsRaw).map((r) => GameCard.create(r));
+        this.set('_gameCards', gameCards);
+      }
+      return gameCards;
+    },
+    set(key, value) {
       this.set('gameCardsRaw', JSON.stringify(value));
+      this.set('_gameCards', value);
       return value;
     }
-
-    // getter
-    var gameCardsRaw = this.get('gameCardsRaw');
-
-    if (!gameCardsRaw) { return [];}
-
-    return JSON.parse(gameCardsRaw).map((r) => GameCard.create(r));
   }),
 
   /** @property {Array<DS.GameCard>} all the cards in hand */
