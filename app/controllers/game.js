@@ -330,6 +330,16 @@ export default Ember.Controller.extend({
     },
 
     /**
+     * Tap or untap a card.
+     *
+     * @param {GameCard} gameCard
+     */
+    tap: function (gameCard) {
+      gameCard.toggleProperty('isTapped');
+      this.get('model').save();
+    },
+
+    /**
       * A player has called it quits!
       */
     endGame: function () {

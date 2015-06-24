@@ -118,6 +118,10 @@ export default Ember.Component.extend({
 
     dragEnded: function () {
       this.sendAction('dragEnded');
+    },
+
+    tap: function (gameCard) {
+      this.sendAction('tap', gameCard);
     }
   }
 });

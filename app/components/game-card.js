@@ -45,6 +45,6 @@ export default Ember.Component.extend({
   isTapped: Ember.computed.alias('gameCard.isTapped'),
 
   click: function () {
-    this.toggleProperty('gameCard.isTapped');
+    this.sendAction('tap', this.get('gameCard'));
   }
 });
