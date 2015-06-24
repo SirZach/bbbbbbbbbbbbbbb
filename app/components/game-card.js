@@ -8,6 +8,8 @@ export default Ember.Component.extend({
 
   classNames: ['game-card', 'cursor-move'],
 
+  classNameBindings: ['isTapped:tapped'],
+
   /** @property {DS.Model GameCard} */
   gameCard: null,
 
@@ -37,5 +39,12 @@ export default Ember.Component.extend({
 
   dragEnd: function (event) {
     this.sendAction('dragEnded');
+  },
+
+  /** @property {Boolean} */
+  isTapped: Ember.computed.alias('gameCard.isTapped'),
+
+  click: function () {
+    this.sendAction('tap', this.get('gameCard'));
   }
 });
