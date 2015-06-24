@@ -1,4 +1,8 @@
-import Ember from 'ember';
+/**
+ * User: sirzach
+ * Date: 6/23/15
+ * Time: 8:18 PM
+ */
 
 /**
  * Get the firebase ref for the given record of the given type.
@@ -12,11 +16,12 @@ function refFor(type, record) {
   return adapter._getRef(modelType, record.get('id'));
 }
 
-export default {
-  name: "Firebase Helpers",
 
-  initialize: function (container, app) {
-    var store = container.lookup('store:main');
+export default {
+  name: 'Firebase Helpers',
+
+  initialize: function(instance) {
+    var store = instance.container.lookup('store:main');
     store.refFor = refFor;
   }
 };

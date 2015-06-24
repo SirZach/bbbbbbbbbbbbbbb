@@ -22,7 +22,7 @@ export default Ember.Route.extend({
       var myId = me.get('id');
       var userIds = users.mapBy('id');
       if (!userIds.contains(user.get('id'))) {
-        gameParticipant = store.createRecord('gameParticipant');
+        gameParticipant = store.createRecord('game-participant');
         gameParticipant.setProperties({
           user: user,
           life: 20

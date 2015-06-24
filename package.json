@@ -40,9 +40,9 @@
     "ember-cli-version-checker": "^1.0.2",
     "ember-data": "1.0.0-beta.15",
     "ember-export-application-global": "^1.0.2",
-    "ember-paper": "0.1.0",
+    "ember-paper": "0.1.2",
     "ember-infinity": "0.0.5",
-    "emberfire": "1.4.3",
+    "emberfire": "1.4.7",
     "express": "^4.8.5",
     "glob": "^4.0.5"
   }

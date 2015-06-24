@@ -202,7 +202,7 @@ var Deck = DS.Model.extend({
   addCard: function (card, board, count) {
     var cardGroup = this.getCardGroup(card.get('name'), board);
     if (!cardGroup) {
-      cardGroup = this.store.createRecord('cardGroup', {
+      cardGroup = this.store.createRecord('card-group', {
         board: board,
         count: 0,
         card: card

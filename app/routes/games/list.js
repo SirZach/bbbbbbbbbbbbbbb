@@ -28,7 +28,7 @@ export default Ember.Route.extend({
         createdDate: new Date()
       });
       var gameParticipants = game.get('gameParticipants');
-      var gameParticipant = this.store.createRecord('gameParticipant');
+      var gameParticipant = this.store.createRecord('game-participant');
       gameParticipant.setProperties({
         user: user.get('content'),
         isPlaying: true,
