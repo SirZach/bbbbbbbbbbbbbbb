@@ -15,10 +15,12 @@ export default Ember.Component.extend({
     return this.get('gameCards').filter(gameCard => {
       var card = this.get('cards').findBy('id', gameCard.get('cardId'));
 
-      return card.get('mainType') !== 'Land';
+      return !card || card.get('mainType') !== 'Land';
     }).sort((gameCardA, gameCardB) => {
-      var cardAType = this.get('cards').findBy('id', gameCardA.get('cardId')).get('mainType');
-      var cardBType = this.get('cards').findBy('id', gameCardB.get('cardId')).get('mainType');
+      var cardA = this.get('cards').findBy('id', gameCardA.get('cardId'));
+      var cardB = this.get('cards').findBy('id', gameCardB.get('cardId'));
+      var cardAType = cardA ? cardA.get('mainType') : 'Token';
+      var cardBType = cardB ? cardB.get('mainType') : 'Token';
 
       if (cardAType > cardBType) {
         return 1;
@@ -35,7 +37,7 @@ export default Ember.Component.extend({
     return this.get('gameCards').filter(gameCard => {
       var card = this.get('cards').findBy('id', gameCard.get('cardId'));
 
-      return card.get('mainType') === 'Land';
+      return card && card.get('mainType') === 'Land';
     });
   }),
 

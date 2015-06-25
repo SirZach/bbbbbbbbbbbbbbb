@@ -4,9 +4,19 @@
   height: 139px;
   box-shadow: 3px 3px 2px 0 map-get($color-grey, '500');
   transition: 0.15s ease-in-out;
+  background-color: map-get($color-red, '300');
+  width: 100px;
   img {
     width: 100px;
     height: 100%;
+  }
+
+  ul {
+    padding: 4px;
+    list-style: none;
+    li {
+      padding: 3px;
+    }
   }
 }
 

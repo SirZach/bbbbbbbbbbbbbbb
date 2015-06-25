@@ -56,7 +56,7 @@ export default Ember.Route.extend({
       var players = game.get('players');
       var promises = players.reduce((prev, p) => {
         var gameCards = Ember.get(p, 'gameCards') || [];
-        prev = prev.concat(gameCards.map((card) => store.find('card', card.cardId)));
+        prev = prev.concat(gameCards.filter((card) => !card.isToken).map((card) => store.find('card', card.cardId)));
         return prev;
       }, []);
 
