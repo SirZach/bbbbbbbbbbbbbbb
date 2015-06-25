@@ -11,7 +11,13 @@ var GameCard = Ember.Object.extend({
   isTapped: false,
 
   /** @property {String} 'hand', 'library', 'graveyard', 'exile', 'battlefield' */
-  zone: 'library'
+  zone: 'library',
+
+  /** @property {Boolean} if the game-card is a token, it doesn't have a cardId */
+  isToken: false,
+
+  /** @property {Object} object containing name, power, toughness, and description */
+  tokenStats: null
 });
 
 GameCard.reopenClass({

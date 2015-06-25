@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import GameCard from '../models/game-card';
 
 export default Ember.Route.extend({
   afterModel: function (model) {
@@ -80,6 +81,7 @@ export default Ember.Route.extend({
   setupController: function (controller, game) {
     this._super.apply(this, arguments);
 
+    //TODO: move this to the route, duh
     var store = this.store;
     store.find('chat', {
       orderBy: 'channel',
@@ -100,6 +102,22 @@ export default Ember.Route.extend({
   }.property('gameParticipant'),
 
   actions: {
+    showToken: function (player) {
+      var gameCards = player.get('gameCards');
+      var createTokenController = this.controllerFor('game/create-token');
+      var gameCard = GameCard.create({
+        order: gameCards.length + 1,
+        zone: GameCard.BATTLEFIELD,
+        isToken: true
+      });
+
+      createTokenController.setProperties({
+        player: player,
+        game: this.modelFor('game')
+      });
+      this.send('openModal', 'game/create-token', gameCard);
+    },
+
     dragStarted: function () {
       this.set('controller.cardIsDragging', true);
     },

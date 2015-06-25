@@ -1,3 +1,7 @@
+{{#if amIPlaying}}
+  {{#x-paper-button action="showToken" params=playerOne}}Create Token{{/x-paper-button}}
+{{/if}}
+
 <div class="pull-right">
   <span>{{playerOne.user.username}} - {{playerOne.life}}</span>
   <span>vs</span>

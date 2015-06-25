@@ -24,6 +24,8 @@ $locked-breakpoint: 1700px;
 @import 'ember-paper-overrides';
 @import 'bootstrap-overrides';
 @import 'decks/list';
+@import 'form';
+@import 'modal';
 
 body { background-color: map-get($color-grey, '300');}
 
@@ -35,13 +37,6 @@ body { background-color: map-get($color-grey, '300');}
 .sm-display {
   @media screen and (min-width: 1680px) {
     display: none;
-  }
-}
-
-.form-horizontal.form-horizontal-condensed {
-  .form-group {
-    margin-bottom: 0;
-    padding: 0 16px; //ember-paper padding
   }
 }
 
