@@ -27,7 +27,7 @@ export default Ember.Controller.extend({
     var participant = this.get('participant');
     var playerOne = this.get('playerOne');
 
-    return participant.get('user.id') === playerOne.get('user.id');
+    return participant && participant.get('user.id') === playerOne.get('user.id');
   }),
 
   /** @property {GameParticipant} The participant representing me. */
