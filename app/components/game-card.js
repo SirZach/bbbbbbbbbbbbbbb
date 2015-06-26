@@ -6,9 +6,9 @@ export default Ember.Component.extend({
 
   attributeBindings: ['draggable'],
 
-  classNames: ['game-card', 'cursor-move'],
+  classNames: ['game-card'],
 
-  classNameBindings: ['isTapped:tapped'],
+  classNameBindings: ['isTapped:tapped', 'draggable:cursor-move', 'canTap'],
 
   /** @property {DS.Model GameCard} */
   gameCard: null,
@@ -24,27 +24,37 @@ export default Ember.Component.extend({
   /** @property {Array<DS.Model Card>} */
   cards: [],
 
+  /** @property {Boolean} do you own the card */
   draggable: true,
 
-  dragStart: function(event) {
-    var gameCard = this.get('gameCard');
-    var dragData = JSON.stringify({
-      cardId: gameCard.get('cardId'),
-      order: gameCard.get('order')
-    });
+  /** @property {Boolean} do you own this card and is it in your battlefield */
+  canTap: false,
 
-    event.dataTransfer.setData('text/plain', dragData);
-    this.sendAction('dragStarted');
+  dragStart: function(event) {
+    if (this.get('draggable')) {
+      var gameCard = this.get('gameCard');
+      var dragData = JSON.stringify({
+        cardId: gameCard.get('cardId'),
+        order: gameCard.get('order')
+      });
+
+      event.dataTransfer.setData('text/plain', dragData);
+      this.sendAction('dragStarted');
+    }
   },
 
   dragEnd: function (event) {
-    this.sendAction('dragEnded');
+    if (this.get('draggable')) {
+      this.sendAction('dragEnded');
+    }
   },
 
   /** @property {Boolean} */
   isTapped: Ember.computed.alias('gameCard.isTapped'),
 
   click: function () {
-    this.sendAction('tap', this.get('gameCard'));
+    if (this.get('canTap')) {
+      this.sendAction('tap', this.get('gameCard'));
+    }
   }
 });

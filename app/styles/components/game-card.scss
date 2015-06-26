@@ -1,6 +1,6 @@
 .game-card {
   display: inline-block;
-  margin: 3px 20px;
+  margin: 3px;
   height: 139px;
   box-shadow: 3px 3px 2px 0 map-get($color-grey, '500');
   transition: 0.15s ease-in-out;
@@ -22,4 +22,8 @@
 
 .tapped {
   transform: rotateZ(90deg);
+}
+
+.can-tap {
+  margin: 3px 20px;
 }
