@@ -20,7 +20,8 @@ var GameCard = Ember.Object.extend({
   tokenStats: null,
 
   bootstrapId: Ember.on('init', function () {
-    this.set('id', GameCard.generateId());
+    var id = this.get('id');
+    this.set('id', id || GameCard.generateId());
   })
 });
 
@@ -30,9 +31,9 @@ GameCard.reopenClass({
   GRAVEYARD: 'graveyard',
   EXILE: 'exile',
   BATTLEFIELD: 'battlefield',
-  _idSequence: 0,
+  _idSequence: 1,
   generateId() {
-    return GameCard._idSequence++;
+    return uuid.v4();
   }
 });
 
