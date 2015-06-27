@@ -31,7 +31,6 @@ GameCard.reopenClass({
   GRAVEYARD: 'graveyard',
   EXILE: 'exile',
   BATTLEFIELD: 'battlefield',
-  _idSequence: 1,
   generateId() {
     return uuid.v4();
   }
