@@ -41,12 +41,18 @@ export default DS.Model.extend({
 
       if (gameCards) {
         // Merge the given properties instead of creating new objects.
-        JSON.parse(gameCardsRaw).forEach((raw, i) => {
-          gameCards.objectAt(i).setProperties(raw);
+        JSON.parse(gameCardsRaw).forEach(raw => {
+          var gameCard = gameCards.findBy('id', raw.id);
+          if (!gameCard) {
+            // If a new token was just created, add it to the list.
+            gameCard = GameCard.create();
+            gameCards.pushObject(gameCard);
+          }
+          gameCard.setProperties(raw);
         });
       } else {
         // Create new objects.
-        gameCards = JSON.parse(gameCardsRaw).map((r) => GameCard.create(r));
+        gameCards = JSON.parse(gameCardsRaw).map(raw => GameCard.create(raw));
         this.set('_gameCards', gameCards);
       }
       return gameCards;

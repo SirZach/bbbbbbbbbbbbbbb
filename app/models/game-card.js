@@ -17,7 +17,12 @@ var GameCard = Ember.Object.extend({
   isToken: false,
 
   /** @property {Object} object containing name, power, toughness, and description */
-  tokenStats: null
+  tokenStats: null,
+
+  bootstrapId: Ember.on('init', function () {
+    var id = this.get('id');
+    this.set('id', id || GameCard.generateId());
+  })
 });
 
 GameCard.reopenClass({
@@ -25,7 +30,10 @@ GameCard.reopenClass({
   HAND: 'hand',
   GRAVEYARD: 'graveyard',
   EXILE: 'exile',
-  BATTLEFIELD: 'battlefield'
+  BATTLEFIELD: 'battlefield',
+  generateId() {
+    return uuid.v4();
+  }
 });
 
 export default GameCard;
