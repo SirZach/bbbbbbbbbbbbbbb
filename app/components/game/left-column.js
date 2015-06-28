@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import Sort from '../../utils/sort';
 
 export default Ember.Component.extend({
   classNames: ['game-left-column'],
@@ -16,8 +17,13 @@ export default Ember.Component.extend({
   /** @property {Array<DS.GameCard>} */
   gameCards: null,
 
+  /** @property {Array<DS.GameCards>} sorted by type */
+  sortedCards: Ember.computed('gameCards.[]', 'cards.@each.cardId', function () {
+    return this.get('gameCards').sort(Sort.CardTypes.bind(this, this.get('cards')));
+  }),
+
   /** @property {Array<DS.Card>} */
-  cardsInDecks: null,
+  cards: null,
 
   actions: {
     close: function () {
