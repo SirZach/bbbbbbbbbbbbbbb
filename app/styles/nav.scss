@@ -27,14 +27,18 @@ md-nav-container.force-unlocked {
   }
 
   md-sidenav {
+    @media screen and (min-width: $locked-breakpoint) {
+      position: fixed;
+    }
+  }
+}
+
+md-nav-container.force-unlocked:not(.sidenav-expanded) {
+  md-sidenav {
     &.md-sidenav-left {
       @media screen and (min-width: $locked-breakpoint) {
         transform: translate3d(-100%, 0, 0);
       }
-    }
-
-    @media screen and (min-width: $locked-breakpoint) {
-      position: fixed;
     }
   }
 
