@@ -23,6 +23,9 @@
   .game-board {
     left: 254px;
   }
+  .game-left-column {
+    padding-left: 254px;
+  }
 }
 
 .game-board-top,
@@ -91,6 +94,11 @@ game-board-container {
       padding: 8px;
       display: block;
       position: relative;
+      &.read-only {
+        background-color: inherit!important;
+        box-shadow: none!important;
+        cursor: default!important;
+      }
       &.show-drop {
         background-color: map-get($color-amber, '100');
         &.is-dragged-over {

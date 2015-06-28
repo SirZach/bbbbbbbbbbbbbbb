@@ -24,36 +24,47 @@ export default Ember.Component.extend({
   /** @property {Boolean} this game-zone is currently the drop target */
   isDraggedOver: false,
 
-  classNameBindings: ['canOpen', 'cardIsDragging:show-drop', 'isDraggedOver'],
+  /** @property {Boolean} if you're not player one, no interactions allowed */
+  readOnly: true,
+
+  classNameBindings: ['canOpen', 'cardIsDragging:show-drop', 'isDraggedOver', 'readOnly'],
 
   drop: function (event) {
-    event.preventDefault();
-    var dragData = JSON.parse(event.dataTransfer.getData('text/plain'));
+    if (!this.get('readOnly')) {
+      event.preventDefault();
+      var dragData = JSON.parse(event.dataTransfer.getData('text/plain'));
 
-    this.sendAction('droppedOn', dragData, this.get('player'), this.get('title').toLowerCase());
+      this.sendAction('droppedOn', dragData, this.get('player'), this.get('title').toLowerCase());
 
-    this.set('isDraggedOver', false);
-    //For some reason when this guy handles the drop, the dragEnd event is not fired. Le sigh.
-    this.sendAction('dragEnded');
+      this.set('isDraggedOver', false);
+      //For some reason when this guy handles the drop, the dragEnd event is not fired. Le sigh.
+      this.sendAction('dragEnded');
+    }
   },
 
   dragOver: function (event) {
-    event.preventDefault();
-    this.set('isDraggedOver', true);
+    if (!this.get('readOnly')) {
+      event.preventDefault();
+      this.set('isDraggedOver', true);
+    }
   },
 
   dragEnter: function (event) {
-    event.preventDefault();
-    this.set('isDraggedOver', true);
+    if (!this.get('readOnly')) {
+      event.preventDefault();
+      this.set('isDraggedOver', true);
+    }
   },
 
   dragLeave: function (event) {
-    event.preventDefault();
-    this.set('isDraggedOver', false);
+    if (!this.get('readOnly')) {
+      event.preventDefault();
+      this.set('isDraggedOver', false);
+    }
   },
 
   click: function () {
-    if (this.get('canOpen')) {
+    if (this.get('canOpen') && !this.get('readOnly')) {
       this.sendAction('open', this.get('player'), this.get('gameCards'), this.get('title'));
     }
   }

@@ -3,9 +3,23 @@ import GameCard from '../models/game-card';
 
 export default Ember.Route.extend({
   afterModel: function (model) {
+    var controller = this.controllerFor('game');
+    var store = this.store;
+
+    function retrieveDSCards (game) {
+      //load all the real card models into the store for future use
+      var players = game.get('players');
+      var promises = players.reduce((prev, p) => {
+        var gameCards = Ember.get(p, 'gameCards') || [];
+        prev = prev.concat(gameCards.filter((card) => !card.isToken).map((card) => store.find('card', card.cardId)));
+        return prev;
+      }, []);
+
+      return Ember.RSVP.all(promises).then(cards => controller.set('cardsInDecks', cards.uniq()));
+    }
     // If you are not logged in, allow anonymous access to the game.
     if (!this.get('session.isAuthenticated')) {
-      return;
+      return retrieveDSCards(model);
     }
 
     // By default, add yourself as a watcher unless you're already in the
@@ -13,11 +27,10 @@ export default Ember.Route.extend({
     //
     var gameParticipants = model.get('gameParticipants');
     var user = this.get('session.user');
-    var controller = this.controllerFor('game');
-    var store = this.store;
     var gameParticipant;
     // Fetch all users to see if we are one of them.
     var promises = [user].concat(gameParticipants.mapBy('user'));
+
     return Ember.RSVP.all(promises).then((users) => {
       var me = users.shift();
       var myId = me.get('id');
@@ -51,22 +64,7 @@ export default Ember.Route.extend({
       // Save the model with the new participant state.
       return model.save();
     })
-    .then((game) => {
-      //load all the real card models into the store for future use
-      var players = game.get('players');
-      var promises = players.reduce((prev, p) => {
-        var gameCards = Ember.get(p, 'gameCards') || [];
-        prev = prev.concat(gameCards.filter((card) => !card.isToken).map((card) => store.find('card', card.cardId)));
-        return prev;
-      }, []);
-
-      return Ember.RSVP.all(promises);
-    })
-    .then((cards) => {
-      //doing this to prevent putting the store into components to get a hold
-      //of real card models
-      controller.set('cardsInDecks', cards.uniq());
-    });
+    .then(retrieveDSCards);
   },
 
   renderTemplate: function () {
@@ -124,6 +122,20 @@ export default Ember.Route.extend({
 
     dragEnded: function () {
       this.set('controller.cardIsDragging', false);
+    },
+
+    /**
+     * Use this action for all game saves as a mediocre approach to handling security
+     */
+    updateGame: function () {
+      var controller = this.get('controller');
+      var game = controller.get('model');
+
+      if (controller.get('amIPlayerOne')) {
+        game.save();
+      } else {
+        game.rollback();
+      }
     },
 
     /**

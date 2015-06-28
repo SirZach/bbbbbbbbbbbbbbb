@@ -30,6 +30,9 @@ export default Ember.Controller.extend({
     return participant && participant.get('user.id') === playerOne.get('user.id');
   }),
 
+  /** @property {Boolean} don't let anyone not player one modify the game */
+  notPlayerOne: Ember.computed.not('amIPlayerOne'),
+
   /** @property {GameParticipant} The participant representing me. */
   participant: function () {
     var participants = this.get('model.gameParticipants');
@@ -250,22 +253,26 @@ export default Ember.Controller.extend({
      * @param {Deck} deck   The selected deck model.
      */
     selectDeck: function (deck) {
-      var participant = this.get('participant');
-      participant.setProperties({
-        deckName: deck.get('name'),
-        deckId: deck.get('id')
-      });
-      this.get('model').save();
+      if (!this.get('readOnly')) {
+        var participant = this.get('participant');
+        participant.setProperties({
+          deckName: deck.get('name'),
+          deckId: deck.get('id')
+        });
+        this.send('updateGame');
+      }
     },
 
     /**
      * Set the participant in the ready state
      */
     iAmReady: function () {
-      var participant = this.get('participant');
-      participant.set('isReady', true);
-      this.initializeGameCards();
-      this.get('model').save();
+      if (this.get('amIPlayerOne')) {
+        var participant = this.get('participant');
+        participant.set('isReady', true);
+        this.initializeGameCards();
+        this.send('updateGame');
+      }
     },
 
     toggleChat: function () {
@@ -279,13 +286,20 @@ export default Ember.Controller.extend({
      * @param zone
      */
     openLeftColumn: function (player, cards, zone) {
-      this.setProperties({
-        leftColumnPlayer: player,
-        leftColumnZone: zone,
-        showLeftColumn: true
-      });
+      if (this.get('amIPlayerOne')) {
+        this.setProperties({
+          leftColumnPlayer: player,
+          leftColumnZone: zone,
+          showLeftColumn: true
+        });
+      }
     },
 
+    /**
+     * Draw cards for player one.
+     * Not surrounded with a readOnly check since it's disabled altogether in the template
+     * @param numCards
+     */
     drawCards: function (numCards) {
       var library = this.get('participant.cardsInLibrary').toArray();
       if (library.get('length') > numCards) {
@@ -296,37 +310,55 @@ export default Ember.Controller.extend({
       } else {
         library.setEach('zone', GameCard.HAND);
       }
-      this.get('model').save();
+
+      this.send('updateGame');
     },
 
+    /**
+     * Shuffle the cards in player one's library
+     * Not surrounded with a readOnly check since it's disabled altogether in the template
+     */
     shuffle: function () {
       var library = this.get('participant.cardsInLibrary');
       var count = 0;
 
       shuffle(library);
       library.forEach((gameCard) => gameCard.set('order', count++));
-      this.get('model').save();
+
+      this.send('updateGame');
     },
 
+    /**
+     * Send all cards from all the game zones back to the library, mainly utilized for a mulligan
+     * Not surrounded with a readOnly check since it's disabled altogether in the template
+     */
     returnAllCards: function () {
-      this.get('participant.gameCards').setEach('zone', GameCard.LIBRARY);
-      this.get('model').save();
+      if (this.get('amIPlayerOne')) {
+        this.get('participant.gameCards').setEach('zone', GameCard.LIBRARY);
+        this.send('updateGame');
+      }
     },
+
     /**
       * Increment or decrement life
       */
     changeLife: function (delta) {
-      var participant = this.get('participant');
-      var life = participant.get('life');
-      participant.set('life', life += delta);
-      this.get('model').save();
+      if (this.get('amIPlayerOne')) {
+        var participant = this.get('participant');
+        var life = participant.get('life');
+
+        participant.set('life', life += delta);
+        this.send('updateGame');
+      }
     },
 
     droppedCard: function (cardData, player, zone) {
-      var gameCard = player.get('gameCards').findBy('order', cardData.order);
+      if (this.get('amIPlayerOne')) {
+        var gameCard = player.get('gameCards').findBy('order', cardData.order);
 
-      gameCard.set('zone', zone);
-      this.get('model').save();
+        gameCard.set('zone', zone);
+        this.send('updateGame');
+      }
     },
 
     /**
@@ -335,8 +367,10 @@ export default Ember.Controller.extend({
      * @param {GameCard} gameCard
      */
     tap: function (gameCard) {
-      gameCard.toggleProperty('isTapped');
-      this.get('model').save();
+      if (this.get('amIPlayerOne')) {
+        gameCard.toggleProperty('isTapped');
+        this.send('updateGame');
+      }
     },
 
     /**
@@ -345,7 +379,7 @@ export default Ember.Controller.extend({
     endGame: function () {
       var game = this.get('model');
       game.set('status', 'ended');
-      game.save();
+      this.send('updateGame');
     }
   }
 });
