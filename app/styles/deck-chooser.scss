@@ -1,6 +1,8 @@
 .deck-chooser {
+  height: calc(100% - 150px);
+  padding-left: 10px;
+  overflow-y: auto;
   list-style: none;
-  padding: 0;
 }
 
 .deck-option {
