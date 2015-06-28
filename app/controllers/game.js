@@ -92,7 +92,22 @@ export default Ember.Controller.extend({
   }.property('playerTwo.user.avatarUrl'),
 
   /** @property {Array<DS.Card>} array of DS.Cards composing the two decks */
-  cardsInDecks: [],
+  cardsInDecks: Ember.computed('playerOne.isReady', 'playerTwo.isReady',
+    'playerOne.gameCards', 'playerTwo.gameCards',
+    function () {
+      var playerOneIsReady = this.get('playerOne.isReady');
+      var playerTwoIsReady = this.get('playerTwo.isReady');
+      if (!playerOneIsReady || !playerTwoIsReady) {
+        return [];
+      }
+      var playerOneCardIds = this.get('playerOne.gameCards').mapBy('cardId');
+      var playerTwoCardIds = this.get('playerTwo.gameCards').mapBy('cardId');
+      var uniqueIds = playerOneCardIds.concat(playerTwoCardIds)
+        .uniq()
+        .compact();
+      return uniqueIds.map(id => this.store.find('card', id));
+    }
+  ),
 
   /** @property {String} The title showing on the top half of the board. */
   topBoardTitle: function () {
