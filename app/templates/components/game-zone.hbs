@@ -1,3 +1,10 @@
-<h5>{{#if canOpen}}{{paper-icon icon='launch'}}{{/if}}{{title}}</h5>
+<h5>
+  {{#unless readOnly}}
+    {{#if canOpen}}
+      {{paper-icon icon='launch'}}
+    {{/if}}
+  {{/unless}}
+  {{title}}
+</h5>
 <h3>{{gameCards.length}}</h3>
 {{yield}}

@@ -13,12 +13,14 @@
       title="Hand"
       gameCards=playerTwo.cardsInHand
       class="right"
+      readOnly=notPlayerOne
       canOpen=false}}
 
     {{game-zone
       title="Library"
       gameCards=playerTwo.cardsInLibrary
       class="right"
+      readOnly=notPlayerOne
       canOpen=false}}
 
     {{game-zone
@@ -27,7 +29,7 @@
       class="right"
       open="openLeftColumn"
       player=playerTwo
-      top=true}}
+      readOnly=notPlayerOne}}
 
     {{game-zone
       title="Exile"
@@ -35,6 +37,6 @@
       class="right bottom"
       open="openLeftColumn"
       player=playerTwo
-      top=true}}
+      readOnly=notPlayerOne}}
   {{/game-zones}}
 {{/game-board-container}}

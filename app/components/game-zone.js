@@ -24,7 +24,10 @@ export default Ember.Component.extend({
   /** @property {Boolean} this game-zone is currently the drop target */
   isDraggedOver: false,
 
-  classNameBindings: ['canOpen', 'cardIsDragging:show-drop', 'isDraggedOver'],
+  /** @property {Boolean} if you're not player one, no interactions allowed */
+  readOnly: null,
+
+  classNameBindings: ['canOpen', 'cardIsDragging:show-drop', 'isDraggedOver', 'readOnly'],
 
   drop: function (event) {
     event.preventDefault();
@@ -53,7 +56,7 @@ export default Ember.Component.extend({
   },
 
   click: function () {
-    if (this.get('canOpen')) {
+    if (this.get('canOpen') && !this.get('readOnly')) {
       this.sendAction('open', this.get('player'), this.get('gameCards'), this.get('title'));
     }
   }
