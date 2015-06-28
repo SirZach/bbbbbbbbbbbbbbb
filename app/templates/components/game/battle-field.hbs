@@ -2,8 +2,8 @@
   {{#each topCards as |gameCard|}}
     {{game-card
     cards=cards
+    readOnly=readOnly
     gameCard=gameCard
-    draggable=bottomBattlefield
     canTap=bottomBattlefield
     dragStarted="dragStarted"
     dragEnded="dragEnded"
@@ -15,8 +15,8 @@
   {{#each bottomCards as |gameCard|}}
     {{game-card
     cards=cards
+    readOnly=readOnly
     gameCard=gameCard
-    draggable=bottomBattlefield
     canTap=bottomBattlefield
     dragStarted="dragStarted"
     dragEnded="dragEnded"

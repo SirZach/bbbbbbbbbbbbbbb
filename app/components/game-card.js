@@ -8,7 +8,7 @@ export default Ember.Component.extend({
 
   classNames: ['game-card'],
 
-  classNameBindings: ['isTapped:tapped', 'draggable:cursor-move', 'canTap'],
+  classNameBindings: ['isTapped:tapped', 'readOnly::cursor-move', 'canTap'],
 
   /** @property {DS.Model GameCard} */
   gameCard: null,
@@ -24,14 +24,14 @@ export default Ember.Component.extend({
   /** @property {Array<DS.Model Card>} */
   cards: [],
 
-  /** @property {Boolean} do you own the card */
-  draggable: true,
-
   /** @property {Boolean} do you own this card and is it in your battlefield */
   canTap: false,
 
+  /** @property {Boolean} only interact with the cards if you're player one */
+  readOnly: false,
+
   dragStart: function(event) {
-    if (this.get('draggable')) {
+    if (!this.get('readOnly')) {
       var gameCard = this.get('gameCard');
       var dragData = JSON.stringify({
         cardId: gameCard.get('cardId'),
@@ -44,7 +44,7 @@ export default Ember.Component.extend({
   },
 
   dragEnd: function (event) {
-    if (this.get('draggable')) {
+    if (!this.get('readOnly')) {
       this.sendAction('dragEnded');
     }
   },
@@ -53,7 +53,7 @@ export default Ember.Component.extend({
   isTapped: Ember.computed.alias('gameCard.isTapped'),
 
   click: function () {
-    if (this.get('canTap')) {
+    if (this.get('canTap') && !this.get('readOnly')) {
       this.sendAction('tap', this.get('gameCard'));
     }
   }

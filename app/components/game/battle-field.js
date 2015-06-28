@@ -62,6 +62,9 @@ export default Ember.Component.extend({
   /** @property {Boolean} location of the battlefield */
   bottomBattlefield: true,
 
+  /** @property {Boolean} ownership of the battlefield */
+  readOnly: true,
+
   /** @property {DS.GameParticipant} */
   player: null,
 
@@ -74,13 +77,10 @@ export default Ember.Component.extend({
   /** @property {Array<DS.Card>} DS.Cards between the decks in play */
   cards: [],
 
-  /** @property {Boolean} can you drop a card onto this battlefield */
-  canDrop: false,
-
   classNameBindings: ['cardIsDragging:show-drop', 'isDraggedOver'],
 
   drop: function (event) {
-    if (this.get('canDrop')) {
+    if (!this.get('readOnly')) {
       event.preventDefault();
       var dragData = JSON.parse(event.dataTransfer.getData('text/plain'));
 
@@ -93,21 +93,21 @@ export default Ember.Component.extend({
   },
 
   dragOver: function (event) {
-    if (this.get('canDrop')) {
+    if (!this.get('readOnly')) {
       event.preventDefault();
       this.set('isDraggedOver', true);
     }
   },
 
   dragEnter: function (event) {
-    if (this.get('canDrop')) {
+    if (!this.get('readOnly')) {
       event.preventDefault();
       this.set('isDraggedOver', true);
     }
   },
 
   dragLeave: function (event) {
-    if (this.get('canDrop')) {
+    if (!this.get('readOnly')) {
       event.preventDefault();
       this.set('isDraggedOver', false);
     }
@@ -115,15 +115,21 @@ export default Ember.Component.extend({
 
   actions: {
     dragStarted: function () {
-      this.sendAction('dragStarted');
+      if (!this.get('readOnly')) {
+        this.sendAction('dragStarted');
+      }
     },
 
     dragEnded: function () {
-      this.sendAction('dragEnded');
+      if (!this.get('readOnly')) {
+        this.sendAction('dragEnded');
+      }
     },
 
     tap: function (gameCard) {
-      this.sendAction('tap', gameCard);
+      if (!this.get('readOnly')) {
+        this.sendAction('tap', gameCard);
+      }
     }
   }
 });
