@@ -7,6 +7,7 @@
       cardIsDragging=cardIsDragging
       droppedOn="droppedCard"
       dragEnded="dragEnded"
+      readOnly=notPlayerOne
       player=playerOne}}
 
     {{game-zone
@@ -16,6 +17,7 @@
       cardIsDragging=cardIsDragging
       droppedOn="droppedCard"
       dragEnded="dragEnded"
+      readOnly=notPlayerOne
       player=playerOne}}
 
     {{#game-zone
@@ -25,6 +27,7 @@
       cardIsDragging=cardIsDragging
       droppedOn="droppedCard"
       dragEnded="dragEnded"
+      readOnly=notPlayerOne
       player=playerOne}}
       {{#if amIPlayerOne}}
         {{#context-menu as |menu|}}
@@ -47,6 +50,7 @@
       droppedOn="droppedCard"
       player=playerOne
       dragEnded="dragEnded"
+      readOnly=notPlayerOne
       gameCards=playerOne.cardsInHand}}
   {{/game-zones}}
 

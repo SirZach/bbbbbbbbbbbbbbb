@@ -131,7 +131,7 @@ export default Ember.Route.extend({
       var controller = this.get('controller');
       var game = controller.get('model');
 
-      if (!controller.get('readOnly')) {
+      if (controller.get('amIPlayerOne')) {
         game.save();
       } else {
         game.rollback();

@@ -3,9 +3,6 @@ import shuffle from '../utils/shuffle';
 import GameCard from '../models/game-card';
 
 export default Ember.Controller.extend({
-  /** @property {Boolean} don't allow edits from an unauthenticated user */
-  readOnly: Ember.computed.not('session.isAuthenticated'),
-
   /** @property {Boolean} Is the game going? */
   isGameInProgress: function () {
     var players = this.get('players');
@@ -32,6 +29,9 @@ export default Ember.Controller.extend({
 
     return participant && participant.get('user.id') === playerOne.get('user.id');
   }),
+
+  /** @property {Boolean} don't let anyone not player one modify the game */
+  notPlayerOne: Ember.computed.not('amIPlayerOne'),
 
   /** @property {GameParticipant} The participant representing me. */
   participant: function () {
@@ -267,7 +267,7 @@ export default Ember.Controller.extend({
      * Set the participant in the ready state
      */
     iAmReady: function () {
-      if (!this.get('readOnly')) {
+      if (this.get('amIPlayerOne')) {
         var participant = this.get('participant');
         participant.set('isReady', true);
         this.initializeGameCards();
@@ -286,7 +286,7 @@ export default Ember.Controller.extend({
      * @param zone
      */
     openLeftColumn: function (player, cards, zone) {
-      if (!this.get('readOnly')) {
+      if (this.get('amIPlayerOne')) {
         this.setProperties({
           leftColumnPlayer: player,
           leftColumnZone: zone,
@@ -333,7 +333,7 @@ export default Ember.Controller.extend({
      * Not surrounded with a readOnly check since it's disabled altogether in the template
      */
     returnAllCards: function () {
-      if (!this.get('readOnly')) {
+      if (this.get('amIPlayerOne')) {
         this.get('participant.gameCards').setEach('zone', GameCard.LIBRARY);
         this.send('updateGame');
       }
@@ -343,7 +343,7 @@ export default Ember.Controller.extend({
       * Increment or decrement life
       */
     changeLife: function (delta) {
-      if (!this.get('readOnly')) {
+      if (this.get('amIPlayerOne')) {
         var participant = this.get('participant');
         var life = participant.get('life');
 
@@ -353,7 +353,7 @@ export default Ember.Controller.extend({
     },
 
     droppedCard: function (cardData, player, zone) {
-      if (!this.get('readOnly')) {
+      if (this.get('amIPlayerOne')) {
         var gameCard = player.get('gameCards').findBy('order', cardData.order);
 
         gameCard.set('zone', zone);
@@ -367,7 +367,7 @@ export default Ember.Controller.extend({
      * @param {GameCard} gameCard
      */
     tap: function (gameCard) {
-      if (!this.get('readOnly')) {
+      if (this.get('amIPlayerOne')) {
         gameCard.toggleProperty('isTapped');
         this.send('updateGame');
       }
