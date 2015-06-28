@@ -379,7 +379,7 @@ export default Ember.Controller.extend({
     endGame: function () {
       var game = this.get('model');
       game.set('status', 'ended');
-      this.send('updateGame')
+      this.send('updateGame');
     }
   }
 });
