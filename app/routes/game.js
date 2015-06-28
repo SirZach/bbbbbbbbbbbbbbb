@@ -125,6 +125,20 @@ export default Ember.Route.extend({
     },
 
     /**
+     * Use this action for all game saves as a mediocre approach to handling security
+     */
+    updateGame: function () {
+      var controller = this.get('controller');
+      var game = controller.get('model');
+
+      if (!controller.get('readOnly')) {
+        game.save();
+      } else {
+        game.rollback();
+      }
+    },
+
+    /**
      * Close the left column
      */
     closeLeftColumn: function () {
