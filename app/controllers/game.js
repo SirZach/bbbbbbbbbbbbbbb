@@ -92,20 +92,12 @@ export default Ember.Controller.extend({
   }.property('playerTwo.user.avatarUrl'),
 
   /** @property {Array<DS.Card>} array of DS.Cards composing the two decks */
-  cardsInDecks: Ember.computed('playerOne.isReady', 'playerTwo.isReady',
-    'playerOne.gameCards', 'playerTwo.gameCards',
+  cardsInDecks: [],
+
+  /** @observer Signals the route to load card models for this game. */
+  playersAreReady: Ember.observer('playerOne.isReady', 'playerTwo.isReady',
     function () {
-      var playerOneIsReady = this.get('playerOne.isReady');
-      var playerTwoIsReady = this.get('playerTwo.isReady');
-      if (!playerOneIsReady || !playerTwoIsReady) {
-        return [];
-      }
-      var playerOneCardIds = this.get('playerOne.gameCards').mapBy('cardId');
-      var playerTwoCardIds = this.get('playerTwo.gameCards').mapBy('cardId');
-      var uniqueIds = playerOneCardIds.concat(playerTwoCardIds)
-        .uniq()
-        .compact();
-      return uniqueIds.map(id => this.store.find('card', id));
+      this.send('playersReady');
     }
   ),
 
