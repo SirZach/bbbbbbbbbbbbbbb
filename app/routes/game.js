@@ -2,13 +2,31 @@ import Ember from 'ember';
 import GameCard from '../models/game-card';
 
 export default Ember.Route.extend({
-  afterModel: function (model) {
+  /**
+   * Retrieves card models that are in the given game.
+   *
+   * @return {Promise} Resolves with Array<Card>
+   */
+  retrieveDSCards (game) {
     var controller = this.controllerFor('game');
     var store = this.store;
+    //load all the real card models into the store for future use
+    var players = game.get('players');
+    var promises = players.reduce((prev, p) => {
+      var gameCards = Ember.get(p, 'gameCards') || [];
+      prev = prev.concat(gameCards.filter((card) => !card.isToken).map((card) => store.find('card', card.cardId)));
+      return prev;
+    }, []);
 
-    // No need to adjust game participants if not logged in.
+    return Ember.RSVP.all(promises).then(cards => controller.set('cardsInDecks', cards.uniq()));
+  },
+
+  afterModel: function (model) {
+    var store = this.store;
+
+    // If you are not logged in, allow anonymous access to the game.
     if (!this.get('session.isAuthenticated')) {
-      return;
+      return this.retrieveDSCards(model);
     }
 
     // By default, add yourself as a watcher unless you're already in the
@@ -52,7 +70,8 @@ export default Ember.Route.extend({
 
       // Save the model with the new participant state.
       return model.save();
-    });
+    })
+    .then(model => this.retrieveDSCards(model));
   },
 
   renderTemplate: function () {
@@ -88,6 +107,13 @@ export default Ember.Route.extend({
   }.property('gameParticipant'),
 
   actions: {
+    /**
+     * Load the card models.
+     */
+    playersReady() {
+      this.retrieveDSCards(this.currentModel);
+    },
+
     showToken: function (player) {
       var gameCards = player.get('gameCards');
       var createTokenController = this.controllerFor('game/create-token');
