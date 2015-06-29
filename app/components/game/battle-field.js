@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import layout from '../../templates/components/game/battle-field';
 import GameCard from '../../models/game-card';
+import Sort from '../../utils/sort';
 
 export default Ember.Component.extend({
   layout: layout,
@@ -11,29 +12,16 @@ export default Ember.Component.extend({
   gameCards: [],
 
   /** @property {Array<DS.GameCard>} non-land cards */
-  nonLandCards: Ember.computed('gameCards.[]', 'cards.[]', function () {
+  nonLandCards: Ember.computed('gameCards.[]', 'cards.@each.cardId', function () {
     return this.get('gameCards').filter(gameCard => {
       var card = this.get('cards').findBy('id', gameCard.get('cardId'));
 
       return !card || card.get('mainType') !== 'Land';
-    }).sort((gameCardA, gameCardB) => {
-      var cardA = this.get('cards').findBy('id', gameCardA.get('cardId'));
-      var cardB = this.get('cards').findBy('id', gameCardB.get('cardId'));
-      var cardAType = cardA ? cardA.get('mainType') : 'Token';
-      var cardBType = cardB ? cardB.get('mainType') : 'Token';
-
-      if (cardAType > cardBType) {
-        return 1;
-      } else if (cardAType < cardBType) {
-        return -1;
-      } else {
-        return 0;
-      }
-    });
+    }).sort(Sort.CardTypes.bind(this, this.get('cards')));
   }),
 
   /** @property {Array<DS.GameCard>} land cards */
-  landCards: Ember.computed('gameCards.[]', 'cards.[]', function () {
+  landCards: Ember.computed('gameCards.[]', 'cards.@each.cardId', function () {
     return this.get('gameCards').filter(gameCard => {
       var card = this.get('cards').findBy('id', gameCard.get('cardId'));
 

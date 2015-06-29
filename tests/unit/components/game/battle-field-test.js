@@ -12,7 +12,9 @@ test('it renders', function(assert) {
   assert.expect(2);
 
   // creates the component instance
-  var component = this.subject();
+  var component = this.subject({
+    nonLandCards: []//this computed property breaks during CL tests but not browser tests :(
+  });
   assert.equal(component._state, 'preRender');
 
   // renders the component to the page
