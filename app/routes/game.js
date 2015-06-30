@@ -74,6 +74,15 @@ export default Ember.Route.extend({
     .then(model => this.retrieveDSCards(model));
   },
 
+  /** if for some reason the will transition didn't fire, make sure to reset
+   * the state of the game controller for this new game
+   */
+  setupController: function (controller) {
+    this._super.apply(this, arguments);
+
+    controller.resetState();
+  },
+
   renderTemplate: function () {
     this._super.apply(this, arguments);
 
@@ -219,6 +228,13 @@ export default Ember.Route.extend({
         }
       });
 
+    },
+
+    /** when exiting the game, make sure to reset the state of the game in case
+     * you come back to another game during the same session
+     */
+    willTransition: function (transaction) {
+      this.get('controller').resetState();
     }
   }
 });

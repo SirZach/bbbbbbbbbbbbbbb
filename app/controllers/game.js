@@ -253,6 +253,17 @@ export default Ember.Controller.extend({
     }
   }),
 
+  /** @function get the game controller in a good state for another game */
+  resetState: function () {
+    this.setProperties({
+      showChat: true,
+      showLeftColumn: false,
+      leftColumnPlayer: null,
+      leftColumnZone: null,
+      cardIsDragging: false
+    });
+  },
+
   actions: {
     /**
      * Respond to a deck selection event.
