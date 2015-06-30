@@ -3,6 +3,8 @@ import layout from '../templates/components/game-card';
 
 var MAGNIFYING_GLASS_WIDTH = 250;
 var MAGNIFYING_GLASS_HEIGHT = 250;
+var MAGNIFIED_CARD_WIDTH = 250;
+var MAGNIFIED_CARD_HEIGHT = 347.5;
 
 export default Ember.Component.extend({
   layout: layout,
@@ -75,10 +77,14 @@ export default Ember.Component.extend({
     // See if we are still over the image.
     var mouseX = event.clientX;
     var mouseY = event.clientY;
-    if (mouseX < this.get('magnifyMinX') ||
-        mouseX > this.get('magnifyMaxX') ||
-        mouseY < this.get('magnifyMinY') ||
-        mouseY > this.get('magnifyMaxY')) {
+    var magnifyMinX = this.get('magnifyMinX');
+    var magnifyMaxX = this.get('magnifyMaxX');
+    var magnifyMinY = this.get('magnifyMinY');
+    var magnifyMaxY = this.get('magnifyMaxY');
+    if (mouseX < magnifyMinX ||
+        mouseX > magnifyMaxX ||
+        mouseY < magnifyMinY ||
+        mouseY > magnifyMaxY) {
       this.set('isMagnifying', false);
       return;
     }
@@ -89,6 +95,10 @@ export default Ember.Component.extend({
     this.set('magnifyTop', top);
 
     // X and Y coordinates for the inner position of the background image.
+    var backgroundX = -((mouseX - magnifyMinX) / 100) * MAGNIFIED_CARD_WIDTH + MAGNIFYING_GLASS_WIDTH / 2;
+    var backgroundY = -((mouseY - magnifyMinY) / 139) * MAGNIFIED_CARD_HEIGHT + MAGNIFYING_GLASS_HEIGHT / 2;
+    this.set('magnifyX', backgroundX);
+    this.set('magnifyY', backgroundY);
   },
 
   mouseLeave: function () {
