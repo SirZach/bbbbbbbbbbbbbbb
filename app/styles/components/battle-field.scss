@@ -1,8 +1,10 @@
 battle-field {
   position: relative;
+  overflow-x: auto;
   .cards {
-    padding: 4px;
+    padding: 16px 16px 16px 4px;
     position: absolute;
+    white-space: nowrap;
   }
   .top-row {
     top: 0;
