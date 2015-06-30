@@ -74,15 +74,6 @@ export default Ember.Route.extend({
     .then(model => this.retrieveDSCards(model));
   },
 
-  /** if for some reason the will transition didn't fire, make sure to reset
-   * the state of the game controller for this new game
-   */
-  setupController: function (controller) {
-    this._super.apply(this, arguments);
-
-    controller.resetState();
-  },
-
   renderTemplate: function () {
     this._super.apply(this, arguments);
 
@@ -107,6 +98,8 @@ export default Ember.Route.extend({
 
       controller.set('chats', gameChats);
     });
+
+    controller.resetState();
   },
 
   gameParticipantRef: function () {
@@ -175,6 +168,8 @@ export default Ember.Route.extend({
     },
 
     willTransition: function () {
+      this.get('controller').resetState();
+
       // If you are not logged in, there is no state to clean up.
       if (!this.get('session.isAuthenticated')) {
         return;
@@ -228,13 +223,6 @@ export default Ember.Route.extend({
         }
       });
 
-    },
-
-    /** when exiting the game, make sure to reset the state of the game in case
-     * you come back to another game during the same session
-     */
-    willTransition: function (transaction) {
-      this.get('controller').resetState();
     }
   }
 });
