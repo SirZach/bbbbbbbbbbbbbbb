@@ -8,7 +8,7 @@ export default Ember.Component.extend({
 
   classNames: ['game-card'],
 
-  classNameBindings: ['isTapped:tapped', 'readOnly::cursor-move', 'canTap'],
+  classNameBindings: ['isTapped:tapped', 'readOnly::cursor-move'],
 
   /** @property {DS.Model GameCard} */
   gameCard: null,
