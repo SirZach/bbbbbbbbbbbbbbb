@@ -332,6 +332,13 @@ export default Ember.Controller.extend({
       shuffle(library);
       library.forEach((gameCard) => gameCard.set('order', count++));
 
+      this.notifications.addNotification({
+        message: 'Library cards shuffled',
+        type: 'success',
+        autoClear: true,
+        clearDuration: 1200
+      });
+
       this.send('updateGame');
     },
 
