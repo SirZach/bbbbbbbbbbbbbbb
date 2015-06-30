@@ -6,4 +6,12 @@
   </ul>
 {{else}}
   <img title={{card.id}} src="{{card.imageUrl}}"/>
+  <div class="game-card-magnify"
+       style="background-image: url('{{card.imageUrl}}');
+              top: {{magnifyTop}}px;
+              left: {{magnifyLeft}}px;
+              background-position-x: {{magnifyX}}px;
+              background-position-y: {{magnifyY}}px;
+              display: {{if isMagnifying 'block'}};">
+  </div>
 {{/if}}
