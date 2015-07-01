@@ -36,6 +36,22 @@ export default Ember.Component.extend({
   /** @property {Boolean} only interact with the cards if you're player one */
   readOnly: false,
 
+  /** Attach document key handlers for magnifying purposes. */
+  attachKeyHandlers: Ember.on('init', function () {
+    var scope = Ember.guidFor(this);
+    $(document).on(`keydown.${scope}`, event => {
+      if (event.which === 90) {
+        this.set('isZPressed', true);
+      }
+    });
+    $(document).on(`keyup.${scope}`, event => {
+      if (event.which === 90) {
+        this.set('isZPressed', false);
+        this.set('isMagnifying', false);
+      }
+    });
+  }),
+
   dragStart: function(event) {
     if (!this.get('readOnly')) {
       var gameCard = this.get('gameCard');
@@ -74,6 +90,11 @@ export default Ember.Component.extend({
   },
 
   mouseMove(event) {
+    // See if the 'Z' key is pressed.
+    if (!this.get('isZPressed')) {
+      this.set('isMagnifying', false);
+      return;
+    }
     // See if we are over the image.
     var mouseX = event.clientX;
     var mouseY = event.clientY;
@@ -106,5 +127,14 @@ export default Ember.Component.extend({
   mouseLeave() {
     // Ensure we always exit magnifying mode when leaving the element.
     this.set('isMagnifying', false);
+  },
+
+  actions: {
+    /** Clean up key handlers. */
+    willDestroyElement() {
+      var scope = Ember.guidFor(this);
+      $(document).off(`keydown.${scope}`);
+      $(document).off(`keyup.${scope}`);
+    }
   }
 });
