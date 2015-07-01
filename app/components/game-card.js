@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Ember from 'ember';
 import layout from '../templates/components/game-card';
 
@@ -63,18 +64,17 @@ export default Ember.Component.extend({
     }
   },
 
-  mouseEnter: function (event) {
-    // Calculate the bounds.
-    var $img = $(event.target);
+  didInsertElement() {
+    // Calculate the bounds of the image inside this element.
+    var $img = $(this.element).find('img');
     this.set('magnifyMinX', $img.offset().left);
     this.set('magnifyMaxX', $img.offset().left + $img.width());
     this.set('magnifyMinY', $img.offset().top);
     this.set('magnifyMaxY', $img.offset().top + $img.height());
-    this.set('isMagnifying', true);
   },
 
-  mouseMove: function (event) {
-    // See if we are still over the image.
+  mouseMove(event) {
+    // See if we are over the image.
     var mouseX = event.clientX;
     var mouseY = event.clientY;
     var magnifyMinX = this.get('magnifyMinX');
@@ -87,6 +87,8 @@ export default Ember.Component.extend({
         mouseY > magnifyMaxY) {
       this.set('isMagnifying', false);
       return;
+    } else {
+      this.set('isMagnifying', true);
     }
     // Top and left coordinates for the placement of the magnifying glass.
     var left = mouseX - MAGNIFYING_GLASS_WIDTH / 2;
@@ -101,7 +103,8 @@ export default Ember.Component.extend({
     this.set('magnifyY', backgroundY);
   },
 
-  mouseLeave: function () {
+  mouseLeave() {
+    // Ensure we always exit magnifying mode when leaving the element.
     this.set('isMagnifying', false);
   }
 });
