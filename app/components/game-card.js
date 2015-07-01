@@ -41,13 +41,21 @@ export default Ember.Component.extend({
     var scope = Ember.guidFor(this);
     $(document).on(`keydown.${scope}`, event => {
       if (event.which === 90) {
-        this.set('isZPressed', true);
+        Ember.run(() => {
+          if (!this.get('isDestroyed')) {
+            this.set('isZPressed', true);
+          }
+        });
       }
     });
     $(document).on(`keyup.${scope}`, event => {
       if (event.which === 90) {
-        this.set('isZPressed', false);
-        this.set('isMagnifying', false);
+        Ember.run(() => {
+          if (!this.get('isDestroyed')) {
+            this.set('isZPressed', false);
+            this.set('isMagnifying', false);
+          }
+        });
       }
     });
   }),
