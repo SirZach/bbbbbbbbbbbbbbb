@@ -22,6 +22,12 @@ export default Ember.Component.extend({
     return this.get('gameCards').sort(Sort.CardTypes.bind(this, this.get('cards')));
   }),
 
+  /** @property {Boolean} set to false since non-players can't open the left column */
+  readOnly: false,
+
+  /** @property {Boolean} ownership of the cards */
+  notReadOnly: Ember.computed.not('readOnly'),
+
   /** @property {Array<DS.Card>} */
   cards: null,
 

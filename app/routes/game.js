@@ -98,6 +98,8 @@ export default Ember.Route.extend({
 
       controller.set('chats', gameChats);
     });
+
+    controller.resetState();
   },
 
   gameParticipantRef: function () {
@@ -166,6 +168,8 @@ export default Ember.Route.extend({
     },
 
     willTransition: function () {
+      this.get('controller').resetState();
+
       // If you are not logged in, there is no state to clean up.
       if (!this.get('session.isAuthenticated')) {
         return;

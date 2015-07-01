@@ -53,6 +53,9 @@ export default Ember.Component.extend({
   /** @property {Boolean} ownership of the battlefield */
   readOnly: true,
 
+  /** @property {Boolean} ownership of the battlefield */
+  notReadOnly: Ember.computed.not('readOnly'),
+
   /** @property {DS.GameParticipant} */
   player: null,
 

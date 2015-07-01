@@ -5,6 +5,7 @@
     readOnly=readOnly
     gameCard=gameCard
     canTap=bottomBattlefield
+    draggable=notReadOnly
     dragStarted="dragStarted"
     dragEnded="dragEnded"
     tap="tap"}}
@@ -15,6 +16,7 @@
   {{#each bottomCards as |gameCard|}}
     {{game-card
     cards=cards
+    draggable=notReadOnly
     readOnly=readOnly
     gameCard=gameCard
     canTap=bottomBattlefield

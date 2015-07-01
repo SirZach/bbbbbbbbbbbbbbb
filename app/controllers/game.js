@@ -253,6 +253,17 @@ export default Ember.Controller.extend({
     }
   }),
 
+  /** @function get the game controller in a good state for another game */
+  resetState: function () {
+    this.setProperties({
+      showChat: true,
+      showLeftColumn: false,
+      leftColumnPlayer: null,
+      leftColumnZone: null,
+      cardIsDragging: false
+    });
+  },
+
   actions: {
     /**
      * Respond to a deck selection event.
@@ -332,6 +343,13 @@ export default Ember.Controller.extend({
       shuffle(library);
       library.forEach((gameCard) => gameCard.set('order', count++));
 
+      this.notifications.addNotification({
+        message: 'Library cards shuffled',
+        type: 'success',
+        autoClear: true,
+        clearDuration: 1200
+      });
+
       this.send('updateGame');
     },
 
@@ -341,7 +359,12 @@ export default Ember.Controller.extend({
      */
     returnAllCards: function () {
       if (this.get('amIPlayerOne')) {
-        this.get('participant.gameCards').setEach('zone', GameCard.LIBRARY);
+        var participantGameCards = this.get('participant.gameCards');
+        participantGameCards.forEach(gameCard => gameCard.setProperties({
+          zone: GameCard.LIBRARY,
+          isTapped: false
+        }));
+
         this.send('updateGame');
       }
     },
@@ -361,9 +384,12 @@ export default Ember.Controller.extend({
 
     droppedCard: function (cardData, player, zone) {
       if (this.get('amIPlayerOne')) {
-        var gameCard = player.get('gameCards').findBy('order', cardData.order);
+        var gameCard = player.get('gameCards').findBy('id', cardData.id);
 
-        gameCard.set('zone', zone);
+        gameCard.setProperties({
+          zone: zone,
+          isTapped: false
+        });
         this.send('updateGame');
       }
     },

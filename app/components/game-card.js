@@ -8,7 +8,7 @@ export default Ember.Component.extend({
 
   classNames: ['game-card'],
 
-  classNameBindings: ['isTapped:tapped', 'readOnly::cursor-move', 'canTap'],
+  classNameBindings: ['isTapped:tapped', 'readOnly::cursor-move'],
 
   /** @property {DS.Model GameCard} */
   gameCard: null,
@@ -35,7 +35,7 @@ export default Ember.Component.extend({
       var gameCard = this.get('gameCard');
       var dragData = JSON.stringify({
         cardId: gameCard.get('cardId'),
-        order: gameCard.get('order')
+        id: gameCard.get('id')
       });
 
       event.dataTransfer.setData('text/plain', dragData);
