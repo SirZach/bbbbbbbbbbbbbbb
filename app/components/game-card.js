@@ -88,13 +88,19 @@ export default Ember.Component.extend({
     }
   },
 
-  didInsertElement() {
+  setMagnifyBounds() {
     // Calculate the bounds of the image inside this element.
     var $img = $(this.element).find('img');
-    this.set('magnifyMinX', $img.offset().left);
-    this.set('magnifyMaxX', $img.offset().left + $img.width());
-    this.set('magnifyMinY', $img.offset().top);
-    this.set('magnifyMaxY', $img.offset().top + $img.height());
+    var magnifyMinX = $img.offset().left;
+    var magnifyMaxX = $img.offset().left + $img.width();
+    var magnifyMinY = $img.offset().top;
+    var magnifyMaxY = $img.offset().top + $img.height();
+    this.setProperties({
+      magnifyMinX,
+      magnifyMaxX,
+      magnifyMinY,
+      magnifyMaxY
+    });
   },
 
   mouseMove(event) {
@@ -102,7 +108,10 @@ export default Ember.Component.extend({
     if (!this.get('isZPressed')) {
       this.set('isMagnifying', false);
       return;
+    } else {
+      this.setMagnifyBounds();
     }
+
     // See if we are over the image.
     var mouseX = event.clientX;
     var mouseY = event.clientY;
@@ -126,8 +135,10 @@ export default Ember.Component.extend({
     this.set('magnifyTop', top);
 
     // X and Y coordinates for the inner position of the background image.
-    var backgroundX = -((mouseX - magnifyMinX) / 100) * MAGNIFIED_CARD_WIDTH + MAGNIFYING_GLASS_WIDTH / 2;
-    var backgroundY = -((mouseY - magnifyMinY) / 139) * MAGNIFIED_CARD_HEIGHT + MAGNIFYING_GLASS_HEIGHT / 2;
+    var backgroundX = -((mouseX - magnifyMinX) / 100) * MAGNIFIED_CARD_WIDTH +
+      MAGNIFYING_GLASS_WIDTH / 2;
+    var backgroundY = -((mouseY - magnifyMinY) / 139) * MAGNIFIED_CARD_HEIGHT +
+      MAGNIFYING_GLASS_HEIGHT / 2;
     this.set('magnifyX', backgroundX);
     this.set('magnifyY', backgroundY);
   },
