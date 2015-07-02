@@ -2,7 +2,7 @@
   {{!-- The cards --}}
   <div class="sample-draw-chart-card-filler">
     <div class="sample-draw-chart-fullscreen-wrapper {{if fullscreen 'is-fullscreen'}}">
-      {{#each sortedHand as |card index|}}
+      {{#each sortedHand key="@index" as |card index|}}
         <div class="card-spoiler card-spoiler-sample-hand card-spoiler-sample-hand-{{index}}">
           <img src={{card.imageUrl}} />
         </div>
