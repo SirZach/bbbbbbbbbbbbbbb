@@ -6,7 +6,7 @@ import Ember from 'ember';
 
 moduleForComponent('x-ago', {
   // specify the other units that are required for this test
-  needs: ['helper:from-now', 'component:paper-icon']
+  needs: ['helper:from-x', 'component:paper-icon']
 });
 
 test('it renders', function(assert) {
