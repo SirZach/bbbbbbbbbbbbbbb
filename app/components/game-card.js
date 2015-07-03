@@ -12,9 +12,7 @@ export default Ember.Component.extend({
 
   attributeBindings: ['draggable'],
 
-  classNames: ['game-card'],
-
-  classNameBindings: ['isTapped:tapped', 'readOnly::cursor-move'],
+  classNameBindings: ['readOnly::cursor-move'],
 
   /** @property {DS.Model GameCard} */
   gameCard: null,
