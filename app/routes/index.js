@@ -8,6 +8,6 @@ export default Ember.Route.extend({
       destination = 'decks.list';
     }
 
-    this.transitionTo(destination);
+    this.replaceWith(destination);
   }
 });
