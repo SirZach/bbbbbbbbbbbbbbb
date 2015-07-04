@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import Ember from 'ember';
 import layout from '../templates/components/game-card';
+import GameCard from '../models/game-card';
 
 var MAGNIFYING_GLASS_WIDTH = 250;
 var MAGNIFYING_GLASS_HEIGHT = 250;
@@ -12,7 +13,9 @@ export default Ember.Component.extend({
 
   attributeBindings: ['draggable'],
 
-  classNameBindings: ['readOnly::cursor-move'],
+  classNames: ['game-card-container'],
+
+  classNameBindings: ['readOnly::cursor-move', 'increasedMargin'],
 
   /** @property {DS.Model GameCard} */
   gameCard: null,
@@ -33,6 +36,9 @@ export default Ember.Component.extend({
 
   /** @property {Boolean} only interact with the cards if you're player one */
   readOnly: false,
+
+  /** @property {Boolean} battle-field cards increase in margin to allow for tapping */
+  increasedMargin: Ember.computed.equal('gameCard.zone', GameCard.BATTLEFIELD),
 
   /** Attach document key handlers for magnifying purposes. */
   attachKeyHandlers: Ember.on('init', function () {

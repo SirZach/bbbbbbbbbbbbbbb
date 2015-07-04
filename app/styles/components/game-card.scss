@@ -1,8 +1,13 @@
-.game-card {
+.game-card-container {
   display: inline-block;
-  margin: 3px 20px;
+  margin: 5px;
   height: 139px;
+  width: 100px;
   box-shadow: 3px 3px 2px 0 map-get($color-grey, '500');
+}
+
+.game-card {
+  height: 139px;
   transition: 0.15s ease-in-out;
   background-color: map-get($color-red, '300');
   width: 100px;
@@ -22,6 +27,10 @@
 
 .tapped {
   transform: rotateZ(90deg);
+}
+
+.increased-margin {
+  margin: 3px 20px;
 }
 
 .game-card-magnify {
