@@ -88,11 +88,14 @@ export default Ember.Component.extend({
 
   setMagnifyBounds() {
     // Calculate the bounds of the image inside this element.
+    var isTapped = this.get('isTapped');
     var $img = $(this.element).find('img');
     var magnifyMinX = $img.offset().left;
-    var magnifyMaxX = $img.offset().left + $img.width();
+    var magnifyMaxX = $img.offset().left +
+      (isTapped ? $img.height() : $img.width());
     var magnifyMinY = $img.offset().top;
-    var magnifyMaxY = $img.offset().top + $img.height();
+    var magnifyMaxY = $img.offset().top +
+      (isTapped ? $img.width() : $img.height());
     this.setProperties({
       magnifyMinX,
       magnifyMaxX,
@@ -132,13 +135,29 @@ export default Ember.Component.extend({
     this.set('magnifyLeft', left);
     this.set('magnifyTop', top);
 
-    // X and Y coordinates for the inner position of the background image.
-    var backgroundX = -((mouseX - magnifyMinX) / 100) * MAGNIFIED_CARD_WIDTH +
-      MAGNIFYING_GLASS_WIDTH / 2;
-    var backgroundY = -((mouseY - magnifyMinY) / 139) * MAGNIFIED_CARD_HEIGHT +
-      MAGNIFYING_GLASS_HEIGHT / 2;
-    this.set('magnifyX', backgroundX);
-    this.set('magnifyY', backgroundY);
+    // X and Y coordinates for the inner position of the background image. Note
+    // that X and Y are rotated 90 degrees when the card is tapped.
+    //
+    var mouseRatioX, mouseRatioY;
+    if (this.get('isTapped')) {
+      mouseRatioY = (mouseY - magnifyMinY) / 100;
+      var tappedBackgroundX = -mouseRatioY * MAGNIFIED_CARD_HEIGHT +
+        MAGNIFYING_GLASS_HEIGHT / 2;
+      mouseRatioX = (mouseX - magnifyMinX) / 139;
+      var tappedBackgroundY = mouseRatioX * MAGNIFIED_CARD_HEIGHT -
+        MAGNIFIED_CARD_HEIGHT + MAGNIFYING_GLASS_WIDTH / 2;
+      this.set('magnifyX', tappedBackgroundX);
+      this.set('magnifyY', tappedBackgroundY);
+    } else {
+      mouseRatioX = (mouseX - magnifyMinX) / 100;
+      var backgroundX = -mouseRatioX * MAGNIFIED_CARD_WIDTH +
+        MAGNIFYING_GLASS_WIDTH / 2;
+      mouseRatioY = (mouseY - magnifyMinY) / 139;
+      var backgroundY = -mouseRatioY * MAGNIFIED_CARD_HEIGHT +
+        MAGNIFYING_GLASS_HEIGHT / 2;
+      this.set('magnifyX', backgroundX);
+      this.set('magnifyY', backgroundY);
+    }
   },
 
   mouseLeave() {
