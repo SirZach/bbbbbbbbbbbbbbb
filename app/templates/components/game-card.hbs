@@ -1,17 +1,20 @@
-{{#if gameCard.isToken}}
-  <ul>
-    <li>{{gameCard.tokenStats.name}}</li>
-    <li>{{gameCard.tokenStats.power}}/{{gameCard.tokenStats.toughness}}</li>
-    <li>{{gameCard.tokenStats.description}}</li>
-  </ul>
-{{else}}
-  <img title={{card.id}} src="{{card.imageUrl}}"/>
-  <div class="game-card-magnify"
-       style='background-image: url("{{card.imageUrl}}");
-              top: {{magnifyTop}}px;
-              left: {{magnifyLeft}}px;
-              background-position-x: {{magnifyX}}px;
-              background-position-y: {{magnifyY}}px;
-              display: {{if isMagnifying "block"}};'>
-  </div>
-{{/if}}
+<div class="game-card {{if isTapped 'tapped'}}">
+  {{#if gameCard.isToken}}
+    <ul>
+      <li>{{gameCard.tokenStats.name}}</li>
+      <li>{{gameCard.tokenStats.power}}/{{gameCard.tokenStats.toughness}}</li>
+      <li>{{gameCard.tokenStats.description}}</li>
+    </ul>
+  {{else}}
+    <img title={{card.id}} src="{{card.imageUrl}}"/>
+  {{/if}}
+</div>
+
+<div class="game-card-magnify {{if isTapped 'tapped'}}"
+     style='background-image: url("{{card.imageUrl}}");
+            top: {{magnifyTop}}px;
+            left: {{magnifyLeft}}px;
+            background-position-x: {{magnifyX}}px;
+            background-position-y: {{magnifyY}}px;
+            display: {{if isMagnifying "block"}};'>
+</div>
