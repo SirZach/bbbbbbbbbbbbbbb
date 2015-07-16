@@ -9,6 +9,12 @@ export default Ember.Controller.extend({
   /** @property {Boolean} Showing only my decks? */
   filterMineOnly: Ember.computed.alias('controllers.decks.mine'),
 
+  /** @property {String} Title to show in the toolbar. */
+  pageTitle: Ember.computed('controllers.decks.mine', function () {
+    var mine = this.get('controllers.decks.mine');
+    return mine ? 'My Decks' : 'Everybody\'s Decks';
+  }),
+
   actions: {
     toggleFiltersActive: function () {
       this.toggleProperty('filtersActive');
