@@ -149,7 +149,7 @@ export default Ember.Component.extend({
     //
     var mouseRatioX, mouseRatioY;
     if (isTapped) {
-      mouseRatioY = (mouseY - magnifyMinY) / 100;
+      mouseRatioY = (mouseY - magnifyMinY) / 139;
       var tappedBackgroundX = -mouseRatioY * MAGNIFIED_CARD_HEIGHT +
         MAGNIFYING_GLASS_HEIGHT / 2;
       mouseRatioX = (mouseX - magnifyMinX) / 139;
