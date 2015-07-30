@@ -30,6 +30,10 @@
   transform: rotateZ(90deg);
 }
 
+.magnifying {
+  cursor: none;
+}
+
 .increased-margin {
   margin: 3px 20px;
 }
@@ -43,6 +47,5 @@
   height: 250px;
   position: fixed;
   z-index: 999;
-  cursor: none;
-  display: none;
+  pointer-events: none;
 }

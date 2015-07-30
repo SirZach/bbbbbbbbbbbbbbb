@@ -57,7 +57,7 @@ export default Ember.Component.extend({
         Ember.run(() => {
           if (!this.get('isDestroyed')) {
             this.set('isZPressed', false);
-            this.set('isMagnifying', false);
+            this.destroyMagnifiedCardElement();
           }
         });
       }
@@ -113,7 +113,7 @@ export default Ember.Component.extend({
   mouseMove(event) {
     // See if the 'Z' key is pressed.
     if (!this.get('isZPressed')) {
-      this.set('isMagnifying', false);
+      this.destroyMagnifiedCardElement();
       return;
     } else {
       this.setMagnifyBounds();
@@ -130,30 +130,33 @@ export default Ember.Component.extend({
         mouseX > magnifyMaxX ||
         mouseY < magnifyMinY ||
         mouseY > magnifyMaxY) {
-      this.set('isMagnifying', false);
+      this.destroyMagnifiedCardElement();
       return;
     } else {
-      this.set('isMagnifying', true);
+      this.createMagnifiedCardElement();
     }
+    var isTapped = this.get('isTapped');
+    var settings = {isTapped};
+
     // Top and left coordinates for the placement of the magnifying glass.
     var left = mouseX - MAGNIFYING_GLASS_WIDTH / 2;
     var top = mouseY - MAGNIFYING_GLASS_HEIGHT / 2;
-    this.set('magnifyLeft', left);
-    this.set('magnifyTop', top);
+    settings.left = left;
+    settings.top = top;
 
     // X and Y coordinates for the inner position of the background image. Note
     // that X and Y are rotated 90 degrees when the card is tapped.
     //
     var mouseRatioX, mouseRatioY;
-    if (this.get('isTapped')) {
-      mouseRatioY = (mouseY - magnifyMinY) / 100;
+    if (isTapped) {
+      mouseRatioY = (mouseY - magnifyMinY) / 139;
       var tappedBackgroundX = -mouseRatioY * MAGNIFIED_CARD_HEIGHT +
         MAGNIFYING_GLASS_HEIGHT / 2;
       mouseRatioX = (mouseX - magnifyMinX) / 139;
       var tappedBackgroundY = mouseRatioX * MAGNIFIED_CARD_HEIGHT -
         MAGNIFIED_CARD_HEIGHT + MAGNIFYING_GLASS_WIDTH / 2;
-      this.set('magnifyX', tappedBackgroundX);
-      this.set('magnifyY', tappedBackgroundY);
+      settings.x = tappedBackgroundX;
+      settings.y = tappedBackgroundY;
     } else {
       mouseRatioX = (mouseX - magnifyMinX) / 100;
       var backgroundX = -mouseRatioX * MAGNIFIED_CARD_WIDTH +
@@ -161,19 +164,73 @@ export default Ember.Component.extend({
       mouseRatioY = (mouseY - magnifyMinY) / 139;
       var backgroundY = -mouseRatioY * MAGNIFIED_CARD_HEIGHT +
         MAGNIFYING_GLASS_HEIGHT / 2;
-      this.set('magnifyX', backgroundX);
-      this.set('magnifyY', backgroundY);
+      settings.x = backgroundX;
+      settings.y = backgroundY;
     }
+
+    this.updateMagnifiedCardElement(settings);
   },
 
   mouseLeave() {
     // Ensure we always exit magnifying mode when leaving the element.
+    this.destroyMagnifiedCardElement();
+  },
+
+  /**
+   * @property {String} Id for the magnified element. Based off the existing id
+   * for uniqueness.
+   */
+  magnifiedCardElementId: Ember.computed(function () {
+    var id = this.element.id;
+    return id + '-magnified';
+  }),
+
+  createMagnifiedCardElement() {
+    this.set('isMagnifying', true);
+    var $el = this.get('$magnifiedCardElement');
+    if ($el) {
+      return;
+    }
+    var id = this.get('magnifiedCardElementId');
+    var template = `<div id="${id}" class="game-card-magnify"></div>`;
+    $('body').append(template);
+    $el = $(`#${id}`);
+    $el.css('background-image', `url("${this.get('card.imageUrl')}")`);
+
+    // Save the element for future use.
+    this.set('$magnifiedCardElement', $el);
+  },
+
+  destroyMagnifiedCardElement() {
     this.set('isMagnifying', false);
+    var $el = this.get('$magnifiedCardElement');
+    if ($el) {
+      $el.remove();
+      this.set('$magnifiedCardElement');
+    }
+  },
+
+  updateMagnifiedCardElement({top, left, x, y, isTapped}) {
+    var $el = this.get('$magnifiedCardElement');
+    if ($el) {
+      $el.css({
+        top: `${top}px`,
+        left: `${left}px`,
+        'background-position-x': `${x}px`,
+        'background-position-y': `${y}px`
+      });
+      if (isTapped) {
+        $el.addClass('tapped');
+      } else {
+        $el.removeClass('tapped');
+      }
+    }
   },
 
   actions: {
     /** Clean up key handlers. */
     willDestroyElement() {
+      this.destroyMagnifiedCardElement();
       var scope = Ember.guidFor(this);
       $(document).off(`keydown.${scope}`);
       $(document).off(`keyup.${scope}`);
