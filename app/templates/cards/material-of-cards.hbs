@@ -2,11 +2,9 @@
   {{#paper-list}}
     {{#each filteredCards as |card|}}
       {{#x-paper-item class="cursor-pointer has-hidden-hover" as |isExpanded|}}
-        {{#paper-tile-left}}
-          {{x-card-image src=card.imageUrl class="face"}}
-        {{/paper-tile-left}}
+        {{x-card-image src=card.imageUrl class="face md-avatar"}}
 
-        {{#paper-tile-content}}
+        <div class="md-list-item-text">
           <h3>{{card.name}}</h3>
           <ul class="pull-right paper-tile-content-right">
             <li>{{card.powerToughnessFormatted}}</li>
@@ -26,7 +24,7 @@
           {{#if isExpanded}}
             {{x-card card=card}}
           {{/if}}
-        {{/paper-tile-content}}
+        </div>
       {{/x-paper-item}}
       {{paper-divider}} {{! OR {{paper-divider inset=true}}
     {{/each}}

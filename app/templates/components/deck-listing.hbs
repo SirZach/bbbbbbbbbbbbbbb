@@ -1,54 +1,14 @@
-{{#paper-tile-left}}
-  <div class="game-listing-deck-image"
-       style="background-image: url('{{deck.defaultImageUrl}}')">
-  </div>
-{{/paper-tile-left}}
-{{#paper-tile-content}}
-  <h3>{{deck.name}}</h3>
-  <div>
+<img src={{deck.defaultImageUrl}} class="md-avatar">
+<div class="md-list-item-text">
+  {{!--
+  {{#link-to 'deck.index' deck tagName="h3" class="link"}}{{deck.name}}{{/link-to}}
     <img class="avatar avatar-medium" src={{deck.owner.avatarUrl}} />
-    {{deck.owner.username}}
-  </div>
-  <ul class="pull-right paper-tile-content-right">
-    <li><strong>{{deck.allCount}}</strong> Cards</li>
-    {{#if canEdit}}
-      <li>
-        {{#x-paper-button-delayed action="deleteDeck" bubbles=false as |showTimer|}}
-          {{paper-icon icon="delete" size="lg" title="Delete"}}
-          {{#if showTimer}}
-            {{donut-timer}}
-          {{/if}}
-        {{/x-paper-button-delayed}}
-      </li>
-    {{/if}}
-    <li>
-      {{#x-paper-button action="goToDeck"}}
-        {{paper-icon icon="share" size="lg" title="Explore"}}
-      {{/x-paper-button}}
-    </li>
-    {{#if canEdit}}
-      <li>
-        {{#x-paper-button action="goToDeckBuilder"}}
-          {{paper-icon icon="translate" size="lg" title="Edit"}}
-        {{/x-paper-button}}
-      </li>
-    {{/if}}
-  </ul>
-  <p class="truncate">{{deck.comments}}</p>
-  {{#if isExpanded}}
+    --}}
+  <h3>{{deck.name}}</h3>
+  <h4>{{deck.owner.username}}</h4>
+  <p>{{deck.description}}</p>
+</div>
 
-    <div class="row">
-      <div class="col-sm-6">
-        {{#titled-card title="Mana Curve"}}
-          {{mana-curve-chart deck=deck spoilerPosition="right"}}
-        {{/titled-card}}
-      </div>
-
-      <div class="col-sm-6">
-        {{#titled-card title="Card Breakdown"}}
-          {{card-breakdown-chart deck=deck}}
-        {{/titled-card}}
-      </div>
-    </div>
-  {{/if}}
-{{/paper-tile-content}}
+{{#paper-button icon-button=true param=item action="secondaryPersonClick"}}
+  {{paper-icon icon="phone"}}
+{{/paper-button}}

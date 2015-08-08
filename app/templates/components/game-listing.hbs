@@ -1,14 +1,14 @@
 {{#paper-item}}
 
-  {{#paper-tile-left classNames="game-listing-matchup"}}
+  <div classNames="game-listing-matchup md-avatar">
     {{game-listing-player player=game.playerOne}}
     <span>vs.</span>
     {{game-listing-player player=game.playerTwo}}
 
     <span>{{game.watchers.length}} watching</span>
-  {{/paper-tile-left}}
+  </div>
 
-  {{#paper-tile-content}}
+  <div class="md-list-item-text">
     {{#link-to 'game' game.id}}
       {{paper-button classNames="md-primary game-listing-join" label="Join Game"}}
     {{/link-to}}
@@ -29,6 +29,6 @@
         </li>
       </ul>
     {{/if}}
-  {{/paper-tile-content}}
+  </div>
 
 {{/paper-item}}
