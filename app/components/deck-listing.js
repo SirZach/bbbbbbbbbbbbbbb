@@ -5,7 +5,7 @@ import layout from '../templates/components/deck-listing';
 export default XPaperItem.extend({
   layout: layout,
 
-  classNames: 'deck-header',
+  classNames: ['deck-header', 'md-3-line'],
 
   canEdit: Ember.computed('deck.owner.id', 'currentUser.id', function () {
     var ownerId = this.get('deck.owner.id') || 'owner';

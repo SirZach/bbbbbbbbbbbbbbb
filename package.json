@@ -41,7 +41,7 @@
     "ember-data": "1.0.0-beta.15",
     "ember-export-application-global": "^1.0.2",
     "ember-infinity": "0.0.5",
-    "ember-paper": "0.2.6",
+    "ember-paper": "0.2.7",
     "emberfire": "1.4.3",
     "express": "^4.8.5",
     "glob": "^4.0.5"
