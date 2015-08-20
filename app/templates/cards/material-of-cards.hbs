@@ -1,11 +1,16 @@
-{{#paper-content classNames="md-whiteframe-z1 list-demo"}}
+{{#paper-content class="md-whiteframe-z1 list-demo"}}
   {{#paper-list}}
     {{#each filteredCards as |card|}}
-      {{#x-paper-item class="cursor-pointer has-hidden-hover" as |isExpanded|}}
-        {{x-card-image src=card.imageUrl class="face md-avatar"}}
+      {{#paper-item class="cursor-pointer has-hidden-hover md-3-line" as |isExpanded|}}
+        {{x-card-image src=card.imageUrl class="md-avatar"}}
 
         <div class="md-list-item-text">
           <h3>{{card.name}}</h3>
+          <h4>
+            {{mana-formatted mana=card.manaCostFormatted}} {{card.powerToughnessFormatted}}
+          </h4>
+          <p class="mt-10" title={{card.text}}>{{card.text}}</p>
+          {{!--
           <ul class="pull-right paper-tile-content-right">
             <li>{{card.powerToughnessFormatted}}</li>
             <li class="ml-10">{{mana-formatted mana=card.manaCostFormatted}}</li>
@@ -19,13 +24,20 @@
                 Sideboard
               {{/x-paper-button}}
             </li>
-          </ul>
-          <p class="mt-10" title={{card.text}}>{{card.text}}</p>
+          </ul>--}}
+          {{#paper-button icon-button=true param=card action="addToMain" class="on-hover md-primary right-48"}}
+            {{paper-icon icon="add-box"}}
+          {{/paper-button}}
+
+          {{#paper-button icon-button=true param=card action="addToSide" class="on-hover"}}
+            {{paper-icon icon="add"}}
+          {{/paper-button}}
+
           {{#if isExpanded}}
             {{x-card card=card}}
           {{/if}}
         </div>
-      {{/x-paper-item}}
+      {{/paper-item}}
       {{paper-divider}} {{! OR {{paper-divider inset=true}}
     {{/each}}
   {{/paper-list}}

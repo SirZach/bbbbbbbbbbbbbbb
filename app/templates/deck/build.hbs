@@ -1,3 +1,17 @@
+{{#paper-toolbar classNames="mb-10"}}
+  <div class="md-toolbar-tools">
+    {{#paper-button classNames="sm-display" action="toggleFiltersActive"}}Toggle Filters{{/paper-button}}
+
+    {{#x-paper-button action="saveDeck" params=controllers.deck.saveParams}}Save{{/x-paper-button}}
+
+    {{#x-paper-button action="openModal" params=controllers.deck.exportParams}}Export{{/x-paper-button}}
+
+    {{#link-to "deck.index" model}}
+      {{#paper-button}}Analyze{{/paper-button}}
+    {{/link-to}}
+  </div>
+{{/paper-toolbar}}
+
 <div class="row row-offcanvas row-offcanvas-left {{if filtersActive 'active'}}">
 
   <div class="col-sm-3 col-lg-1 sidebar-offcanvas" id="sidebar">
@@ -18,7 +32,7 @@
     <div class="col-sm-7 col-lg-6">
       {{#paper-card class="mr-0 ml-0"}}
         {{#paper-card-content}}
-          {{paper-text class="width-100" label="Search by card name" value=nameSearch}}
+          {{paper-input class="width-100" label="Search by card name" value=nameSearch}}
         {{/paper-card-content}}
       {{/paper-card}}
       {{partial "cards/material-of-cards"}}
@@ -33,10 +47,10 @@
               {{controllers.deck.model.classification}}
             </div>
             <div class="form-group">
-              {{paper-text class="width-100" label="Deck Name" value=controllers.deck.model.name}}
+              {{paper-input class="width-100" label="Deck Name" value=controllers.deck.model.name}}
             </div>
             <div class="form-group">
-              {{paper-text class="width-100" label="Comments" value=controllers.deck.model.comments}}
+              {{paper-input class="width-100" label="Comments" value=controllers.deck.model.comments}}
             </div>
           </form>
         {{/paper-card-content}}
