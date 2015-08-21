@@ -5,15 +5,6 @@ export default Ember.Route.extend({
     return this.store.filter('game', {orderBy: 'createdDate'}, () => true);
   },
 
-  renderTemplate: function () {
-    this._super.apply(this, arguments);
-
-    this.render('nav-toolbars/games-list', {
-      into: 'application',
-      outlet: 'nav-toolbar'
-    });
-  },
-
   actions: {
     newGame: function () {
       // The user must not be anonymous.
