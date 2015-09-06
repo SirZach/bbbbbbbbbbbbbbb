@@ -1,4 +1,4 @@
-{{#paper-item class="md-3-line"}}
+{{#paper-item class="md-3-line" action="goToGame" param=game}}
 
   {{!-- <div classNames="game-listing-matchup md-avatar">
     {{game-listing-player player=game.playerOne}}
@@ -11,11 +11,6 @@
   <div class="md-list-item-text">
     <h3>{{game.playerOne.user.username}} vs. {{game.playerTwo.user.username}}</h3>
     <h4>{{game.watchers.length}} watching</h4>
-
-    {{!-- {{paper-button classNames="md-primary" label="Join Game"}} --}}
-    {{#paper-button icon-button=true param=game action="goToGame"}}
-      {{paper-icon icon="launch"}}
-    {{/paper-button}}
 
     {{#if canDeleteGame}}
       <ul class="pull-right paper-tile-content-right">

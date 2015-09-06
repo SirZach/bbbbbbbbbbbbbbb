@@ -1,4 +1,4 @@
-import PaperText from 'ember-paper/components/paper-text';
+import PaperText from 'ember-paper/components/paper-input';
 import layout from '../templates/components/x-paper-text';
 
 export default PaperText.extend({

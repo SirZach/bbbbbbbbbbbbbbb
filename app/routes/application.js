@@ -57,6 +57,10 @@ export default Ember.Route.extend({
         channel: channel
       });
       chat.save();
+    },
+
+    goToGame(game) {
+      this.transitionTo('game', game);
     }
   }
 });
