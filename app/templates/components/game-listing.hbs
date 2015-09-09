@@ -1,33 +1,39 @@
 {{#paper-item class="md-3-line" action="goToGame" param=game}}
 
-  {{!-- <div classNames="game-listing-matchup md-avatar">
-    {{game-listing-player player=game.playerOne}}
-    <span>vs.</span>
-    {{game-listing-player player=game.playerTwo}}
-
-    <span>{{game.watchers.length}} watching</span>
-  </div> --}}
+  {{!-- Player One --}}
+  <img src={{game.playerOne.user.avatarUrl}} class="avatar avatar-ember-paper md-avatar">
+  <div class="md-list-item-text">
+    <h3>{{game.playerOne.user.username}}</h3>
+    {{#link-to 'deck.index' game.playerOne.deckId tagName="h4" class="link"}}{{game.playerOne.deckName}}{{/link-to}}
+    <p>{{game.watchers.length}} watching</p>
+  </div>
 
   <div class="md-list-item-text">
-    <h3>{{game.playerOne.user.username}} vs. {{game.playerTwo.user.username}}</h3>
-    <h4>{{game.watchers.length}} watching</h4>
-
-    {{#if canDeleteGame}}
-      <ul class="pull-right paper-tile-content-right">
-        <li>
-          {{#x-paper-button-delayed
-            action="deleteGame"
-            params=game
-            bubbles=false
-            as |showTimer|}}
-            {{paper-icon icon="delete" size="lg" title="Delete"}}
-            {{#if showTimer}}
-              {{donut-timer}}
-            {{/if}}
-          {{/x-paper-button-delayed}}
-        </li>
-      </ul>
-    {{/if}}
+    <h3 class="ta-c">vs.</h3>
   </div>
+
+  {{!-- Player Two --}}
+  <img src={{game.playerTwo.user.avatarUrl}} class="avatar avatar-ember-paper md-avatar">
+  <div class="md-list-item-text">
+    <h3>{{game.playerTwo.user.username}}</h3>
+    {{#link-to 'deck.index' game.playerTwo.deckId tagName="h4" class="link"}}{{game.playerTwo.deckName}}{{/link-to}}
+  </div>
+
+  {{#if canDeleteGame}}
+    <ul class="pull-right paper-tile-content-right">
+      <li>
+        {{#x-paper-button-delayed
+          action="deleteGame"
+          params=game
+          bubbles=false
+          as |showTimer|}}
+          {{paper-icon icon="delete" size="lg" title="Delete"}}
+          {{#if showTimer}}
+            {{donut-timer}}
+          {{/if}}
+        {{/x-paper-button-delayed}}
+      </li>
+    </ul>
+  {{/if}}
 
 {{/paper-item}}

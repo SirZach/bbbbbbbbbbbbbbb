@@ -19,12 +19,13 @@
 .pr-10 {padding-right: 10px!important;}
 
 .ta-l {text-align: left!important;}
+.ta-c {text-align: center}
 
 .link {
   cursor: pointer;
-  color: map-get($color-light-blue, '800');
+  color: map-get($color-light-blue, '800')!important;
   &:hover {
-    color: map-get($color-light-blue, '900');
+    color: map-get($color-light-blue, '900')!important;
   }
 }
 
