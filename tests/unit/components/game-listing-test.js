@@ -8,8 +8,6 @@ moduleForComponent('game-listing', {
   // specify the other units that are required for this test
   needs: [
     'component:paper-item',
-    'component:paper-tile-left',
-    'component:paper-tile-content',
     'component:paper-button',
     'component:game-listing-player',
     'component:x-paper-button-delayed',
