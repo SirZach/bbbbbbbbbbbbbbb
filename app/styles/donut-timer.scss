@@ -2,8 +2,8 @@
 
 .donut-wrapper {
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 8px;
+  right: 6px;
 }
 
 @mixin donut-timer($item, $duration, $size, $bgBorder, $timerBorder, $hover: running) {

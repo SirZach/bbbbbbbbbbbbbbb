@@ -20,20 +20,18 @@
   </div>
 
   {{#if canDeleteGame}}
-    <ul class="pull-right paper-tile-content-right">
-      <li>
-        {{#x-paper-button-delayed
-          action="deleteGame"
-          params=game
-          bubbles=false
-          as |showTimer|}}
-          {{paper-icon icon="delete" size="lg" title="Delete"}}
-          {{#if showTimer}}
-            {{donut-timer}}
-          {{/if}}
-        {{/x-paper-button-delayed}}
-      </li>
-    </ul>
+    {{#x-paper-button-delayed
+      action="deleteGame"
+      class="md-secondary-container"
+      params=game
+      bubbles=false
+      icon-button=true
+      as |showTimer|}}
+      {{paper-icon icon="delete" size="lg" title="Delete"}}
+      {{#if showTimer}}
+        {{donut-timer}}
+      {{/if}}
+    {{/x-paper-button-delayed}}
   {{/if}}
 
 {{/paper-item}}

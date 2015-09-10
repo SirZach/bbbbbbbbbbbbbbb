@@ -3,8 +3,8 @@
     {{#paper-card-content}}
       <h3>Email Login</h3>
       <form role="form" {{action "login" on="submit"}}>
-          {{paper-text classNames="login-input" type="email" label="Email" value=loginEmail}}
-          {{paper-text classNames="login-input" type="password" label="Password" value=loginPassword}}
+          {{paper-input classNames="login-input" type="email" label="Email" value=loginEmail}}
+          {{paper-input classNames="login-input" type="password" label="Password" value=loginPassword}}
         {{#paper-button type="submit" classNames="md-primary" raised=true}}
           Log In
         {{/paper-button}}
@@ -38,9 +38,9 @@
     {{#paper-card-content}}
       <h3>Sign Up</h3>
       <form role="form" {{action "signup" on="submit"}}>
-          {{paper-text classNames="login-input" type="text" label="Username" value=signupUsername}}
-          {{paper-text classNames="login-input" type="email" label="Email" value=signupEmail}}
-          {{paper-text classNames="login-input" type="password" label="Password" value=signupPassword}}
+          {{paper-input classNames="login-input" type="text" label="Username" value=signupUsername}}
+          {{paper-input classNames="login-input" type="email" label="Email" value=signupEmail}}
+          {{paper-input classNames="login-input" type="password" label="Password" value=signupPassword}}
         {{#paper-button type="submit" classNames="md-primary" raised=true}}
           Sign Up
         {{/paper-button}}
