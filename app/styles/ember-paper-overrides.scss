@@ -45,3 +45,11 @@ md-toolbar {
     }
   }
 }
+
+.md-button {
+  &.md-default-theme {
+    &.md-primary.md-raised {
+      color: rgba(255,255,255,.87);
+    }
+  }
+}

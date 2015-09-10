@@ -1,50 +1,63 @@
-<div class="col-md-4 col-sm-6">
-  {{#paper-card}}
-    {{#paper-card-content}}
-      <h3>Email Login</h3>
-      <form role="form" {{action "login" on="submit"}}>
-          {{paper-input classNames="login-input" type="email" label="Email" value=loginEmail}}
-          {{paper-input classNames="login-input" type="password" label="Password" value=loginPassword}}
-        {{#paper-button type="submit" classNames="md-primary" raised=true}}
-          Log In
-        {{/paper-button}}
-      </form>
-      {{#if loginError}}
-        <p class="login-error">
-          {{paper-icon icon="error"}}
-          {{loginError}}
-        </p>
-      {{/if}}
-    {{/paper-card-content}}
-  {{/paper-card}}
-</div>
+{{#paper-toolbar classNames="mb-10"}}
+  <h2 class="md-toolbar-tools">
+    {{#paper-sidenav-toggle}}
+      {{paper-icon icon="menu"}}
+    {{/paper-sidenav-toggle}}
+  </h2>
+{{/paper-toolbar}}
 
-<div class="col-md-4 col-sm-6">
-  {{#paper-card}}
-    {{#paper-card-content}}
-      <h3>Social Login</h3>
-      <button class="btn btn-block btn-social btn-github" {{action "loginWithSocial" "github"}}>
-        {{fa-icon "github"}} Log in with Github
-      </button>
-      <button class="btn btn-block btn-social btn-twitter" {{action "loginWithSocial" "twitter"}}>
-        {{fa-icon "twitter"}} Log in with Twitter
-      </button>
-    {{/paper-card-content}}
-  {{/paper-card}}
-</div>
+{{#paper-content id="infinity-window" classNames="md-padding"}}
+  <div class="container-fluid">
+    <div class="col-md-4 col-sm-6">
+      {{#paper-card}}
+        {{#paper-card-content}}
+          <h3>Email Login</h3>
+          <form role="form" {{action "login" on="submit"}}>
+              {{paper-input classNames="login-input" type="email" label="Email" value=loginEmail}}
+              {{paper-input classNames="login-input" type="password" label="Password" value=loginPassword}}
+            {{#paper-button type="submit" primary=true raised=true}}
+              Log In
+            {{/paper-button}}
+          </form>
+          {{#if loginError}}
+            <p class="login-error">
+              {{paper-icon icon="error"}}
+              {{loginError}}
+            </p>
+          {{/if}}
+        {{/paper-card-content}}
+      {{/paper-card}}
+    </div>
 
-<div class="col-md-4 col-sm-6">
-  {{#paper-card}}
-    {{#paper-card-content}}
-      <h3>Sign Up</h3>
-      <form role="form" {{action "signup" on="submit"}}>
-          {{paper-input classNames="login-input" type="text" label="Username" value=signupUsername}}
-          {{paper-input classNames="login-input" type="email" label="Email" value=signupEmail}}
-          {{paper-input classNames="login-input" type="password" label="Password" value=signupPassword}}
-        {{#paper-button type="submit" classNames="md-primary" raised=true}}
-          Sign Up
-        {{/paper-button}}
-      </form>
-    {{/paper-card-content}}
-  {{/paper-card}}
-</div>
+    <div class="col-md-4 col-sm-6">
+      {{#paper-card}}
+        {{#paper-card-content}}
+          <h3>Social Login</h3>
+          <button class="btn btn-block btn-social btn-github" {{action "loginWithSocial" "github"}}>
+            {{fa-icon "github"}} Log in with Github
+          </button>
+          <button class="btn btn-block btn-social btn-twitter" {{action "loginWithSocial" "twitter"}}>
+            {{fa-icon "twitter"}} Log in with Twitter
+          </button>
+        {{/paper-card-content}}
+      {{/paper-card}}
+    </div>
+
+    <div class="col-md-4 col-sm-6">
+      {{#paper-card}}
+        {{#paper-card-content}}
+          <h3>Sign Up</h3>
+          <form role="form" {{action "signup" on="submit"}}>
+              {{paper-input classNames="login-input" type="text" label="Username" value=signupUsername}}
+              {{paper-input classNames="login-input" type="email" label="Email" value=signupEmail}}
+              {{paper-input classNames="login-input" type="password" label="Password" value=signupPassword}}
+            {{#paper-button type="submit" classNames="md-primary" raised=true}}
+              Sign Up
+            {{/paper-button}}
+          </form>
+        {{/paper-card-content}}
+      {{/paper-card}}
+    </div>
+
+  </div>
+{{/paper-content}}
