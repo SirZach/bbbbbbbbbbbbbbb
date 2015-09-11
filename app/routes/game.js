@@ -74,15 +74,6 @@ export default Ember.Route.extend({
     .then(model => this.retrieveDSCards(model));
   },
 
-  renderTemplate: function () {
-    this._super.apply(this, arguments);
-
-    this.render('nav-toolbars/game', {
-      into: 'application',
-      outlet: 'nav-toolbar'
-    });
-  },
-
   setupController: function (controller, game) {
     this._super.apply(this, arguments);
 

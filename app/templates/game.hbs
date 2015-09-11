@@ -1,3 +1,39 @@
+{{#paper-toolbar}}
+  <h2 class="md-toolbar-tools jc-sb">
+    {{#paper-sidenav-toggle}}
+      {{paper-icon icon="menu"}}
+    {{/paper-sidenav-toggle}}
+
+    {{#if amIPlaying}}
+      {{#x-paper-button action="showToken" params=playerOne}}Add Token{{/x-paper-button}}
+    {{/if}}
+
+    <div class="pull-right">
+      <span>{{playerOne.user.username}} - {{playerOne.life}}</span>
+      <span>vs</span>
+      {{#if playerTwo}}
+        <span>{{playerTwo.user.username}} - {{playerTwo.life}}</span>
+      {{else}}
+        <span>...</span>
+      {{/if}}
+
+      {{#if amIPlaying}}
+        {{#x-paper-button icon-button=true action="changeLife" params=1}}+1{{/x-paper-button}}
+        {{#x-paper-button icon-button=true action="changeLife" params=5}}+5{{/x-paper-button}}
+        {{#x-paper-button icon-button=true action="changeLife" params=-1}}-1{{/x-paper-button}}
+        {{#x-paper-button icon-button=true action="changeLife" params=-5}}-5{{/x-paper-button}}
+        {{#x-paper-button-delayed icon-button=true class="md-warn" action="endGame" title="End Game" bubbles=false as |showTimer|}}
+          {{paper-icon icon="warning" size="lg"}}
+          {{#if showTimer}}
+            {{donut-timer}}
+          {{/if}}
+        {{/x-paper-button-delayed}}
+      {{/if}}
+    </div>
+  </h2>
+{{/paper-toolbar}}
+
+
 {{game/left-column
   player=leftColumnPlayer
   gameCards=leftColumnCards
