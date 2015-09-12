@@ -13,7 +13,7 @@ export default Ember.Component.extend({
     let content = get(this, 'content');
     let index = get(this, 'index');
 
-    return index === (get(content, 'length') - 1);
+    return index === get(content, 'length') - 1;
   }),
 
   notLast: computed.not('isLast')

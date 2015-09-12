@@ -13,7 +13,8 @@
     <div class="col-sm-12 col-lg-10">
       {{#paper-content classNames="md-whiteframe-z1 list-demo list-controls-demo"}}
         {{#paper-list}}
-          {{#each model as |deck|}}
+          {{#each model as |deck index|}}
+            {{#is-last content=model index=index as |notLast|}}
             {{!-- {{deck-listing
               deck=deck
               currentUser=session.user
@@ -31,8 +32,10 @@
 
               {{/paper-item}}
 
-              {{paper-divider}}
-
+              {{#if notLast}}
+                {{paper-divider}}
+              {{/if}}
+            {{/is-last}}
           {{/each}}
         {{/paper-list}}
       {{/paper-content}}
