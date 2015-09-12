@@ -3,14 +3,15 @@
   margin: 5px;
   height: 139px;
   width: 100px;
-  box-shadow: 3px 3px 2px 0 map-get($color-grey, '500');
 }
 
 .game-card {
   height: 139px;
-  transition: 0.15s ease-in-out;
-  background-color: map-get($color-red, '300');
   width: 100px;
+  background-color: map-get($color-red, '300');
+  transition: 0.15s ease-in-out;
+  box-shadow: 3px 3px 2px 0 map-get($color-grey, '500');
+
   img {
     width: 100px;
     height: 100%;
@@ -29,6 +30,10 @@
   transform: rotateZ(90deg);
 }
 
+.magnifying {
+  cursor: none;
+}
+
 .increased-margin {
   margin: 3px 20px;
 }
@@ -42,6 +47,5 @@
   height: 250px;
   position: fixed;
   z-index: 999;
-  cursor: none;
-  display: none;
+  pointer-events: none;
 }

@@ -196,3 +196,8 @@ body { background-color: map-get($color-grey, '300');}
     }
   }
 }
+
+.toolbar-title {
+  display: inline-block;
+  margin-right: 10px;
+}
