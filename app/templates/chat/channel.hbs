@@ -6,6 +6,7 @@
   <form {{action "submitChat" on="submit"}}>
     {{paper-input
       label="Say something!"
-      value=says}}
+      value=says
+      disabled=session.doesNotHaveWriteAccess}}
   </form>
 </div>
