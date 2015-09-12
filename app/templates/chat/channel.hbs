@@ -2,11 +2,10 @@
   <h2 class="chat-title">#{{channel}}</h2>
   {{chat-pane chats=model title=channel class="chat-pane"}}
   {{active-user-list presences=sortedPresences}}
-  {{x-paper-text
-    label="Say something!"
-    value=says action="say"
-    channel=channel
-    controllerName="chat/channel"
-    class="chat-input"
-    disabled=session.doesNotHaveWriteAccess}}
+
+  <form {{action "submitChat" on="submit"}}>
+    {{paper-input
+      label="Say something!"
+      value=says}}
+  </form>
 </div>
