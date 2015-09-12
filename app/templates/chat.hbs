@@ -1,1 +1,14 @@
-{{outlet}}
+{{#paper-toolbar classNames="mb-10"}}
+  <h2 class="md-toolbar-tools">
+    {{#paper-sidenav-toggle}}
+      {{paper-icon icon="menu"}}
+    {{/paper-sidenav-toggle}}
+
+  </h2>
+{{/paper-toolbar}}
+
+{{#paper-content id="infinity-window" classNames="md-padding"}}
+  <div class="container-fluid">
+    {{outlet}}
+  </div>
+{{/paper-content}}
