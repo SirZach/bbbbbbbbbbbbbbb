@@ -45,7 +45,7 @@
   dragEnded="dragEnded"
 }}
 <div class="game-board {{if showChat 'show-chat' 'hide-chat'}} {{if showLeftColumn 'show-left-column'}}">
-  {{#paper-button class="chat-chevron" action="toggleChat"}}
+  {{#paper-button class="chat-chevron" action="toggleChat" icon-button=true}}
     {{paper-icon icon=showChatClass}}
   {{/paper-button}}
 
