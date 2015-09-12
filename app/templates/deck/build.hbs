@@ -1,16 +1,12 @@
-{{#paper-toolbar classNames="mb-10"}}
-  <div class="md-toolbar-tools">
-    {{#paper-button classNames="sm-display" action="toggleFiltersActive"}}Toggle Filters{{/paper-button}}
+<div class="mb-10 d-f">
+  {{#paper-button classNames="sm-display" action="toggleFiltersActive"}}Toggle Filters{{/paper-button}}
 
-    {{#x-paper-button action="saveDeck" params=controllers.deck.saveParams}}Save{{/x-paper-button}}
+  {{#x-paper-button action="saveDeck" primary=true raised=true params=controllers.deck.saveParams}}Save{{/x-paper-button}}
 
-    {{#x-paper-button action="openModal" params=controllers.deck.exportParams}}Export{{/x-paper-button}}
-
-    {{#link-to "deck.index" model}}
-      {{#paper-button}}Analyze{{/paper-button}}
-    {{/link-to}}
-  </div>
-{{/paper-toolbar}}
+  {{#link-to "deck.index" model}}
+    {{#paper-button raised=true}}Analyze{{/paper-button}}
+  {{/link-to}}
+</div>
 
 <div class="row row-offcanvas row-offcanvas-left {{if filtersActive 'active'}}">
 
