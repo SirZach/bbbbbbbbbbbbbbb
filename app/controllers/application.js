@@ -12,7 +12,7 @@ export default Ember.Controller.extend({
    * Should the side nav be unlocked regardless of viewport width?
    */
   forceSidenavUnlocked: Ember.computed('currentPath', function () {
-    return this.get('currentPath') === 'games.game';
+    return this.get('currentPath') === 'game';
   }),
 
   /** @property {Boolean} Classes to apply to the side nav container. */
