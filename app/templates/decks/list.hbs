@@ -22,7 +22,9 @@
               deleteDeck="deleteDeck"
               goToDeckBuilder="goToDeckBuilder"}} --}}
               {{#paper-item class="md-3-line"}}
-                <img src={{deck.defaultImageUrl}} class="md-avatar">
+                <div class="deck-image-frame"
+                     style="background-image: url('{{deck.defaultImageUrl}}')">
+                </div>
                 <div class="md-list-item-text">
 
                   {{#link-to 'deck.index' deck tagName="h3" class="link"}}{{deck.name}}{{/link-to}}

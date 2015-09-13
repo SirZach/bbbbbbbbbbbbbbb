@@ -8,3 +8,12 @@
     margin-left: 0;
   }
 }
+
+.deck-image-frame {
+  @extend .avatar;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  background-position: 50% 19%;
+  background-size: 200%;
+}
