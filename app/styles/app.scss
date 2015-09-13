@@ -1,18 +1,16 @@
 @import 'color-palette';
 
-$primary-color-palette: $color-orange;
+$primary: $color-orange;
 $locked-breakpoint: 1700px;
 
 @import 'ember-paper';
 
 @import 'chat';
 @import 'offcanvas';
-@import 'material-of-cards';
 @import 'magic-font';
 @import 'utils';
 @import 'nav';
 @import 'avatar';
-@import 'game-listing';
 @import 'game';
 @import 'failed-imports';
 @import 'deck-chooser';
@@ -107,7 +105,7 @@ body { background-color: map-get($color-grey, '300');}
   top: 13px;
 }
 
-@mixin deck-card ($height:100px, $width:70px, $borderColor:map-get($primary-color-palette, '500'), $backgroundColor:map-get($color-grey, '300')){
+@mixin deck-card ($height:100px, $width:70px, $borderColor:map-get($primary, '500'), $backgroundColor:map-get($color-grey, '300')){
   height: $height;
   width: $width;
   border: 2px solid $borderColor;
@@ -184,15 +182,15 @@ body { background-color: map-get($color-grey, '300');}
     height: 20px;
     width: 20px;
     .card-one {
-      @include deck-card(20px, 14px, #fff, map-get($primary-color-palette, '500'));
+      @include deck-card(20px, 14px, #fff, map-get($primary, '500'));
     }
     .card-two {
-      @include deck-card(20px, 14px, #fff, map-get($primary-color-palette, '500'));
+      @include deck-card(20px, 14px, #fff, map-get($primary, '500'));
       right: 0px;
       top: 5px;
     }
     .card-three {
-      @include deck-card(20px, 14px, #fff, map-get($primary-color-palette, '500'));
+      @include deck-card(20px, 14px, #fff, map-get($primary, '500'));
       left: 12px;
       top: 10px;
     }

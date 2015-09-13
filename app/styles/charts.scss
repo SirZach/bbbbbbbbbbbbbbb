@@ -139,13 +139,13 @@
 
 .mana-curve-chart-label {
   margin-top: 20px;
-  border-top: 1px solid map-get($primary-color-palette, '500');
+  border-top: 1px solid map-get($primary, '500');
 }
 
 .lil-card-stack {
   &:hover, &:focus {
     .lil-card {
-      box-shadow: 0 0 8px 4px map-get($primary-color-palette, '300');
+      box-shadow: 0 0 8px 4px map-get($primary, '300');
     }
   }
 }
@@ -209,7 +209,7 @@ h3.chart-card-title {
   margin-top: 16px;
   margin-bottom: -16px;
   padding: 16px;
-  background-color: map-get($primary-color-palette, '500');
+  background-color: map-get($primary, '500');
   color: white;
 
   .chart-card-title-actions {

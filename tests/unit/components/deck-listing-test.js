@@ -6,14 +6,13 @@ import {
 moduleForComponent('deck-listing', {
   // specify the other units that are required for this test
   needs: [
-    'component:paper-tile-left',
-    'component:paper-tile-content',
     'component:paper-icon',
     'component:x-paper-button-delayed',
     'component:x-paper-button',
     'component:titled-card',
     'component:mana-curve-chart',
-    'component:card-breakdown-chart'
+    'component:card-breakdown-chart',
+    'component:paper-button'
   ]
 });
 

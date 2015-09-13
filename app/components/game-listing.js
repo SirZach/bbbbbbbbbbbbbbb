@@ -15,6 +15,10 @@ export default Ember.Component.extend({
   actions: {
     deleteGame: function (game) {
       this.sendAction('deleteGame', game);
+    },
+
+    goToGame(game) {
+      this.sendAction('goToGame', game);
     }
   }
 });

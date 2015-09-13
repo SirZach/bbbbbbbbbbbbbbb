@@ -293,6 +293,16 @@ export default Ember.Controller.extend({
       }
     },
 
+    /**
+     * Respond to chat submission.
+     */
+    submitChat() {
+      let says = this.get('says');
+      let channel = this.get('model.id');
+      this.send('say', says, channel);
+      this.set('says', null);
+    },
+
     toggleChat: function () {
       this.toggleProperty('showChat');
     },

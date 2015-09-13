@@ -1,10 +1,8 @@
-<span style="inline-block;">
-  {{#each formattedCharacters as |character|}}
-    {{#if character.isNumber}}
-      <span>{{character.value}}</span>
-    {{else}}
-      <span data-magic-icon={{character.symbol}}
-        title={{character.description}}></span>
-    {{/if}}
-  {{/each}}
-</span>
+{{#each formattedCharacters as |character|}}
+  {{#if character.isNumber}}
+    <span>{{character.value}}</span>
+  {{else}}
+    <span data-magic-icon={{character.symbol}}
+      title={{character.description}}></span>
+  {{/if}}
+{{/each}}

@@ -40,6 +40,8 @@ function getSymbol (letter) {
 }
 
 export default Ember.Component.extend({
+  tagName: 'span',
+
   formattedCharacters: function () {
     var mana = this.get('mana'),
         charObjects = [];

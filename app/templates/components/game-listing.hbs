@@ -1,34 +1,37 @@
-{{#paper-item}}
+{{#paper-item class="md-3-line" action="goToGame" param=game}}
 
-  {{#paper-tile-left classNames="game-listing-matchup"}}
-    {{game-listing-player player=game.playerOne}}
-    <span>vs.</span>
-    {{game-listing-player player=game.playerTwo}}
+  {{!-- Player One --}}
+  <img src={{game.playerOne.user.avatarUrl}} class="avatar avatar-ember-paper md-avatar">
+  <div class="md-list-item-text">
+    <h3>{{game.playerOne.user.username}}</h3>
+    {{#link-to 'deck.index' game.playerOne.deckId tagName="h4" class="link"}}{{game.playerOne.deckName}}{{/link-to}}
+    <p>{{game.watchers.length}} watching</p>
+  </div>
 
-    <span>{{game.watchers.length}} watching</span>
-  {{/paper-tile-left}}
+  <div class="md-list-item-text">
+    <h3 class="ta-c">vs.</h3>
+  </div>
 
-  {{#paper-tile-content}}
-    {{#link-to 'game' game.id}}
-      {{paper-button classNames="md-primary game-listing-join" label="Join Game"}}
-    {{/link-to}}
+  {{!-- Player Two --}}
+  <img src={{game.playerTwo.user.avatarUrl}} class="avatar avatar-ember-paper md-avatar">
+  <div class="md-list-item-text">
+    <h3>{{game.playerTwo.user.username}}</h3>
+    {{#link-to 'deck.index' game.playerTwo.deckId tagName="h4" class="link"}}{{game.playerTwo.deckName}}{{/link-to}}
+  </div>
 
-    {{#if canDeleteGame}}
-      <ul class="pull-right paper-tile-content-right">
-        <li>
-          {{#x-paper-button-delayed
-            action="deleteGame"
-            params=game
-            bubbles=false
-            as |showTimer|}}
-            {{paper-icon icon="delete" size="lg" title="Delete"}}
-            {{#if showTimer}}
-              {{donut-timer}}
-            {{/if}}
-          {{/x-paper-button-delayed}}
-        </li>
-      </ul>
-    {{/if}}
-  {{/paper-tile-content}}
+  {{#if canDeleteGame}}
+    {{#x-paper-button-delayed
+      action="deleteGame"
+      class="md-secondary-container"
+      params=game
+      bubbles=false
+      icon-button=true
+      as |showTimer|}}
+      {{paper-icon icon="delete" size="lg" title="Delete"}}
+      {{#if showTimer}}
+        {{donut-timer}}
+      {{/if}}
+    {{/x-paper-button-delayed}}
+  {{/if}}
 
 {{/paper-item}}

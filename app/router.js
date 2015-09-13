@@ -21,10 +21,12 @@ Router.map(function() {
   });
 
   this.resource('games', function () {
-    this.resource('game', {path: '/:game_id'});
     this.route('list');
     this.route('new');
   });
+
+  this.resource('game', {path: 'games/:game_id'});
+
   this.route('four-oh-four', {path: '*path'});
 });
 

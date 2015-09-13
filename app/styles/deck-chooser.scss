@@ -16,7 +16,7 @@
 }
 
 .deck-option-selected {
-  box-shadow: 0 0 20px map-get($primary-color-palette, '900');
+  box-shadow: 0 0 20px map-get($primary, '900');
 }
 
 .deck-option-text {

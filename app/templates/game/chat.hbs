@@ -9,14 +9,12 @@
         title="title"
         classNames="chat-pane compact"
       }}
-      {{x-paper-text
-        label="Say something!"
-        value=says action="say"
-        channel=model.id
-        controllerName="game"
-        class="chat-input"
-        disabled=session.doesNotHaveWriteAccess
-      }}
+      <form {{action "submitChat" on="submit"}}>
+        {{paper-input
+          label="Say something!"
+          value=says
+          disabled=session.doesNotHaveWriteAccess}}
+      </form>
     </div>
   </div>
 </div>

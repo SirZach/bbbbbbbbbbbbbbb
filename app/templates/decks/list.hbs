@@ -11,21 +11,36 @@
       {{/paper-card}}
     </div>
     <div class="col-sm-12 col-lg-10">
-      {{#paper-content classNames="md-whiteframe-z1"}}
+      {{#paper-content classNames="md-whiteframe-z1 list-demo list-controls-demo"}}
         {{#paper-list}}
-          {{#each model as |deck|}}
-            {{deck-listing
-              class="cursor-pointer"
+          {{#each model as |deck index|}}
+            {{#is-last content=model index=index as |notLast|}}
+            {{!-- {{deck-listing
               deck=deck
               currentUser=session.user
               goToDeck="goToDeck"
               deleteDeck="deleteDeck"
-              goToDeckBuilder="goToDeckBuilder"}}
-            {{paper-divider}}
+              goToDeckBuilder="goToDeckBuilder"}} --}}
+              {{#paper-item class="md-3-line"}}
+                <div class="deck-image-frame"
+                     style="background-image: url('{{deck.defaultImageUrl}}')">
+                </div>
+                <div class="md-list-item-text">
+
+                  {{#link-to 'deck.index' deck tagName="h3" class="link"}}{{deck.name}}{{/link-to}}
+                  <h4>{{deck.owner.username}}</h4>
+                  <p>{{deck.description}}</p>
+                </div>
+
+              {{/paper-item}}
+
+              {{#if notLast}}
+                {{paper-divider}}
+              {{/if}}
+            {{/is-last}}
           {{/each}}
         {{/paper-list}}
       {{/paper-content}}
-
       {{#if model.loadsLazily}}
         {{az-infinity-loader
           classNames="infinity-loader"

@@ -8,8 +8,6 @@ moduleForComponent('user-status', {
   // specify the other units that are required for this test
   needs: [
     'component:paper-item',
-    'component:paper-tile-left',
-    'component:paper-tile-content',
     'component:paper-divider',
     'helper:from-now'
   ]

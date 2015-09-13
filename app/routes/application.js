@@ -39,12 +39,10 @@ export default Ember.Route.extend({
      * @param channel - what chat room should this message go in?
      * This action handles all chat rooms
      */
-    say: function (says, channel, controller) {
+    say: function (says, channel) {
       if (says.trim().length === 0) {
         return;
       }
-
-      this.controllerFor(controller).set('says');
 
       var name = this.get('session.user.username');
       var avatarUrl = this.get('session.user.avatarUrl');
@@ -57,6 +55,10 @@ export default Ember.Route.extend({
         channel: channel
       });
       chat.save();
+    },
+
+    goToGame(game) {
+      this.transitionTo('game', game);
     }
   }
 });

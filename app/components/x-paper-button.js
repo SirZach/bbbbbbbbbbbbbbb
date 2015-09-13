@@ -4,13 +4,13 @@ import PaperButton from 'ember-paper/components/paper-button';
 export default PaperButton.extend({
   attributeBindings: ['target', 'action', 'title'],
 
-  click: function () {
+  click() {
     //stolen from ember-paper
     var target = this.get('target');
     var parameters = target ? [this.get('action')] : ['action'];
     var params = this.get('params');
     var paramsAsArray = Ember.isArray(params) ? params : [params];
-    
+
     parameters = parameters.concat(paramsAsArray);
 
     if (target) {
