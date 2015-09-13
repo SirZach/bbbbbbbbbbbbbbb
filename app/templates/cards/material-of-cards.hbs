@@ -2,7 +2,7 @@
   {{#paper-list}}
     {{#each filteredCards as |card|}}
       {{#paper-item class="cursor-pointer has-hidden-hover md-3-line" as |isExpanded|}}
-        {{x-card-image src=card.imageUrl class="md-avatar"}}
+        {{x-card-image src=card.imageUrl class="face"}}
 
         <div class="md-list-item-text">
           <h3>{{card.name}}</h3>
