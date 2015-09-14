@@ -54,7 +54,7 @@ var Deck = DS.Model.extend({
   comments: DS.attr('string'),
 
   /** @property {Array[CardGroup]} - individual card multiples */
-  cardGroups: DS.hasMany('cardGroup', {embedded: true}),
+  cardGroups: DS.hasMany('cardGroup', {embedded: true, async: true}),
 
   sortedCardGroups: Ember.computed.sort('cardGroups', function (a, b) {
     return a.get('card.name') < b.get('card.name') ? -1 : 1;
