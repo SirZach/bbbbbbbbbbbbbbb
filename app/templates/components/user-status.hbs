@@ -1,8 +1,6 @@
-{{#paper-item}}
-  {{#paper-tile-left}}
-    <img src={{presence.user.avatarUrl}} class="user-avatar">
-  {{/paper-tile-left}}
-  {{#paper-tile-content}}
+{{#paper-item classNames="md-3-line"}}
+  <img src={{presence.user.avatarUrl}} class="user-avatar md-avatar">
+  <div class="md-list-item-text">
     <h3>{{presence.user.username}}</h3>
     <h4>
       {{lastSeenLabel}}
@@ -10,6 +8,6 @@
         {{from-now presence.lastSeen includeSuffix=isOffline}}
       {{/unless}}
     </h4>
-  {{/paper-tile-content}}
+  </div>
 {{/paper-item}}
 {{paper-divider}}

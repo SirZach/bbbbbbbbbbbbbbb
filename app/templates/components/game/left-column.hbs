@@ -7,14 +7,15 @@
         <strong>{{player.user.username}} - {{zone}}</strong>
       </div>
 
-      {{#paper-button class="close-column" action="close"}}
+      {{#paper-button class="close-column" action="close" icon-button=true}}
         {{paper-icon icon="chevron-left"}}
       {{/paper-button}}
 
-      {{#each gameCards as |card|}}
+      {{#each sortedCards as |card|}}
         {{game-card
           cards=cards
           gameCard=card
+          draggable=notReadOnly
           dragStarted="dragStarted"
           dragEnded="dragEnded"}}
       {{/each}}

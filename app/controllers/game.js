@@ -27,8 +27,11 @@ export default Ember.Controller.extend({
     var participant = this.get('participant');
     var playerOne = this.get('playerOne');
 
-    return participant.get('user.id') === playerOne.get('user.id');
+    return participant && participant.get('user.id') === playerOne.get('user.id');
   }),
+
+  /** @property {Boolean} don't let anyone not player one modify the game */
+  notPlayerOne: Ember.computed.not('amIPlayerOne'),
 
   /** @property {GameParticipant} The participant representing me. */
   participant: function () {
@@ -90,6 +93,13 @@ export default Ember.Controller.extend({
 
   /** @property {Array<DS.Card>} array of DS.Cards composing the two decks */
   cardsInDecks: [],
+
+  /** @observer Signals the route to load card models for this game. */
+  playersAreReady: Ember.observer('playerOne.isReady', 'playerTwo.isReady',
+    function () {
+      this.send('playersReady');
+    }
+  ),
 
   /** @property {String} The title showing on the top half of the board. */
   topBoardTitle: function () {
@@ -243,6 +253,17 @@ export default Ember.Controller.extend({
     }
   }),
 
+  /** @function get the game controller in a good state for another game */
+  resetState: function () {
+    this.setProperties({
+      showChat: true,
+      showLeftColumn: false,
+      leftColumnPlayer: null,
+      leftColumnZone: null,
+      cardIsDragging: false
+    });
+  },
+
   actions: {
     /**
      * Respond to a deck selection event.
@@ -250,22 +271,36 @@ export default Ember.Controller.extend({
      * @param {Deck} deck   The selected deck model.
      */
     selectDeck: function (deck) {
-      var participant = this.get('participant');
-      participant.setProperties({
-        deckName: deck.get('name'),
-        deckId: deck.get('id')
-      });
-      this.get('model').save();
+      if (!this.get('readOnly')) {
+        var participant = this.get('participant');
+        participant.setProperties({
+          deckName: deck.get('name'),
+          deckId: deck.get('id')
+        });
+        this.send('updateGame');
+      }
     },
 
     /**
      * Set the participant in the ready state
      */
     iAmReady: function () {
-      var participant = this.get('participant');
-      participant.set('isReady', true);
-      this.initializeGameCards();
-      this.get('model').save();
+      if (this.get('amIPlayerOne')) {
+        var participant = this.get('participant');
+        participant.set('isReady', true);
+        this.initializeGameCards();
+        this.send('updateGame');
+      }
+    },
+
+    /**
+     * Respond to chat submission.
+     */
+    submitChat() {
+      let says = this.get('says');
+      let channel = this.get('model.id');
+      this.send('say', says, channel);
+      this.set('says', null);
     },
 
     toggleChat: function () {
@@ -279,13 +314,20 @@ export default Ember.Controller.extend({
      * @param zone
      */
     openLeftColumn: function (player, cards, zone) {
-      this.setProperties({
-        leftColumnPlayer: player,
-        leftColumnZone: zone,
-        showLeftColumn: true
-      });
+      if (this.get('amIPlayerOne')) {
+        this.setProperties({
+          leftColumnPlayer: player,
+          leftColumnZone: zone,
+          showLeftColumn: true
+        });
+      }
     },
 
+    /**
+     * Draw cards for player one.
+     * Not surrounded with a readOnly check since it's disabled altogether in the template
+     * @param numCards
+     */
     drawCards: function (numCards) {
       var library = this.get('participant.cardsInLibrary').toArray();
       if (library.get('length') > numCards) {
@@ -296,37 +338,82 @@ export default Ember.Controller.extend({
       } else {
         library.setEach('zone', GameCard.HAND);
       }
-      this.get('model').save();
+
+      this.send('updateGame');
     },
 
+    /**
+     * Shuffle the cards in player one's library
+     * Not surrounded with a readOnly check since it's disabled altogether in the template
+     */
     shuffle: function () {
       var library = this.get('participant.cardsInLibrary');
       var count = 0;
 
       shuffle(library);
       library.forEach((gameCard) => gameCard.set('order', count++));
-      this.get('model').save();
+
+      this.notifications.addNotification({
+        message: 'Library cards shuffled',
+        type: 'success',
+        autoClear: true,
+        clearDuration: 1200
+      });
+
+      this.send('updateGame');
     },
 
+    /**
+     * Send all cards from all the game zones back to the library, mainly utilized for a mulligan
+     * Not surrounded with a readOnly check since it's disabled altogether in the template
+     */
     returnAllCards: function () {
-      this.get('participant.gameCards').setEach('zone', GameCard.LIBRARY);
-      this.get('model').save();
+      if (this.get('amIPlayerOne')) {
+        var participantGameCards = this.get('participant.gameCards');
+        participantGameCards.forEach(gameCard => gameCard.setProperties({
+          zone: GameCard.LIBRARY,
+          isTapped: false
+        }));
+
+        this.send('updateGame');
+      }
     },
+
     /**
       * Increment or decrement life
       */
     changeLife: function (delta) {
-      var participant = this.get('participant');
-      var life = participant.get('life');
-      participant.set('life', life += delta);
-      this.get('model').save();
+      if (this.get('amIPlayerOne')) {
+        var participant = this.get('participant');
+        var life = participant.get('life');
+
+        participant.set('life', life += delta);
+        this.send('updateGame');
+      }
     },
 
     droppedCard: function (cardData, player, zone) {
-      var gameCard = player.get('gameCards').findBy('order', cardData.order);
+      if (this.get('amIPlayerOne')) {
+        var gameCard = player.get('gameCards').findBy('id', cardData.id);
 
-      gameCard.set('zone', zone);
-      this.get('model').save();
+        gameCard.setProperties({
+          zone: zone,
+          isTapped: false
+        });
+        this.send('updateGame');
+      }
+    },
+
+    /**
+     * Tap or untap a card.
+     *
+     * @param {GameCard} gameCard
+     */
+    tap: function (gameCard) {
+      if (this.get('amIPlayerOne')) {
+        gameCard.toggleProperty('isTapped');
+        this.send('updateGame');
+      }
     },
 
     /**
@@ -335,7 +422,7 @@ export default Ember.Controller.extend({
     endGame: function () {
       var game = this.get('model');
       game.set('status', 'ended');
-      game.save();
+      this.send('updateGame');
     }
   }
 });

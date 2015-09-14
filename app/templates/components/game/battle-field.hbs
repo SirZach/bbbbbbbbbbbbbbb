@@ -2,9 +2,13 @@
   {{#each topCards as |gameCard|}}
     {{game-card
     cards=cards
+    readOnly=readOnly
     gameCard=gameCard
+    canTap=bottomBattlefield
+    draggable=notReadOnly
     dragStarted="dragStarted"
-    dragEnded="dragEnded"}}
+    dragEnded="dragEnded"
+    tap="tap"}}
   {{/each}}
 </div>
 
@@ -12,8 +16,12 @@
   {{#each bottomCards as |gameCard|}}
     {{game-card
     cards=cards
+    draggable=notReadOnly
+    readOnly=readOnly
     gameCard=gameCard
+    canTap=bottomBattlefield
     dragStarted="dragStarted"
-    dragEnded="dragEnded"}}
+    dragEnded="dragEnded"
+    tap="tap"}}
   {{/each}}
 </div>

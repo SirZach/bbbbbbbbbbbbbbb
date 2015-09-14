@@ -1,6 +1,8 @@
 .deck-chooser {
+  height: calc(100% - 150px);
+  padding-left: 10px;
+  overflow-y: auto;
   list-style: none;
-  padding: 0;
 }
 
 .deck-option {
@@ -14,7 +16,7 @@
 }
 
 .deck-option-selected {
-  box-shadow: 0 0 20px map-get($primary-color-palette, '900');
+  box-shadow: 0 0 20px map-get($primary, '900');
 }
 
 .deck-option-text {

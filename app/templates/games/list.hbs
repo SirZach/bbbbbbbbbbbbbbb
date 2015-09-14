@@ -1,12 +1,17 @@
 {{#if joinableGames.length}}
   {{#paper-content classNames="md-whiteframe-z1"}}
     {{#paper-list}}
-      {{#each joinableGames as |game|}}
-        {{game-listing
-          game=game
-          currentUserId=session.user.id
-          deleteGame="deleteGame"}}
-        {{paper-divider}}
+      {{#each joinableGames as |game index|}}
+        {{#is-last content=joinableGames index=index as |notLast|}}
+          {{game-listing
+            game=game
+            currentUserId=session.user.id
+            deleteGame="deleteGame"
+            goToGame="goToGame"}}
+          {{#if notLast}}
+            {{paper-divider}}
+          {{/if}}
+        {{/is-last}}
       {{/each}}
     {{/paper-list}}
   {{/paper-content}}

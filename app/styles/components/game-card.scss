@@ -1,10 +1,51 @@
-.game-card {
+.game-card-container {
   display: inline-block;
-  margin: 3px;
+  margin: 5px;
   height: 139px;
+  width: 100px;
+}
+
+.game-card {
+  height: 139px;
+  width: 100px;
+  background-color: map-get($color-red, '300');
+  transition: 0.15s ease-in-out;
   box-shadow: 3px 3px 2px 0 map-get($color-grey, '500');
+
   img {
     width: 100px;
     height: 100%;
   }
+
+  ul {
+    padding: 4px;
+    list-style: none;
+    li {
+      padding: 3px;
+    }
+  }
+}
+
+.tapped {
+  transform: rotateZ(90deg);
+}
+
+.magnifying {
+  cursor: none;
+}
+
+.increased-margin {
+  margin: 3px 20px;
+}
+
+.game-card-magnify {
+  box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.85), 0 0 7px 7px rgba(0, 0, 0, 0.25), inset 0 0 40px 2px rgba(0, 0, 0, 0.25);
+  background-repeat: no-repeat;
+  background-size: 250px auto;
+  border-radius: 50%;
+  width: 250px;
+  height: 250px;
+  position: fixed;
+  z-index: 999;
+  pointer-events: none;
 }

@@ -1,4 +1,4 @@
-{{#paper-nav-container open=drawerOpen classNames="ember-app"}}
+{{#paper-nav-container open=drawerOpen classNames=navContainerClassnames}}
 
   {{#paper-sidenav classNames="md-sidenav-left md-whiteframe-z2" flex-layout="column" flex=true}}
 
@@ -56,21 +56,7 @@
   {{/paper-sidenav}}
 
   {{#paper-content flex-layout="column" flex=true}}
-    {{#paper-toolbar classNames="mb-10"}}
-      <div class="md-toolbar-tools">
-        <h2>
-          {{#paper-sidenav-toggle}}
-            {{paper-icon icon="menu"}}
-          {{/paper-sidenav-toggle}}
-          {{outlet 'nav-toolbar'}}
-        </h2>
-      </div>
-    {{/paper-toolbar}}
-    {{#paper-content id="infinity-window"}}
-      <div class="container-fluid">
-        {{outlet}}
-      </div>
-    {{/paper-content}}
+    {{outlet}}
   {{/paper-content}}
 
 {{/paper-nav-container}}

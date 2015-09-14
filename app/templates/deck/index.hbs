@@ -1,16 +1,15 @@
 {{#paper-item classNames="deck-header bg-transparent"}}
-  {{#paper-tile-left}}
-    <div class="game-listing-deck-image"
-         style="background-image: url('{{model.defaultImageUrl}}')">
-    </div>
-  {{/paper-tile-left}}
-  {{#paper-tile-content}}
+  <div class="deck-image-frame"
+       style="background-image: url('{{model.defaultImageUrl}}')">
+  </div>
+
+  <div class="md-list-item-text">
     <h2>{{model.name}}</h2>
     <div>
       <img class="avatar avatar-medium" src={{model.owner.avatarUrl}} />
       {{model.owner.username}}
     </div>
-  {{/paper-tile-content}}
+  </div>
 {{/paper-item}}
 
 <div class="row">

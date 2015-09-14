@@ -1,0 +1,12 @@
+.form-horizontal {
+  &.form-horizontal-condensed {
+    .form-group {
+      margin-bottom: 0;
+      padding: 0 16px; //ember-paper padding
+    }
+  }
+  &.form-horizontal-centered {
+    width: 200px;
+    margin: 0 auto;
+  }
+}

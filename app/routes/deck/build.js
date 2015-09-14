@@ -12,15 +12,6 @@ export default Ember.Route.extend(InfinityRoute, {
     });
   },
 
-  renderTemplate: function () {
-    this._super.apply(this, arguments);
-
-    this.render('nav-toolbars/deck-build', {
-      into: 'application',
-      outlet: 'nav-toolbar'
-    });
-  },
-
   actions: {
     willTransition: function (transition) {
       var deck = this.get('controller.model');

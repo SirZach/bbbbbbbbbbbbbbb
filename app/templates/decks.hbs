@@ -1,0 +1,19 @@
+{{#paper-toolbar classNames="mb-10"}}
+  <h2 class="md-toolbar-tools">
+    {{#paper-sidenav-toggle}}
+      {{paper-icon icon="menu"}}
+    {{/paper-sidenav-toggle}}
+
+    <h3 class="toolbar-title">{{pageTitle}}</h3>
+
+    {{paper-button classNames="sm-display" action="toggleFiltersActive" label="Toggle Filters"}}
+    {{paper-button action="createNewDeck" label="Create"}}
+    {{paper-button action="importDeck" label="Import"}}
+
+  </h2>
+{{/paper-toolbar}}
+{{#paper-content id="infinity-window" classNames="md-padding"}}
+  <div class="container-fluid">
+    {{outlet}}
+  </div>
+{{/paper-content}}

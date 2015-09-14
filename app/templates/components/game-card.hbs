@@ -1,1 +1,11 @@
-<img title={{card.id}} src="{{card.imageUrl}}"/>
+<div class="game-card {{if isTapped 'tapped'}} {{if isMagnifying 'magnifying'}}">
+  {{#if gameCard.isToken}}
+    <ul>
+      <li>{{gameCard.tokenStats.name}}</li>
+      <li>{{gameCard.tokenStats.power}}/{{gameCard.tokenStats.toughness}}</li>
+      <li>{{gameCard.tokenStats.description}}</li>
+    </ul>
+  {{else}}
+    <img title={{card.id}} src="{{card.imageUrl}}"/>
+  {{/if}}
+</div>

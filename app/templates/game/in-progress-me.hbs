@@ -7,6 +7,7 @@
       cardIsDragging=cardIsDragging
       droppedOn="droppedCard"
       dragEnded="dragEnded"
+      readOnly=notPlayerOne
       player=playerOne}}
 
     {{game-zone
@@ -16,6 +17,7 @@
       cardIsDragging=cardIsDragging
       droppedOn="droppedCard"
       dragEnded="dragEnded"
+      readOnly=notPlayerOne
       player=playerOne}}
 
     {{#game-zone
@@ -25,14 +27,15 @@
       cardIsDragging=cardIsDragging
       droppedOn="droppedCard"
       dragEnded="dragEnded"
+      readOnly=notPlayerOne
       player=playerOne}}
       {{#if amIPlayerOne}}
         {{#context-menu as |menu|}}
           <ul>
-            <li {{action 'drawCards' 7}}>Draw 7</li>
             <li {{action 'drawCards' 1}}>Draw Card</li>
             <li {{action 'openLeftColumn' playerOne playerOne.cardsInLibrary 'Library'}}>Search</li>
             <li {{action 'shuffle'}}>Shuffle</li>
+            <li {{action 'drawCards' 7}}>Draw 7</li>
             <li {{action 'returnAllCards'}}>Return All Cards</li>
           </ul>
         {{/context-menu}}
@@ -47,6 +50,7 @@
       droppedOn="droppedCard"
       player=playerOne
       dragEnded="dragEnded"
+      readOnly=notPlayerOne
       gameCards=playerOne.cardsInHand}}
   {{/game-zones}}
 
@@ -55,11 +59,12 @@
     droppedOn="droppedCard"
     dragEnded="dragEnded"
     dragStarted="dragStarted"
+    tap="tap"
     cardIsDragging=cardIsDragging
     player=playerOne
     cards=cardsInDecks
-    canDrop=true
     bottomBattlefield=true
+    readOnly=notPlayerOne
   }}
 
 {{/game-board-container}}

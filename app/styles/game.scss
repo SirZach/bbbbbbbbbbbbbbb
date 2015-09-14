@@ -19,12 +19,6 @@
   }
 }
 
-@media screen and (min-width: $locked-breakpoint) {
-  .game-board {
-    left: 254px;
-  }
-}
-
 .game-board-top,
 .game-board-bottom {
   height: 50%;
@@ -61,8 +55,7 @@
       margin: 0;
       padding: 8px;
       .column-header {
-        height: 50px;
-        padding: 10px 0;
+        padding: 10px 48px 10px 0;
         line-height: 30px;
         text-align: center;
         font-size: 14px;
@@ -88,9 +81,14 @@ game-board-container {
       border-right: 1px solid $grey-divider;
       border-bottom: 1px solid $grey-divider;
       height: 25%;
-      padding: 8px;
+      padding: 4px;
       display: block;
       position: relative;
+      &.read-only {
+        background-color: inherit!important;
+        box-shadow: none!important;
+        cursor: default!important;
+      }
       &.show-drop {
         background-color: map-get($color-amber, '100');
         &.is-dragged-over {

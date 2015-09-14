@@ -9,8 +9,7 @@ moduleForComponent('failed-imports', {
     'component:paper-button',
     'component:paper-content',
     'component:paper-list',
-    'component:paper-item',
-    'component:paper-tile-content'
+    'component:paper-item'
   ]
 });
 

@@ -4,7 +4,14 @@ md-item-content {
     height: auto;
   }
 }
-md-card-content {background: #fff;}
+md-list-item {
+  background: #fff;
+  .md-secondary-container {
+    &.right-48 {
+      right: 48px;
+    }
+  }
+}
 
 md-input-group {
   &.width-100 {
@@ -22,4 +29,31 @@ md-input-group {
   h2 {
     width: 100%;
   }
+}
+
+md-card {
+  md-card-content {
+    background-color: white;
+  }
+}
+
+md-toolbar {
+  &.md-default-theme {
+    color: rgba(255,255,255,.87);
+    .md-button, md-icon {
+      color: rgba(255,255,255,.87);
+    }
+  }
+}
+
+.md-button {
+  &.md-default-theme {
+    &.md-primary.md-raised {
+      color: rgba(255,255,255,.87);
+    }
+  }
+}
+
+md-list {
+  background-color: white;
 }

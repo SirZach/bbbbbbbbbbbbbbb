@@ -5,7 +5,8 @@
     "-Promise",
     "moment",
     "Firebase",
-    "md5"
+    "md5",
+    "uuid"
   ],
   "browser": true,
   "boss": true,

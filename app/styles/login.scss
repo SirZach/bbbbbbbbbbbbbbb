@@ -5,7 +5,7 @@
 .login-error,
 .signup-error {
   margin-top: 20px;
-  color: map-get($primary-color-palette, '900');
+  color: map-get($primary, '900');
 }
 
 .btn-social {

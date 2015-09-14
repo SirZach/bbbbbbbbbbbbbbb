@@ -1,8 +1,9 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import $ from 'jquery';
+import ENV from 'webatrice/config/environment';
 
-var FIREBASE_URL = 'https://dazzling-fire-7827.firebaseio.com';
+var FIREBASE_URL = ENV.firebase;
 var IDLE_MS = 60000;
 
 var session = Ember.Object.extend({

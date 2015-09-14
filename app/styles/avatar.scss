@@ -20,4 +20,11 @@
     margin-bottom: 0px;
     margin-left: 1.1em;
   }
+
+  &.avatar-ember-paper {
+    width: 40px;
+    height: 40px;
+    margin: 8px 8px 16px 0;
+    box-sizing: content-box;
+  }
 }

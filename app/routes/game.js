@@ -1,10 +1,32 @@
 import Ember from 'ember';
+import GameCard from '../models/game-card';
 
 export default Ember.Route.extend({
+  /**
+   * Retrieves card models that are in the given game.
+   *
+   * @return {Promise} Resolves with Array<Card>
+   */
+  retrieveDSCards (game) {
+    var controller = this.controllerFor('game');
+    var store = this.store;
+    //load all the real card models into the store for future use
+    var players = game.get('players');
+    var promises = players.reduce((prev, p) => {
+      var gameCards = Ember.get(p, 'gameCards') || [];
+      prev = prev.concat(gameCards.filter((card) => !card.isToken).map((card) => store.find('card', card.cardId)));
+      return prev;
+    }, []);
+
+    return Ember.RSVP.all(promises).then(cards => controller.set('cardsInDecks', cards.uniq()));
+  },
+
   afterModel: function (model) {
+    var store = this.store;
+
     // If you are not logged in, allow anonymous access to the game.
     if (!this.get('session.isAuthenticated')) {
-      return;
+      return this.retrieveDSCards(model);
     }
 
     // By default, add yourself as a watcher unless you're already in the
@@ -12,11 +34,10 @@ export default Ember.Route.extend({
     //
     var gameParticipants = model.get('gameParticipants');
     var user = this.get('session.user');
-    var controller = this.controllerFor('game');
-    var store = this.store;
     var gameParticipant;
     // Fetch all users to see if we are one of them.
     var promises = [user].concat(gameParticipants.mapBy('user'));
+
     return Ember.RSVP.all(promises).then((users) => {
       var me = users.shift();
       var myId = me.get('id');
@@ -50,36 +71,13 @@ export default Ember.Route.extend({
       // Save the model with the new participant state.
       return model.save();
     })
-    .then((game) => {
-      //load all the real card models into the store for future use
-      var players = game.get('players');
-      var promises = players.reduce((prev, p) => {
-        var gameCards = Ember.get(p, 'gameCards') || [];
-        prev = prev.concat(gameCards.map((card) => store.find('card', card.cardId)));
-        return prev;
-      }, []);
-
-      return Ember.RSVP.all(promises);
-    })
-    .then((cards) => {
-      //doing this to prevent putting the store into components to get a hold
-      //of real card models
-      controller.set('cardsInDecks', cards.uniq());
-    });
-  },
-
-  renderTemplate: function () {
-    this._super.apply(this, arguments);
-
-    this.render('nav-toolbars/game', {
-      into: 'application',
-      outlet: 'nav-toolbar'
-    });
+    .then(model => this.retrieveDSCards(model));
   },
 
   setupController: function (controller, game) {
     this._super.apply(this, arguments);
 
+    //TODO: move this to the route, duh
     var store = this.store;
     store.find('chat', {
       orderBy: 'channel',
@@ -91,6 +89,8 @@ export default Ember.Route.extend({
 
       controller.set('chats', gameChats);
     });
+
+    controller.resetState();
   },
 
   gameParticipantRef: function () {
@@ -100,12 +100,49 @@ export default Ember.Route.extend({
   }.property('gameParticipant'),
 
   actions: {
+    /**
+     * Load the card models.
+     */
+    playersReady() {
+      this.retrieveDSCards(this.currentModel);
+    },
+
+    showToken: function (player) {
+      var gameCards = player.get('gameCards');
+      var createTokenController = this.controllerFor('game/create-token');
+      var gameCard = GameCard.create({
+        order: gameCards.length + 1,
+        zone: GameCard.BATTLEFIELD,
+        isToken: true
+      });
+
+      createTokenController.setProperties({
+        player: player,
+        game: this.modelFor('game')
+      });
+      this.send('openModal', 'game/create-token', gameCard);
+    },
+
     dragStarted: function () {
       this.set('controller.cardIsDragging', true);
     },
 
     dragEnded: function () {
       this.set('controller.cardIsDragging', false);
+    },
+
+    /**
+     * Use this action for all game saves as a mediocre approach to handling security
+     */
+    updateGame: function () {
+      var controller = this.get('controller');
+      var game = controller.get('model');
+
+      if (controller.get('amIPlayerOne')) {
+        game.save();
+      } else {
+        game.rollback();
+      }
     },
 
     /**
@@ -122,6 +159,8 @@ export default Ember.Route.extend({
     },
 
     willTransition: function () {
+      this.get('controller').resetState();
+
       // If you are not logged in, there is no state to clean up.
       if (!this.get('session.isAuthenticated')) {
         return;

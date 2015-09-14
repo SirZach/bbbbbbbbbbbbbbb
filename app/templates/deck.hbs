@@ -1,0 +1,22 @@
+{{#paper-toolbar classNames="mb-10"}}
+  <h2 class="md-toolbar-tools">
+    {{#paper-sidenav-toggle}}
+      {{paper-icon icon="menu"}}
+    {{/paper-sidenav-toggle}}
+
+    {{#if canEdit}}
+      {{#link-to "deck.build" model}}
+        {{#paper-button}}Edit{{/paper-button}}
+      {{/link-to}}
+    {{/if}}
+
+    {{#x-paper-button action="openModal" params=exportParams}}Export{{/x-paper-button}}
+
+  </h2>
+{{/paper-toolbar}}
+
+{{#paper-content id="infinity-window" classNames="md-padding"}}
+  <div class="container-fluid">
+    {{outlet}}
+  </div>
+{{/paper-content}}
