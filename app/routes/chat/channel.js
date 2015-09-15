@@ -23,8 +23,7 @@ export default Ember.Route.extend({
   setupController: function (controller, model) {
     controller.set('channel', this.get('channel'));
     controller.set('presences');
-    var presences = this.store.filter('presence', {},
-      (presence) => !!presence._data.user);
+    var presences = this.store.filter('presence', {}, presence => !!presence.get('user'));
     controller.set('presences', presences);
     return this._super(controller, model);
   }
