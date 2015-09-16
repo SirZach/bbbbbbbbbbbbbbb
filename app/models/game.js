@@ -6,7 +6,7 @@ export default DS.Model.extend({
   createdDate: DS.attr('date'),
 
   /** @property {Array<GameParticipant>} Embedded participant records. */
-  gameParticipants: DS.hasMany('gameParticipant', {embedded: true}),
+  gameParticipants: DS.hasMany('gameParticipant'),
 
   /** @property {String} One of 'preparing', 'in-play', 'ended'. */
   status: DS.attr('string'),
