@@ -10,7 +10,7 @@ var session = Ember.Object.extend({
   ref: new Firebase(FIREBASE_URL),
 
   store: function () {
-    return this.container.lookup('store:main');
+    return this.container.lookup('service:store');
   }.property(),
 
   log: function () {

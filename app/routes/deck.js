@@ -7,7 +7,7 @@ export default Ember.Route.extend({
     }
 
     var cardsController = this.controllerFor('cards');
-    return this.store.find('card').then(function (cards) {
+    return this.store.findAll('card').then(function (cards) {
       cardsController.set('model', cards);
       // A hack to not show the spinner. Not sure it even makes sense to show
       // this subset of cards on load.

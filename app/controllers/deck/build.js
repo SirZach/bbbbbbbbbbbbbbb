@@ -21,7 +21,7 @@ export default Ember.Controller.extend({
 
   canShowDeckTable: function () {
     return this.get('model.cardGroups.length');
-  }.property('model.cardGroups.@each'),
+  }.property('model.cardGroups.[]'),
 
   actions: {
     toggleFiltersActive: function () {

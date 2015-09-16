@@ -18,5 +18,5 @@ export default DS.Model.extend({
     /** @property {Boolean} Does this user have a deck that is game-ready? */
     hasGameReadyDecks: function () {
       return this.get('gameReadyDecks.length') > 0;
-    }.property('gameReadyDecks.@each')
+    }.property('gameReadyDecks.[]')
 });
