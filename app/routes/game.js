@@ -94,7 +94,8 @@ export default Ember.Route.extend({
   },
 
   gameParticipantRef: function () {
-    return this.store.refFor('game', this.modelFor('game'))
+    return this.modelFor('game')
+      .ref()
       .child('gameParticipants')
       .child(this.get('gameParticipant.id'));
   }.property('gameParticipant'),
