@@ -28,12 +28,12 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.contentSecurityPolicy = {
-      'img-src': "'self' http://localhost:3000 https://avatars.githubusercontent.com https://www.gravatar.com http://avatars.io http://pbs.twimg.com",
+      'img-src': "*",
       'font-src': "https://fonts.gstatic.com http://localhost:4200 http://www.fontsaddict.com",
       'style-src': "'self' 'unsafe-inline'",
       'connect-src': "'self' http://localhost:3000 https://*.firebaseio.com wss://*.firebaseio.com https://api.app.netuitive.com",
       'report-uri': "'none'",
-      'script-src': "'self' 'unsafe-eval' localhost:35729 0.0.0.0:35729 https://assets.app.netuitive.com"
+      'script-src': "* 'nonce-justallowit'"
     };
     ENV.firebase = 'https://dim-glow-0245.firebaseio.com/';
   }
