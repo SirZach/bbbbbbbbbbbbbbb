@@ -18,11 +18,11 @@ export default Ember.Component.extend({
 
   canShowMainDeck: function () {
     return !this.get('doNotShowTypes').contains('mainDeck');
-  }.property('doNotShowTypes.@each'),
+  }.property('doNotShowTypes.[]'),
 
   canShowSideDeck: function () {
     return !this.get('doNotShowTypes').contains('sideDeck');
-  }.property('doNotShowTypes.@each'),
+  }.property('doNotShowTypes.[]'),
 
   /** @property {Boolean} Render spoiler on left side? */
   isSpoilerOpposite: function () {
@@ -53,12 +53,14 @@ export default Ember.Component.extend({
       offsetY -= (160 - $target.height() / 2);
       offsetY = Math.max(minY, offsetY);
       offsetY = Math.min(maxY, offsetY);
-      var spoilerCardStyle = `top: ${offsetY}px;`;
+      var spoilerCardStyle =
+        new Ember.Handlebars.SafeString(`top: ${offsetY}px;`);
 
       // Calculate where to put the arrow such that it points at the midpoint of
       // the row hovered. 6 is half the height of the arrow.
       var rowMidpoint = $target.position().top + $target.height() / 2 - 6;
-      var spoilerCardPointerStyle = `top: ${rowMidpoint}px;`;
+      var spoilerCardPointerStyle =
+        new Ember.Handlebars.SafeString(`top: ${rowMidpoint}px;`);
       this.set('spoilerCardStyle', spoilerCardStyle);
       this.set('spoilerCardPointerStyle', spoilerCardPointerStyle);
       this.set('spoilerCard', card);

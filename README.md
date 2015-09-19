@@ -1,8 +1,7 @@
 # Webatrice
 
 This README outlines the details of collaborating on this Ember application.
-
-Webatrice is a web application aspiring to be part of the desktop application called Cockatrice. To read more about Cockatrice, go to https://github.com/Cockatrice/Cockatrice.
+A short introduction of this app could easily go here.
 
 ## Prerequisites
 
@@ -13,7 +12,6 @@ You will need the following things properly installed on your computer.
 * [Bower](http://bower.io/)
 * [Ember CLI](http://www.ember-cli.com/)
 * [PhantomJS](http://phantomjs.org/)
-* [Node.js](http://nodejs.org/) (with NPM) and [Bower](http://bower.io/)
 
 ## Installation
 
@@ -37,8 +35,6 @@ Make use of the many generators for code, try `ember help generate` for more det
 * `ember test --server`
 
 ### Building
-
-[![Build Status](https://travis-ci.org/thomasjmwb/bbbbbbbbbbbbbbb.svg?branch=master)](https://travis-ci.org/thomasjmwb/bbbbbbbbbbbbbbb)
 
 * `ember build` (development)
 * `ember build --environment production` (production)

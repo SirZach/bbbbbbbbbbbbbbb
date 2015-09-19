@@ -43,7 +43,7 @@ export default Ember.Route.extend({
       var myId = me.get('id');
       var userIds = users.mapBy('id');
       if (!userIds.contains(user.get('id'))) {
-        gameParticipant = store.createRecord('gameParticipant');
+        gameParticipant = store.createRecord('game-participant');
         gameParticipant.setProperties({
           user: user,
           life: 20
@@ -94,7 +94,8 @@ export default Ember.Route.extend({
   },
 
   gameParticipantRef: function () {
-    return this.store.refFor('game', this.modelFor('game'))
+    return this.modelFor('game')
+      .ref()
       .child('gameParticipants')
       .child(this.get('gameParticipant.id'));
   }.property('gameParticipant'),

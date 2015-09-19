@@ -54,7 +54,7 @@ var Deck = DS.Model.extend({
   comments: DS.attr('string'),
 
   /** @property {Array[CardGroup]} - individual card multiples */
-  cardGroups: DS.hasMany('cardGroup', {embedded: true}),
+  cardGroups: DS.hasMany('cardGroup', {async: false}),
 
   sortedCardGroups: Ember.computed.sort('cardGroups', function (a, b) {
     return a.get('card.name') < b.get('card.name') ? -1 : 1;
@@ -202,7 +202,7 @@ var Deck = DS.Model.extend({
   addCard: function (card, board, count) {
     var cardGroup = this.getCardGroup(card.get('name'), board);
     if (!cardGroup) {
-      cardGroup = this.store.createRecord('cardGroup', {
+      cardGroup = this.store.createRecord('card-group', {
         board: board,
         count: 0,
         card: card
@@ -279,7 +279,7 @@ var Deck = DS.Model.extend({
     var mainCardGroups = this.get('mainCardGroups');
     var sideCardGroups = this.get('sideCardGroups');
     return mainCardGroups.get('length') + sideCardGroups.get('length');
-  }.property('cardGroups.@each'),
+  }.property('cardGroups.[]'),
 
   /** @property {Boolean} - is this deck game-ready? */
   isGameReady: Ember.computed.gt('mainCount', 0),

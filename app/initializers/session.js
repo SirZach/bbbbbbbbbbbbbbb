@@ -10,7 +10,7 @@ var session = Ember.Object.extend({
   ref: new Firebase(FIREBASE_URL),
 
   store: function () {
-    return this.container.lookup('store:main');
+    return this.container.lookup('service:store');
   }.property(),
 
   log: function () {
@@ -164,7 +164,7 @@ var session = Ember.Object.extend({
       amOnline.on('value', function (snapshot) {
         Ember.run(() => {
           if (snapshot.val()) {
-            var ref = store.refFor('presence', presence);
+            var ref = presence.ref();
             ref.child('state')
               .onDisconnect()
               .set('offline');

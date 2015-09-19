@@ -12,7 +12,7 @@ export default Ember.Component.extend({
         doNotShowTypes = this.get('doNotShowTypes');
 
     return !doNotShowTypes.contains(superType);
-  }.property('doNotShowTypes.@each', 'family'),
+  }.property('doNotShowTypes.[]', 'family'),
 
   actions: {
     showCard: function (card) {

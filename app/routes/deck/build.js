@@ -49,7 +49,7 @@ export default Ember.Route.extend(InfinityRoute, {
       //
       var infinityModel = this.infinityModel('card', query);
       infinityModel.then((cards) => {
-        this.get(modelPath).pushObjects(cards.get('content'));
+        this.get(modelPath).pushObjects(cards.toArray());
       });
     }
   }

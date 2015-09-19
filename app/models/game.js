@@ -6,7 +6,7 @@ export default DS.Model.extend({
   createdDate: DS.attr('date'),
 
   /** @property {Array<GameParticipant>} Embedded participant records. */
-  gameParticipants: DS.hasMany('gameParticipant', {embedded: true}),
+  gameParticipants: DS.hasMany('gameParticipant'),
 
   /** @property {String} One of 'preparing', 'in-play', 'ended'. */
   status: DS.attr('string'),
@@ -15,15 +15,16 @@ export default DS.Model.extend({
   players: function () {
     var gameParticipants = this.get('gameParticipants');
     var players = gameParticipants.filterBy('isPlaying');
-    while (players.length < 2) {
-      players.pushObject({
+    var arrPlayers = players.toArray();
+    while (arrPlayers.length < 2) {
+      arrPlayers.pushObject({
         user: {
           avatarUrl: 'http://www.gravatar.com/avatar/?s=256&default=mm',
           username: '???'
         }
       });
     }
-    return players;
+    return arrPlayers;
   }.property(
     'gameParticipants.@each.user',
     'gameParticipants.@each.deckName',
@@ -32,12 +33,12 @@ export default DS.Model.extend({
   /** @property {GameParticipant} The first player. */
   playerOne: function () {
     return this.get('players').objectAt(0);
-  }.property('players.@each'),
+  }.property('players.[]'),
 
   /** @property {GameParticipant} The second player. */
   playerTwo: function () {
     return this.get('players').objectAt(1);
-  }.property('players.@each'),
+  }.property('players.[]'),
 
   /** @property {Array<GameParticipant>} People watching the game. */
   watchers: function () {
@@ -53,7 +54,7 @@ export default DS.Model.extend({
   /** @property {Boolean} Is there at least one open seat? */
   isWaitingForOpponent: function () {
     var players = this.get('gameParticipants').filterBy('isPlaying');
-    return players.length < 2;
+    return players.get('length') < 2;
   }.property('gameParticipants.@each.isPlaying'),
 
   save: function () {

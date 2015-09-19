@@ -5,4 +5,4 @@ export function fromX(params, options) {
   return moment(params[0]).from(params[1], !includeSuffix);
 }
 
-export default Ember.HTMLBars.makeBoundHelper(fromX);
+export default Ember.Helper.helper(fromX);

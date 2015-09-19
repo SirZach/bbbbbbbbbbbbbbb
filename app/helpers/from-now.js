@@ -1,8 +1,8 @@
 import Ember from 'ember';
 
-export function fromNow(params, options) {
+export function fromNow([value], options) {
   var includeSuffix = (options && options.includeSuffix);
-  return moment(params[0]).fromNow(!includeSuffix);
+  return moment(value).fromNow(!includeSuffix);
 }
 
-export default Ember.HTMLBars.makeBoundHelper(fromNow);
+export default Ember.Helper.helper(fromNow);

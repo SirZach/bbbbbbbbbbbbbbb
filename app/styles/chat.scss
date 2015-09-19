@@ -97,5 +97,10 @@
 }
 
 .user-offline {
-  color: #AAA;
+  md-list-item.md-3-line {
+    .md-list-item-text {
+      h3 { color: #AAA!important;}
+      h4 { color: #AAA!important;}
+    }
+  }
 }
