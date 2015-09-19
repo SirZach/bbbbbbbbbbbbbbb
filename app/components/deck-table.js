@@ -18,11 +18,11 @@ export default Ember.Component.extend({
 
   canShowMainDeck: function () {
     return !this.get('doNotShowTypes').contains('mainDeck');
-  }.property('doNotShowTypes.@each'),
+  }.property('doNotShowTypes.[]'),
 
   canShowSideDeck: function () {
     return !this.get('doNotShowTypes').contains('sideDeck');
-  }.property('doNotShowTypes.@each'),
+  }.property('doNotShowTypes.[]'),
 
   /** @property {Boolean} Render spoiler on left side? */
   isSpoilerOpposite: function () {

@@ -279,7 +279,7 @@ var Deck = DS.Model.extend({
     var mainCardGroups = this.get('mainCardGroups');
     var sideCardGroups = this.get('sideCardGroups');
     return mainCardGroups.get('length') + sideCardGroups.get('length');
-  }.property('cardGroups.@each'),
+  }.property('cardGroups.[]'),
 
   /** @property {Boolean} - is this deck game-ready? */
   isGameReady: Ember.computed.gt('mainCount', 0),
