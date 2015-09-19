@@ -43,7 +43,7 @@ test('the players list contains the people playing', function (assert) {
     model.get('gameParticipants').pushObjects(gameParticipants);
   });
   var players = model.get('players');
-  assert.equal(players.length, 2);
+  assert.equal(players.get('length'), 2);
   var names = players.mapBy('user.username');
   assert.deepEqual(names, ['SirZach', 'ahaurw01']);
 });
@@ -67,7 +67,7 @@ test('the players list should be padded with a placeholder', function (assert) {
     model.get('gameParticipants').pushObjects(gameParticipants);
   });
   var players = model.get('players');
-  assert.equal(players.length, 2);
+  assert.equal(players.get('length'), 2);
   var names = players.mapBy('user.username');
   assert.deepEqual(names, ['SirZach', '???']);
 });
