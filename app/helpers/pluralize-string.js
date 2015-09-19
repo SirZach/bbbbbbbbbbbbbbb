@@ -1,6 +1,5 @@
 import Ember from 'ember';
 
-export default Ember.HTMLBars.makeBoundHelper(function(params) {
-  let value = params[0];
+export default Ember.Helper.helper(function([value]) {
   return value ? value.pluralize() : value;
 });
