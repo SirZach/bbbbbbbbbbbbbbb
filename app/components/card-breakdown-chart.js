@@ -1,5 +1,14 @@
 import Ember from 'ember';
 import layout from '../templates/components/card-breakdown-chart';
+const { computed } = Ember;
+
+const StatObj = Ember.Object.extend({
+  widthStyle: computed('width', function () {
+    let width = this.get('width');
+
+    return new Ember.Handlebars.SafeString(`width: ${width}`);
+  })
+});
 
 export default Ember.Component.extend({
   layout: layout,
@@ -51,12 +60,12 @@ export default Ember.Component.extend({
         stat.width += (100 / mainCount) * count;
       });
 
-    return Ember.keys(stats).map((cardType) => {
-      return {
+    return Object.keys(stats).map((cardType) => {
+      return StatObj.create({
         label: cardType,
         count: stats[cardType].count,
         width: `${stats[cardType].width}%`
-      };
+      });
     });
   }.property('deck')
 });

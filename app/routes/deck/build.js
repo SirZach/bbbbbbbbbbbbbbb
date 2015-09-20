@@ -29,7 +29,7 @@ export default Ember.Route.extend(InfinityRoute, {
       var nameSearch = cardsController.get('nameSearch');
       // Ember Infinity-prescribed configuration - perPage and modelPath.
       var perPage = 20;
-      var modelPath = 'controller.controllers.cards.model';
+      var modelPath = 'controller.cardsController.model';
 
       this.set(modelPath, []);
 

@@ -1,11 +1,12 @@
 import Ember from 'ember';
+const { inject, computed } = Ember;
 
 export default Ember.Controller.extend({
-  needs: ['decks'],
+  decksController: inject.controller('decks'),
 
   /** @property {Boolean} Is the filters column enabled? */
-  filtersActive: Ember.computed.alias('controllers.decks.filtersActive'),
+  filtersActive: computed.alias('decksController.filtersActive'),
 
   /** @property {Boolean} Showing only my decks? */
-  filterMineOnly: Ember.computed.alias('controllers.decks.mine')
+  filterMineOnly: computed.alias('decksController.mine')
 });

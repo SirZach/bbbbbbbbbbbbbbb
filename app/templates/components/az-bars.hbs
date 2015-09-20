@@ -1,5 +1,5 @@
 {{#each data as |bar|}}
-  <div style="width: {{bar.width}};">
+  <div style={{bar.widthStyle}}>
     {{#if bar.count}}
       <span class="bar {{bar.label}}">
         <span class="count">{{bar.count}}</span>

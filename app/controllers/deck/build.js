@@ -1,13 +1,15 @@
 import Ember from 'ember';
+const { inject } = Ember;
 
 export default Ember.Controller.extend({
-  needs: ['cards', 'deck'],
+  cardsController: inject.controller('cards'),
+  deckController: inject.controller('deck'),
 
   filtersActive: false,
 
   doNotShowTypes: [],
 
-  nameSearch: Ember.computed.alias('controllers.cards.nameSearch'),
+  nameSearch: Ember.computed.alias('cardsController.nameSearch'),
 
   _triggerCardLookup: function () {
     this.send('getNewCards');
@@ -17,7 +19,7 @@ export default Ember.Controller.extend({
     Ember.run.debounce(this, '_triggerCardLookup', 500);
   }.observes('nameSearch'),
 
-  filteredCards: Ember.computed.alias('controllers.cards.model'),
+  filteredCards: Ember.computed.alias('cardsController.model'),
 
   canShowDeckTable: function () {
     return this.get('model.cardGroups.length');

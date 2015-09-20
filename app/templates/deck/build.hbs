@@ -1,7 +1,7 @@
 <div class="mb-10 d-f">
   {{#paper-button classNames="sm-display" action="toggleFiltersActive"}}Toggle Filters{{/paper-button}}
 
-  {{#x-paper-button action="saveDeck" primary=true raised=true params=controllers.deck.saveParams}}Save{{/x-paper-button}}
+  {{#x-paper-button action="saveDeck" primary=true raised=true params=deckController.saveParams}}Save{{/x-paper-button}}
 
   {{#link-to "deck.index" model}}
     {{#paper-button raised=true}}Analyze{{/paper-button}}
@@ -14,9 +14,9 @@
     {{#paper-card}}
       {{#paper-card-content}}
         {{card-filters
-          typesSelected=controllers.cards.types
-          colorsSelected=controllers.cards.colors
-          legalitiesSelected=controllers.cards.legalities
+          typesSelected=cardsController.types
+          colorsSelected=cardsController.colors
+          legalitiesSelected=cardsController.legalities
           typesChanged="typesChanged"
           colorsChanged="colorsChanged"
           legalitiesChanged="legalitiesChanged"
@@ -40,13 +40,13 @@
           <form class="form-horizontal form-horizontal-condensed">
             <div class="form-group">
               <label class="control-label">Classification</label>
-              {{controllers.deck.model.classification}}
+              {{deckController.model.classification}}
             </div>
             <div class="form-group">
-              {{paper-input class="width-100" label="Deck Name" value=controllers.deck.model.name}}
+              {{paper-input class="width-100" label="Deck Name" value=deckController.model.name}}
             </div>
             <div class="form-group">
-              {{paper-input class="width-100" label="Comments" value=controllers.deck.model.comments}}
+              {{paper-input class="width-100" label="Comments" value=deckController.model.comments}}
             </div>
           </form>
         {{/paper-card-content}}
