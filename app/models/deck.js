@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import SpecialCards from 'webatrice/utils/special-cards';
+const { computed, get } = Ember;
 
 /**
  * Represents a collection of CardGroups.
@@ -290,7 +291,12 @@ var Deck = DS.Model.extend({
     return cardGroups.filterBy('card.mainType', 'Creature')
       .sortBy('card.cmc')
       .get('lastObject.card.imageUrl');
-  }.property('mainCardGroups.@each.cmc')
+  }.property('mainCardGroups.@each.cmc'),
+
+  defaultImageUrlStyle: computed('defaultImageUrl', function () {
+    let defaultImageUrl = get(this, 'defaultImageUrl');
+    return new Ember.Handlebars.SafeString(`background-image: url(${defaultImageUrl})`);
+  })
 });
 
 Deck.reopenClass({
