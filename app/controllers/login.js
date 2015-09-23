@@ -7,7 +7,7 @@ export default Ember.Controller.extend({
       var password = this.get('loginPassword');
       this.set('loginError');
       this.session.loginWithPassword(email, password).then(
-        () => this.transitionTo('/'),
+        () => this.transitionToRoute('/'),
         (error) => {
           this.notifications.addNotification({
             message: error.message,
@@ -21,7 +21,7 @@ export default Ember.Controller.extend({
       var email = this.get('signupEmail');
       var password = this.get('signupPassword');
       this.session.signupWithPassword(username, email, password).then(
-        () => this.transitionTo('/'),
+        () => this.transitionToRoute('/'),
         (error) => {
           this.notifications.addNotification({
             message: error.message,
