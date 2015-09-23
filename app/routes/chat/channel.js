@@ -10,7 +10,7 @@ export default Ember.Route.extend({
     // Bullshit.
     // Then make a live updating RecordArray that filters the store properly.
     //
-    return store.find('chat', {
+    return store.query('chat', {
       orderBy: 'channel',
       equalTo: params.channel
     }).then(function () {

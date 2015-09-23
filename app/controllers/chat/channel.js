@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+let PresencesContainer = Ember.ArrayProxy.extend(Ember.SortableMixin);
+
 export default Ember.Controller.extend({
   /** @property {String} bound to the chat input */
   says: null,
@@ -12,7 +14,7 @@ export default Ember.Controller.extend({
     if (!presences) {
       return null;
     }
-    return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
+    return PresencesContainer.create({
       sortProperties: ['statePriority', 'user.username'],
       sortAscending: true,
       content: presences.get('content')

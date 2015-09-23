@@ -44,7 +44,7 @@ export default Ember.Route.extend({
     //
     var limitToLast = 10;
     var paddedLimitToLast = model.length ? limitToLast + 1 : limitToLast;
-    return this.store.find('deck', {
+    return this.store.query('deck', {
       endAt,
       limitToLast: paddedLimitToLast
     }).then((decks) => {
