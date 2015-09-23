@@ -1,70 +1,73 @@
-{{#paper-nav-container open=drawerOpen classNames=navContainerClassnames}}
+<div class="ember-app">
+  {{#paper-nav-container open=drawerOpen classNames=navContainerClassnames}}
 
-  {{#paper-sidenav classNames="md-sidenav-left md-whiteframe-z2" flex-layout="column" flex=true}}
+    {{#paper-sidenav classNames="md-sidenav-left md-whiteframe-z2" flex-layout="column" flex=true}}
 
-    {{#paper-toolbar}}
-    <div class="md-toolbar-tools">
-      <div class="brand">
-        <div class="three-card-deck brand">
-          <div class="card-one"></div>
-          <div class="card-two"></div>
-          <div class="card-three"></div>
+      {{#paper-toolbar}}
+      <div class="md-toolbar-tools">
+        <div class="brand">
+          <div class="three-card-deck brand">
+            <div class="card-one"></div>
+            <div class="card-two"></div>
+            <div class="card-three"></div>
+          </div>
+          <strong>Webatrice</strong>
         </div>
-        <strong>Webatrice</strong>
       </div>
-    </div>
-    {{/paper-toolbar}}
+      {{/paper-toolbar}}
 
-    {{#paper-content}}
-      <nav class="sidenav">
-        <ul>
-          {{!--Logged in user--}}
-          {{#if session.isAuthenticated}}
-          <li class="cursor-pointer">
-            <img class="avatar avatar-text avatar-small avatar-list" src={{session.user.avatarUrl}} />
-          </li>
-          <li>{{#link-to 'decks.list'}}Decks{{/link-to}}</li>
-          {{else}}
-          <li>{{#link-to 'login'}}Log in{{/link-to}}</li>
-          {{/if}}
+      {{#paper-content}}
+        <nav class="sidenav">
+          <ul>
+            {{!--Logged in user--}}
+            {{#if session.isAuthenticated}}
+            <li class="cursor-pointer">
+              <img class="avatar avatar-text avatar-small avatar-list" src={{session.user.avatarUrl}} />
+            </li>
+            <li>{{#link-to 'decks.list'}}Decks{{/link-to}}</li>
+            {{else}}
+            <li>{{#link-to 'login'}}Log in{{/link-to}}</li>
+            {{/if}}
 
-          {{!-- Games link --}}
-          <li>{{#link-to 'games.list'}}Games{{/link-to}}</li>
+            {{!-- Games link --}}
+            <li>{{#link-to 'games.list'}}Games{{/link-to}}</li>
 
-          {{!--Lobby link--}}
-          <li>{{#link-to 'chat'}}Lobby{{/link-to}}</li>
+            {{!--Lobby link--}}
+            <li>{{#link-to 'chat'}}Lobby{{/link-to}}</li>
 
-          {{!--Build a deck--}}
-          {{#if session.isAuthenticated}}
-          <li>{{#link-to 'deck.build' 'new'}}Build a deck{{/link-to}}</li>
-          {{/if}}
+            {{!--Build a deck--}}
+            {{#if session.isAuthenticated}}
+            <li>{{#link-to 'deck.build' 'new'}}Build a deck{{/link-to}}</li>
+            {{/if}}
 
-          {{!--Github link--}}
-          <li><a target="_blank" href="https://github.com/SirZach/bbbbbbbbbbbbbbb/issues">{{fa-icon "github"}} Report an issue</a></li>
+            {{!--Github link--}}
+            <li><a target="_blank" href="https://github.com/SirZach/bbbbbbbbbbbbbbb/issues">{{fa-icon "github"}} Report an issue</a></li>
 
-          {{!--Disclaimer link--}}
-          <li>{{#link-to 'disclaimer'}}Disclaimer{{/link-to}}</li>
+            {{!--Disclaimer link--}}
+            <li>{{#link-to 'disclaimer'}}Disclaimer{{/link-to}}</li>
 
-          {{#if session.isAuthenticated}}
-          <li><a href="#" {{action "logout"}}>Log out</a></li>
-          {{/if}}
+            {{#if session.isAuthenticated}}
+            <li><a href="#" {{action "logout"}}>Log out</a></li>
+            {{/if}}
 
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      {{/paper-content}}
+
+    {{/paper-sidenav}}
+
+    {{#paper-content flex-layout="column" flex=true}}
+      {{outlet}}
     {{/paper-content}}
 
-  {{/paper-sidenav}}
+  {{/paper-nav-container}}
+  {{outlet "modal"}}
 
-  {{#paper-content flex-layout="column" flex=true}}
-    {{outlet}}
-  {{/paper-content}}
+  {{!-- notifications --}}
+  <div class="notifications-container">
+    {{#each notifications as |notification|}}
+      {{notification-message notification=notification}}
+    {{/each}}
+  </div>
 
-{{/paper-nav-container}}
-{{outlet "modal"}}
-
-{{!-- notifications --}}
-<div class="notifications-container">
-  {{#each notifications as |notification|}}
-    {{notification-message notification=notification}}
-  {{/each}}
 </div>

@@ -1,7 +1,8 @@
 import Ember from 'ember';
+const { inject, computed } = Ember;
 
 export default Ember.Controller.extend({
-  needs: ['user'],
+  userController: inject.controller('user'),
 
   routeDidChange: function () {
     this.set('drawerOpen', false);
@@ -11,12 +12,12 @@ export default Ember.Controller.extend({
    * @property {Boolean}
    * Should the side nav be unlocked regardless of viewport width?
    */
-  forceSidenavUnlocked: Ember.computed('currentPath', function () {
+  forceSidenavUnlocked: computed('currentPath', function () {
     return this.get('currentPath') === 'game';
   }),
 
   /** @property {Boolean} Classes to apply to the side nav container. */
-  navContainerClassnames: Ember.computed('forceSidenavUnlocked', function () {
+  navContainerClassnames: computed('forceSidenavUnlocked', function () {
     var classNames = 'ember-app';
     if (this.get('forceSidenavUnlocked')) {
       classNames += ' force-unlocked';

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.ArrayController.extend({
+export default Ember.Controller.extend({
   queryParams: ['mine'],
 
   /** @property {Boolean} Is the filters column enabled? */
