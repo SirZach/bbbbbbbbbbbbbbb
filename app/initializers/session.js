@@ -3,10 +3,10 @@ import DS from 'ember-data';
 import $ from 'jquery';
 import ENV from 'webatrice/config/environment';
 
-var FIREBASE_URL = ENV.firebase;
-var IDLE_MS = 60000;
+let FIREBASE_URL = ENV.firebase;
+let IDLE_MS = 60000;
 
-var session = Ember.Object.extend({
+let session = Ember.Object.extend({
   ref: new Firebase(FIREBASE_URL),
 
   store: function() {
@@ -18,8 +18,8 @@ var session = Ember.Object.extend({
   }.property(),
 
   addFirebaseCallback: function() {
-    var session = this;
-    var store = this.get('store');
+    let session = this;
+    let store = this.get('store');
 
     this.get('ref').onAuth(function(authData) {
       Ember.run(function() {
@@ -52,12 +52,12 @@ var session = Ember.Object.extend({
    * @return {Promise}
    */
   initializeUser: function(authData) {
-    var socialUserData;
+    let socialUserData;
     if (authData.provider !== 'password') {
       socialUserData = this.parseSocialData(authData);
     }
-    var promise = this.updateOrCreateUser(authData.uid, socialUserData);
-    var userPromiseProxy = DS.PromiseObject.create({
+    let promise = this.updateOrCreateUser(authData.uid, socialUserData);
+    let userPromiseProxy = DS.PromiseObject.create({
       promise: promise
     });
     this.set('user', userPromiseProxy);
@@ -91,14 +91,14 @@ var session = Ember.Object.extend({
       return;
     }
 
-    var store = this.get('store');
-    var log = this.get('log');
+    let store = this.get('store');
+    let log = this.get('log');
 
     // Support old and new style user ids until all are transitioned.
-    var query = uid;
+    let query = uid;
     if (socialUserData && socialUserData.provider === 'github') {
       if (!socialUserData || !socialUserData.username) {
-        var error = `No 3rd party auth data for ${uid}.`;
+        let error = `No 3rd party auth data for ${uid}.`;
         log.error(`No 3rd party auth data for ${uid}.`);
         throw new Error(error);
       }
@@ -149,10 +149,10 @@ var session = Ember.Object.extend({
    */
   bindPresence: function() {
     // The user is a promise object that has resolved by now.
-    var user = this.get('user.content');
-    var amOnline = new Firebase(FIREBASE_URL + '/.info/connected');
-    var store = this.get('store');
-    var session = this;
+    let user = this.get('user.content');
+    let amOnline = new Firebase(FIREBASE_URL + '/.info/connected');
+    let store = this.get('store');
+    let session = this;
     return user.get('presence').then(function(presence) {
       if (!presence) {
         presence = store.createRecord('presence', {
@@ -164,7 +164,7 @@ var session = Ember.Object.extend({
       amOnline.on('value', function(snapshot) {
         Ember.run(() => {
           if (snapshot.val()) {
-            var ref = presence.ref();
+            let ref = presence.ref();
             ref.child('state')
               .onDisconnect()
               .set('offline');
@@ -247,8 +247,8 @@ var session = Ember.Object.extend({
   },
 
   createPasswordUser: function(userData) {
-    var store = this.get('store');
-    var user = store.createRecord('user');
+    let store = this.get('store');
+    let user = store.createRecord('user');
     user.setProperties(userData);
     user.set('id', userData.uid);
     user.set('avatarUrl',
@@ -269,13 +269,13 @@ var session = Ember.Object.extend({
    * @return {Object} Parsed user info.
    */
   parseSocialData: function(authData) {
-    var log = this.get('log');
+    let log = this.get('log');
     if (!authData) {
       log.error('No authData provided to parseSocialData.');
     }
-    var userData;
+    let userData;
 
-    var provider = authData.provider;
+    let provider = authData.provider;
     if (provider === 'github') {
       userData = {
         username: authData.github.username,

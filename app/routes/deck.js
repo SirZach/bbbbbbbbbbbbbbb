@@ -6,7 +6,7 @@ export default Ember.Route.extend({
       this.replaceWith('/');
     }
 
-    var cardsController = this.controllerFor('cards');
+    let cardsController = this.controllerFor('cards');
     return this.store.findAll('card').then(function(cards) {
       cardsController.set('model', cards);
       // A hack to not show the spinner. Not sure it even makes sense to show
@@ -19,7 +19,7 @@ export default Ember.Route.extend({
 
   model: function(params) {
     if (params.deck_id === 'new') {
-      var deck = this.store.createRecord('deck');
+      let deck = this.store.createRecord('deck');
       return this.get('session.user').then((user) => {
         deck.set('owner', user);
         return deck;
@@ -31,7 +31,7 @@ export default Ember.Route.extend({
 
   /** Make sure all the cards for the deck are loaded before continuing */
   afterModel: function(deck) {
-    var cardPromiseArray = [];
+    let cardPromiseArray = [];
 
     deck.get('cardGroups').forEach(function(cardGroup) {
       cardPromiseArray.push(cardGroup.get('card'));

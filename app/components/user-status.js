@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   classNameBindings: ['statusClass'],
 
   statusClass: function() {
-    var state = this.get('presence.state');
+    let state = this.get('presence.state');
     return 'user-' + state;
   }.property('presence.state'),
 
@@ -16,7 +16,7 @@ export default Ember.Component.extend({
   isOffline: Ember.computed.equal('presence.state', 'offline'),
 
   lastSeenLabel: function() {
-    var state = this.get('presence.state');
+    let state = this.get('presence.state');
     if (state === 'online') {
       return 'online';
     } else if (state === 'idle') {

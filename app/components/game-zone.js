@@ -32,7 +32,7 @@ export default Ember.Component.extend({
   drop: function(event) {
     if (!this.get('readOnly')) {
       event.preventDefault();
-      var dragData = JSON.parse(event.dataTransfer.getData('text/plain'));
+      let dragData = JSON.parse(event.dataTransfer.getData('text/plain'));
 
       this.sendAction('droppedOn', dragData, this.get('player'), this.get('title').toLowerCase());
 

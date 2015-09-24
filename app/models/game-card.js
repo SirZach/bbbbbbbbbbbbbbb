@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-var GameCard = Ember.Object.extend({
+let GameCard = Ember.Object.extend({
   /** @property {String} Card identifier. */
   cardId: null,
 
@@ -20,7 +20,7 @@ var GameCard = Ember.Object.extend({
   tokenStats: null,
 
   bootstrapId: Ember.on('init', function() {
-    var id = this.get('id');
+    let id = this.get('id');
     this.set('id', id || GameCard.generateId());
   })
 });

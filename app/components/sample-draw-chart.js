@@ -13,7 +13,7 @@ export default PaperCard.extend({
 
   /** @property {Array<Card>} The hand sorted by cmc and name. */
   sortedHand: function() {
-    var hand = this.get('hand') || [];
+    let hand = this.get('hand') || [];
     return hand.sortBy('cmc', 'name');
   }.property('hand'),
 
@@ -22,10 +22,10 @@ export default PaperCard.extend({
      * "Draw" a new hand by choosing 7 random cards from the deck.
      */
     refresh: function() {
-      var cardGroups = this.get('deck.mainCardGroups') || [];
-      var cards = [];
+      let cardGroups = this.get('deck.mainCardGroups') || [];
+      let cards = [];
       cardGroups.forEach((cardGroup) => {
-        for (var i = 0; i < cardGroup.get('count'); i++) {
+        for (let i = 0; i < cardGroup.get('count'); i++) {
           cards.push(cardGroup.get('card'));
         }
       });

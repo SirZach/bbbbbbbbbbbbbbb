@@ -5,7 +5,7 @@ import GameCard from '../models/game-card';
 export default Ember.Controller.extend({
   /** @property {Boolean} Is the game going? */
   isGameInProgress: function() {
-    var players = this.get('players');
+    let players = this.get('players');
     return players.get('length') === 2 && players.every((player) => player && player.get('isReady'));
   }.property('players.@each.isReady'),
 
@@ -13,19 +13,19 @@ export default Ember.Controller.extend({
 
   /** @property {Boolean} Am I one of the players? */
   amIPlaying: function() {
-    var playerUserIds = this.get('model.gameParticipants')
+    let playerUserIds = this.get('model.gameParticipants')
       .filterBy('isPlaying')
       .mapBy('user.id')
       .compact();
-    var myId = this.get('session.user.id');
+    let myId = this.get('session.user.id');
     return playerUserIds.contains(myId);
   }.property(
     'model.gameParticipants.@each.{isPlaying,userId}',
     'session.user.id'),
 
   amIPlayerOne: Ember.computed('participant.user.id', 'playerOne.user.id', function() {
-    var participant = this.get('participant');
-    var playerOne = this.get('playerOne');
+    let participant = this.get('participant');
+    let playerOne = this.get('playerOne');
 
     return participant && participant.get('user.id') === playerOne.get('user.id');
   }),
@@ -35,8 +35,8 @@ export default Ember.Controller.extend({
 
   /** @property {GameParticipant} The participant representing me. */
   participant: function() {
-    var participants = this.get('model.gameParticipants');
-    var myId = this.get('session.user.id');
+    let participants = this.get('model.gameParticipants');
+    let myId = this.get('session.user.id');
     return participants.findBy('user.id', myId);
   }.property('model.gameParticipants.@each.userId', 'session.user.id'),
 
@@ -47,9 +47,9 @@ export default Ember.Controller.extend({
    *                                    there is only one other player.
    */
   players: function() {
-    var players = this.get('model.gameParticipants').filterBy('isPlaying');
-    var amIPlaying = this.get('amIPlaying');
-    var myId = this.get('session.user.id');
+    let players = this.get('model.gameParticipants').filterBy('isPlaying');
+    let amIPlaying = this.get('amIPlaying');
+    let myId = this.get('session.user.id');
     if (!amIPlaying) {
       if (players.length > 1) {
         // Simply sort by username.
@@ -70,7 +70,7 @@ export default Ember.Controller.extend({
   }.property('players.@each'),
 
   playerOneAvatarUrl: function() {
-    var playerOne = this.get('playerOne');
+    let playerOne = this.get('playerOne');
     if (playerOne) {
       return playerOne.get('user.avatarUrl');
     } else {
@@ -83,7 +83,7 @@ export default Ember.Controller.extend({
   }.property('players.@each'),
 
   playerTwoAvatarUrl: function() {
-    var playerTwo = this.get('playerTwo');
+    let playerTwo = this.get('playerTwo');
     if (playerTwo) {
       return playerTwo.get('user.avatarUrl');
     } else {
@@ -103,9 +103,9 @@ export default Ember.Controller.extend({
 
   /** @property {String} The title showing on the top half of the board. */
   topBoardTitle: function() {
-    var isGameInPrep = this.get('isGameInPrep');
-    var playerTwoUsername = this.get('playerTwo.user.username');
-    var playerTwoIsReady = this.get('playerTwo.isReady');
+    let isGameInPrep = this.get('isGameInPrep');
+    let playerTwoUsername = this.get('playerTwo.user.username');
+    let playerTwoIsReady = this.get('playerTwo.isReady');
 
     if (playerTwoUsername) {
       if (isGameInPrep) {
@@ -126,10 +126,10 @@ export default Ember.Controller.extend({
 
   /** @property {String} The title showing on the bottom half of the board. */
   bottomBoardTitle: function() {
-    var isGameInPrep = this.get('isGameInPrep');
-    var amIPlaying = this.get('amIPlaying');
-    var playerOneUsername = this.get('playerOne.user.username');
-    var playerOneIsReady = this.get('playerOne.isReady');
+    let isGameInPrep = this.get('isGameInPrep');
+    let amIPlaying = this.get('amIPlaying');
+    let playerOneUsername = this.get('playerOne.user.username');
+    let playerOneIsReady = this.get('playerOne.isReady');
 
     if (amIPlaying) {
       if (isGameInPrep && !playerOneIsReady) {
@@ -184,8 +184,8 @@ export default Ember.Controller.extend({
 
   /** @property {Array<DS.GameCard>} */
   leftColumnCards: Ember.computed('leftColumnPlayer', 'leftColumnZone', 'playerOne.gameCards.@each.zone', 'playerTwo.gameCards.@each.zone', function() {
-    var player = this.get('leftColumnPlayer');
-    var zone = this.get('leftColumnZone');
+    let player = this.get('leftColumnPlayer');
+    let zone = this.get('leftColumnZone');
 
     return player ? player.get('cardsIn' + zone.capitalize()) : [];
   }),
@@ -198,7 +198,7 @@ export default Ember.Controller.extend({
 
   /** @property {Boolean} participant can mark themselves ready */
   participantCanReady: function() {
-    var amIPlaying = this.get('amIPlaying');
+    let amIPlaying = this.get('amIPlaying');
     if (!amIPlaying) {
       return false;
     }
@@ -208,8 +208,8 @@ export default Ember.Controller.extend({
 
   /** @property {Deck} the deck used by the participant */
   gameDeck: function() {
-    var deckId = this.get('participant.deckId');
-    var deck = this.get('session.user.gameReadyDecks').findBy('id', deckId);
+    let deckId = this.get('participant.deckId');
+    let deck = this.get('session.user.gameReadyDecks').findBy('id', deckId);
     return deck;
   }.property('session.user.gameReadyDecks.[]', 'participant.deckId'),
 
@@ -221,13 +221,13 @@ export default Ember.Controller.extend({
     if (!this.get('hasChosenDeck')) {
       return;
     }
-    var deck = this.get('gameDeck');
-    var gameCards = [];
+    let deck = this.get('gameDeck');
+    let gameCards = [];
 
     deck.get('mainCardGroups').forEach((cardGroup) => {
-      var card = cardGroup.get('card');
-      var count = cardGroup.get('count');
-      var i, gameCard;
+      let card = cardGroup.get('card');
+      let count = cardGroup.get('count');
+      let i, gameCard;
       for (i = 0; i < count; i++) {
         gameCard = GameCard.create();
         gameCard.set('cardId', card.get('id'));
@@ -239,7 +239,7 @@ export default Ember.Controller.extend({
     // which it is saved in the database. If we don't give it an order, they'll
     // come back next time in the order the records were created.
     //
-    var count = 0;
+    let count = 0;
     gameCards.forEach((gameCard) => gameCard.set('order', count++));
     this.set('participant.gameCards', gameCards);
   },
@@ -272,7 +272,7 @@ export default Ember.Controller.extend({
      */
     selectDeck: function(deck) {
       if (!this.get('readOnly')) {
-        var participant = this.get('participant');
+        let participant = this.get('participant');
         participant.setProperties({
           deckName: deck.get('name'),
           deckId: deck.get('id')
@@ -286,7 +286,7 @@ export default Ember.Controller.extend({
      */
     iAmReady: function() {
       if (this.get('amIPlayerOne')) {
-        var participant = this.get('participant');
+        let participant = this.get('participant');
         participant.set('isReady', true);
         this.initializeGameCards();
         this.send('updateGame');
@@ -329,10 +329,10 @@ export default Ember.Controller.extend({
      * @param numCards
      */
     drawCards: function(numCards) {
-      var library = this.get('participant.cardsInLibrary').toArray();
+      let library = this.get('participant.cardsInLibrary').toArray();
       if (library.get('length') > numCards) {
-        for (var i = 0; i < numCards; i++) {
-          var card = library.objectAt(i);
+        for (let i = 0; i < numCards; i++) {
+          let card = library.objectAt(i);
           card.set('zone', 'hand');
         }
       } else {
@@ -347,8 +347,8 @@ export default Ember.Controller.extend({
      * Not surrounded with a readOnly check since it's disabled altogether in the template
      */
     shuffle: function() {
-      var library = this.get('participant.cardsInLibrary');
-      var count = 0;
+      let library = this.get('participant.cardsInLibrary');
+      let count = 0;
 
       shuffle(library);
       library.forEach((gameCard) => gameCard.set('order', count++));
@@ -369,7 +369,7 @@ export default Ember.Controller.extend({
      */
     returnAllCards: function() {
       if (this.get('amIPlayerOne')) {
-        var participantGameCards = this.get('participant.gameCards');
+        let participantGameCards = this.get('participant.gameCards');
         participantGameCards.forEach(gameCard => gameCard.setProperties({
           zone: GameCard.LIBRARY,
           isTapped: false
@@ -384,8 +384,8 @@ export default Ember.Controller.extend({
       */
     changeLife: function(delta) {
       if (this.get('amIPlayerOne')) {
-        var participant = this.get('participant');
-        var life = participant.get('life');
+        let participant = this.get('participant');
+        let life = participant.get('life');
 
         participant.set('life', life += delta);
         this.send('updateGame');
@@ -394,7 +394,7 @@ export default Ember.Controller.extend({
 
     droppedCard: function(cardData, player, zone) {
       if (this.get('amIPlayerOne')) {
-        var gameCard = player.get('gameCards').findBy('id', cardData.id);
+        let gameCard = player.get('gameCards').findBy('id', cardData.id);
 
         gameCard.setProperties({
           zone: zone,
@@ -420,7 +420,7 @@ export default Ember.Controller.extend({
       * A player has called it quits!
       */
     endGame: function() {
-      var game = this.get('model');
+      let game = this.get('model');
       game.set('status', 'ended');
       this.send('updateGame');
     }

@@ -13,9 +13,9 @@ export default DS.Model.extend({
 
   /** @property {Array<GameParticipant>} People playing the game. */
   players: function() {
-    var gameParticipants = this.get('gameParticipants');
-    var players = gameParticipants.filterBy('isPlaying');
-    var arrPlayers = players.toArray();
+    let gameParticipants = this.get('gameParticipants');
+    let players = gameParticipants.filterBy('isPlaying');
+    let arrPlayers = players.toArray();
     while (arrPlayers.length < 2) {
       arrPlayers.pushObject({
         user: {
@@ -42,7 +42,7 @@ export default DS.Model.extend({
 
   /** @property {Array<GameParticipant>} People watching the game. */
   watchers: function() {
-    var gameParticipants = this.get('gameParticipants');
+    let gameParticipants = this.get('gameParticipants');
     return gameParticipants
       .rejectBy('isPlaying')
       .filterBy('isPresent');
@@ -53,12 +53,12 @@ export default DS.Model.extend({
 
   /** @property {Boolean} Is there at least one open seat? */
   isWaitingForOpponent: function() {
-    var players = this.get('gameParticipants').filterBy('isPlaying');
+    let players = this.get('gameParticipants').filterBy('isPlaying');
     return players.get('length') < 2;
   }.property('gameParticipants.@each.isPlaying'),
 
   save: function() {
-    var participants = this.get('gameParticipants');
+    let participants = this.get('gameParticipants');
     participants.invoke('setGameCardsRaw');
     return this._super.apply(this, arguments);
   }

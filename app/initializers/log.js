@@ -2,18 +2,18 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 
-var Log = Ember.Object.extend({
+let Log = Ember.Object.extend({
   createLogMessage: function(message, level) {
-    var store = this.container.lookup('store:main');
-    var session = this.container.lookup('session:main');
-    var user = session.get('user.content');
-    var logMessage = store.createRecord('log-message', {
+    let store = this.container.lookup('store:main');
+    let session = this.container.lookup('session:main');
+    let user = session.get('user.content');
+    let logMessage = store.createRecord('log-message', {
       username: user && user.get('username'),
       userId: user && user.get('id'),
       message: message,
       level: level
     });
-    var logMessageId = logMessage.get('id');
+    let logMessageId = logMessage.get('id');
     logMessage.set('id', `${level}${logMessageId}`);
     console.error(logMessage.toJSON());
     return logMessage.save();

@@ -32,8 +32,8 @@ export default DS.Model.extend({
 
   gameCards: Ember.computed('gameCardsRaw', {
     get() {
-      var gameCardsRaw = this.get('gameCardsRaw');
-      var gameCards = this.get('_gameCards');
+      let gameCardsRaw = this.get('gameCardsRaw');
+      let gameCards = this.get('_gameCards');
 
       if (!gameCardsRaw) {
         return [];
@@ -42,7 +42,7 @@ export default DS.Model.extend({
       if (gameCards) {
         // Merge the given properties instead of creating new objects.
         JSON.parse(gameCardsRaw).forEach(raw => {
-          var gameCard = gameCards.findBy('id', raw.id);
+          let gameCard = gameCards.findBy('id', raw.id);
           if (!gameCard) {
             // If a new token was just created, add it to the list.
             gameCard = GameCard.create();
@@ -90,7 +90,7 @@ export default DS.Model.extend({
   }),
 
   setGameCardsRaw: function() {
-    var gameCards = this.get('gameCards');
+    let gameCards = this.get('gameCards');
     if (gameCards) {
       this.set('gameCardsRaw', JSON.stringify(gameCards));
     }

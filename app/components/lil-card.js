@@ -10,13 +10,13 @@ export default Ember.Component.extend({
 
   /** @property {String} color class */
   color: function() {
-    var color = this.get('cardInfo.card.displayColor');
+    let color = this.get('cardInfo.card.displayColor');
     return `lil-card-${color}`;
   }.property('cardInfo.card.displayColor'),
 
   /** @property {String} z-index for proper stacking */
   style: function() {
-    var zIndex = this.get('cardInfo.zIndex');
+    let zIndex = this.get('cardInfo.zIndex');
     return `z-index: ${zIndex};`;
   }.property('cardInfo.zIndex')
 });

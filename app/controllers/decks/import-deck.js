@@ -10,13 +10,13 @@ export default Ember.Controller.extend({
     },
 
     importDeck: function() {
-      var importContents = this.get('importContents');
+      let importContents = this.get('importContents');
       
       this.get('session.user').then((user) => {
         Deck.createFromImport(importContents, this.store).then((result) => {
-          var deck = result.deck;
+          let deck = result.deck;
           deck.set('owner', user);
-          var errors = result.errors;
+          let errors = result.errors;
 
           if (errors.length) {
             deck.set('failedImports', errors);

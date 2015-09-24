@@ -13,8 +13,8 @@ export default DS.Model.extend({
 
   /** @property {String} - combo of board and card type */
   superType: function() {
-    var board = this.get('board');
-    var type = this.get('card.type');
+    let board = this.get('board');
+    let type = this.get('card.type');
     return board + type;
   }.property('board', 'card.type'),
 

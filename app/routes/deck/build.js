@@ -14,7 +14,7 @@ export default Ember.Route.extend(InfinityRoute, {
 
   actions: {
     willTransition: function(transition) {
-      var deck = this.get('controller.model');
+      let deck = this.get('controller.model');
 
       if (deck.get('isNew')) {
         deck.destroyRecord();
@@ -22,18 +22,18 @@ export default Ember.Route.extend(InfinityRoute, {
     },
 
     getNewCards: function() {
-      var cardsController = this.controllerFor('cards');
-      var colors = cardsController.get('colors');
-      var legalities = cardsController.get('legalities');
-      var types = cardsController.get('types');
-      var nameSearch = cardsController.get('nameSearch');
+      let cardsController = this.controllerFor('cards');
+      let colors = cardsController.get('colors');
+      let legalities = cardsController.get('legalities');
+      let types = cardsController.get('types');
+      let nameSearch = cardsController.get('nameSearch');
       // Ember Infinity-prescribed configuration - perPage and modelPath.
-      var perPage = 20;
-      var modelPath = 'controller.cardsController.model';
+      let perPage = 20;
+      let modelPath = 'controller.cardsController.model';
 
       this.set(modelPath, []);
 
-      var query = {
+      let query = {
         colors,
         legalities,
         types,
@@ -47,7 +47,7 @@ export default Ember.Route.extend(InfinityRoute, {
       // cards it finds into our card controller. Subsequent loads will be
       // pushed to that controller by the mixin.
       //
-      var infinityModel = this.infinityModel('card', query);
+      let infinityModel = this.infinityModel('card', query);
       infinityModel.then((cards) => {
         this.get(modelPath).pushObjects(cards.toArray());
       });

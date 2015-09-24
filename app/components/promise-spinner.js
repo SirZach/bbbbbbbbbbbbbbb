@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-var PromiseController = Ember.Controller.extend(Ember.PromiseProxyMixin);
+let PromiseController = Ember.Controller.extend(Ember.PromiseProxyMixin);
 
 export default Ember.Component.extend({
   promiseSpinnerUrls: Ember.inject.service('promise-spinner-urls'),
@@ -13,10 +13,10 @@ export default Ember.Component.extend({
   }.on('didInsertElement'),
 
   retrieveData: function() {
-    var url = this.get('url');
-    var promiseSpinnerUrls = this.get('promiseSpinnerUrls');
-    var dataFound = promiseSpinnerUrls.hasData(url);
-    var promiseController;
+    let url = this.get('url');
+    let promiseSpinnerUrls = this.get('promiseSpinnerUrls');
+    let dataFound = promiseSpinnerUrls.hasData(url);
+    let promiseController;
 
     if (dataFound) {
       promiseController = PromiseController.create({

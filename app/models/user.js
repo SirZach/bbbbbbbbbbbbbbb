@@ -11,7 +11,7 @@ export default DS.Model.extend({
 
     /** @property {Array<Deck>} The decks that are legal for play. */
     gameReadyDecks: function() {
-      var decks = this.get('decks');
+      let decks = this.get('decks');
       return decks.filterBy('isGameReady');
     }.property('decks.@each.isGameReady'),
 

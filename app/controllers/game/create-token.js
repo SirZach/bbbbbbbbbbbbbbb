@@ -19,10 +19,10 @@ export default Ember.Controller.extend({
     },
 
     createToken: function() {
-      var gameCard = this.get('model');
-      var player = this.get('player');
-      var playerGameCards = player.get('gameCards');
-      var game = this.get('game');
+      let gameCard = this.get('model');
+      let player = this.get('player');
+      let playerGameCards = player.get('gameCards');
+      let game = this.get('game');
 
       gameCard.set('tokenStats', {
         name: this.get('name'),

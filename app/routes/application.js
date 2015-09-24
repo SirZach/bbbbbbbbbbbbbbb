@@ -44,10 +44,10 @@ export default Ember.Route.extend({
         return;
       }
 
-      var name = this.get('session.user.username');
-      var avatarUrl = this.get('session.user.avatarUrl');
-      var when = new Date();
-      var chat = this.store.createRecord('chat', {
+      let name = this.get('session.user.username');
+      let avatarUrl = this.get('session.user.avatarUrl');
+      let when = new Date();
+      let chat = this.store.createRecord('chat', {
         name: name,
         avatarUrl: avatarUrl,
         says: says,

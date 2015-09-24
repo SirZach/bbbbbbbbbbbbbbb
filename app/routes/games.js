@@ -9,16 +9,16 @@ export default Ember.Route.extend({
 
   actions: {
     deleteGame: function(game) {
-      var gameId = game.get('id');
-      var store = this.store;
-      var notifications = this.notifications;
+      let gameId = game.get('id');
+      let store = this.store;
+      let notifications = this.notifications;
 
       game.destroyRecord().then(() => {
         store.find('chat', {
           orderBy: 'channel',
           equalTo: gameId
         }).then(function(gameChats) {
-          var promises = gameChats.map((chat) => chat.destroyRecord());
+          let promises = gameChats.map((chat) => chat.destroyRecord());
           Ember.RSVP
             .all(promises)
             .then(() => {

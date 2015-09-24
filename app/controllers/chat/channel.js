@@ -10,7 +10,7 @@ export default Ember.Controller.extend({
   channel: null,
 
   sortedPresences: function() {
-    var presences = this.get('presences');
+    let presences = this.get('presences');
     if (!presences) {
       return null;
     }

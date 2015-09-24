@@ -6,7 +6,7 @@ const { computed, get } = Ember;
 /**
  * Represents a collection of CardGroups.
  */
-var CardFamily = Ember.Object.extend({
+let CardFamily = Ember.Object.extend({
   /** @property {Boolean} */
   isMain: null,
 
@@ -15,8 +15,8 @@ var CardFamily = Ember.Object.extend({
 
   /** @property {String} - e.g. main-Creature */
   superType: function() {
-    var isMain = this.get('isMain');
-    var type = this.get('type');
+    let isMain = this.get('isMain');
+    let type = this.get('type');
 
     return isMain ? `main-${type}` : `side-${type}`;
   }.property('isMain', 'type'),
@@ -44,7 +44,7 @@ function computeIsLegal(style) {
   }.property('cardGroups.@each.card.' + style);
 }
 
-var Deck = DS.Model.extend({
+let Deck = DS.Model.extend({
   /** @property {User} - owner of the deck */
   owner: DS.belongsTo('user', {async: true}),
 
@@ -94,7 +94,7 @@ var Deck = DS.Model.extend({
 
   /** @property {String} -  */
   classification: function() {
-    var isStandard = this.get('isStandard'),
+    let isStandard = this.get('isStandard'),
         isModern = this.get('isModern'),
         isLegacy = this.get('isLegacy'),
         isVintage = this.get('isVintage');
@@ -120,9 +120,9 @@ var Deck = DS.Model.extend({
    *                              lands, etc.
    */
   mainDeckFamilies: function() {
-    var cardGroups = this.get('mainCardGroups');
-    var cardTypes = this.get('mainCardTypes');
-    var cardFamilies = cardTypes.map(function(cardType) {
+    let cardGroups = this.get('mainCardGroups');
+    let cardTypes = this.get('mainCardTypes');
+    let cardFamilies = cardTypes.map(function(cardType) {
           return CardFamily.create({
             isMain: true,
             type: cardType,
@@ -146,9 +146,9 @@ var Deck = DS.Model.extend({
    *                              lands, etc.
    */
   sideDeckFamilies: function() {
-    var cardGroups = this.get('sideCardGroups');
-    var cardTypes = this.get('sideCardTypes');
-    var cardFamilies = cardTypes.map(function(cardType) {
+    let cardGroups = this.get('sideCardGroups');
+    let cardTypes = this.get('sideCardTypes');
+    let cardFamilies = cardTypes.map(function(cardType) {
           return CardFamily.create({
             isMain: false,
             type: cardType,
@@ -172,7 +172,7 @@ var Deck = DS.Model.extend({
       return true;
     }
 
-    var cardGroup = this.getCardGroup(name, board);
+    let cardGroup = this.getCardGroup(name, board);
     if (!cardGroup) {
       return true;
     }
@@ -189,7 +189,7 @@ var Deck = DS.Model.extend({
    * @return {CardGroup|null}
    */
   getCardGroup: function(name, board) {
-    var cardGroups = this.getWithDefault(board + 'CardGroups', []);
+    let cardGroups = this.getWithDefault(board + 'CardGroups', []);
     return cardGroups.filterBy('card.name', name)[0];
   },
 
@@ -201,7 +201,7 @@ var Deck = DS.Model.extend({
    * @param {Number} count - (optional) number of cards to add
    */
   addCard: function(card, board, count) {
-    var cardGroup = this.getCardGroup(card.get('name'), board);
+    let cardGroup = this.getCardGroup(card.get('name'), board);
     if (!cardGroup) {
       cardGroup = this.store.createRecord('card-group', {
         board: board,
@@ -223,7 +223,7 @@ var Deck = DS.Model.extend({
    * @param {String} board - 'main', 'side'
    */
   removeCard: function(card, board) {
-    var cardGroup;
+    let cardGroup;
     cardGroup = this.getCardGroup(card.get('name'), board);
     if (cardGroup) {
       cardGroup.decrementProperty('count');
@@ -240,8 +240,8 @@ var Deck = DS.Model.extend({
    * @param {String} board - 'main', 'side'
    */
   removeAllCards: function(card, board) {
-    var cardGroups = this.get('cardGroups');
-    var cardGroup = this.getCardGroup(card.get('name'), board);
+    let cardGroups = this.get('cardGroups');
+    let cardGroup = this.getCardGroup(card.get('name'), board);
     if (cardGroup) {
       cardGroups.removeObject(cardGroup);
     }
@@ -249,9 +249,9 @@ var Deck = DS.Model.extend({
 
   /** @property {String} - a string representation of the deck that Cockatrice knows how to parse and import */
   exportFormat: function() {
-    var mainDeckFamilies = this.get('mainDeckFamilies');
-    var sideDeckFamilies = this.get('sideDeckFamilies');
-    var exp = '';
+    let mainDeckFamilies = this.get('mainDeckFamilies');
+    let sideDeckFamilies = this.get('sideDeckFamilies');
+    let exp = '';
 
     mainDeckFamilies.forEach(function(family) {
       family.get('cardGroups').forEach(function(cardGroup) {
@@ -277,8 +277,8 @@ var Deck = DS.Model.extend({
 
   /** @property {Number} - the total number of unique cards in the main and sideboard */
   numberOfUniqueCardsInDeck: function() {
-    var mainCardGroups = this.get('mainCardGroups');
-    var sideCardGroups = this.get('sideCardGroups');
+    let mainCardGroups = this.get('mainCardGroups');
+    let sideCardGroups = this.get('sideCardGroups');
     return mainCardGroups.get('length') + sideCardGroups.get('length');
   }.property('cardGroups.[]'),
 
@@ -287,7 +287,7 @@ var Deck = DS.Model.extend({
 
   /** @property {String} - default image url; uses a card in the deck */
   defaultImageUrl: function() {
-    var cardGroups = this.get('mainCardGroups');
+    let cardGroups = this.get('mainCardGroups');
     return cardGroups.filterBy('card.mainType', 'Creature')
       .sortBy('card.cmc')
       .get('lastObject.card.imageUrl');
@@ -309,15 +309,15 @@ Deck.reopenClass({
    * @return {Promise} - Resolves with {deck: Deck, errors: String[]}
    */
   createFromImport: function(importText, store) {
-    var deck = store.createRecord('deck');
+    let deck = store.createRecord('deck');
 
     // Flag for indicating all further cards should belong to the sideboard.
     // Sideboarded cards are either each preceeded by "SB: " (Cockatrice style)
     // or by a "Sideboard:" line (Tapped Out style).
-    var sideboardReached = false;
-    var lines = importText.split('\n');
-    var errors = [];
-    var promises = [];
+    let sideboardReached = false;
+    let lines = importText.split('\n');
+    let errors = [];
+    let promises = [];
     lines.forEach(function(line) {
       try {
         line = line.trim();
@@ -329,7 +329,7 @@ Deck.reopenClass({
           return;
         }
 
-        var board = sideboardReached || /^SB: /.test(line) ? 'side' : 'main';
+        let board = sideboardReached || /^SB: /.test(line) ? 'side' : 'main';
 
         // Regex description:
         // Match an optional "SB: " string at the beginning.
@@ -338,12 +338,12 @@ Deck.reopenClass({
         // Look for at least one whitespace character.
         // match the rest of the line as the card name.
         //
-        var options = /^(SB: )?(\d+)x?\s+(.+)$/.exec(line);
-        var count = Number(options[options.length - 2]);
+        let options = /^(SB: )?(\d+)x?\s+(.+)$/.exec(line);
+        let count = Number(options[options.length - 2]);
         if (isNaN(count)) {
           throw new Error(options[options.length - 2] + ' is not a number');
         }
-        var name = options[options.length - 1];
+        let name = options[options.length - 1];
         if (name.length === 0) {
           throw new Error('No card name specified');
         }

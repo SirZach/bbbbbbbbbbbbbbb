@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model: function(params) {
-    var store = this.store;
+    let store = this.store;
     this.set('channel', params.channel);
     // ATTN PLEASE: HACK ATTACK.
     // Do a query against the server using the Firebase API. This returns an
@@ -23,7 +23,7 @@ export default Ember.Route.extend({
   setupController: function(controller, model) {
     controller.set('channel', this.get('channel'));
     controller.set('presences');
-    var presences = this.store.filter('presence', {}, presence => !!presence.get('user'));
+    let presences = this.store.filter('presence', {}, presence => !!presence.get('user'));
     controller.set('presences', presences);
     return this._super(controller, model);
   }

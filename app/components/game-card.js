@@ -3,10 +3,10 @@ import Ember from 'ember';
 import layout from '../templates/components/game-card';
 import GameCard from '../models/game-card';
 
-var MAGNIFYING_GLASS_WIDTH = 250;
-var MAGNIFYING_GLASS_HEIGHT = 250;
-var MAGNIFIED_CARD_WIDTH = 250;
-var MAGNIFIED_CARD_HEIGHT = 347.5;
+let MAGNIFYING_GLASS_WIDTH = 250;
+let MAGNIFYING_GLASS_HEIGHT = 250;
+let MAGNIFIED_CARD_WIDTH = 250;
+let MAGNIFIED_CARD_HEIGHT = 347.5;
 
 export default Ember.Component.extend({
   layout: layout,
@@ -22,8 +22,8 @@ export default Ember.Component.extend({
 
   /** @property {DS.Model Card} */
   card: function() {
-    var gameCardId = this.get('gameCard.cardId');
-    var cards = this.get('cards');
+    let gameCardId = this.get('gameCard.cardId');
+    let cards = this.get('cards');
 
     return cards ? cards.findBy('id', gameCardId) : null;
   }.property('cards.@each.cardId', 'gameCard.cardId'),
@@ -42,7 +42,7 @@ export default Ember.Component.extend({
 
   /** Attach document key handlers for magnifying purposes. */
   attachKeyHandlers: Ember.on('init', function() {
-    var scope = Ember.guidFor(this);
+    let scope = Ember.guidFor(this);
     $(document).on(`keydown.${scope}`, event => {
       if (event.which === 90) {
         Ember.run(() => {
@@ -66,8 +66,8 @@ export default Ember.Component.extend({
 
   dragStart: function(event) {
     if (!this.get('readOnly')) {
-      var gameCard = this.get('gameCard');
-      var dragData = JSON.stringify({
+      let gameCard = this.get('gameCard');
+      let dragData = JSON.stringify({
         cardId: gameCard.get('cardId'),
         id: gameCard.get('id')
       });
@@ -94,13 +94,13 @@ export default Ember.Component.extend({
 
   setMagnifyBounds() {
     // Calculate the bounds of the image inside this element.
-    var isTapped = this.get('isTapped');
-    var $img = $(this.element).find('img');
-    var magnifyMinX = $img.offset().left;
-    var magnifyMaxX = $img.offset().left +
+    let isTapped = this.get('isTapped');
+    let $img = $(this.element).find('img');
+    let magnifyMinX = $img.offset().left;
+    let magnifyMaxX = $img.offset().left +
       (isTapped ? $img.height() : $img.width());
-    var magnifyMinY = $img.offset().top;
-    var magnifyMaxY = $img.offset().top +
+    let magnifyMinY = $img.offset().top;
+    let magnifyMaxY = $img.offset().top +
       (isTapped ? $img.width() : $img.height());
     this.setProperties({
       magnifyMinX,
@@ -120,12 +120,12 @@ export default Ember.Component.extend({
     }
 
     // See if we are over the image.
-    var mouseX = event.clientX;
-    var mouseY = event.clientY;
-    var magnifyMinX = this.get('magnifyMinX');
-    var magnifyMaxX = this.get('magnifyMaxX');
-    var magnifyMinY = this.get('magnifyMinY');
-    var magnifyMaxY = this.get('magnifyMaxY');
+    let mouseX = event.clientX;
+    let mouseY = event.clientY;
+    let magnifyMinX = this.get('magnifyMinX');
+    let magnifyMaxX = this.get('magnifyMaxX');
+    let magnifyMinY = this.get('magnifyMinY');
+    let magnifyMaxY = this.get('magnifyMaxY');
     if (mouseX < magnifyMinX ||
         mouseX > magnifyMaxX ||
         mouseY < magnifyMinY ||
@@ -135,34 +135,34 @@ export default Ember.Component.extend({
     } else {
       this.createMagnifiedCardElement();
     }
-    var isTapped = this.get('isTapped');
-    var settings = {isTapped};
+    let isTapped = this.get('isTapped');
+    let settings = {isTapped};
 
     // Top and left coordinates for the placement of the magnifying glass.
-    var left = mouseX - MAGNIFYING_GLASS_WIDTH / 2;
-    var top = mouseY - MAGNIFYING_GLASS_HEIGHT / 2;
+    let left = mouseX - MAGNIFYING_GLASS_WIDTH / 2;
+    let top = mouseY - MAGNIFYING_GLASS_HEIGHT / 2;
     settings.left = left;
     settings.top = top;
 
     // X and Y coordinates for the inner position of the background image. Note
     // that X and Y are rotated 90 degrees when the card is tapped.
     //
-    var mouseRatioX, mouseRatioY;
+    let mouseRatioX, mouseRatioY;
     if (isTapped) {
       mouseRatioY = (mouseY - magnifyMinY) / 139;
-      var tappedBackgroundX = -mouseRatioY * MAGNIFIED_CARD_HEIGHT +
+      let tappedBackgroundX = -mouseRatioY * MAGNIFIED_CARD_HEIGHT +
         MAGNIFYING_GLASS_HEIGHT / 2;
       mouseRatioX = (mouseX - magnifyMinX) / 139;
-      var tappedBackgroundY = mouseRatioX * MAGNIFIED_CARD_HEIGHT -
+      let tappedBackgroundY = mouseRatioX * MAGNIFIED_CARD_HEIGHT -
         MAGNIFIED_CARD_HEIGHT + MAGNIFYING_GLASS_WIDTH / 2;
       settings.x = tappedBackgroundX;
       settings.y = tappedBackgroundY;
     } else {
       mouseRatioX = (mouseX - magnifyMinX) / 100;
-      var backgroundX = -mouseRatioX * MAGNIFIED_CARD_WIDTH +
+      let backgroundX = -mouseRatioX * MAGNIFIED_CARD_WIDTH +
         MAGNIFYING_GLASS_WIDTH / 2;
       mouseRatioY = (mouseY - magnifyMinY) / 139;
-      var backgroundY = -mouseRatioY * MAGNIFIED_CARD_HEIGHT +
+      let backgroundY = -mouseRatioY * MAGNIFIED_CARD_HEIGHT +
         MAGNIFYING_GLASS_HEIGHT / 2;
       settings.x = backgroundX;
       settings.y = backgroundY;
@@ -181,18 +181,18 @@ export default Ember.Component.extend({
    * for uniqueness.
    */
   magnifiedCardElementId: Ember.computed(function() {
-    var id = this.element.id;
+    let id = this.element.id;
     return id + '-magnified';
   }),
 
   createMagnifiedCardElement() {
     this.set('isMagnifying', true);
-    var $el = this.get('$magnifiedCardElement');
+    let $el = this.get('$magnifiedCardElement');
     if ($el) {
       return;
     }
-    var id = this.get('magnifiedCardElementId');
-    var template = `<div id="${id}" class="game-card-magnify"></div>`;
+    let id = this.get('magnifiedCardElementId');
+    let template = `<div id="${id}" class="game-card-magnify"></div>`;
     $('body').append(template);
     $el = $(`#${id}`);
     $el.css('background-image', `url("${this.get('card.imageUrl')}")`);
@@ -203,7 +203,7 @@ export default Ember.Component.extend({
 
   destroyMagnifiedCardElement() {
     this.set('isMagnifying', false);
-    var $el = this.get('$magnifiedCardElement');
+    let $el = this.get('$magnifiedCardElement');
     if ($el) {
       $el.remove();
       this.set('$magnifiedCardElement');
@@ -211,7 +211,7 @@ export default Ember.Component.extend({
   },
 
   updateMagnifiedCardElement({top, left, x, y, isTapped}) {
-    var $el = this.get('$magnifiedCardElement');
+    let $el = this.get('$magnifiedCardElement');
     if ($el) {
       $el.css({
         top: `${top}px`,
@@ -231,7 +231,7 @@ export default Ember.Component.extend({
     /** Clean up key handlers. */
     willDestroyElement() {
       this.destroyMagnifiedCardElement();
-      var scope = Ember.guidFor(this);
+      let scope = Ember.guidFor(this);
       $(document).off(`keydown.${scope}`);
       $(document).off(`keyup.${scope}`);
     }

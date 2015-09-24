@@ -8,12 +8,12 @@ export default Ember.Route.extend({
    * @return {Promise} Resolves with Array<Card>
    */
   retrieveDSCards (game) {
-    var controller = this.controllerFor('game');
-    var store = this.store;
+    let controller = this.controllerFor('game');
+    let store = this.store;
     //load all the real card models into the store for future use
-    var players = game.get('players');
-    var promises = players.reduce((prev, p) => {
-      var gameCards = Ember.get(p, 'gameCards') || [];
+    let players = game.get('players');
+    let promises = players.reduce((prev, p) => {
+      let gameCards = Ember.get(p, 'gameCards') || [];
       prev = prev.concat(gameCards.filter((card) => !card.isToken).map((card) => store.find('card', card.cardId)));
       return prev;
     }, []);
@@ -22,7 +22,7 @@ export default Ember.Route.extend({
   },
 
   afterModel: function(model) {
-    var store = this.store;
+    let store = this.store;
 
     // If you are not logged in, allow anonymous access to the game.
     if (!this.get('session.isAuthenticated')) {
@@ -32,16 +32,16 @@ export default Ember.Route.extend({
     // By default, add yourself as a watcher unless you're already in the
     // participants list.
     //
-    var gameParticipants = model.get('gameParticipants');
-    var user = this.get('session.user');
-    var gameParticipant;
+    let gameParticipants = model.get('gameParticipants');
+    let user = this.get('session.user');
+    let gameParticipant;
     // Fetch all users to see if we are one of them.
-    var promises = [user].concat(gameParticipants.mapBy('user'));
+    let promises = [user].concat(gameParticipants.mapBy('user'));
 
     return Ember.RSVP.all(promises).then((users) => {
-      var me = users.shift();
-      var myId = me.get('id');
-      var userIds = users.mapBy('id');
+      let me = users.shift();
+      let myId = me.get('id');
+      let userIds = users.mapBy('id');
       if (!userIds.contains(user.get('id'))) {
         gameParticipant = store.createRecord('game-participant');
         gameParticipant.setProperties({
@@ -57,7 +57,7 @@ export default Ember.Route.extend({
       gameParticipant.set('isPresent', true);
       this.set('gameParticipant', gameParticipant);
       // Queue the participant disconnect behavior.
-      var participantRef = this.get('gameParticipantRef');
+      let participantRef = this.get('gameParticipantRef');
       // Simply mark as not present. We don't want to destroy participants if
       // they happen to actually be playing.
       participantRef.child('isPresent').onDisconnect().set(false);
@@ -78,12 +78,12 @@ export default Ember.Route.extend({
     this._super.apply(this, arguments);
 
     //TODO: move this to the route, duh
-    var store = this.store;
+    let store = this.store;
     store.find('chat', {
       orderBy: 'channel',
       equalTo: game.id
     }).then(function() {
-      var gameChats = store.filter('chat', function(chat) {
+      let gameChats = store.filter('chat', function(chat) {
         return chat.get('channel') === game.id;
       });
 
@@ -109,9 +109,9 @@ export default Ember.Route.extend({
     },
 
     showToken: function(player) {
-      var gameCards = player.get('gameCards');
-      var createTokenController = this.controllerFor('game/create-token');
-      var gameCard = GameCard.create({
+      let gameCards = player.get('gameCards');
+      let createTokenController = this.controllerFor('game/create-token');
+      let gameCard = GameCard.create({
         order: gameCards.length + 1,
         zone: GameCard.BATTLEFIELD,
         isToken: true
@@ -136,8 +136,8 @@ export default Ember.Route.extend({
      * Use this action for all game saves as a mediocre approach to handling security
      */
     updateGame: function() {
-      var controller = this.get('controller');
-      var game = controller.get('model');
+      let controller = this.get('controller');
+      let game = controller.get('model');
 
       if (controller.get('amIPlayerOne')) {
         game.save();
@@ -150,7 +150,7 @@ export default Ember.Route.extend({
      * Close the left column
      */
     closeLeftColumn: function() {
-      var controller = this.get('controller');
+      let controller = this.get('controller');
 
       controller.setProperties({
         leftColumnPlayer: null,
@@ -177,18 +177,18 @@ export default Ember.Route.extend({
      * to atomically alter the list of playing participants.
      */
     joinAsPlayer: function() {
-      var user = this.get('session.user');
-      var gameParticipantsRef = this.store.refFor('game', this.modelFor('game'))
+      let user = this.get('session.user');
+      let gameParticipantsRef = this.store.refFor('game', this.modelFor('game'))
         .child('gameParticipants');
       gameParticipantsRef.transaction((gameParticipants) => {
         // Try to add myself as a player. Check first that there are not two
         // players already present.
         //
-        var numPlayers = 0;
-        var myParticipant;
-        for (var id in gameParticipants) {
+        let numPlayers = 0;
+        let myParticipant;
+        for (let id in gameParticipants) {
           if (gameParticipants.hasOwnProperty(id)) {
-            var participant = gameParticipants[id];
+            let participant = gameParticipants[id];
             if (participant.isPlaying) {
               numPlayers++;
             }

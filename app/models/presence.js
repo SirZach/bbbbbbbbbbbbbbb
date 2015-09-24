@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 
-var PRIORITIES = {
+let PRIORITIES = {
   online: 1,
   idle: 2,
   offline: 3
@@ -12,7 +12,7 @@ export default DS.Model.extend({
   lastSeen: DS.attr('date'),
 
   statePriority: function() {
-    var state = this.get('state');
+    let state = this.get('state');
     return PRIORITIES[state] || 99;
   }.property('state')
 });

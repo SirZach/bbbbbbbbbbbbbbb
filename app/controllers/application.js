@@ -18,7 +18,7 @@ export default Ember.Controller.extend({
 
   /** @property {Boolean} Classes to apply to the side nav container. */
   navContainerClassnames: computed('forceSidenavUnlocked', function() {
-    var classNames = 'ember-app';
+    let classNames = 'ember-app';
     if (this.get('forceSidenavUnlocked')) {
       classNames += ' force-unlocked';
     }

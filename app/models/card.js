@@ -63,7 +63,7 @@ export default DS.Model.extend({
   recentSet: DS.attr('string'),
 
   imageUrl: function() {
-    var host = 'https://big-furry-monster.herokuapp.com';
+    let host = 'https://big-furry-monster.herokuapp.com';
     if (ENV.environment === 'development') {
       host = 'http://localhost:3000';
     }
@@ -81,7 +81,7 @@ export default DS.Model.extend({
 
   /** @property {String} display color - e.g. blue; colorless; multicolored */
   displayColor: function() {
-    var colors = this.get('colors');
+    let colors = this.get('colors');
     if (!colors || !colors.length) {
       return 'colorless';
     }

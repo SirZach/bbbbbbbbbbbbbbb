@@ -6,7 +6,7 @@
  * @return {Array} That same array, shuffled.
  */
 export default function shuffle(array) {
-  var index = array.length, temp, random;
+  let index = array.length, temp, random;
   // While there are elements in the array.
   while (index > 0) {
     // Pick a random index.

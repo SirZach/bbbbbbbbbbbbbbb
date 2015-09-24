@@ -43,11 +43,11 @@ export default Ember.Component.extend({
   tagName: 'span',
 
   formattedCharacters: function() {
-    var mana = this.get('mana'),
+    let mana = this.get('mana'),
         charObjects = [];
 
-    for (var i = 0; i < mana.length; i++) {
-      var char = mana.charAt(i);
+    for (let i = 0; i < mana.length; i++) {
+      let char = mana.charAt(i);
       charObjects.pushObject(getSymbol(char));
     }
 
