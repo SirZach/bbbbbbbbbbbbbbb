@@ -3,7 +3,7 @@ import DS from 'ember-data';
 
 export default DS.Model.extend({
   /** @property {Card} - the card model with all the info about it */
-  card: DS.belongsTo('card', {async: true}),
+  card: DS.belongsTo('card', { async: true }),
 
   /** @property {String} - 'main', 'side' (, 'maybe?') */
   board: DS.attr('string'),

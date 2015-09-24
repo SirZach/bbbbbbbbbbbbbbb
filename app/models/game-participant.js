@@ -4,16 +4,16 @@ import GameCard from './game-card';
 
 export default DS.Model.extend({
   /** @property {User} Reference to the user record. */
-  user: DS.belongsTo('user', {async: true}),
+  user: DS.belongsTo('user', { async: true }),
 
   /** @property {Boolean} Is this person a player (or a watcher)? */
-  isPlaying: DS.attr('boolean', {defaultValue: false}),
+  isPlaying: DS.attr('boolean', { defaultValue: false }),
 
   /** @property {Boolean} Is this person online and in the game room? */
-  isPresent: DS.attr('boolean', {defaultValue: true}),
+  isPresent: DS.attr('boolean', { defaultValue: true }),
 
   /** @property {Boolean} Is this person ready to play? */
-  isReady: DS.attr('boolean', {defaultValue: false}),
+  isReady: DS.attr('boolean', { defaultValue: false }),
 
   /** @property {String} The name of the deck being used. */
   deckName: DS.attr('string'),
@@ -89,7 +89,7 @@ export default DS.Model.extend({
     return this.get('gameCards').filterBy('zone', GameCard.BATTLEFIELD);
   }),
 
-  setGameCardsRaw: function() {
+  setGameCardsRaw() {
     let gameCards = this.get('gameCards');
     if (gameCards) {
       this.set('gameCardsRaw', JSON.stringify(gameCards));

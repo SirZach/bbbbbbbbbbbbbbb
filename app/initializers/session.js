@@ -58,7 +58,7 @@ let session = Ember.Object.extend({
     }
     let promise = this.updateOrCreateUser(authData.uid, socialUserData);
     let userPromiseProxy = DS.PromiseObject.create({
-      promise: promise
+      promise
     });
     this.set('user', userPromiseProxy);
     return userPromiseProxy.then(() => this.bindPresence());
@@ -150,13 +150,13 @@ let session = Ember.Object.extend({
   bindPresence() {
     // The user is a promise object that has resolved by now.
     let user = this.get('user.content');
-    let amOnline = new Firebase(FIREBASE_URL + '/.info/connected');
+    let amOnline = new Firebase(`${FIREBASE_URL}/.info/connected`);
     let store = this.get('store');
     let session = this;
     return user.get('presence').then(function(presence) {
       if (!presence) {
         presence = store.createRecord('presence', {
-          user: user
+          user
         });
         user.set('presence', presence);
         user.save();
@@ -202,8 +202,8 @@ let session = Ember.Object.extend({
   loginWithPassword(email, password) {
     return new Ember.RSVP.Promise((resolve, reject) => {
       this.get('ref').authWithPassword({
-        email: email,
-        password: password
+        email,
+        password
       }, (error, userData) => {
         if (error) {
           Ember.run(() => reject(error));
@@ -226,17 +226,17 @@ let session = Ember.Object.extend({
   signupWithPassword(username, email, password) {
     return new Ember.RSVP.Promise((resolve, reject) => {
       this.get('ref').createUser({
-        email: email,
-        password: password
+        email,
+        password
       }, (error, userData) => {
         if (error) {
           Ember.run(() => reject(error));
         } else {
           Ember.run(() => {
             resolve(this.createPasswordUser(Ember.merge(userData, {
-              username: username,
-              email: email,
-              password: password
+              username,
+              email,
+              password
             })));
           });
         }
@@ -275,21 +275,21 @@ let session = Ember.Object.extend({
     }
     let userData;
 
-    let provider = authData.provider;
+    let { provider } = authData;
     if (provider === 'github') {
       userData = {
         username: authData.github.username,
         avatarUrl: authData.github.cachedUserProfile.avatar_url,
         displayName: authData.github.displayName,
         email: authData.github.email,
-        provider: provider
+        provider
       };
     } else if (provider === 'twitter') {
       userData = {
         username: authData.twitter.username,
         avatarUrl: `http://avatars.io/twitter/${authData.twitter.username}?size=large`,
         displayName: authData.twitter.displayName,
-        provider: provider
+        provider
       };
     } else {
       provider = provider || '<null>';
@@ -306,7 +306,7 @@ let session = Ember.Object.extend({
   /** @property {Boolean} A convenience property to see if the user can write to
    *                      Firebase.
    */
-  doesNotHaveWriteAccess: Ember.computed.not('hasWriteAccess'),
+  doesNotHaveWriteAccess: Ember.computed.not('hasWriteAccess')
 });
 
 export default {

@@ -185,9 +185,9 @@ export default Ember.Controller.extend({
   /** @property {Array<DS.GameCard>} */
   leftColumnCards: Ember.computed('leftColumnPlayer', 'leftColumnZone', 'playerOne.gameCards.@each.zone', 'playerTwo.gameCards.@each.zone', function() {
     let player = this.get('leftColumnPlayer');
-    let zone = this.get('leftColumnZone');
+    let zone = this.get('leftColumnZone').capitalize();
 
-    return player ? player.get('cardsIn' + zone.capitalize()) : [];
+    return player ? player.get(`cardsIn${zone}`) : [];
   }),
 
   /** @property {Boolean} a card is being dragged */
@@ -397,7 +397,7 @@ export default Ember.Controller.extend({
         let gameCard = player.get('gameCards').findBy('id', cardData.id);
 
         gameCard.setProperties({
-          zone: zone,
+          zone,
           isTapped: false
         });
         this.send('updateGame');

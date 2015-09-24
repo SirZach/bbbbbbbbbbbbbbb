@@ -9,8 +9,8 @@ let Log = Ember.Object.extend({
     let logMessage = store.createRecord('log-message', {
       username: user && user.get('username'),
       userId: user && user.get('id'),
-      message: message,
-      level: level
+      message,
+      level
     });
     let logMessageId = logMessage.get('id');
     logMessage.set('id', `${level}${logMessageId}`);

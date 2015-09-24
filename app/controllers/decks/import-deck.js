@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
 
       this.get('session.user').then((user) => {
         Deck.createFromImport(importContents, this.store).then((result) => {
-          let deck = result.deck;
+          let { deck } = result;
           deck.set('owner', user);
           let { errors } = result;
 

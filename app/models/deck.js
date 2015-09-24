@@ -38,15 +38,17 @@ let CardFamily = Ember.Object.extend({
  * @return {Ember.computed}
  */
 function computeIsLegal(style) {
-  style = 'is' + style.capitalize();
+  let capitalizedStyle = style.capitalize();
+
+  style = `is${capitalizedStyle}`;
   return function() {
-    return this.get('cardGroups').isEvery('card.' + style);
+    return this.get('cardGroups').isEvery(`card.${style}`);
   }.property('cardGroups.@each.card.' + style);
 }
 
 let Deck = DS.Model.extend({
   /** @property {User} - owner of the deck */
-  owner: DS.belongsTo('user', {async: true}),
+  owner: DS.belongsTo('user', { async: true }),
 
   /** @property {String} - the deck name */
   name: DS.attr('string'),
@@ -55,7 +57,7 @@ let Deck = DS.Model.extend({
   comments: DS.attr('string'),
 
   /** @property {Array[CardGroup]} - individual card multiples */
-  cardGroups: DS.hasMany('cardGroup', {async: false}),
+  cardGroups: DS.hasMany('cardGroup', { async: false }),
 
   sortedCardGroups: Ember.computed.sort('cardGroups', function(a, b) {
     return a.get('card.name') < b.get('card.name') ? -1 : 1;
@@ -94,10 +96,10 @@ let Deck = DS.Model.extend({
 
   /** @property {String} -  */
   classification: function() {
-    let isStandard = this.get('isStandard'),
-        isModern = this.get('isModern'),
-        isLegacy = this.get('isLegacy'),
-        isVintage = this.get('isVintage');
+    let isStandard = this.get('isStandard');
+    let isModern = this.get('isModern');
+    let isLegacy = this.get('isLegacy');
+    let isVintage = this.get('isVintage');
 
     if (this.get('cardGroups.length') === 0) {
       return '';
@@ -166,7 +168,7 @@ let Deck = DS.Model.extend({
    *
    * @return {Boolean}
    */
-  canAddToDeck: function(name, board) {
+  canAddToDeck(name, board) {
     if (SpecialCards.BASIC_LANDS.contains(name) ||
         SpecialCards.MORE_THAN_FOUR_LEGAL.contains(name)) {
       return true;
@@ -188,8 +190,8 @@ let Deck = DS.Model.extend({
    *
    * @return {CardGroup|null}
    */
-  getCardGroup: function(name, board) {
-    let cardGroups = this.getWithDefault(board + 'CardGroups', []);
+  getCardGroup(name, board) {
+    let cardGroups = this.getWithDefault(`${board}CardGroups`, []);
     return cardGroups.filterBy('card.name', name)[0];
   },
 
@@ -200,13 +202,13 @@ let Deck = DS.Model.extend({
    * @param {String} board - 'main', 'side'
    * @param {Number} count - (optional) number of cards to add
    */
-  addCard: function(card, board, count) {
+  addCard(card, board, count) {
     let cardGroup = this.getCardGroup(card.get('name'), board);
     if (!cardGroup) {
       cardGroup = this.store.createRecord('card-group', {
-        board: board,
+        board,
         count: 0,
-        card: card
+        card
       });
       this.get('cardGroups').pushObject(cardGroup);
     }
@@ -222,7 +224,7 @@ let Deck = DS.Model.extend({
    * @param {Card} card
    * @param {String} board - 'main', 'side'
    */
-  removeCard: function(card, board) {
+  removeCard(card, board) {
     let cardGroup;
     cardGroup = this.getCardGroup(card.get('name'), board);
     if (cardGroup) {
@@ -239,7 +241,7 @@ let Deck = DS.Model.extend({
    * @param {Card} card
    * @param {String} board - 'main', 'side'
    */
-  removeAllCards: function(card, board) {
+  removeAllCards(card, board) {
     let cardGroups = this.get('cardGroups');
     let cardGroup = this.getCardGroup(card.get('name'), board);
     if (cardGroup) {
@@ -308,7 +310,7 @@ Deck.reopenClass({
    *
    * @return {Promise} - Resolves with {deck: Deck, errors: String[]}
    */
-  createFromImport: function(importText, store) {
+  createFromImport(importText, store) {
     let deck = store.createRecord('deck');
 
     // Flag for indicating all further cards should belong to the sideboard.
@@ -341,7 +343,9 @@ Deck.reopenClass({
         let options = /^(SB: )?(\d+)x?\s+(.+)$/.exec(line);
         let count = Number(options[options.length - 2]);
         if (isNaN(count)) {
-          throw new Error(options[options.length - 2] + ' is not a number');
+          let nanMessage = options[options.length - 2];
+
+          throw new Error(`${nanMessage} is not a number`);
         }
         let name = options[options.length - 1];
         if (name.length === 0) {
@@ -359,8 +363,8 @@ Deck.reopenClass({
     });
     return Ember.RSVP.all(promises).then(function() {
       return {
-        deck: deck,
-        errors: errors
+        deck,
+        errors
       };
     });
   }
