@@ -10,7 +10,7 @@ moduleForModel('deck', {
 
 // Replace this with your real tests.
 test('it exists', function(assert) {
-  var model = this.subject();
+  let model = this.subject();
   // var store = this.store();
   assert.ok(!!model);
 });

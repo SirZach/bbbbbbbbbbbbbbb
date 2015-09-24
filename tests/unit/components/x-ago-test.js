@@ -13,7 +13,7 @@ test('it renders', function(assert) {
   assert.expect(2);
 
   // creates the component instance
-  var component = this.subject();
+  let component = this.subject();
   Ember.run(function () {
     component.set('date', new Date());
   });
@@ -24,10 +24,10 @@ test('it renders', function(assert) {
   assert.equal(component._state, 'inDOM');
 });
 
-test('it renders a time ago', function (assert) {
+test('it renders a time ago', function(assert) {
   assert.expect(1);
 
-  var component = this.subject();
+  let component = this.subject();
   Ember.run(function () {
     component.set('date', moment().subtract(1, 'days').toDate());
   });

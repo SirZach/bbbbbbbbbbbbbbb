@@ -9,13 +9,13 @@ moduleFor('controller:games/list', {
 });
 
 test('canCreateGame - no logged in user', function(assert) {
-  var controller = this.subject();
+  let controller = this.subject();
   controller.set('session', {});
   assert.equal(controller.get('canCreateGame'), false);
 });
 
 test('canCreateGame - user is logged in', function(assert) {
-  var controller = this.subject();
+  let controller = this.subject();
   controller.set('session', {
     user: {}
   });

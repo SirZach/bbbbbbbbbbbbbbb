@@ -1,8 +1,10 @@
 import Ember from 'ember';
 import layout from '../templates/components/active-user-list';
 
-export default Ember.Component.extend({
-  layout: layout,
+const { Component } = Ember;
+
+export default Component.extend({
+  layout,
 
   classNames: 'active-user-list'
 });

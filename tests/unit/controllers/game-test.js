@@ -9,8 +9,8 @@ moduleFor('controller:game', {
   // needs: ['controller:foo']
 });
 
-test('top title is waiting for player when no players', function (assert) {
-  var controller = this.subject({
+test('top title is waiting for player when no players', function(assert) {
+  let controller = this.subject({
     model: {
       gameParticipants: []
     }
@@ -18,8 +18,8 @@ test('top title is waiting for player when no players', function (assert) {
   assert.equal(controller.get('topBoardTitle'), 'Waiting for player...');
 });
 
-test('bottom title is waiting for player when no players', function (assert) {
-  var controller = this.subject({
+test('bottom title is waiting for player when no players', function(assert) {
+  let controller = this.subject({
     model: {
       gameParticipants: []
     }
@@ -27,8 +27,8 @@ test('bottom title is waiting for player when no players', function (assert) {
   assert.equal(controller.get('bottomBoardTitle'), 'Waiting for player...');
 });
 
-test('top title is waiting for so-and-so to choose when one other player', function (assert) {
-  var controller = this.subject({
+test('top title is waiting for so-and-so to choose when one other player', function(assert) {
+  let controller = this.subject({
     model: {
       gameParticipants: [{
         user: {id: 'him', username: 'SirZach'},
@@ -39,8 +39,8 @@ test('top title is waiting for so-and-so to choose when one other player', funct
   assert.equal(controller.get('topBoardTitle'), 'Waiting for SirZach to choose a deck');
 });
 
-test('bottom title is choose a deck when you are preparing', function (assert) {
-  var controller = this.subject({
+test('bottom title is choose a deck when you are preparing', function(assert) {
+  let controller = this.subject({
     model: {
       gameParticipants: [Ember.Object.create({
         user: {id: 'me'},
@@ -54,8 +54,8 @@ test('bottom title is choose a deck when you are preparing', function (assert) {
   assert.equal(controller.get('bottomBoardTitle'), 'Choose a deck');
 });
 
-test('top title is he\'s ready when ready', function (assert) {
-  var controller = this.subject({
+test('top title is he\'s ready when ready', function(assert) {
+  let controller = this.subject({
     model: {
       gameParticipants: [Ember.Object.create({
         user: {id: 'him', username: 'SirZach'},
@@ -67,8 +67,8 @@ test('top title is he\'s ready when ready', function (assert) {
   assert.equal(controller.get('topBoardTitle'), 'SirZach is ready');
 });
 
-test('bottom title is he\s ready when ready', function (assert) {
-  var controller = this.subject({
+test('bottom title is he\s ready when ready', function(assert) {
+  let controller = this.subject({
     model: {
       gameParticipants: [Ember.Object.create({
         user: {id: 'him', username: 'SirZach'},
@@ -83,8 +83,8 @@ test('bottom title is he\s ready when ready', function (assert) {
   assert.equal(controller.get('bottomBoardTitle'), 'SirZach is ready');
 });
 
-test('bottom title is you are ready when I\'m ready', function (assert) {
-  var controller = this.subject({
+test('bottom title is you are ready when I\'m ready', function(assert) {
+  let controller = this.subject({
     model: {
       gameParticipants: [{
         user: {id: 'me', username: 'ahaurw01'},
