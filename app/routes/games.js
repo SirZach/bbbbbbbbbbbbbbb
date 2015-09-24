@@ -10,8 +10,7 @@ export default Ember.Route.extend({
   actions: {
     deleteGame(game) {
       let gameId = game.get('id');
-      let store = this.store;
-      let notifications = this.notifications;
+      let { store, notifications } = this;
 
       game.destroyRecord().then(() => {
         store.find('chat', {

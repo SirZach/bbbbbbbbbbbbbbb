@@ -1,4 +1,5 @@
 {
   "requireCommentsToIncludeAccess": null,
-  "requireBlocksOnNewline": null
+  "requireBlocksOnNewline": null,
+  "requireCamelCaseOrUpperCaseIdentifiers": null
 }

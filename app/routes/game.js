@@ -9,7 +9,7 @@ export default Ember.Route.extend({
    */
   retrieveDSCards(game) {
     let controller = this.controllerFor('game');
-    let store = this.store;
+    let { store } = this;
     // load all the real card models into the store for future use
     let players = game.get('players');
     let promises = players.reduce((prev, p) => {
@@ -18,7 +18,7 @@ export default Ember.Route.extend({
       return prev;
     }, []);
 
-    return Ember.RSVP.all(promises).then(cards => controller.set('cardsInDecks', cards.uniq()));
+    return Ember.RSVP.all(promises).then((cards) => controller.set('cardsInDecks', cards.uniq()));
   },
 
   afterModel(model) {
@@ -45,7 +45,7 @@ export default Ember.Route.extend({
       if (!userIds.contains(user.get('id'))) {
         gameParticipant = store.createRecord('game-participant');
         gameParticipant.setProperties({
-          user: user,
+          user,
           life: 20
         });
         gameParticipants.pushObject(gameParticipant);
@@ -118,7 +118,7 @@ export default Ember.Route.extend({
       });
 
       createTokenController.setProperties({
-        player: player,
+        player,
         game: this.modelFor('game')
       });
       this.send('openModal', 'game/create-token', gameCard);
