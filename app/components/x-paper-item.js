@@ -7,7 +7,7 @@ export default PaperItem.extend({
 
   classNameBindings: ['isExpanded'],
 
-  click: function() {
+  click() {
     this.toggleProperty('isExpanded');
   }
 });

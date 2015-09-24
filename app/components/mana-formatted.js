@@ -21,7 +21,7 @@ function getSymbol(letter) {
       symbol: '>',
       description: 'Forest'
     };
-  } else if (letter === 'W'){
+  } else if (letter === 'W') {
     return {
       symbol: '@',
       description: 'Plains'

@@ -37,7 +37,7 @@ export default Ember.Component.extend({
       this.sendAction('droppedOn', dragData, this.get('player'), this.get('title').toLowerCase());
 
       this.set('isDraggedOver', false);
-      //For some reason when this guy handles the drop, the dragEnd event is not fired. Le sigh.
+      // For some reason when this guy handles the drop, the dragEnd event is not fired. Le sigh.
       this.sendAction('dragEnded');
     }
   },

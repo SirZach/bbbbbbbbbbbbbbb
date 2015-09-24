@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
 
   nameSearch: Ember.computed.alias('cardsController.nameSearch'),
 
-  _triggerCardLookup: function() {
+  _triggerCardLookup() {
     this.send('getNewCards');
   },
 
@@ -26,11 +26,11 @@ export default Ember.Controller.extend({
   }.property('model.cardGroups.[]'),
 
   actions: {
-    toggleFiltersActive: function() {
+    toggleFiltersActive() {
       this.toggleProperty('filtersActive');
     },
 
-    clearFailedImports: function() {
+    clearFailedImports() {
       this.set('model.failedImports');
     }
   }

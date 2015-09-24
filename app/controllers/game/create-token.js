@@ -14,11 +14,11 @@ export default Ember.Controller.extend({
   description: null,
 
   actions: {
-    close: function() {
+    close() {
       return this.send('closeModal');
     },
 
-    createToken: function() {
+    createToken() {
       let gameCard = this.get('model');
       let player = this.get('player');
       let playerGameCards = player.get('gameCards');

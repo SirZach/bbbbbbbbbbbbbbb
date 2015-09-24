@@ -217,7 +217,7 @@ export default Ember.Controller.extend({
    * Prepare the deck for play. Create game card models for each card in the
    * main deck, shuffle. By default, cards are put in the library.
    */
-  initializeGameCards: function() {
+  initializeGameCards() {
     if (!this.get('hasChosenDeck')) {
       return;
     }
@@ -254,7 +254,7 @@ export default Ember.Controller.extend({
   }),
 
   /** @function get the game controller in a good state for another game */
-  resetState: function() {
+  resetState() {
     this.setProperties({
       showChat: true,
       showLeftColumn: false,
@@ -270,7 +270,7 @@ export default Ember.Controller.extend({
      *
      * @param {Deck} deck   The selected deck model.
      */
-    selectDeck: function(deck) {
+    selectDeck(deck) {
       if (!this.get('readOnly')) {
         let participant = this.get('participant');
         participant.setProperties({
@@ -284,7 +284,7 @@ export default Ember.Controller.extend({
     /**
      * Set the participant in the ready state
      */
-    iAmReady: function() {
+    iAmReady() {
       if (this.get('amIPlayerOne')) {
         let participant = this.get('participant');
         participant.set('isReady', true);
@@ -303,7 +303,7 @@ export default Ember.Controller.extend({
       this.set('says', null);
     },
 
-    toggleChat: function() {
+    toggleChat() {
       this.toggleProperty('showChat');
     },
 
@@ -313,7 +313,7 @@ export default Ember.Controller.extend({
      * @param cards
      * @param zone
      */
-    openLeftColumn: function(player, cards, zone) {
+    openLeftColumn(player, cards, zone) {
       if (this.get('amIPlayerOne')) {
         this.setProperties({
           leftColumnPlayer: player,
@@ -328,7 +328,7 @@ export default Ember.Controller.extend({
      * Not surrounded with a readOnly check since it's disabled altogether in the template
      * @param numCards
      */
-    drawCards: function(numCards) {
+    drawCards(numCards) {
       let library = this.get('participant.cardsInLibrary').toArray();
       if (library.get('length') > numCards) {
         for (let i = 0; i < numCards; i++) {
@@ -346,7 +346,7 @@ export default Ember.Controller.extend({
      * Shuffle the cards in player one's library
      * Not surrounded with a readOnly check since it's disabled altogether in the template
      */
-    shuffle: function() {
+    shuffle() {
       let library = this.get('participant.cardsInLibrary');
       let count = 0;
 
@@ -367,10 +367,10 @@ export default Ember.Controller.extend({
      * Send all cards from all the game zones back to the library, mainly utilized for a mulligan
      * Not surrounded with a readOnly check since it's disabled altogether in the template
      */
-    returnAllCards: function() {
+    returnAllCards() {
       if (this.get('amIPlayerOne')) {
         let participantGameCards = this.get('participant.gameCards');
-        participantGameCards.forEach(gameCard => gameCard.setProperties({
+        participantGameCards.forEach((gameCard) => gameCard.setProperties({
           zone: GameCard.LIBRARY,
           isTapped: false
         }));
@@ -382,7 +382,7 @@ export default Ember.Controller.extend({
     /**
       * Increment or decrement life
       */
-    changeLife: function(delta) {
+    changeLife(delta) {
       if (this.get('amIPlayerOne')) {
         let participant = this.get('participant');
         let life = participant.get('life');
@@ -392,7 +392,7 @@ export default Ember.Controller.extend({
       }
     },
 
-    droppedCard: function(cardData, player, zone) {
+    droppedCard(cardData, player, zone) {
       if (this.get('amIPlayerOne')) {
         let gameCard = player.get('gameCards').findBy('id', cardData.id);
 
@@ -409,7 +409,7 @@ export default Ember.Controller.extend({
      *
      * @param {GameCard} gameCard
      */
-    tap: function(gameCard) {
+    tap(gameCard) {
       if (this.get('amIPlayerOne')) {
         gameCard.toggleProperty('isTapped');
         this.send('updateGame');
@@ -419,7 +419,7 @@ export default Ember.Controller.extend({
     /**
       * A player has called it quits!
       */
-    endGame: function() {
+    endGame() {
       let game = this.get('model');
       game.set('status', 'ended');
       this.send('updateGame');

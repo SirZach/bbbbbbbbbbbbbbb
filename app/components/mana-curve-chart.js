@@ -31,7 +31,7 @@ export default Ember.Component.extend({
       let cmcBucket = grouped.findBy('cmc', cardGroup.get('card.cmc'));
       if (!cmcBucket) {
         grouped.pushObject(Ember.Object.create({
-          cmc: cmc,
+          cmc,
           content: []
         }));
       }

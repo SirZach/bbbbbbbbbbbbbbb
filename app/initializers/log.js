@@ -1,9 +1,8 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-
 let Log = Ember.Object.extend({
-  createLogMessage: function(message, level) {
+  createLogMessage(message, level) {
     let store = this.container.lookup('store:main');
     let session = this.container.lookup('session:main');
     let user = session.get('user.content');
@@ -19,19 +18,19 @@ let Log = Ember.Object.extend({
     return logMessage.save();
   },
 
-  error: function(message) {
+  error(message) {
     return this.createLogMessage(message, 'error');
   },
 
-  info: function(message) {
+  info(message) {
     return this.createLogMessage(message, 'info');
   }
 });
 
 export default {
-  name: "Log",
+  name: 'Log',
 
-  initialize: function(container, app) {
+  initialize(container, app) {
     app.register('log:main', Log);
     app.inject('component', 'log', 'log:main');
     app.inject('controller', 'log', 'log:main');

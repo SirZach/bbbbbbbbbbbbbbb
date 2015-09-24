@@ -38,7 +38,7 @@ let session = Ember.Object.extend({
     });
   }.on('init'),
 
-  logout: function() {
+  logout() {
     this.get('ref').unauth();
     this.set('user', null);
   },
@@ -51,7 +51,7 @@ let session = Ember.Object.extend({
    *
    * @return {Promise}
    */
-  initializeUser: function(authData) {
+  initializeUser(authData) {
     let socialUserData;
     if (authData.provider !== 'password') {
       socialUserData = this.parseSocialData(authData);
@@ -85,7 +85,7 @@ let session = Ember.Object.extend({
    *
    * @return {Promise}
    */
-  updateOrCreateUser: function(uid, socialUserData) {
+  updateOrCreateUser(uid, socialUserData) {
     if (!uid) {
       log.error(`No uid passed for user: ${socialUserData}.`);
       return;
@@ -126,7 +126,7 @@ let session = Ember.Object.extend({
     return store.find('user', query).then(afterFind, afterFind);
   },
 
-  onPresenceStateChange: function(state) {
+  onPresenceStateChange(state) {
     Ember.run(() => {
       if (!this.get('user.isFulfilled')) {
         return;
@@ -147,7 +147,7 @@ let session = Ember.Object.extend({
    *
    * @return {Promise}
    */
-  bindPresence: function() {
+  bindPresence() {
     // The user is a promise object that has resolved by now.
     let user = this.get('user.content');
     let amOnline = new Firebase(FIREBASE_URL + '/.info/connected');
@@ -179,7 +179,7 @@ let session = Ember.Object.extend({
     });
   },
 
-  loginWithSocial: function(provider) {
+  loginWithSocial(provider) {
     return new Ember.RSVP.Promise(function(resolve, reject) {
       this.get('ref').authWithOAuthPopup(provider, function(error, user) {
         if (user) {
@@ -199,7 +199,7 @@ let session = Ember.Object.extend({
    *
    * @return {Promise}
    */
-  loginWithPassword: function(email, password) {
+  loginWithPassword(email, password) {
     return new Ember.RSVP.Promise((resolve, reject) => {
       this.get('ref').authWithPassword({
         email: email,
@@ -223,7 +223,7 @@ let session = Ember.Object.extend({
    *
    * @return {Promise}
    */
-  signupWithPassword: function(username, email, password) {
+  signupWithPassword(username, email, password) {
     return new Ember.RSVP.Promise((resolve, reject) => {
       this.get('ref').createUser({
         email: email,
@@ -246,7 +246,7 @@ let session = Ember.Object.extend({
     });
   },
 
-  createPasswordUser: function(userData) {
+  createPasswordUser(userData) {
     let store = this.get('store');
     let user = store.createRecord('user');
     user.setProperties(userData);
@@ -268,7 +268,7 @@ let session = Ember.Object.extend({
    *
    * @return {Object} Parsed user info.
    */
-  parseSocialData: function(authData) {
+  parseSocialData(authData) {
     let log = this.get('log');
     if (!authData) {
       log.error('No authData provided to parseSocialData.');
@@ -310,9 +310,9 @@ let session = Ember.Object.extend({
 });
 
 export default {
-  name: "Session",
+  name: 'Session',
 
-  initialize: function(container, app) {
+  initialize(container, app) {
     app.register('session:main', session);
     app.inject('controller', 'session', 'session:main');
     app.inject('route', 'session', 'session:main');
