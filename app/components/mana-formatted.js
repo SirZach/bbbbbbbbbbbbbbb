@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-function getSymbol (letter) {
+function getSymbol(letter) {
   if (letter === 'U') {
     return {
       symbol: '+',
@@ -43,8 +43,8 @@ export default Ember.Component.extend({
   tagName: 'span',
 
   formattedCharacters: function() {
-    let mana = this.get('mana'),
-        charObjects = [];
+    let mana = this.get('mana');
+    let charObjects = [];
 
     for (let i = 0; i < mana.length; i++) {
       let char = mana.charAt(i);

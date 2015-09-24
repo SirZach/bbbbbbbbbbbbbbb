@@ -2,7 +2,7 @@ import Ember from 'ember';
 import layout from '../templates/components/lil-card';
 
 export default Ember.Component.extend({
-  layout: layout,
+  layout,
 
   classNameBindings: [':lil-card', 'color'],
 

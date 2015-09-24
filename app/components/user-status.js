@@ -2,13 +2,13 @@ import Ember from 'ember';
 import layout from '../templates/components/user-status';
 
 export default Ember.Component.extend({
-  layout: layout,
+  layout,
 
   classNameBindings: ['statusClass'],
 
   statusClass: function() {
     let state = this.get('presence.state');
-    return 'user-' + state;
+    return `user-${state}`;
   }.property('presence.state'),
 
   isOnline: Ember.computed.equal('presence.state', 'online'),

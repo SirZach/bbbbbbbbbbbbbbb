@@ -2,14 +2,14 @@ import Ember from 'ember';
 import layout from '../templates/components/lil-card-stack';
 
 export default Ember.Component.extend({
-  layout: layout,
+  layout,
 
   classNames: ['lil-card-stack'],
 
   /**
    * Handles the mouse/focus enter event for showing the related card image.
    */
-  mouseEnter: function() {
+  mouseEnter() {
     let card = this.get('cardGroup.card');
     this.sendAction('cardFocusIn', card);
   },
@@ -17,7 +17,7 @@ export default Ember.Component.extend({
   /**
    * Handles the mouse/focus leave event for hiding the related card image.
    */
-  mouseLeave: function() {
+  mouseLeave() {
     let card = this.get('cardGroup.card');
     this.sendAction('cardFocusOut', card);
   },

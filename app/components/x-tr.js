@@ -6,18 +6,18 @@ export default Ember.Component.extend({
   /**
    * Handles the mouse/focus enter event.
    */
-  mouseEnter: function($event) {
+  mouseEnter($event) {
     this.sendAction('focusIn', $event, this.get('param'));
   },
 
   /**
    * Handles the mouse/focus leave event.
    */
-  mouseLeave: function($event) {
+  mouseLeave($event) {
     this.sendAction('focusOut', $event, this.get('param'));
   },
 
-  click: function() {
+  click() {
     this.sendAction('action', this.get('param'));
   }
 });

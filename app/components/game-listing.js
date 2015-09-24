@@ -2,7 +2,7 @@ import Ember from 'ember';
 import layout from '../templates/components/game-listing';
 
 export default Ember.Component.extend({
-  layout: layout,
+  layout,
 
   canDeleteGame: function() {
     let playerOneId = this.get('game.playerOne.user.id');
@@ -13,7 +13,7 @@ export default Ember.Component.extend({
   }.property('game.playerOne.user.id', 'currentUserId', 'game.gameParticipants.@each.isPlaying'),
 
   actions: {
-    deleteGame: function(game) {
+    deleteGame(game) {
       this.sendAction('deleteGame', game);
     },
 

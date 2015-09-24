@@ -12,7 +12,7 @@ let COLOR_ORDER = {
 };
 
 export default Ember.Component.extend({
-  layout: layout,
+  layout,
 
   classNames: ['mana-curve-chart'],
 
@@ -68,7 +68,7 @@ export default Ember.Component.extend({
     /**
      * Show this card image.
      */
-    cardFocusIn: function(card) {
+    cardFocusIn(card) {
       this.set('spoilerCard', card);
       this.set('cardSpoilerHidden', false);
     },
@@ -76,7 +76,7 @@ export default Ember.Component.extend({
     /**
      * Hide this card image.
      */
-    cardFocusOut: function(card) {
+    cardFocusOut(card) {
       this.set('cardSpoilerHidden', true);
     }
   }

@@ -7,7 +7,7 @@ import GameCard from '../models/game-card';
 export default PaperCard.extend({
   layout,
 
-  willInsertElement: function() {
+  willInsertElement() {
     this.send('refresh');
   },
 
@@ -21,7 +21,7 @@ export default PaperCard.extend({
     /**
      * "Draw" a new hand by choosing 7 random cards from the deck.
      */
-    refresh: function() {
+    refresh() {
       let cardGroups = this.get('deck.mainCardGroups') || [];
       let cards = [];
       cardGroups.forEach((cardGroup) => {

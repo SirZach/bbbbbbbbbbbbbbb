@@ -3,7 +3,7 @@ import layout from '../templates/components/game-zone';
 import $ from 'jquery';
 
 export default Ember.Component.extend({
-  layout: layout,
+  layout,
 
   tagName: 'game-zone',
 
@@ -29,7 +29,7 @@ export default Ember.Component.extend({
 
   classNameBindings: ['canOpen', 'cardIsDragging:show-drop', 'isDraggedOver', 'readOnly'],
 
-  drop: function(event) {
+  drop(event) {
     if (!this.get('readOnly')) {
       event.preventDefault();
       let dragData = JSON.parse(event.dataTransfer.getData('text/plain'));
@@ -42,28 +42,28 @@ export default Ember.Component.extend({
     }
   },
 
-  dragOver: function(event) {
+  dragOver(event) {
     if (!this.get('readOnly')) {
       event.preventDefault();
       this.set('isDraggedOver', true);
     }
   },
 
-  dragEnter: function(event) {
+  dragEnter(event) {
     if (!this.get('readOnly')) {
       event.preventDefault();
       this.set('isDraggedOver', true);
     }
   },
 
-  dragLeave: function(event) {
+  dragLeave(event) {
     if (!this.get('readOnly')) {
       event.preventDefault();
       this.set('isDraggedOver', false);
     }
   },
 
-  click: function() {
+  click() {
     if (this.get('canOpen') && !this.get('readOnly')) {
       this.sendAction('open', this.get('player'), this.get('gameCards'), this.get('title'));
     }

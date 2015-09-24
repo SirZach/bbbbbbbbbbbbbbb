@@ -2,7 +2,7 @@ import Ember from 'ember';
 import layout from '../templates/components/x-ago';
 
 export default Ember.Component.extend({
-  layout: layout,
+  layout,
 
   tagName: 'span',
 
@@ -14,7 +14,7 @@ export default Ember.Component.extend({
   /** @property {Epoch} the current clock time */
   xTime: null,
 
-  startTimer: function() {
+  startTimer() {
     this.set('xTime', Date.now());
     this.scheduleStartTimer();
   },

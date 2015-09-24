@@ -9,7 +9,7 @@ let MAGNIFIED_CARD_WIDTH = 250;
 let MAGNIFIED_CARD_HEIGHT = 347.5;
 
 export default Ember.Component.extend({
-  layout: layout,
+  layout,
 
   attributeBindings: ['draggable'],
 
@@ -43,7 +43,7 @@ export default Ember.Component.extend({
   /** Attach document key handlers for magnifying purposes. */
   attachKeyHandlers: Ember.on('init', function() {
     let scope = Ember.guidFor(this);
-    $(document).on(`keydown.${scope}`, event => {
+    $(document).on(`keydown.${scope}`, (event) => {
       if (event.which === 90) {
         Ember.run(() => {
           if (!this.get('isDestroyed')) {
@@ -52,7 +52,7 @@ export default Ember.Component.extend({
         });
       }
     });
-    $(document).on(`keyup.${scope}`, event => {
+    $(document).on(`keyup.${scope}`, (event) => {
       if (event.which === 90) {
         Ember.run(() => {
           if (!this.get('isDestroyed')) {
@@ -64,7 +64,7 @@ export default Ember.Component.extend({
     });
   }),
 
-  dragStart: function(event) {
+  dragStart(event) {
     if (!this.get('readOnly')) {
       let gameCard = this.get('gameCard');
       let dragData = JSON.stringify({
@@ -77,7 +77,7 @@ export default Ember.Component.extend({
     }
   },
 
-  dragEnd: function(event) {
+  dragEnd(event) {
     if (!this.get('readOnly')) {
       this.sendAction('dragEnded');
     }
@@ -86,7 +86,7 @@ export default Ember.Component.extend({
   /** @property {Boolean} */
   isTapped: Ember.computed.alias('gameCard.isTapped'),
 
-  click: function() {
+  click() {
     if (this.get('canTap') && !this.get('readOnly')) {
       this.sendAction('tap', this.get('gameCard'));
     }
@@ -136,7 +136,7 @@ export default Ember.Component.extend({
       this.createMagnifiedCardElement();
     }
     let isTapped = this.get('isTapped');
-    let settings = {isTapped};
+    let settings = { isTapped };
 
     // Top and left coordinates for the placement of the magnifying glass.
     let left = mouseX - MAGNIFYING_GLASS_WIDTH / 2;
@@ -181,8 +181,8 @@ export default Ember.Component.extend({
    * for uniqueness.
    */
   magnifiedCardElementId: Ember.computed(function() {
-    let id = this.element.id;
-    return id + '-magnified';
+    let { id } = this.element;
+    return `${id}-magnified`;
   }),
 
   createMagnifiedCardElement() {
@@ -210,7 +210,7 @@ export default Ember.Component.extend({
     }
   },
 
-  updateMagnifiedCardElement({top, left, x, y, isTapped}) {
+  updateMagnifiedCardElement({ top, left, x, y, isTapped }) {
     let $el = this.get('$magnifiedCardElement');
     if ($el) {
       $el.css({

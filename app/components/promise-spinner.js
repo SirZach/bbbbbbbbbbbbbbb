@@ -12,7 +12,7 @@ export default Ember.Component.extend({
     this.retrieveData();
   }.on('didInsertElement'),
 
-  retrieveData: function() {
+  retrieveData() {
     let url = this.get('url');
     let promiseSpinnerUrls = this.get('promiseSpinnerUrls');
     let dataFound = promiseSpinnerUrls.hasData(url);
@@ -36,7 +36,7 @@ export default Ember.Component.extend({
     this.set('promiseController', promiseController);
   },
 
-  //Why do I need this?
+  // Why do I need this?
   urlChanged: function() {
     this.retrieveData();
   }.observes('url')

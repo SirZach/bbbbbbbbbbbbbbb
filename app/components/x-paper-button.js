@@ -5,7 +5,7 @@ export default PaperButton.extend({
   attributeBindings: ['target', 'action', 'title'],
 
   click() {
-    //stolen from ember-paper
+    // stolen from ember-paper
     let target = this.get('target');
     let parameters = target ? [this.get('action')] : ['action'];
     let params = this.get('params');
