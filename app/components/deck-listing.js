@@ -10,8 +10,8 @@ export default XPaperItem.extend({
   classNames: ['deck-header', 'md-3-line'],
 
   canEdit: computed('deck.owner.id', 'currentUser.id', function() {
-    var ownerId = this.get('deck.owner.id') || 'owner';
-    var myId = this.get('currentUser.id') || 'me';
+    let ownerId = this.get('deck.owner.id') || 'owner';
+    let myId = this.get('currentUser.id') || 'me';
     return ownerId === myId;
   }),
 

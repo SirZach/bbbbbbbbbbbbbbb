@@ -13,7 +13,7 @@ test('it renders', function(assert) {
 
   // creates the component instance
   let component = this.subject({
-    nonLandCards: []//this computed property breaks during CL tests but not browser tests :(
+    nonLandCards: [] //this computed property breaks during CL tests but not browser tests :(
   });
   assert.equal(component._state, 'preRender');
 

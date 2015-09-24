@@ -1,41 +1,43 @@
 import Ember from 'ember';
 import layout from '../templates/components/deck-table-item';
 
-export default Ember.Component.extend({
-  layout: layout,
+const { Component, computed } = Ember;
+
+export default Component.extend({
+  layout,
 
   tagName: '',
 
-  /** @property {Boolean} - can this deck family be shown? */
-  canShow: function () {
-    var superType = this.get('family.superType'),
-        doNotShowTypes = this.get('doNotShowTypes');
+  /** @public @property {Boolean} - can this deck family be shown? */
+  canShow: computed('doNotShowTypes.[]', 'family', function() {
+    let superType = this.get('family.superType');
+    let doNotShowTypes = this.get('doNotShowTypes');
 
     return !doNotShowTypes.contains(superType);
-  }.property('doNotShowTypes.[]', 'family'),
+  }),
 
   actions: {
-    showCard: function (card) {
+    showCard(card) {
       this.sendAction('showCard', card);
     },
 
-    showHide: function (section) {
+    showHide(section) {
       this.sendAction('showHide', section);
     },
 
-    hoverOn: function ($event, card) {
+    hoverOn($event, card) {
       this.sendAction('hoverOn', $event, card);
     },
 
-    hoverOff: function ($event, card) {
+    hoverOff($event, card) {
       this.sendAction('hoverOff', $event, card);
     },
 
-    remove: function (cardGroup) {
+    remove(cardGroup) {
       this.sendAction('remove', cardGroup);
     },
 
-    add: function (cardGroup) {
+    add(cardGroup) {
       this.sendAction('add', cardGroup);
     }
   }

@@ -1,11 +1,13 @@
 import Ember from 'ember';
 import layout from '../templates/components/failed-imports';
 
-export default Ember.Component.extend({
-  layout: layout,
+const { Component } = Ember;
+
+export default Component.extend({
+  layout,
 
   actions: {
-    close: function () {
+    close() {
       this.sendAction();
     }
   }

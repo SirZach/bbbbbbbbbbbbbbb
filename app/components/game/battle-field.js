@@ -3,34 +3,36 @@ import layout from '../../templates/components/game/battle-field';
 import GameCard from '../../models/game-card';
 import Sort from '../../utils/sort';
 
-export default Ember.Component.extend({
-  layout: layout,
+const { Component, computed } = Ember;
+
+export default Component.extend({
+  layout,
 
   tagName: 'battle-field',
 
-  /** @property {Array<DS.Model GameCard>} */
+  /** @public @property {Array<DS.Model GameCard>} */
   gameCards: [],
 
-  /** @property {Array<DS.GameCard>} non-land cards */
-  nonLandCards: Ember.computed('gameCards.[]', 'cards.@each.cardId', function () {
+  /** @public @property {Array<DS.GameCard>} non-land cards */
+  nonLandCards: computed('gameCards.[]', 'cards.@each.cardId', function() {
     return this.get('gameCards').filter(gameCard => {
-      var card = this.get('cards').findBy('id', gameCard.get('cardId'));
+      let card = this.get('cards').findBy('id', gameCard.get('cardId'));
 
       return !card || card.get('mainType') !== 'Land';
     }).sort(Sort.CardTypes.bind(this, this.get('cards')));
   }),
 
-  /** @property {Array<DS.GameCard>} land cards */
-  landCards: Ember.computed('gameCards.[]', 'cards.@each.cardId', function () {
+  /** @public @property {Array<DS.GameCard>} land cards */
+  landCards: computed('gameCards.[]', 'cards.@each.cardId', function() {
     return this.get('gameCards').filter(gameCard => {
-      var card = this.get('cards').findBy('id', gameCard.get('cardId'));
+      let card = this.get('cards').findBy('id', gameCard.get('cardId'));
 
       return card && card.get('mainType') === 'Land';
     });
   }),
 
-  /** @property {Array<DS.GameCard>} cards to be rendered at the top of the battlefield */
-  topCards: Ember.computed('bottomBattlefield', 'landCards.[]', 'nonLandCards.[]', function () {
+  /** @public @property {Array<DS.GameCard>} cards to be rendered at the top of the battlefield */
+  topCards: computed('bottomBattlefield', 'landCards.[]', 'nonLandCards.[]', function() {
     if (this.get('bottomBattlefield')) {
       return this.get('nonLandCards');
     } else {
@@ -38,8 +40,8 @@ export default Ember.Component.extend({
     }
   }),
 
-  /** @property {Array<DS.GameCard>} cards to be rendered at the bottom of the battlefield */
-  bottomCards: Ember.computed('bottomBattlefield', 'landCards.[]', 'nonLandCards.[]', function () {
+  /** @public @property {Array<DS.GameCard>} cards to be rendered at the bottom of the battlefield */
+  bottomCards: computed('bottomBattlefield', 'landCards.[]', 'nonLandCards.[]', function() {
     if (this.get('bottomBattlefield')) {
       return this.get('landCards');
     } else {
@@ -47,33 +49,33 @@ export default Ember.Component.extend({
     }
   }),
 
-  /** @property {Boolean} location of the battlefield */
+  /** @public @property {Boolean} location of the battlefield */
   bottomBattlefield: true,
 
-  /** @property {Boolean} ownership of the battlefield */
+  /** @public @property {Boolean} ownership of the battlefield */
   readOnly: true,
 
-  /** @property {Boolean} ownership of the battlefield */
-  notReadOnly: Ember.computed.not('readOnly'),
+  /** @public @property {Boolean} ownership of the battlefield */
+  notReadOnly: computed.not('readOnly'),
 
-  /** @property {DS.GameParticipant} */
+  /** @public @property {DS.GameParticipant} */
   player: null,
 
-  /** @property {Boolean} a card is being dragged on the screen */
+  /** @public @property {Boolean} a card is being dragged on the screen */
   cardIsDragging: false,
 
-  /** @property {Boolean} this game-zone is currently the drop target */
+  /** @public @property {Boolean} this game-zone is currently the drop target */
   isDraggedOver: false,
 
-  /** @property {Array<DS.Card>} DS.Cards between the decks in play */
+  /** @public @property {Array<DS.Card>} DS.Cards between the decks in play */
   cards: [],
 
   classNameBindings: ['cardIsDragging:show-drop', 'isDraggedOver'],
 
-  drop: function (event) {
+  drop(event) {
     if (!this.get('readOnly')) {
       event.preventDefault();
-      var dragData = JSON.parse(event.dataTransfer.getData('text/plain'));
+      let dragData = JSON.parse(event.dataTransfer.getData('text/plain'));
 
       this.set('isDraggedOver', false);
       this.sendAction('droppedOn', dragData, this.get('player'), GameCard.BATTLEFIELD);
@@ -83,21 +85,21 @@ export default Ember.Component.extend({
     }
   },
 
-  dragOver: function (event) {
+  dragOver(event) {
     if (!this.get('readOnly')) {
       event.preventDefault();
       this.set('isDraggedOver', true);
     }
   },
 
-  dragEnter: function (event) {
+  dragEnter(event) {
     if (!this.get('readOnly')) {
       event.preventDefault();
       this.set('isDraggedOver', true);
     }
   },
 
-  dragLeave: function (event) {
+  dragLeave(event) {
     if (!this.get('readOnly')) {
       event.preventDefault();
       this.set('isDraggedOver', false);
@@ -105,19 +107,19 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    dragStarted: function () {
+    dragStarted() {
       if (!this.get('readOnly')) {
         this.sendAction('dragStarted');
       }
     },
 
-    dragEnded: function () {
+    dragEnded() {
       if (!this.get('readOnly')) {
         this.sendAction('dragEnded');
       }
     },
 
-    tap: function (gameCard) {
+    tap(gameCard) {
       if (!this.get('readOnly')) {
         this.sendAction('tap', gameCard);
       }

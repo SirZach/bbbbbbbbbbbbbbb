@@ -15,7 +15,7 @@ moduleForComponent('x-card', {
   ]
 });
 
-/**
+/*
 test('it renders', function(assert) {
   assert.expect(2);
 

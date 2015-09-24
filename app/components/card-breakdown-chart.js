@@ -46,7 +46,7 @@ export default Component.extend({
 
     cardGroups
       .filterBy('board', 'main')
-      .forEach(group => {
+      .forEach((group) => {
         let mainType = group.get('card.mainType');
         if (!stats[mainType]) {
           stats[mainType] = {

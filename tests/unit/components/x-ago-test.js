@@ -14,7 +14,7 @@ test('it renders', function(assert) {
 
   // creates the component instance
   let component = this.subject();
-  Ember.run(function () {
+  Ember.run(function() {
     component.set('date', new Date());
   });
   assert.equal(component._state, 'preRender');
@@ -28,7 +28,7 @@ test('it renders a time ago', function(assert) {
   assert.expect(1);
 
   let component = this.subject();
-  Ember.run(function () {
+  Ember.run(function() {
     component.set('date', moment().subtract(1, 'days').toDate());
   });
   assert.equal(this.$().text().trim(), 'a day ago');

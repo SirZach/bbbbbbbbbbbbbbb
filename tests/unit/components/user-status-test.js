@@ -13,7 +13,7 @@ moduleForComponent('user-status', {
   ]
 });
 
-test('it renders', function (assert) {
+test('it renders', function(assert) {
   assert.expect(2);
 
   // creates the component instance
@@ -29,7 +29,7 @@ test('statusClass - appends state to "user-"', function(assert) {
   assert.expect(1);
 
   let component = this.subject();
-  Ember.run(function () {
+  Ember.run(function() {
     component.set('presence', {
       state: 'literally-cant-even'
     });
@@ -41,19 +41,19 @@ test('statusClass - appends state to "user-"', function(assert) {
 test('isOnline - should parallel online state', function(assert) {
   assert.expect(3);
   let component = this.subject();
-  Ember.run(function () {
+  Ember.run(function() {
     component.set('presence', {
       state: 'online'
     });
   });
   assert.ok(component.get('isOnline'));
 
-  Ember.run(function () {
+  Ember.run(function() {
     component.set('presence.state', 'idle');
   });
   assert.ok(!component.get('isOnline'));
 
-  Ember.run(function () {
+  Ember.run(function() {
     component.set('presence.state', 'offline');
   });
   assert.ok(!component.get('isOnline'));
@@ -62,19 +62,19 @@ test('isOnline - should parallel online state', function(assert) {
 test('isOffline - should parallel offline state', function(assert) {
   assert.expect(3);
   let component = this.subject();
-  Ember.run(function () {
+  Ember.run(function() {
     component.set('presence', {
       state: 'offline'
     });
   });
   assert.ok(component.get('isOffline'));
 
-  Ember.run(function () {
+  Ember.run(function() {
     component.set('presence.state', 'idle');
   });
   assert.ok(!component.get('isOffline'));
 
-  Ember.run(function () {
+  Ember.run(function() {
     component.set('presence.state', 'online');
   });
   assert.ok(!component.get('isOffline'));
@@ -83,7 +83,7 @@ test('isOffline - should parallel offline state', function(assert) {
 test('lastSeenLabel - should be "online" when active', function(assert) {
   assert.expect(1);
   let component = this.subject();
-  Ember.run(function () {
+  Ember.run(function() {
     component.set('presence', {
       state: 'online'
     });
@@ -94,7 +94,7 @@ test('lastSeenLabel - should be "online" when active', function(assert) {
 test('lastSeenLabel - should be "online" when active', function(assert) {
   assert.expect(1);
   let component = this.subject();
-  Ember.run(function () {
+  Ember.run(function() {
     component.set('presence', {
       state: 'online'
     });
@@ -105,7 +105,7 @@ test('lastSeenLabel - should be "online" when active', function(assert) {
 test('lastSeenLabel - should be "idle for" when idle', function(assert) {
   assert.expect(1);
   let component = this.subject();
-  Ember.run(function () {
+  Ember.run(function() {
     component.set('presence', {
       state: 'idle'
     });
@@ -116,7 +116,7 @@ test('lastSeenLabel - should be "idle for" when idle', function(assert) {
 test('lastSeenLabel - should be "last seen" when offline', function(assert) {
   assert.expect(1);
   let component = this.subject();
-  Ember.run(function () {
+  Ember.run(function() {
     component.set('presence', {
       state: 'offline'
     });
