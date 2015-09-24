@@ -7,7 +7,7 @@ export default Ember.Route.extend({
     }
   },
 
-  beforeModel: function() {
+  beforeModel() {
     if (!this.get('session.isAuthenticated')) {
       this.replaceWith('/');
     } else {
@@ -16,9 +16,9 @@ export default Ember.Route.extend({
     }
   },
 
-  model: function({mine}) {
+  model({ mine }) {
     if (mine) {
-      return this.get('session.user.decks').then(decks => {
+      return this.get('session.user.decks').then((decks) => {
         // Show last created first.
         let model = decks.toArray().reverseObjects();
         // We don't want to lazy load any more models.
@@ -33,7 +33,7 @@ export default Ember.Route.extend({
     return this._createFetchPromise();
   },
 
-  _createFetchPromise: function() {
+  _createFetchPromise() {
     let lastDeckId = this.get('_lastDeckId');
     let endAt = lastDeckId ? lastDeckId : null;
     let model = this.get('_unfilteredDecks') || [];
@@ -72,7 +72,7 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    deleteDeck: function(deck) {
+    deleteDeck(deck) {
       // Remove the record from the listing so we don't trigger weird 'null'
       // image lookups.
       //
@@ -101,19 +101,19 @@ export default Ember.Route.extend({
         });
     },
 
-    goToDeck: function(deck) {
+    goToDeck(deck) {
       this.transitionTo('deck.index', deck);
     },
 
-    goToDeckBuilder: function(deck) {
+    goToDeckBuilder(deck) {
       this.transitionTo('deck.build', deck);
     },
 
-    importDeck: function() {
+    importDeck() {
       this.send('openModal', 'decks/import-deck');
     },
 
-    infinityLoad: function() {
+    infinityLoad() {
       let model = this.currentModel;
       if (this.get('_isLoading') || model.get('reachedInfinity')) {
         return;

@@ -1,14 +1,14 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  redirect: function(model, transition) {
+  redirect(model, transition) {
     if (transition.targetName === 'games.index') {
       this.transitionTo('games.list');
     }
   },
 
   actions: {
-    deleteGame: function(game) {
+    deleteGame(game) {
       let gameId = game.get('id');
       let store = this.store;
       let notifications = this.notifications;

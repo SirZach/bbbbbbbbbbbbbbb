@@ -44,7 +44,7 @@ test('gameCards - sets raw', function(assert) {
   assert.expect(5);
   let model = this.subject();
   Ember.run(function() {
-    let gameCards = gameCardFixtures.map(fixture => GameCard.create(fixture));
+    let gameCards = gameCardFixtures.map((fixture) => GameCard.create(fixture));
     model.set('gameCards', gameCards);
   });
   let gameCardsRaw = model.get('gameCardsRaw');
@@ -60,7 +60,7 @@ test('gameCards - update raw', function(assert) {
   let model = this.subject();
   let gameCards;
   Ember.run(function() {
-    gameCards = gameCardFixtures.map(fixture => GameCard.create(fixture));
+    gameCards = gameCardFixtures.map((fixture) => GameCard.create(fixture));
     model.set('gameCards', gameCards);
   });
   let gameCardFixturesNew = [];

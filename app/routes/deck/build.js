@@ -2,7 +2,7 @@ import Ember from 'ember';
 import InfinityRoute from 'ember-infinity/mixins/route';
 
 export default Ember.Route.extend(InfinityRoute, {
-  afterModel: function(deck) {
+  afterModel(deck) {
     return deck.get('owner').then((owner) => {
       return this.get('session.user').then((user) => {
         if (owner.get('id') !== user.get('id')) {
@@ -13,7 +13,7 @@ export default Ember.Route.extend(InfinityRoute, {
   },
 
   actions: {
-    willTransition: function(transition) {
+    willTransition(transition) {
       let deck = this.get('controller.model');
 
       if (deck.get('isNew')) {
@@ -21,7 +21,7 @@ export default Ember.Route.extend(InfinityRoute, {
       }
     },
 
-    getNewCards: function() {
+    getNewCards() {
       let cardsController = this.controllerFor('cards');
       let colors = cardsController.get('colors');
       let legalities = cardsController.get('legalities');

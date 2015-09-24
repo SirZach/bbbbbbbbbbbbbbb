@@ -75,7 +75,7 @@ export default DS.Model.extend({
   channelFireballPrice: function() {
     let name = this.get('name');
 
-    //TODO: get host from the card.js adapter
+    // TODO: get host from the card.js adapter
     if (ENV.environment === 'development') {
       return `http://localhost:3000/prices/${name}`;
     } else {

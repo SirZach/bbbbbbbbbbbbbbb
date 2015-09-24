@@ -2,14 +2,14 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
 
-  beforeModel: function() {
+  beforeModel() {
     if (this.get('session.isAuthenticated')) {
       this.replaceWith('/');
     }
   },
 
   actions: {
-    willTransition: function(transition) {
+    willTransition(transition) {
       this.controller.setProperties({
         signupUsername: null,
         signupEmail: null,

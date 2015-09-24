@@ -41,7 +41,7 @@ export default DS.Model.extend({
 
       if (gameCards) {
         // Merge the given properties instead of creating new objects.
-        JSON.parse(gameCardsRaw).forEach(raw => {
+        JSON.parse(gameCardsRaw).forEach((raw) => {
           let gameCard = gameCards.findBy('id', raw.id);
           if (!gameCard) {
             // If a new token was just created, add it to the list.
@@ -52,7 +52,7 @@ export default DS.Model.extend({
         });
       } else {
         // Create new objects.
-        gameCards = JSON.parse(gameCardsRaw).map(raw => GameCard.create(raw));
+        gameCards = JSON.parse(gameCardsRaw).map((raw) => GameCard.create(raw));
         this.set('_gameCards', gameCards);
       }
       return gameCards;

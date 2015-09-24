@@ -43,7 +43,7 @@ function computeIsLegal(style) {
   style = `is${capitalizedStyle}`;
   return function() {
     return this.get('cardGroups').isEvery(`card.${style}`);
-  }.property('cardGroups.@each.card.' + style);
+  }.property(`cardGroups.@each.card.${style}`);
 }
 
 let Deck = DS.Model.extend({

@@ -7,10 +7,10 @@ export default Ember.Route.extend({
    *
    * @return {Promise} Resolves with Array<Card>
    */
-  retrieveDSCards (game) {
+  retrieveDSCards(game) {
     let controller = this.controllerFor('game');
     let store = this.store;
-    //load all the real card models into the store for future use
+    // load all the real card models into the store for future use
     let players = game.get('players');
     let promises = players.reduce((prev, p) => {
       let gameCards = Ember.get(p, 'gameCards') || [];
@@ -21,8 +21,8 @@ export default Ember.Route.extend({
     return Ember.RSVP.all(promises).then(cards => controller.set('cardsInDecks', cards.uniq()));
   },
 
-  afterModel: function(model) {
-    let store = this.store;
+  afterModel(model) {
+    let { store } = this;
 
     // If you are not logged in, allow anonymous access to the game.
     if (!this.get('session.isAuthenticated')) {
@@ -71,14 +71,14 @@ export default Ember.Route.extend({
       // Save the model with the new participant state.
       return model.save();
     })
-    .then(model => this.retrieveDSCards(model));
+    .then((model) => this.retrieveDSCards(model));
   },
 
-  setupController: function(controller, game) {
+  setupController(controller, game) {
     this._super.apply(this, arguments);
 
-    //TODO: move this to the route, duh
-    let store = this.store;
+    // TODO: move this to the route, duh
+    let { store } = this;
     store.find('chat', {
       orderBy: 'channel',
       equalTo: game.id
@@ -108,7 +108,7 @@ export default Ember.Route.extend({
       this.retrieveDSCards(this.currentModel);
     },
 
-    showToken: function(player) {
+    showToken(player) {
       let gameCards = player.get('gameCards');
       let createTokenController = this.controllerFor('game/create-token');
       let gameCard = GameCard.create({
@@ -124,18 +124,18 @@ export default Ember.Route.extend({
       this.send('openModal', 'game/create-token', gameCard);
     },
 
-    dragStarted: function() {
+    dragStarted() {
       this.set('controller.cardIsDragging', true);
     },
 
-    dragEnded: function() {
+    dragEnded() {
       this.set('controller.cardIsDragging', false);
     },
 
     /**
      * Use this action for all game saves as a mediocre approach to handling security
      */
-    updateGame: function() {
+    updateGame() {
       let controller = this.get('controller');
       let game = controller.get('model');
 
@@ -149,7 +149,7 @@ export default Ember.Route.extend({
     /**
      * Close the left column
      */
-    closeLeftColumn: function() {
+    closeLeftColumn() {
       let controller = this.get('controller');
 
       controller.setProperties({
@@ -159,7 +159,7 @@ export default Ember.Route.extend({
       });
     },
 
-    willTransition: function() {
+    willTransition() {
       this.get('controller').resetState();
 
       // If you are not logged in, there is no state to clean up.
@@ -176,7 +176,7 @@ export default Ember.Route.extend({
      * Join this game as a player if possible. Use the Firebase transaction API
      * to atomically alter the list of playing participants.
      */
-    joinAsPlayer: function() {
+    joinAsPlayer() {
       let user = this.get('session.user');
       let gameParticipantsRef = this.store.refFor('game', this.modelFor('game'))
         .child('gameParticipants');

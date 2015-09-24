@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  beforeModel: function() {
+  beforeModel() {
     if (!this.get('session.isAuthenticated')) {
       this.replaceWith('/');
     }
@@ -17,7 +17,7 @@ export default Ember.Route.extend({
     });
   },
 
-  model: function(params) {
+  model(params) {
     if (params.deck_id === 'new') {
       let deck = this.store.createRecord('deck');
       return this.get('session.user').then((user) => {
@@ -30,7 +30,7 @@ export default Ember.Route.extend({
   },
 
   /** Make sure all the cards for the deck are loaded before continuing */
-  afterModel: function(deck) {
+  afterModel(deck) {
     let cardPromiseArray = [];
 
     deck.get('cardGroups').forEach(function(cardGroup) {
@@ -41,15 +41,15 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    addToMain: function(card) {
+    addToMain(card) {
       this.get('controller.model').addCard(card, 'main');
     },
 
-    addToSide: function(card) {
+    addToSide(card) {
       this.get('controller.model').addCard(card, 'side');
     },
 
-    saveDeck: function(deck) {
+    saveDeck(deck) {
       this.get('session.user').then((user) => {
         deck.save()
           .then(() => user.get('decks'))
@@ -76,19 +76,19 @@ export default Ember.Route.extend({
       });
     },
 
-    showCard: function(card) {
+    showCard(card) {
       this.controllerFor('deck.build').set('nameSearch', card.get('name'));
     },
 
-    typesChanged: function() {
+    typesChanged() {
       this.send('getNewCards');
     },
 
-    colorsChanged: function() {
+    colorsChanged() {
       this.send('getNewCards');
     },
 
-    legalitiesChanged: function() {
+    legalitiesChanged() {
       this.send('getNewCards');
     }
   }

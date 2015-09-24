@@ -57,7 +57,7 @@ export default DS.Model.extend({
     return players.get('length') < 2;
   }.property('gameParticipants.@each.isPlaying'),
 
-  save: function() {
+  save() {
     let participants = this.get('gameParticipants');
     participants.invoke('setGameCardsRaw');
     return this._super.apply(this, arguments);

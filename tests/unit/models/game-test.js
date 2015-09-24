@@ -31,12 +31,12 @@ test('the players list contains the people playing', function(assert) {
   Ember.run(this, function() {
     let users = ['SirZach', 'ahaurw01'].map((username) => {
       return this.store().createRecord('user', {
-        username: username
+        username
       });
     });
     let gameParticipants = users.map((user) => {
       return this.store().createRecord('gameParticipant', {
-        user: user,
+        user,
         isPlaying: true
       });
     });
@@ -55,12 +55,12 @@ test('the players list should be padded with a placeholder', function(assert) {
   Ember.run(this, function() {
     let users = ['SirZach'].map((username) => {
       return this.store().createRecord('user', {
-        username: username
+        username
       });
     });
     let gameParticipants = users.map((user) => {
       return this.store().createRecord('gameParticipant', {
-        user: user,
+        user,
         isPlaying: true
       });
     });
@@ -79,12 +79,12 @@ test('playerOne should be the first player', function(assert) {
   Ember.run(this, function() {
     let users = ['SirZach', 'ahaurw01'].map((username) => {
       return this.store().createRecord('user', {
-        username: username
+        username
       });
     });
     let gameParticipants = users.map((user) => {
       return this.store().createRecord('gameParticipant', {
-        user: user,
+        user,
         isPlaying: true
       });
     });
@@ -101,12 +101,12 @@ test('playerTwo should be the second player', function(assert) {
   Ember.run(this, function() {
     let users = ['SirZach', 'ahaurw01'].map((username) => {
       return this.store().createRecord('user', {
-        username: username
+        username
       });
     });
     let gameParticipants = users.map((user) => {
       return this.store().createRecord('gameParticipant', {
-        user: user,
+        user,
         isPlaying: true
       });
     });
@@ -124,12 +124,12 @@ test('watchers should contain all people not playing', function(assert) {
     let users = ['SirZach', 'ahaurw01', 'thomasjmwb', 'wycats', 'tomdale']
       .map((username) => {
         return this.store().createRecord('user', {
-          username: username
+          username
         });
       });
     let gameParticipants = users.map((user, index) => {
       return this.store().createRecord('gameParticipant', {
-        user: user,
+        user,
         isPlaying: index < 2
       });
     });
