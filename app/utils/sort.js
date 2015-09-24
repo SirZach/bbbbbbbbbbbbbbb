@@ -1,5 +1,5 @@
 export default {
-  CardTypes: function (cards, gameCardA, gameCardB) {
+  CardTypes: function(cards, gameCardA, gameCardB) {
     var cardA = cards.findBy('id', gameCardA.get('cardId'));
     var cardB = cards.findBy('id', gameCardB.get('cardId'));
     var cardAType = cardA ? cardA.get('mainType') : 'Token';

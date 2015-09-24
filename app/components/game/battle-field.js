@@ -10,28 +10,28 @@ export default Component.extend({
 
   tagName: 'battle-field',
 
-  /** @public @property {Array<DS.Model GameCard>} */
+  /**  @property {Array<DS.Model GameCard>} */
   gameCards: [],
 
-  /** @public @property {Array<DS.GameCard>} non-land cards */
+  /**  @property {Array<DS.GameCard>} non-land cards */
   nonLandCards: computed('gameCards.[]', 'cards.@each.cardId', function() {
-    return this.get('gameCards').filter(gameCard => {
+    return this.get('gameCards').filter((gameCard) => {
       let card = this.get('cards').findBy('id', gameCard.get('cardId'));
 
       return !card || card.get('mainType') !== 'Land';
     }).sort(Sort.CardTypes.bind(this, this.get('cards')));
   }),
 
-  /** @public @property {Array<DS.GameCard>} land cards */
+  /**  @property {Array<DS.GameCard>} land cards */
   landCards: computed('gameCards.[]', 'cards.@each.cardId', function() {
-    return this.get('gameCards').filter(gameCard => {
+    return this.get('gameCards').filter((gameCard) => {
       let card = this.get('cards').findBy('id', gameCard.get('cardId'));
 
       return card && card.get('mainType') === 'Land';
     });
   }),
 
-  /** @public @property {Array<DS.GameCard>} cards to be rendered at the top of the battlefield */
+  /**  @property {Array<DS.GameCard>} cards to be rendered at the top of the battlefield */
   topCards: computed('bottomBattlefield', 'landCards.[]', 'nonLandCards.[]', function() {
     if (this.get('bottomBattlefield')) {
       return this.get('nonLandCards');
@@ -40,7 +40,7 @@ export default Component.extend({
     }
   }),
 
-  /** @public @property {Array<DS.GameCard>} cards to be rendered at the bottom of the battlefield */
+  /**  @property {Array<DS.GameCard>} cards to be rendered at the bottom of the battlefield */
   bottomCards: computed('bottomBattlefield', 'landCards.[]', 'nonLandCards.[]', function() {
     if (this.get('bottomBattlefield')) {
       return this.get('landCards');
@@ -49,25 +49,25 @@ export default Component.extend({
     }
   }),
 
-  /** @public @property {Boolean} location of the battlefield */
+  /**  @property {Boolean} location of the battlefield */
   bottomBattlefield: true,
 
-  /** @public @property {Boolean} ownership of the battlefield */
+  /**  @property {Boolean} ownership of the battlefield */
   readOnly: true,
 
-  /** @public @property {Boolean} ownership of the battlefield */
+  /**  @property {Boolean} ownership of the battlefield */
   notReadOnly: computed.not('readOnly'),
 
-  /** @public @property {DS.GameParticipant} */
+  /**  @property {DS.GameParticipant} */
   player: null,
 
-  /** @public @property {Boolean} a card is being dragged on the screen */
+  /**  @property {Boolean} a card is being dragged on the screen */
   cardIsDragging: false,
 
-  /** @public @property {Boolean} this game-zone is currently the drop target */
+  /**  @property {Boolean} this game-zone is currently the drop target */
   isDraggedOver: false,
 
-  /** @public @property {Array<DS.Card>} DS.Cards between the decks in play */
+  /**  @property {Array<DS.Card>} DS.Cards between the decks in play */
   cards: [],
 
   classNameBindings: ['cardIsDragging:show-drop', 'isDraggedOver'],
@@ -80,7 +80,7 @@ export default Component.extend({
       this.set('isDraggedOver', false);
       this.sendAction('droppedOn', dragData, this.get('player'), GameCard.BATTLEFIELD);
 
-      //For some reason when this guy handles the drop, the dragEnd event is not fired. Le sigh.
+      // For some reason when this guy handles the drop, the dragEnd event is not fired. Le sigh.
       this.sendAction('dragEnded');
     }
   },

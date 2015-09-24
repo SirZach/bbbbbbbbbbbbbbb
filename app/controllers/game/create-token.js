@@ -18,7 +18,7 @@ export default Ember.Controller.extend({
       return this.send('closeModal');
     },
 
-    createToken: function () {
+    createToken: function() {
       var gameCard = this.get('model');
       var player = this.get('player');
       var playerGameCards = player.get('gameCards');

@@ -21,7 +21,7 @@ export default Ember.Route.extend({
     return Ember.RSVP.all(promises).then(cards => controller.set('cardsInDecks', cards.uniq()));
   },
 
-  afterModel: function (model) {
+  afterModel: function(model) {
     var store = this.store;
 
     // If you are not logged in, allow anonymous access to the game.
@@ -74,7 +74,7 @@ export default Ember.Route.extend({
     .then(model => this.retrieveDSCards(model));
   },
 
-  setupController: function (controller, game) {
+  setupController: function(controller, game) {
     this._super.apply(this, arguments);
 
     //TODO: move this to the route, duh
@@ -82,8 +82,8 @@ export default Ember.Route.extend({
     store.find('chat', {
       orderBy: 'channel',
       equalTo: game.id
-    }).then(function () {
-      var gameChats = store.filter('chat', function (chat) {
+    }).then(function() {
+      var gameChats = store.filter('chat', function(chat) {
         return chat.get('channel') === game.id;
       });
 
@@ -93,7 +93,7 @@ export default Ember.Route.extend({
     controller.resetState();
   },
 
-  gameParticipantRef: function () {
+  gameParticipantRef: function() {
     return this.modelFor('game')
       .ref()
       .child('gameParticipants')
@@ -108,7 +108,7 @@ export default Ember.Route.extend({
       this.retrieveDSCards(this.currentModel);
     },
 
-    showToken: function (player) {
+    showToken: function(player) {
       var gameCards = player.get('gameCards');
       var createTokenController = this.controllerFor('game/create-token');
       var gameCard = GameCard.create({
@@ -124,18 +124,18 @@ export default Ember.Route.extend({
       this.send('openModal', 'game/create-token', gameCard);
     },
 
-    dragStarted: function () {
+    dragStarted: function() {
       this.set('controller.cardIsDragging', true);
     },
 
-    dragEnded: function () {
+    dragEnded: function() {
       this.set('controller.cardIsDragging', false);
     },
 
     /**
      * Use this action for all game saves as a mediocre approach to handling security
      */
-    updateGame: function () {
+    updateGame: function() {
       var controller = this.get('controller');
       var game = controller.get('model');
 
@@ -149,7 +149,7 @@ export default Ember.Route.extend({
     /**
      * Close the left column
      */
-    closeLeftColumn: function () {
+    closeLeftColumn: function() {
       var controller = this.get('controller');
 
       controller.setProperties({
@@ -159,7 +159,7 @@ export default Ember.Route.extend({
       });
     },
 
-    willTransition: function () {
+    willTransition: function() {
       this.get('controller').resetState();
 
       // If you are not logged in, there is no state to clean up.
@@ -176,7 +176,7 @@ export default Ember.Route.extend({
      * Join this game as a player if possible. Use the Firebase transaction API
      * to atomically alter the list of playing participants.
      */
-    joinAsPlayer: function () {
+    joinAsPlayer: function() {
       var user = this.get('session.user');
       var gameParticipantsRef = this.store.refFor('game', this.modelFor('game'))
         .child('gameParticipants');

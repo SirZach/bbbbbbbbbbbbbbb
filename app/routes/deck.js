@@ -1,13 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  beforeModel: function () {
+  beforeModel: function() {
     if (!this.get('session.isAuthenticated')) {
       this.replaceWith('/');
     }
 
     var cardsController = this.controllerFor('cards');
-    return this.store.findAll('card').then(function (cards) {
+    return this.store.findAll('card').then(function(cards) {
       cardsController.set('model', cards);
       // A hack to not show the spinner. Not sure it even makes sense to show
       // this subset of cards on load.
@@ -17,7 +17,7 @@ export default Ember.Route.extend({
     });
   },
 
-  model: function (params) {
+  model: function(params) {
     if (params.deck_id === 'new') {
       var deck = this.store.createRecord('deck');
       return this.get('session.user').then((user) => {
@@ -30,10 +30,10 @@ export default Ember.Route.extend({
   },
 
   /** Make sure all the cards for the deck are loaded before continuing */
-  afterModel: function (deck) {
+  afterModel: function(deck) {
     var cardPromiseArray = [];
 
-    deck.get('cardGroups').forEach(function (cardGroup) {
+    deck.get('cardGroups').forEach(function(cardGroup) {
       cardPromiseArray.push(cardGroup.get('card'));
     });
 
@@ -41,15 +41,15 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    addToMain: function (card) {
+    addToMain: function(card) {
       this.get('controller.model').addCard(card, 'main');
     },
 
-    addToSide: function (card) {
+    addToSide: function(card) {
       this.get('controller.model').addCard(card, 'side');
     },
 
-    saveDeck: function (deck) {
+    saveDeck: function(deck) {
       this.get('session.user').then((user) => {
         deck.save()
           .then(() => user.get('decks'))
@@ -76,19 +76,19 @@ export default Ember.Route.extend({
       });
     },
 
-    showCard: function (card) {
+    showCard: function(card) {
       this.controllerFor('deck.build').set('nameSearch', card.get('name'));
     },
 
-    typesChanged: function () {
+    typesChanged: function() {
       this.send('getNewCards');
     },
 
-    colorsChanged: function () {
+    colorsChanged: function() {
       this.send('getNewCards');
     },
 
-    legalitiesChanged: function () {
+    legalitiesChanged: function() {
       this.send('getNewCards');
     }
   }

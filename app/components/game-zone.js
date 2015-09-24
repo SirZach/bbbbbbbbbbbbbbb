@@ -29,7 +29,7 @@ export default Ember.Component.extend({
 
   classNameBindings: ['canOpen', 'cardIsDragging:show-drop', 'isDraggedOver', 'readOnly'],
 
-  drop: function (event) {
+  drop: function(event) {
     if (!this.get('readOnly')) {
       event.preventDefault();
       var dragData = JSON.parse(event.dataTransfer.getData('text/plain'));
@@ -42,28 +42,28 @@ export default Ember.Component.extend({
     }
   },
 
-  dragOver: function (event) {
+  dragOver: function(event) {
     if (!this.get('readOnly')) {
       event.preventDefault();
       this.set('isDraggedOver', true);
     }
   },
 
-  dragEnter: function (event) {
+  dragEnter: function(event) {
     if (!this.get('readOnly')) {
       event.preventDefault();
       this.set('isDraggedOver', true);
     }
   },
 
-  dragLeave: function (event) {
+  dragLeave: function(event) {
     if (!this.get('readOnly')) {
       event.preventDefault();
       this.set('isDraggedOver', false);
     }
   },
 
-  click: function () {
+  click: function() {
     if (this.get('canOpen') && !this.get('readOnly')) {
       this.sendAction('open', this.get('player'), this.get('gameCards'), this.get('title'));
     }

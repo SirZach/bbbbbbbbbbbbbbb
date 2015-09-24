@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
       return this.send('closeModal');
     },
 
-    importDeck: function () {
+    importDeck: function() {
       var importContents = this.get('importContents');
       
       this.get('session.user').then((user) => {

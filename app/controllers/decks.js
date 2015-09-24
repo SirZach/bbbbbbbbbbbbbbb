@@ -10,7 +10,7 @@ export default Ember.Controller.extend({
   mine: false,
 
   /** @property {String} Title to show in the toolbar. */
-  pageTitle: Ember.computed('mine', function () {
+  pageTitle: Ember.computed('mine', function() {
     var mine = this.get('mine');
     return mine ? 'My Decks' : 'Everybody\'s Decks';
   }),

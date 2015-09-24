@@ -65,31 +65,31 @@ export default DS.Model.extend({
   }),
 
   /** @property {Array<DS.GameCard>} all the cards in hand */
-  cardsInHand: Ember.computed('gameCards.@each.zone', function () {
+  cardsInHand: Ember.computed('gameCards.@each.zone', function() {
     return this.get('gameCards').filterBy('zone', GameCard.HAND);
   }),
 
   /** @property {Array<DS.GameCard>} all the cards in library */
-  cardsInLibrary: Ember.computed('gameCards.@each.zone', function () {
+  cardsInLibrary: Ember.computed('gameCards.@each.zone', function() {
     return this.get('gameCards').filterBy('zone', GameCard.LIBRARY).sortBy('order');
   }),
 
   /** @property {Array<DS.GameCard>} all the cards in graveyard */
-  cardsInGraveyard: Ember.computed('gameCards.@each.zone', function () {
+  cardsInGraveyard: Ember.computed('gameCards.@each.zone', function() {
     return this.get('gameCards').filterBy('zone', GameCard.GRAVEYARD);
   }),
 
   /** @property {Array<DS.GameCard>} all the cards in exile */
-  cardsInExile: Ember.computed('gameCards.@each.zone', function () {
+  cardsInExile: Ember.computed('gameCards.@each.zone', function() {
     return this.get('gameCards').filterBy('zone', GameCard.EXILE);
   }),
 
   /** @property {Array<DS.GameCard>} all the cards on the battlefield */
-  cardsInBattlefield: Ember.computed('gameCards.@each.zone', function () {
+  cardsInBattlefield: Ember.computed('gameCards.@each.zone', function() {
     return this.get('gameCards').filterBy('zone', GameCard.BATTLEFIELD);
   }),
 
-  setGameCardsRaw: function () {
+  setGameCardsRaw: function() {
     var gameCards = this.get('gameCards');
     if (gameCards) {
       this.set('gameCardsRaw', JSON.stringify(gameCards));

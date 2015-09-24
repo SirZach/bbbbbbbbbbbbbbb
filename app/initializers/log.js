@@ -3,7 +3,7 @@ import DS from 'ember-data';
 
 
 var Log = Ember.Object.extend({
-  createLogMessage: function (message, level) {
+  createLogMessage: function(message, level) {
     var store = this.container.lookup('store:main');
     var session = this.container.lookup('session:main');
     var user = session.get('user.content');
@@ -19,11 +19,11 @@ var Log = Ember.Object.extend({
     return logMessage.save();
   },
 
-  error: function (message) {
+  error: function(message) {
     return this.createLogMessage(message, 'error');
   },
 
-  info: function (message) {
+  info: function(message) {
     return this.createLogMessage(message, 'info');
   }
 });
@@ -31,7 +31,7 @@ var Log = Ember.Object.extend({
 export default {
   name: "Log",
 
-  initialize: function (container, app) {
+  initialize: function(container, app) {
     app.register('log:main', Log);
     app.inject('component', 'log', 'log:main');
     app.inject('controller', 'log', 'log:main');

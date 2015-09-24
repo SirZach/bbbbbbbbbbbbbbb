@@ -43,7 +43,7 @@ test('it exists', function(assert) {
 test('gameCards - sets raw', function(assert) {
   assert.expect(5);
   let model = this.subject();
-  Ember.run(function () {
+  Ember.run(function() {
     let gameCards = gameCardFixtures.map(fixture => GameCard.create(fixture));
     model.set('gameCards', gameCards);
   });
@@ -59,7 +59,7 @@ test('gameCards - sets raw', function(assert) {
 test('gameCards - update raw', function(assert) {
   let model = this.subject();
   let gameCards;
-  Ember.run(function () {
+  Ember.run(function() {
     gameCards = gameCardFixtures.map(fixture => GameCard.create(fixture));
     model.set('gameCards', gameCards);
   });
@@ -77,7 +77,7 @@ test('gameCards - update raw', function(assert) {
     zone: 'battlefield'
   });
   let newGameCardsRaw = JSON.stringify(gameCardFixturesNew);
-  Ember.run(function () {
+  Ember.run(function() {
     model.set('gameCardsRaw', newGameCardsRaw);
   });
   gameCards = model.get('gameCards');

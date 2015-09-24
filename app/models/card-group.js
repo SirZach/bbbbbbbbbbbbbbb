@@ -12,7 +12,7 @@ export default DS.Model.extend({
   count: DS.attr('number'),
 
   /** @property {String} - combo of board and card type */
-  superType: function () {
+  superType: function() {
     var board = this.get('board');
     var type = this.get('card.type');
     return board + type;

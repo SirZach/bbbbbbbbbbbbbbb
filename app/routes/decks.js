@@ -7,7 +7,7 @@ export default Ember.Route.extend({
     }
   },
 
-  beforeModel: function () {
+  beforeModel: function() {
     if (!this.get('session.isAuthenticated')) {
       this.replaceWith('/');
     } else {
@@ -16,7 +16,7 @@ export default Ember.Route.extend({
     }
   },
 
-  model: function ({mine}) {
+  model: function({mine}) {
     if (mine) {
       return this.get('session.user.decks').then(decks => {
         // Show last created first.
@@ -33,7 +33,7 @@ export default Ember.Route.extend({
     return this._createFetchPromise();
   },
 
-  _createFetchPromise: function () {
+  _createFetchPromise: function() {
     var lastDeckId = this.get('_lastDeckId');
     var endAt = lastDeckId ? lastDeckId : null;
     var model = this.get('_unfilteredDecks') || [];
@@ -72,7 +72,7 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    deleteDeck: function (deck) {
+    deleteDeck: function(deck) {
       // Remove the record from the listing so we don't trigger weird 'null'
       // image lookups.
       //
@@ -101,19 +101,19 @@ export default Ember.Route.extend({
         });
     },
 
-    goToDeck: function (deck) {
+    goToDeck: function(deck) {
       this.transitionTo('deck.index', deck);
     },
 
-    goToDeckBuilder: function (deck) {
+    goToDeckBuilder: function(deck) {
       this.transitionTo('deck.build', deck);
     },
 
-    importDeck: function () {
+    importDeck: function() {
       this.send('openModal', 'decks/import-deck');
     },
 
-    infinityLoad: function () {
+    infinityLoad: function() {
       var model = this.currentModel;
       if (this.get('_isLoading') || model.get('reachedInfinity')) {
         return;

@@ -2,19 +2,19 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   actions: {
-    loginWithSocial: function (provider) {
+    loginWithSocial: function(provider) {
       this.get('session').loginWithSocial(provider).then(() => {
         this.transitionTo('/');
       });
     },
 
-    logout: function () {
+    logout: function() {
       this.get('session').logout();
       this.transitionTo('/');
       this.set('controller.drawerOpen', false);
     },
 
-    openModal: function (modalName, model) {
+    openModal: function(modalName, model) {
       return this.render(modalName, {
         controller: modalName,
         model: model ? model : Ember.Object.create({}),
@@ -23,14 +23,14 @@ export default Ember.Route.extend({
       });
     },
 
-    closeModal: function () {
+    closeModal: function() {
       return this.disconnectOutlet({
         outlet: 'modal',
         parentView: 'application'
       });
     },
 
-    createNewDeck: function () {
+    createNewDeck: function() {
       this.transitionTo('deck.build', 'new');
     },
 
@@ -39,7 +39,7 @@ export default Ember.Route.extend({
      * @param channel - what chat room should this message go in?
      * This action handles all chat rooms
      */
-    say: function (says, channel) {
+    say: function(says, channel) {
       if (says.trim().length === 0) {
         return;
       }

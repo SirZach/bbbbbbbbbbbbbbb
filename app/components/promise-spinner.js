@@ -8,11 +8,11 @@ export default Ember.Component.extend({
   /** @property {PromiseController} houses the promise */
   promiseController: null,
 
-  fetchOnBeginning: function () {
+  fetchOnBeginning: function() {
     this.retrieveData();
   }.on('didInsertElement'),
 
-  retrieveData: function () {
+  retrieveData: function() {
     var url = this.get('url');
     var promiseSpinnerUrls = this.get('promiseSpinnerUrls');
     var dataFound = promiseSpinnerUrls.hasData(url);
@@ -20,13 +20,13 @@ export default Ember.Component.extend({
 
     if (dataFound) {
       promiseController = PromiseController.create({
-        promise: new Ember.RSVP.Promise(function (resolve, reject) {
+        promise: new Ember.RSVP.Promise(function(resolve, reject) {
           resolve(dataFound);
         })
       });
     } else {
       promiseController = PromiseController.create({
-        promise: Ember.$.getJSON(url).then(function (data) {
+        promise: Ember.$.getJSON(url).then(function(data) {
           promiseSpinnerUrls.get('store').set(url.replace(/\./g, '-'), data);
           return data;
         })
@@ -37,7 +37,7 @@ export default Ember.Component.extend({
   },
 
   //Why do I need this?
-  urlChanged: function () {
+  urlChanged: function() {
     this.retrieveData();
   }.observes('url')
 });

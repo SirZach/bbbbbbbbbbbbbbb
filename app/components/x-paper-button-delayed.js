@@ -5,14 +5,14 @@ export default XPaperButton.extend({
 
   showTimer: false,
 
-  mouseDown: function () {
+  mouseDown: function() {
     this.setProperties({
       timerId: window.setTimeout(this.heldDownLongEnough.bind(this), 2000),
       showTimer: true
     });
   },
 
-  mouseUp: function () {
+  mouseUp: function() {
     //mousedown was not held down long enough
     if (this.get('timerId')) {
       window.clearTimeout(this.get('timerId'));
@@ -25,13 +25,13 @@ export default XPaperButton.extend({
     }
   },
 
-  heldDownLongEnough: function () {
+  heldDownLongEnough: function() {
     this.set('showTimer', false);
 
     this.click();
   },
 
-  click: function () {
+  click: function() {
     //mousedown was held for 2 seconds and now it's retriggering after the mouseup, don't send the click action twice
     if (!this.get('timerId')) {
       return false;

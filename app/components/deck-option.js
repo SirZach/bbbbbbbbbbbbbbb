@@ -13,7 +13,7 @@ export default Component.extend({
     return `background-image: url("${this.get('deck.defaultImageUrl')}")`;
   }),
 
-  /** @public @property {Boolean} Is this the selected deck? */
+  /** @property {Boolean} Is this the selected deck? */
   isSelected: computed('selectedDeckId', 'deckId', function() {
     return this.get('selectedDeckId') === this.get('deck.id');
   }),

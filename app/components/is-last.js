@@ -9,7 +9,7 @@ export default Ember.Component.extend({
   index: null,
 
   /** @property {Boolean} is current iterable last in the content */
-  isLast: computed('index', 'content', function () {
+  isLast: computed('index', 'content', function() {
     let content = get(this, 'content');
     let index = get(this, 'index');
 

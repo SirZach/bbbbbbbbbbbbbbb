@@ -4,7 +4,7 @@ import GameCard from '../models/game-card';
 
 export default Ember.Controller.extend({
   /** @property {Boolean} Is the game going? */
-  isGameInProgress: function () {
+  isGameInProgress: function() {
     var players = this.get('players');
     return players.get('length') === 2 && players.every((player) => player && player.get('isReady'));
   }.property('players.@each.isReady'),
@@ -12,7 +12,7 @@ export default Ember.Controller.extend({
   isGameInPrep: Ember.computed.not('isGameInProgress'),
 
   /** @property {Boolean} Am I one of the players? */
-  amIPlaying: function () {
+  amIPlaying: function() {
     var playerUserIds = this.get('model.gameParticipants')
       .filterBy('isPlaying')
       .mapBy('user.id')
@@ -23,7 +23,7 @@ export default Ember.Controller.extend({
     'model.gameParticipants.@each.{isPlaying,userId}',
     'session.user.id'),
 
-  amIPlayerOne: Ember.computed('participant.user.id', 'playerOne.user.id', function () {
+  amIPlayerOne: Ember.computed('participant.user.id', 'playerOne.user.id', function() {
     var participant = this.get('participant');
     var playerOne = this.get('playerOne');
 
@@ -34,7 +34,7 @@ export default Ember.Controller.extend({
   notPlayerOne: Ember.computed.not('amIPlayerOne'),
 
   /** @property {GameParticipant} The participant representing me. */
-  participant: function () {
+  participant: function() {
     var participants = this.get('model.gameParticipants');
     var myId = this.get('session.user.id');
     return participants.findBy('user.id', myId);
@@ -46,7 +46,7 @@ export default Ember.Controller.extend({
    *                                    It will be null if I am not playing and
    *                                    there is only one other player.
    */
-  players: function () {
+  players: function() {
     var players = this.get('model.gameParticipants').filterBy('isPlaying');
     var amIPlaying = this.get('amIPlaying');
     var myId = this.get('session.user.id');
@@ -65,11 +65,11 @@ export default Ember.Controller.extend({
     }
   }.property('model.gameParticipants.@each.isPlaying', 'amIPlaying'),
 
-  playerOne: function () {
+  playerOne: function() {
     return this.get('players')[0];
   }.property('players.@each'),
 
-  playerOneAvatarUrl: function () {
+  playerOneAvatarUrl: function() {
     var playerOne = this.get('playerOne');
     if (playerOne) {
       return playerOne.get('user.avatarUrl');
@@ -78,11 +78,11 @@ export default Ember.Controller.extend({
     }
   }.property('playerOne.user.avatarUrl'),
 
-  playerTwo: function () {
+  playerTwo: function() {
     return this.get('players')[1];
   }.property('players.@each'),
 
-  playerTwoAvatarUrl: function () {
+  playerTwoAvatarUrl: function() {
     var playerTwo = this.get('playerTwo');
     if (playerTwo) {
       return playerTwo.get('user.avatarUrl');
@@ -96,13 +96,13 @@ export default Ember.Controller.extend({
 
   /** @observer Signals the route to load card models for this game. */
   playersAreReady: Ember.observer('playerOne.isReady', 'playerTwo.isReady',
-    function () {
+    function() {
       this.send('playersReady');
     }
   ),
 
   /** @property {String} The title showing on the top half of the board. */
-  topBoardTitle: function () {
+  topBoardTitle: function() {
     var isGameInPrep = this.get('isGameInPrep');
     var playerTwoUsername = this.get('playerTwo.user.username');
     var playerTwoIsReady = this.get('playerTwo.isReady');
@@ -125,7 +125,7 @@ export default Ember.Controller.extend({
     'playerTwo.user.{username,isReady}'),
 
   /** @property {String} The title showing on the bottom half of the board. */
-  bottomBoardTitle: function () {
+  bottomBoardTitle: function() {
     var isGameInPrep = this.get('isGameInPrep');
     var amIPlaying = this.get('amIPlaying');
     var playerOneUsername = this.get('playerOne.user.username');
@@ -169,7 +169,7 @@ export default Ember.Controller.extend({
   showChat: true,
 
   /** @property {String} class name for the show/hide chat icon */
-  showChatClass: Ember.computed('showChat', function () {
+  showChatClass: Ember.computed('showChat', function() {
     return this.get('showChat') ? 'chevron-right' : 'chevron-left';
   }),
 
@@ -183,7 +183,7 @@ export default Ember.Controller.extend({
   leftColumnZone: null,
 
   /** @property {Array<DS.GameCard>} */
-  leftColumnCards: Ember.computed('leftColumnPlayer', 'leftColumnZone', 'playerOne.gameCards.@each.zone', 'playerTwo.gameCards.@each.zone', function () {
+  leftColumnCards: Ember.computed('leftColumnPlayer', 'leftColumnZone', 'playerOne.gameCards.@each.zone', 'playerTwo.gameCards.@each.zone', function() {
     var player = this.get('leftColumnPlayer');
     var zone = this.get('leftColumnZone');
 
@@ -197,7 +197,7 @@ export default Ember.Controller.extend({
   hasChosenDeck: Ember.computed.and('participant.deckName', 'participant.deckId'),
 
   /** @property {Boolean} participant can mark themselves ready */
-  participantCanReady: function () {
+  participantCanReady: function() {
     var amIPlaying = this.get('amIPlaying');
     if (!amIPlaying) {
       return false;
@@ -207,7 +207,7 @@ export default Ember.Controller.extend({
   }.property('amIPlaying', 'participant.isReady', 'hasChosenDeck'),
 
   /** @property {Deck} the deck used by the participant */
-  gameDeck: function () {
+  gameDeck: function() {
     var deckId = this.get('participant.deckId');
     var deck = this.get('session.user.gameReadyDecks').findBy('id', deckId);
     return deck;
@@ -217,7 +217,7 @@ export default Ember.Controller.extend({
    * Prepare the deck for play. Create game card models for each card in the
    * main deck, shuffle. By default, cards are put in the library.
    */
-  initializeGameCards: function () {
+  initializeGameCards: function() {
     if (!this.get('hasChosenDeck')) {
       return;
     }
@@ -247,14 +247,14 @@ export default Ember.Controller.extend({
   /**
     * If a player selects End Game, redirect everyone back to the games list
     */
-  statusChanged: Ember.observer('model.status', function () {
+  statusChanged: Ember.observer('model.status', function() {
     if (this.get('model.status') === 'ended') {
       this.transitionToRoute('games.list');
     }
   }),
 
   /** @function get the game controller in a good state for another game */
-  resetState: function () {
+  resetState: function() {
     this.setProperties({
       showChat: true,
       showLeftColumn: false,
@@ -270,7 +270,7 @@ export default Ember.Controller.extend({
      *
      * @param {Deck} deck   The selected deck model.
      */
-    selectDeck: function (deck) {
+    selectDeck: function(deck) {
       if (!this.get('readOnly')) {
         var participant = this.get('participant');
         participant.setProperties({
@@ -284,7 +284,7 @@ export default Ember.Controller.extend({
     /**
      * Set the participant in the ready state
      */
-    iAmReady: function () {
+    iAmReady: function() {
       if (this.get('amIPlayerOne')) {
         var participant = this.get('participant');
         participant.set('isReady', true);
@@ -303,7 +303,7 @@ export default Ember.Controller.extend({
       this.set('says', null);
     },
 
-    toggleChat: function () {
+    toggleChat: function() {
       this.toggleProperty('showChat');
     },
 
@@ -313,7 +313,7 @@ export default Ember.Controller.extend({
      * @param cards
      * @param zone
      */
-    openLeftColumn: function (player, cards, zone) {
+    openLeftColumn: function(player, cards, zone) {
       if (this.get('amIPlayerOne')) {
         this.setProperties({
           leftColumnPlayer: player,
@@ -328,7 +328,7 @@ export default Ember.Controller.extend({
      * Not surrounded with a readOnly check since it's disabled altogether in the template
      * @param numCards
      */
-    drawCards: function (numCards) {
+    drawCards: function(numCards) {
       var library = this.get('participant.cardsInLibrary').toArray();
       if (library.get('length') > numCards) {
         for (var i = 0; i < numCards; i++) {
@@ -346,7 +346,7 @@ export default Ember.Controller.extend({
      * Shuffle the cards in player one's library
      * Not surrounded with a readOnly check since it's disabled altogether in the template
      */
-    shuffle: function () {
+    shuffle: function() {
       var library = this.get('participant.cardsInLibrary');
       var count = 0;
 
@@ -367,7 +367,7 @@ export default Ember.Controller.extend({
      * Send all cards from all the game zones back to the library, mainly utilized for a mulligan
      * Not surrounded with a readOnly check since it's disabled altogether in the template
      */
-    returnAllCards: function () {
+    returnAllCards: function() {
       if (this.get('amIPlayerOne')) {
         var participantGameCards = this.get('participant.gameCards');
         participantGameCards.forEach(gameCard => gameCard.setProperties({
@@ -382,7 +382,7 @@ export default Ember.Controller.extend({
     /**
       * Increment or decrement life
       */
-    changeLife: function (delta) {
+    changeLife: function(delta) {
       if (this.get('amIPlayerOne')) {
         var participant = this.get('participant');
         var life = participant.get('life');
@@ -392,7 +392,7 @@ export default Ember.Controller.extend({
       }
     },
 
-    droppedCard: function (cardData, player, zone) {
+    droppedCard: function(cardData, player, zone) {
       if (this.get('amIPlayerOne')) {
         var gameCard = player.get('gameCards').findBy('id', cardData.id);
 
@@ -409,7 +409,7 @@ export default Ember.Controller.extend({
      *
      * @param {GameCard} gameCard
      */
-    tap: function (gameCard) {
+    tap: function(gameCard) {
       if (this.get('amIPlayerOne')) {
         gameCard.toggleProperty('isTapped');
         this.send('updateGame');
@@ -419,7 +419,7 @@ export default Ember.Controller.extend({
     /**
       * A player has called it quits!
       */
-    endGame: function () {
+    endGame: function() {
       var game = this.get('model');
       game.set('status', 'ended');
       this.send('updateGame');

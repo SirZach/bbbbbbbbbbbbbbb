@@ -7,12 +7,12 @@ import GameCard from '../models/game-card';
 export default PaperCard.extend({
   layout,
 
-  willInsertElement: function () {
+  willInsertElement: function() {
     this.send('refresh');
   },
 
   /** @property {Array<Card>} The hand sorted by cmc and name. */
-  sortedHand: function () {
+  sortedHand: function() {
     var hand = this.get('hand') || [];
     return hand.sortBy('cmc', 'name');
   }.property('hand'),
@@ -21,7 +21,7 @@ export default PaperCard.extend({
     /**
      * "Draw" a new hand by choosing 7 random cards from the deck.
      */
-    refresh: function () {
+    refresh: function() {
       var cardGroups = this.get('deck.mainCardGroups') || [];
       var cards = [];
       cardGroups.forEach((cardGroup) => {

@@ -7,24 +7,24 @@ export default Ember.Component.extend({
   tagName: 'span',
 
   /** @property {Time} the time of the object */
-  time: function () {
+  time: function() {
     return this.get('date');
   }.property('date'),
 
   /** @property {Epoch} the current clock time */
   xTime: null,
 
-  startTimer: function () {
+  startTimer: function() {
     this.set('xTime', Date.now());
     this.scheduleStartTimer();
   },
 
-  scheduleStartTimer: function () {
+  scheduleStartTimer: function() {
     this.set('xTime', Date.now());
     this._timer = Ember.run.later(this, 'startTimer', 60000);
   }.on('didInsertElement'),
 
-  killTimer: function () {
+  killTimer: function() {
     Ember.run.cancel(this._timer);
   }.on('willDestroyElement')
 });

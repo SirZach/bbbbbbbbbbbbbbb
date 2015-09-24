@@ -17,7 +17,7 @@ moduleForComponent('game-listing', {
 });
 
 /*
-test('it renders', function (assert) {
+test('it renders', function(assert) {
   assert.expect(2);
 
   // creates the component instance
@@ -26,7 +26,7 @@ test('it renders', function (assert) {
     gameParticipants: [],
     playerOne: Ember.Object.create()
   });
-  Ember.run(function () {
+  Ember.run(function() {
     component.set('game', game);
   });
   assert.equal(component._state, 'preRender');

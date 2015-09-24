@@ -17,7 +17,7 @@ export default Ember.Component.extend({
   classNames: ['mana-curve-chart'],
 
   /** @property {Array} CardGroups organized by cost. */
-  costGroups: function () {
+  costGroups: function() {
     // Make a structure that looks like this:
     // [{cmc: 1, cardGroups: [x, y, z]}, {cmc: 2, cardGroups: a, b, c}, ...]
     //
@@ -60,7 +60,7 @@ export default Ember.Component.extend({
   cardSpoilerHidden: 'hidden',
 
   /** @property {Boolean} Render spoiler on right side? */
-  isSpoilerOpposite: function () {
+  isSpoilerOpposite: function() {
     return this.get('spoilerPosition') === 'right';
   }.property('spoilerPosition'),
 
@@ -68,7 +68,7 @@ export default Ember.Component.extend({
     /**
      * Show this card image.
      */
-    cardFocusIn: function (card) {
+    cardFocusIn: function(card) {
       this.set('spoilerCard', card);
       this.set('cardSpoilerHidden', false);
     },
@@ -76,7 +76,7 @@ export default Ember.Component.extend({
     /**
      * Hide this card image.
      */
-    cardFocusOut: function (card) {
+    cardFocusOut: function(card) {
       this.set('cardSpoilerHidden', true);
     }
   }

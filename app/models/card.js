@@ -62,7 +62,7 @@ export default DS.Model.extend({
   isVintage: DS.attr('boolean'),
   recentSet: DS.attr('string'),
 
-  imageUrl: function () {
+  imageUrl: function() {
     var host = 'https://big-furry-monster.herokuapp.com';
     if (ENV.environment === 'development') {
       host = 'http://localhost:3000';
@@ -70,7 +70,7 @@ export default DS.Model.extend({
     return host + '/images/' + this.get('name');
   }.property('name'),
 
-  channelFireballPrice: function () {
+  channelFireballPrice: function() {
     //TODO: get host from the card.js adapter
     if (ENV.environment === 'development') {
       return "http://localhost:3000/prices/" + this.get('name');
@@ -80,7 +80,7 @@ export default DS.Model.extend({
   }.property('name'),
 
   /** @property {String} display color - e.g. blue; colorless; multicolored */
-  displayColor: function () {
+  displayColor: function() {
     var colors = this.get('colors');
     if (!colors || !colors.length) {
       return 'colorless';

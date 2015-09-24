@@ -9,20 +9,20 @@ var IDLE_MS = 60000;
 var session = Ember.Object.extend({
   ref: new Firebase(FIREBASE_URL),
 
-  store: function () {
+  store: function() {
     return this.container.lookup('service:store');
   }.property(),
 
-  log: function () {
+  log: function() {
     return this.container.lookup('log:main');
   }.property(),
 
-  addFirebaseCallback: function () {
+  addFirebaseCallback: function() {
     var session = this;
     var store = this.get('store');
 
-    this.get('ref').onAuth(function (authData) {
-      Ember.run(function () {
+    this.get('ref').onAuth(function(authData) {
+      Ember.run(function() {
         if (authData) {
           // Set the 'user' property to be a promise proxy that resolves when we
           // are done creating the user. Most people will just ignore the fact
@@ -38,7 +38,7 @@ var session = Ember.Object.extend({
     });
   }.on('init'),
 
-  logout: function () {
+  logout: function() {
     this.get('ref').unauth();
     this.set('user', null);
   },
@@ -51,7 +51,7 @@ var session = Ember.Object.extend({
    *
    * @return {Promise}
    */
-  initializeUser: function (authData) {
+  initializeUser: function(authData) {
     var socialUserData;
     if (authData.provider !== 'password') {
       socialUserData = this.parseSocialData(authData);
@@ -64,7 +64,7 @@ var session = Ember.Object.extend({
     return userPromiseProxy.then(() => this.bindPresence());
   },
 
-  trackActivity: function () {
+  trackActivity: function() {
     $(document).idleTimer({
       // Call user idle after this many milliseconds.
       timeout: IDLE_MS,
@@ -85,7 +85,7 @@ var session = Ember.Object.extend({
    *
    * @return {Promise}
    */
-  updateOrCreateUser: function (uid, socialUserData) {
+  updateOrCreateUser: function(uid, socialUserData) {
     if (!uid) {
       log.error(`No uid passed for user: ${socialUserData}.`);
       return;
@@ -126,12 +126,12 @@ var session = Ember.Object.extend({
     return store.find('user', query).then(afterFind, afterFind);
   },
 
-  onPresenceStateChange: function (state) {
+  onPresenceStateChange: function(state) {
     Ember.run(() => {
       if (!this.get('user.isFulfilled')) {
         return;
       }
-      this.get('user.presence').then(function (presence) {
+      this.get('user.presence').then(function(presence) {
         presence.set('state', state);
         if (state === 'idle') {
           presence.set('lastSeen',
@@ -147,13 +147,13 @@ var session = Ember.Object.extend({
    *
    * @return {Promise}
    */
-  bindPresence: function () {
+  bindPresence: function() {
     // The user is a promise object that has resolved by now.
     var user = this.get('user.content');
     var amOnline = new Firebase(FIREBASE_URL + '/.info/connected');
     var store = this.get('store');
     var session = this;
-    return user.get('presence').then(function (presence) {
+    return user.get('presence').then(function(presence) {
       if (!presence) {
         presence = store.createRecord('presence', {
           user: user
@@ -161,7 +161,7 @@ var session = Ember.Object.extend({
         user.set('presence', presence);
         user.save();
       }
-      amOnline.on('value', function (snapshot) {
+      amOnline.on('value', function(snapshot) {
         Ember.run(() => {
           if (snapshot.val()) {
             var ref = presence.ref();
@@ -179,9 +179,9 @@ var session = Ember.Object.extend({
     });
   },
 
-  loginWithSocial: function (provider) {
-    return new Ember.RSVP.Promise(function (resolve, reject) {
-      this.get('ref').authWithOAuthPopup(provider, function (error, user) {
+  loginWithSocial: function(provider) {
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      this.get('ref').authWithOAuthPopup(provider, function(error, user) {
         if (user) {
           Ember.run(() => resolve(user));
         } else {
@@ -199,7 +199,7 @@ var session = Ember.Object.extend({
    *
    * @return {Promise}
    */
-  loginWithPassword: function (email, password) {
+  loginWithPassword: function(email, password) {
     return new Ember.RSVP.Promise((resolve, reject) => {
       this.get('ref').authWithPassword({
         email: email,
@@ -223,7 +223,7 @@ var session = Ember.Object.extend({
    *
    * @return {Promise}
    */
-  signupWithPassword: function (username, email, password) {
+  signupWithPassword: function(username, email, password) {
     return new Ember.RSVP.Promise((resolve, reject) => {
       this.get('ref').createUser({
         email: email,
@@ -246,7 +246,7 @@ var session = Ember.Object.extend({
     });
   },
 
-  createPasswordUser: function (userData) {
+  createPasswordUser: function(userData) {
     var store = this.get('store');
     var user = store.createRecord('user');
     user.setProperties(userData);
@@ -256,7 +256,7 @@ var session = Ember.Object.extend({
     return user.save();
   },
 
-  currentUser: function () {
+  currentUser: function() {
     return this.get('ref').getAuth();
   }.property('isAuthenticated'),
 
@@ -268,7 +268,7 @@ var session = Ember.Object.extend({
    *
    * @return {Object} Parsed user info.
    */
-  parseSocialData: function (authData) {
+  parseSocialData: function(authData) {
     var log = this.get('log');
     if (!authData) {
       log.error('No authData provided to parseSocialData.');
@@ -312,7 +312,7 @@ var session = Ember.Object.extend({
 export default {
   name: "Session",
 
-  initialize: function (container, app) {
+  initialize: function(container, app) {
     app.register('session:main', session);
     app.inject('controller', 'session', 'session:main');
     app.inject('route', 'session', 'session:main');

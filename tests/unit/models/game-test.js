@@ -28,7 +28,7 @@ test('the players list contains the people playing', function(assert) {
 
   let model = this.subject();
 
-  Ember.run(this, function () {
+  Ember.run(this, function() {
     let users = ['SirZach', 'ahaurw01'].map((username) => {
       return this.store().createRecord('user', {
         username: username
@@ -52,7 +52,7 @@ test('the players list should be padded with a placeholder', function(assert) {
   assert.expect(2);
 
   let model = this.subject();
-  Ember.run(this, function () {
+  Ember.run(this, function() {
     let users = ['SirZach'].map((username) => {
       return this.store().createRecord('user', {
         username: username
@@ -76,7 +76,7 @@ test('playerOne should be the first player', function(assert) {
   assert.expect(1);
 
   let model = this.subject();
-  Ember.run(this, function () {
+  Ember.run(this, function() {
     let users = ['SirZach', 'ahaurw01'].map((username) => {
       return this.store().createRecord('user', {
         username: username
@@ -98,7 +98,7 @@ test('playerTwo should be the second player', function(assert) {
   assert.expect(1);
 
   let model = this.subject();
-  Ember.run(this, function () {
+  Ember.run(this, function() {
     let users = ['SirZach', 'ahaurw01'].map((username) => {
       return this.store().createRecord('user', {
         username: username
@@ -120,7 +120,7 @@ test('watchers should contain all people not playing', function(assert) {
   assert.expect(2);
 
   let model = this.subject();
-  Ember.run(this, function () {
+  Ember.run(this, function() {
     let users = ['SirZach', 'ahaurw01', 'thomasjmwb', 'wycats', 'tomdale']
       .map((username) => {
         return this.store().createRecord('user', {

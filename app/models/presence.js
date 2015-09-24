@@ -11,7 +11,7 @@ export default DS.Model.extend({
   state: DS.attr('string'),
   lastSeen: DS.attr('date'),
 
-  statePriority: function () {
+  statePriority: function() {
     var state = this.get('state');
     return PRIORITIES[state] || 99;
   }.property('state')

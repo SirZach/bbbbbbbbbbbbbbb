@@ -21,7 +21,7 @@ export default Ember.Component.extend({
   gameCard: null,
 
   /** @property {DS.Model Card} */
-  card: function () {
+  card: function() {
     var gameCardId = this.get('gameCard.cardId');
     var cards = this.get('cards');
 
@@ -41,7 +41,7 @@ export default Ember.Component.extend({
   increasedMargin: Ember.computed.equal('gameCard.zone', GameCard.BATTLEFIELD),
 
   /** Attach document key handlers for magnifying purposes. */
-  attachKeyHandlers: Ember.on('init', function () {
+  attachKeyHandlers: Ember.on('init', function() {
     var scope = Ember.guidFor(this);
     $(document).on(`keydown.${scope}`, event => {
       if (event.which === 90) {
@@ -77,7 +77,7 @@ export default Ember.Component.extend({
     }
   },
 
-  dragEnd: function (event) {
+  dragEnd: function(event) {
     if (!this.get('readOnly')) {
       this.sendAction('dragEnded');
     }
@@ -86,7 +86,7 @@ export default Ember.Component.extend({
   /** @property {Boolean} */
   isTapped: Ember.computed.alias('gameCard.isTapped'),
 
-  click: function () {
+  click: function() {
     if (this.get('canTap') && !this.get('readOnly')) {
       this.sendAction('tap', this.get('gameCard'));
     }
@@ -180,7 +180,7 @@ export default Ember.Component.extend({
    * @property {String} Id for the magnified element. Based off the existing id
    * for uniqueness.
    */
-  magnifiedCardElementId: Ember.computed(function () {
+  magnifiedCardElementId: Ember.computed(function() {
     var id = this.element.id;
     return id + '-magnified';
   }),

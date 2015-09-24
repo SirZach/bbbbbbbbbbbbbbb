@@ -1,12 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  model: function () {
+  model: function() {
     return this.store.filter('game', {orderBy: 'createdDate'}, () => true);
   },
 
   actions: {
-    newGame: function () {
+    newGame: function() {
       // The user must not be anonymous.
       if (this.get('session.user.isAnonymous')) {
         return;
@@ -27,7 +27,7 @@ export default Ember.Route.extend({
       });
       gameParticipants.addObject(gameParticipant);
 
-      game.save().then(function (game) {
+      game.save().then(function(game) {
         self.transitionTo('game', game);
       });
     }

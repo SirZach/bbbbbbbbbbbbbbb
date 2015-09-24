@@ -19,7 +19,7 @@ var GameCard = Ember.Object.extend({
   /** @property {Object} object containing name, power, toughness, and description */
   tokenStats: null,
 
-  bootstrapId: Ember.on('init', function () {
+  bootstrapId: Ember.on('init', function() {
     var id = this.get('id');
     this.set('id', id || GameCard.generateId());
   })
