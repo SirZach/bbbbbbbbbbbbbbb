@@ -86,13 +86,13 @@ let session = Ember.Object.extend({
    * @return {Promise}
    */
   updateOrCreateUser(uid, socialUserData) {
+    let log = this.get('log');
+    let store = this.get('store');
+
     if (!uid) {
       log.error(`No uid passed for user: ${socialUserData}.`);
       return;
     }
-
-    let store = this.get('store');
-    let log = this.get('log');
 
     // Support old and new style user ids until all are transitioned.
     let query = uid;
