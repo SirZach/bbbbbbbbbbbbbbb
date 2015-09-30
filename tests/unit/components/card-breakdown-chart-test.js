@@ -13,7 +13,7 @@ test('it renders', function(assert) {
   assert.expect(2);
 
   // creates the component instance
-  var component = this.subject({
+  let component = this.subject({
     deck: Ember.Object.create({
       cardGroups: []
     })

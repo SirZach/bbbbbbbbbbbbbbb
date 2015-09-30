@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import layout from '../templates/components/mana-curve-chart';
 
-var COLOR_ORDER = {
+let COLOR_ORDER = {
   colorless: 1,
   white: 2,
   blue: 3,
@@ -12,26 +12,26 @@ var COLOR_ORDER = {
 };
 
 export default Ember.Component.extend({
-  layout: layout,
+  layout,
 
   classNames: ['mana-curve-chart'],
 
   /** @property {Array} CardGroups organized by cost. */
-  costGroups: function () {
+  costGroups: function() {
     // Make a structure that looks like this:
     // [{cmc: 1, cardGroups: [x, y, z]}, {cmc: 2, cardGroups: a, b, c}, ...]
     //
-    var grouped = [];
-    var mainCardGroups = this.get('deck.mainCardGroups');
+    let grouped = [];
+    let mainCardGroups = this.get('deck.mainCardGroups');
     mainCardGroups.forEach((cardGroup) => {
-      var cmc = cardGroup.get('card.cmc');
+      let cmc = cardGroup.get('card.cmc');
       if (cmc == null) {
         return;
       }
-      var cmcBucket = grouped.findBy('cmc', cardGroup.get('card.cmc'));
+      let cmcBucket = grouped.findBy('cmc', cardGroup.get('card.cmc'));
       if (!cmcBucket) {
         grouped.pushObject(Ember.Object.create({
-          cmc: cmc,
+          cmc,
           content: []
         }));
       }
@@ -40,10 +40,10 @@ export default Ember.Component.extend({
     });
     // Sort each stack by color and name.
     grouped.forEach((costGroup) => {
-      var cardGroups = costGroup.get('content');
+      let cardGroups = costGroup.get('content');
       cardGroups.sort((a, b) => {
-        var aColorWeight = COLOR_ORDER[a.get('card.displayColor')];
-        var bColorWeight = COLOR_ORDER[b.get('card.displayColor')];
+        let aColorWeight = COLOR_ORDER[a.get('card.displayColor')];
+        let bColorWeight = COLOR_ORDER[b.get('card.displayColor')];
         if (aColorWeight !== bColorWeight) {
           return aColorWeight - bColorWeight;
         } else {
@@ -60,7 +60,7 @@ export default Ember.Component.extend({
   cardSpoilerHidden: 'hidden',
 
   /** @property {Boolean} Render spoiler on right side? */
-  isSpoilerOpposite: function () {
+  isSpoilerOpposite: function() {
     return this.get('spoilerPosition') === 'right';
   }.property('spoilerPosition'),
 
@@ -68,7 +68,7 @@ export default Ember.Component.extend({
     /**
      * Show this card image.
      */
-    cardFocusIn: function (card) {
+    cardFocusIn(card) {
       this.set('spoilerCard', card);
       this.set('cardSpoilerHidden', false);
     },
@@ -76,7 +76,7 @@ export default Ember.Component.extend({
     /**
      * Hide this card image.
      */
-    cardFocusOut: function (card) {
+    cardFocusOut(card) {
       this.set('cardSpoilerHidden', true);
     }
   }

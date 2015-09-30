@@ -7,7 +7,7 @@ export default Ember.Route.extend({
     }
   },
 
-  beforeModel: function () {
+  beforeModel() {
     if (!this.get('session.isAuthenticated')) {
       this.replaceWith('/');
     } else {
@@ -16,11 +16,11 @@ export default Ember.Route.extend({
     }
   },
 
-  model: function ({mine}) {
+  model({ mine }) {
     if (mine) {
-      return this.get('session.user.decks').then(decks => {
+      return this.get('session.user.decks').then((decks) => {
         // Show last created first.
-        var model = decks.toArray().reverseObjects();
+        let model = decks.toArray().reverseObjects();
         // We don't want to lazy load any more models.
         model.set('loadsLazily', false);
         return model;
@@ -33,17 +33,17 @@ export default Ember.Route.extend({
     return this._createFetchPromise();
   },
 
-  _createFetchPromise: function () {
-    var lastDeckId = this.get('_lastDeckId');
-    var endAt = lastDeckId ? lastDeckId : null;
-    var model = this.get('_unfilteredDecks') || [];
+  _createFetchPromise() {
+    let lastDeckId = this.get('_lastDeckId');
+    let endAt = lastDeckId ? lastDeckId : null;
+    let model = this.get('_unfilteredDecks') || [];
     model.set('loadsLazily', true);
 
     // OMG what a hack. Firebase doesn't support exclusive queries, so ask for
     // one more than we want if we have already loaded some records.
     //
-    var limitToLast = 10;
-    var paddedLimitToLast = model.length ? limitToLast + 1 : limitToLast;
+    let limitToLast = 10;
+    let paddedLimitToLast = model.length ? limitToLast + 1 : limitToLast;
     return this.store.query('deck', {
       endAt,
       limitToLast: paddedLimitToLast
@@ -72,11 +72,11 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    deleteDeck: function (deck) {
+    deleteDeck(deck) {
       // Remove the record from the listing so we don't trigger weird 'null'
       // image lookups.
       //
-      var deckIndex = this.currentModel.indexOf(deck);
+      let deckIndex = this.currentModel.indexOf(deck);
       this.currentModel.removeObject(deck);
 
       deck.destroyRecord()
@@ -101,20 +101,20 @@ export default Ember.Route.extend({
         });
     },
 
-    goToDeck: function (deck) {
+    goToDeck(deck) {
       this.transitionTo('deck.index', deck);
     },
 
-    goToDeckBuilder: function (deck) {
+    goToDeckBuilder(deck) {
       this.transitionTo('deck.build', deck);
     },
 
-    importDeck: function () {
+    importDeck() {
       this.send('openModal', 'decks/import-deck');
     },
 
-    infinityLoad: function () {
-      var model = this.currentModel;
+    infinityLoad() {
+      let model = this.currentModel;
       if (this.get('_isLoading') || model.get('reachedInfinity')) {
         return;
       }

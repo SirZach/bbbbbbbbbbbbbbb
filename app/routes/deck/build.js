@@ -2,7 +2,7 @@ import Ember from 'ember';
 import InfinityRoute from 'ember-infinity/mixins/route';
 
 export default Ember.Route.extend(InfinityRoute, {
-  afterModel: function (deck) {
+  afterModel(deck) {
     return deck.get('owner').then((owner) => {
       return this.get('session.user').then((user) => {
         if (owner.get('id') !== user.get('id')) {
@@ -13,27 +13,27 @@ export default Ember.Route.extend(InfinityRoute, {
   },
 
   actions: {
-    willTransition: function (transition) {
-      var deck = this.get('controller.model');
+    willTransition(transition) {
+      let deck = this.get('controller.model');
 
       if (deck.get('isNew')) {
         deck.destroyRecord();
       }
     },
 
-    getNewCards: function () {
-      var cardsController = this.controllerFor('cards');
-      var colors = cardsController.get('colors');
-      var legalities = cardsController.get('legalities');
-      var types = cardsController.get('types');
-      var nameSearch = cardsController.get('nameSearch');
+    getNewCards() {
+      let cardsController = this.controllerFor('cards');
+      let colors = cardsController.get('colors');
+      let legalities = cardsController.get('legalities');
+      let types = cardsController.get('types');
+      let nameSearch = cardsController.get('nameSearch');
       // Ember Infinity-prescribed configuration - perPage and modelPath.
-      var perPage = 20;
-      var modelPath = 'controller.cardsController.model';
+      let perPage = 20;
+      let modelPath = 'controller.cardsController.model';
 
       this.set(modelPath, []);
 
-      var query = {
+      let query = {
         colors,
         legalities,
         types,
@@ -47,7 +47,7 @@ export default Ember.Route.extend(InfinityRoute, {
       // cards it finds into our card controller. Subsequent loads will be
       // pushed to that controller by the mixin.
       //
-      var infinityModel = this.infinityModel('card', query);
+      let infinityModel = this.infinityModel('card', query);
       infinityModel.then((cards) => {
         this.get(modelPath).pushObjects(cards.toArray());
       });

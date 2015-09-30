@@ -62,26 +62,30 @@ export default DS.Model.extend({
   isVintage: DS.attr('boolean'),
   recentSet: DS.attr('string'),
 
-  imageUrl: function () {
-    var host = 'https://big-furry-monster.herokuapp.com';
+  imageUrl: function() {
+    let host = 'https://big-furry-monster.herokuapp.com';
+    let name = this.get('name');
+
     if (ENV.environment === 'development') {
       host = 'http://localhost:3000';
     }
-    return host + '/images/' + this.get('name');
+    return `${host}/images/${name}`;
   }.property('name'),
 
-  channelFireballPrice: function () {
-    //TODO: get host from the card.js adapter
+  channelFireballPrice: function() {
+    let name = this.get('name');
+
+    // TODO: get host from the card.js adapter
     if (ENV.environment === 'development') {
-      return "http://localhost:3000/prices/" + this.get('name');
+      return `http://localhost:3000/prices/${name}`;
     } else {
-      return "https://big-furry-monster.herokuapp.com/prices/" + this.get('name');
+      return `https://big-furry-monster.herokuapp.com/prices/${name}`;
     }
   }.property('name'),
 
   /** @property {String} display color - e.g. blue; colorless; multicolored */
-  displayColor: function () {
-    var colors = this.get('colors');
+  displayColor: function() {
+    let colors = this.get('colors');
     if (!colors || !colors.length) {
       return 'colorless';
     }

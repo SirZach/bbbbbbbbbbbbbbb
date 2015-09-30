@@ -5,6 +5,6 @@ module('Unit | Helper | from x');
 
 // Replace this with your real tests.
 test('it works', function(assert) {
-  var result = fromX(42);
+  let result = fromX(42);
   assert.ok(result);
 });

@@ -9,8 +9,8 @@ export default Ember.Controller.extend({
   /** @property {String} set by the route */
   channel: null,
 
-  sortedPresences: function () {
-    var presences = this.get('presences');
+  sortedPresences: function() {
+    let presences = this.get('presences');
     if (!presences) {
       return null;
     }

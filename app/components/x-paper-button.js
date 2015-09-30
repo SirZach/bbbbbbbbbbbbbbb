@@ -5,11 +5,11 @@ export default PaperButton.extend({
   attributeBindings: ['target', 'action', 'title'],
 
   click() {
-    //stolen from ember-paper
-    var target = this.get('target');
-    var parameters = target ? [this.get('action')] : ['action'];
-    var params = this.get('params');
-    var paramsAsArray = Ember.isArray(params) ? params : [params];
+    // stolen from ember-paper
+    let target = this.get('target');
+    let parameters = target ? [this.get('action')] : ['action'];
+    let params = this.get('params');
+    let paramsAsArray = Ember.isArray(params) ? params : [params];
 
     parameters = parameters.concat(paramsAsArray);
 

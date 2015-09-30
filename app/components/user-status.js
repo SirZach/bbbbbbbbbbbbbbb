@@ -2,21 +2,21 @@ import Ember from 'ember';
 import layout from '../templates/components/user-status';
 
 export default Ember.Component.extend({
-  layout: layout,
+  layout,
 
   classNameBindings: ['statusClass'],
 
-  statusClass: function () {
-    var state = this.get('presence.state');
-    return 'user-' + state;
+  statusClass: function() {
+    let state = this.get('presence.state');
+    return `user-${state}`;
   }.property('presence.state'),
 
   isOnline: Ember.computed.equal('presence.state', 'online'),
 
   isOffline: Ember.computed.equal('presence.state', 'offline'),
 
-  lastSeenLabel: function () {
-    var state = this.get('presence.state');
+  lastSeenLabel: function() {
+    let state = this.get('presence.state');
     if (state === 'online') {
       return 'online';
     } else if (state === 'idle') {

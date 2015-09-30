@@ -1,24 +1,23 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  redirect: function (model, transition) {
+  redirect(model, transition) {
     if (transition.targetName === 'games.index') {
       this.transitionTo('games.list');
     }
   },
 
   actions: {
-    deleteGame: function (game) {
-      var gameId = game.get('id');
-      var store = this.store;
-      var notifications = this.notifications;
+    deleteGame(game) {
+      let gameId = game.get('id');
+      let { store, notifications } = this;
 
       game.destroyRecord().then(() => {
         store.find('chat', {
           orderBy: 'channel',
           equalTo: gameId
-        }).then(function (gameChats) {
-          var promises = gameChats.map((chat) => chat.destroyRecord());
+        }).then(function(gameChats) {
+          let promises = gameChats.map((chat) => chat.destroyRecord());
           Ember.RSVP
             .all(promises)
             .then(() => {

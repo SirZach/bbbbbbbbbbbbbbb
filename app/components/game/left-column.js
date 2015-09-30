@@ -18,7 +18,7 @@ export default Ember.Component.extend({
   gameCards: null,
 
   /** @property {Array<DS.GameCards>} sorted by type */
-  sortedCards: Ember.computed('gameCards.[]', 'cards.@each.cardId', function () {
+  sortedCards: Ember.computed('gameCards.[]', 'cards.@each.cardId', function() {
     return this.get('gameCards').sort(Sort.CardTypes.bind(this, this.get('cards')));
   }),
 
@@ -32,15 +32,15 @@ export default Ember.Component.extend({
   cards: null,
 
   actions: {
-    close: function () {
+    close() {
       this.sendAction('close');
     },
 
-    dragStarted: function () {
+    dragStarted() {
       this.sendAction('dragStarted');
     },
 
-    dragEnded: function () {
+    dragEnded() {
       this.sendAction('dragEnded');
     }
   }

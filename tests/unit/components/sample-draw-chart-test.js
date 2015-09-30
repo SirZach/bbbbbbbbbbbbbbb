@@ -17,7 +17,7 @@ test('it renders', function(assert) {
   assert.expect(2);
 
   // creates the component instance
-  var component = this.subject();
+  let component = this.subject();
   assert.equal(component._state, 'preRender');
 
   // renders the component to the page
@@ -25,7 +25,7 @@ test('it renders', function(assert) {
   assert.equal(component._state, 'inDOM');
 });
 
-var deckFixture = Ember.Object.create({
+let deckFixture = Ember.Object.create({
   mainCardGroups: [
     Ember.Object.create({
       count: 1,
@@ -86,25 +86,25 @@ var deckFixture = Ember.Object.create({
   ]
 });
 
-test('hand has 7 cards', function (assert) {
-  var component = this.subject({
+test('hand has 7 cards', function(assert) {
+  let component = this.subject({
     deck: deckFixture
   });
   component.send('refresh');
-  var hand = component.get('hand');
+  let hand = component.get('hand');
   assert.equal(hand.length, 7);
 });
 
-test('sorted hand is sorted by name and cmc', function (assert) {
+test('sorted hand is sorted by name and cmc', function(assert) {
   assert.expect(15);
-  var component = this.subject({
+  let component = this.subject({
     deck: deckFixture
   });
   component.send('refresh');
-  var hand = component.get('sortedHand');
+  let hand = component.get('sortedHand');
   assert.equal(hand.length, 7);
-  var previousCmc = -1;
-  var previousName = '';
+  let previousCmc = -1;
+  let previousName = '';
   hand.forEach((card) => {
     assert.ok(card.get('cmc') >= previousCmc);
     if (previousCmc !== card.get('cmc')) {

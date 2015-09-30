@@ -1,13 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  beforeModel: function () {
+  beforeModel() {
     if (!this.get('session.isAuthenticated')) {
       this.replaceWith('/');
     }
 
-    var cardsController = this.controllerFor('cards');
-    return this.store.findAll('card').then(function (cards) {
+    let cardsController = this.controllerFor('cards');
+    return this.store.findAll('card').then(function(cards) {
       cardsController.set('model', cards);
       // A hack to not show the spinner. Not sure it even makes sense to show
       // this subset of cards on load.
@@ -17,9 +17,9 @@ export default Ember.Route.extend({
     });
   },
 
-  model: function (params) {
+  model(params) {
     if (params.deck_id === 'new') {
-      var deck = this.store.createRecord('deck');
+      let deck = this.store.createRecord('deck');
       return this.get('session.user').then((user) => {
         deck.set('owner', user);
         return deck;
@@ -30,10 +30,10 @@ export default Ember.Route.extend({
   },
 
   /** Make sure all the cards for the deck are loaded before continuing */
-  afterModel: function (deck) {
-    var cardPromiseArray = [];
+  afterModel(deck) {
+    let cardPromiseArray = [];
 
-    deck.get('cardGroups').forEach(function (cardGroup) {
+    deck.get('cardGroups').forEach(function(cardGroup) {
       cardPromiseArray.push(cardGroup.get('card'));
     });
 
@@ -41,15 +41,15 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    addToMain: function (card) {
+    addToMain(card) {
       this.get('controller.model').addCard(card, 'main');
     },
 
-    addToSide: function (card) {
+    addToSide(card) {
       this.get('controller.model').addCard(card, 'side');
     },
 
-    saveDeck: function (deck) {
+    saveDeck(deck) {
       this.get('session.user').then((user) => {
         deck.save()
           .then(() => user.get('decks'))
@@ -76,19 +76,19 @@ export default Ember.Route.extend({
       });
     },
 
-    showCard: function (card) {
+    showCard(card) {
       this.controllerFor('deck.build').set('nameSearch', card.get('name'));
     },
 
-    typesChanged: function () {
+    typesChanged() {
       this.send('getNewCards');
     },
 
-    colorsChanged: function () {
+    colorsChanged() {
       this.send('getNewCards');
     },
 
-    legalitiesChanged: function () {
+    legalitiesChanged() {
       this.send('getNewCards');
     }
   }

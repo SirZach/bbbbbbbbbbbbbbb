@@ -2,21 +2,23 @@ import Ember from 'ember';
 import layout from '../templates/components/context-menu';
 import $ from 'jquery';
 
-export default Ember.Component.extend({
+const { Component } = Ember;
+
+export default Component.extend({
   isOpen: false,
 
-  layout: layout,
+  layout,
 
   tagName: 'context-menu',
 
   actions: {
-    toggle: function () {
+    toggle() {
       this.toggleProperty('isOpen');
     }
   },
 
-  createClickHandler: function () {
-    var contextMenu = this;
+  createClickHandler() {
+    let contextMenu = this;
     function clickHandler(event) {
       if (contextMenu.get('isOpen')) {
         if (!$(event.target).closest(`#${contextMenu.get('elementId')}`).length) {
@@ -27,11 +29,11 @@ export default Ember.Component.extend({
     return clickHandler;
   },
 
-  attachCloseout: function () {
+  attachCloseout: function() {
     $(document).on(`click.context-menu-${this.get('elementId')}`, this.createClickHandler());
   }.on('didInsertElement'),
 
-  removeDocListener: function () {
+  removeDocListener: function() {
     $(document).off(`click.context-menu-${this.get('elementId')}`);
   }.on('willDestroyElement')
 });

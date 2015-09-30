@@ -1,23 +1,23 @@
 import Ember from 'ember';
 import layout from '../templates/components/card-breakdown-chart';
-const { computed } = Ember;
+const { computed, Component, Handlebars } = Ember;
 
 const StatObj = Ember.Object.extend({
-  widthStyle: computed('width', function () {
+  widthStyle: computed('width', function() {
     let width = this.get('width');
 
-    return new Ember.Handlebars.SafeString(`width: ${width}`);
+    return new Handlebars.SafeString(`width: ${width}`);
   })
 });
 
-export default Ember.Component.extend({
-  layout: layout,
+export default Component.extend({
+  layout,
 
-  bars: function () {
-    var deck = this.get('deck');
-    var cardGroups = deck.get('cardGroups');
-    var mainCount = deck.get('mainCount');
-    var stats = {
+  bars: computed('deck', function() {
+    let deck = this.get('deck');
+    let cardGroups = deck.get('cardGroups');
+    let mainCount = deck.get('mainCount');
+    let stats = {
       Creature: {
         count: 0,
         width: 0
@@ -47,15 +47,15 @@ export default Ember.Component.extend({
     cardGroups
       .filterBy('board', 'main')
       .forEach((group) => {
-        var mainType = group.get('card.mainType');
+        let mainType = group.get('card.mainType');
         if (!stats[mainType]) {
           stats[mainType] = {
             count: 0,
             width: 0
           };
         }
-        var stat = stats[mainType];
-        var count = group.get('count');
+        let stat = stats[mainType];
+        let count = group.get('count');
         stat.count += count;
         stat.width += (100 / mainCount) * count;
       });
@@ -67,5 +67,5 @@ export default Ember.Component.extend({
         width: `${stats[cardType].width}%`
       });
     });
-  }.property('deck')
+  })
 });

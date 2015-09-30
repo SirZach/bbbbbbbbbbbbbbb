@@ -16,7 +16,7 @@ moduleForModel('game-participant', {
   ]
 });
 
-var gameCardFixtures = [{
+let gameCardFixtures = [{
   id: 1,
   cardId: 'Swamp',
   order: 1
@@ -35,35 +35,35 @@ var gameCardFixtures = [{
 }];
 
 test('it exists', function(assert) {
-  var model = this.subject();
+  let model = this.subject();
   // var store = this.store();
   assert.ok(!!model);
 });
 
-test('gameCards - sets raw', function (assert) {
+test('gameCards - sets raw', function(assert) {
   assert.expect(5);
-  var model = this.subject();
-  Ember.run(function () {
-    var gameCards = gameCardFixtures.map(fixture => GameCard.create(fixture));
+  let model = this.subject();
+  Ember.run(function() {
+    let gameCards = gameCardFixtures.map((fixture) => GameCard.create(fixture));
     model.set('gameCards', gameCards);
   });
-  var gameCardsRaw = model.get('gameCardsRaw');
+  let gameCardsRaw = model.get('gameCardsRaw');
   assert.equal(typeof gameCardsRaw, 'string');
-  var gameCardsRawHydrated = JSON.parse(gameCardsRaw);
+  let gameCardsRawHydrated = JSON.parse(gameCardsRaw);
   assert.equal(gameCardsRawHydrated.length, 4);
   assert.equal(gameCardsRawHydrated[3].id, 4);
   assert.equal(gameCardsRawHydrated[3].cardId, 'Island');
   assert.equal(gameCardsRawHydrated[3].order, 4);
 });
 
-test('gameCards - update raw', function (assert) {
-  var model = this.subject();
-  var gameCards;
-  Ember.run(function () {
-    gameCards = gameCardFixtures.map(fixture => GameCard.create(fixture));
+test('gameCards - update raw', function(assert) {
+  let model = this.subject();
+  let gameCards;
+  Ember.run(function() {
+    gameCards = gameCardFixtures.map((fixture) => GameCard.create(fixture));
     model.set('gameCards', gameCards);
   });
-  var gameCardFixturesNew = [];
+  let gameCardFixturesNew = [];
   gameCardFixturesNew.pushObjects(gameCardFixtures);
   gameCardFixturesNew.push({
     id: 5,
@@ -76,13 +76,13 @@ test('gameCards - update raw', function (assert) {
     },
     zone: 'battlefield'
   });
-  var newGameCardsRaw = JSON.stringify(gameCardFixturesNew);
-  Ember.run(function () {
+  let newGameCardsRaw = JSON.stringify(gameCardFixturesNew);
+  Ember.run(function() {
     model.set('gameCardsRaw', newGameCardsRaw);
   });
   gameCards = model.get('gameCards');
   assert.equal(gameCards.get('length'), 5);
-  var token = gameCards.findBy('isToken', true);
+  let token = gameCards.findBy('isToken', true);
   assert.ok(token);
   assert.equal(token.tokenStats.name, 'Spirit');
   assert.equal(token.zone, 'battlefield');

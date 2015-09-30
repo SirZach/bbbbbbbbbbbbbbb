@@ -4,16 +4,16 @@ import GameCard from './game-card';
 
 export default DS.Model.extend({
   /** @property {User} Reference to the user record. */
-  user: DS.belongsTo('user', {async: true}),
+  user: DS.belongsTo('user', { async: true }),
 
   /** @property {Boolean} Is this person a player (or a watcher)? */
-  isPlaying: DS.attr('boolean', {defaultValue: false}),
+  isPlaying: DS.attr('boolean', { defaultValue: false }),
 
   /** @property {Boolean} Is this person online and in the game room? */
-  isPresent: DS.attr('boolean', {defaultValue: true}),
+  isPresent: DS.attr('boolean', { defaultValue: true }),
 
   /** @property {Boolean} Is this person ready to play? */
-  isReady: DS.attr('boolean', {defaultValue: false}),
+  isReady: DS.attr('boolean', { defaultValue: false }),
 
   /** @property {String} The name of the deck being used. */
   deckName: DS.attr('string'),
@@ -32,8 +32,8 @@ export default DS.Model.extend({
 
   gameCards: Ember.computed('gameCardsRaw', {
     get() {
-      var gameCardsRaw = this.get('gameCardsRaw');
-      var gameCards = this.get('_gameCards');
+      let gameCardsRaw = this.get('gameCardsRaw');
+      let gameCards = this.get('_gameCards');
 
       if (!gameCardsRaw) {
         return [];
@@ -41,8 +41,8 @@ export default DS.Model.extend({
 
       if (gameCards) {
         // Merge the given properties instead of creating new objects.
-        JSON.parse(gameCardsRaw).forEach(raw => {
-          var gameCard = gameCards.findBy('id', raw.id);
+        JSON.parse(gameCardsRaw).forEach((raw) => {
+          let gameCard = gameCards.findBy('id', raw.id);
           if (!gameCard) {
             // If a new token was just created, add it to the list.
             gameCard = GameCard.create();
@@ -52,7 +52,7 @@ export default DS.Model.extend({
         });
       } else {
         // Create new objects.
-        gameCards = JSON.parse(gameCardsRaw).map(raw => GameCard.create(raw));
+        gameCards = JSON.parse(gameCardsRaw).map((raw) => GameCard.create(raw));
         this.set('_gameCards', gameCards);
       }
       return gameCards;
@@ -65,32 +65,32 @@ export default DS.Model.extend({
   }),
 
   /** @property {Array<DS.GameCard>} all the cards in hand */
-  cardsInHand: Ember.computed('gameCards.@each.zone', function () {
+  cardsInHand: Ember.computed('gameCards.@each.zone', function() {
     return this.get('gameCards').filterBy('zone', GameCard.HAND);
   }),
 
   /** @property {Array<DS.GameCard>} all the cards in library */
-  cardsInLibrary: Ember.computed('gameCards.@each.zone', function () {
+  cardsInLibrary: Ember.computed('gameCards.@each.zone', function() {
     return this.get('gameCards').filterBy('zone', GameCard.LIBRARY).sortBy('order');
   }),
 
   /** @property {Array<DS.GameCard>} all the cards in graveyard */
-  cardsInGraveyard: Ember.computed('gameCards.@each.zone', function () {
+  cardsInGraveyard: Ember.computed('gameCards.@each.zone', function() {
     return this.get('gameCards').filterBy('zone', GameCard.GRAVEYARD);
   }),
 
   /** @property {Array<DS.GameCard>} all the cards in exile */
-  cardsInExile: Ember.computed('gameCards.@each.zone', function () {
+  cardsInExile: Ember.computed('gameCards.@each.zone', function() {
     return this.get('gameCards').filterBy('zone', GameCard.EXILE);
   }),
 
   /** @property {Array<DS.GameCard>} all the cards on the battlefield */
-  cardsInBattlefield: Ember.computed('gameCards.@each.zone', function () {
+  cardsInBattlefield: Ember.computed('gameCards.@each.zone', function() {
     return this.get('gameCards').filterBy('zone', GameCard.BATTLEFIELD);
   }),
 
-  setGameCardsRaw: function () {
-    var gameCards = this.get('gameCards');
+  setGameCardsRaw() {
+    let gameCards = this.get('gameCards');
     if (gameCards) {
       this.set('gameCardsRaw', JSON.stringify(gameCards));
     }

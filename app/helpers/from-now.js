@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export function fromNow([value], options) {
-  var includeSuffix = (options && options.includeSuffix);
+  let includeSuffix = (options && options.includeSuffix);
   return moment(value).fromNow(!includeSuffix);
 }
 

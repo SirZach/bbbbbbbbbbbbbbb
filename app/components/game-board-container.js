@@ -1,8 +1,10 @@
 import Ember from 'ember';
 import layout from '../templates/components/game-board-container';
 
-export default Ember.Component.extend({
-  layout: layout,
+const { Component } = Ember;
+
+export default Component.extend({
+  layout,
 
   tagName: 'game-board-container'
 });

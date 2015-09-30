@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component } = Ember;
+
+export default Component.extend({
   types: ['Creature', 'Enchantment', 'Land', 'Instant', 'Sorcery', 'Artifact'],
 
   colors: ['Black', 'Blue', 'Green', 'Red', 'White'],
@@ -8,13 +10,13 @@ export default Ember.Component.extend({
   legalities: ['Standard', 'Modern', 'Legacy', 'Vintage'],
 
   actions: {
-    typesChanged: function () {
+    typesChanged() {
       this.sendAction('typesChanged');
     },
-    colorsChanged: function () {
+    colorsChanged() {
       this.sendAction('colorsChanged');
     },
-    legalitiesChanged: function () {
+    legalitiesChanged() {
       this.sendAction('legalitiesChanged');
     }
   }

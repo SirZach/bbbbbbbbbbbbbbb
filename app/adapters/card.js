@@ -1,6 +1,8 @@
 import DS from 'ember-data';
 import config from 'webatrice/config/environment';
-var host;
+
+const { RESTAdapter } = DS;
+let host;
 
 if (config.environment === 'production') {
   host = 'https://big-furry-monster.herokuapp.com';
@@ -8,6 +10,6 @@ if (config.environment === 'production') {
   host = 'http://localhost:3000';
 }
 
-export default DS.RESTAdapter.extend({
-  host: host
+export default RESTAdapter.extend({
+  host
 });

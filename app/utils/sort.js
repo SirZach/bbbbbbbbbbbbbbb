@@ -1,9 +1,9 @@
 export default {
-  CardTypes: function (cards, gameCardA, gameCardB) {
-    var cardA = cards.findBy('id', gameCardA.get('cardId'));
-    var cardB = cards.findBy('id', gameCardB.get('cardId'));
-    var cardAType = cardA ? cardA.get('mainType') : 'Token';
-    var cardBType = cardB ? cardB.get('mainType') : 'Token';
+  CardTypes(cards, gameCardA, gameCardB) {
+    let cardA = cards.findBy('id', gameCardA.get('cardId'));
+    let cardB = cards.findBy('id', gameCardB.get('cardId'));
+    let cardAType = cardA ? cardA.get('mainType') : 'Token';
+    let cardBType = cardB ? cardB.get('mainType') : 'Token';
 
     if (cardAType > cardBType) {
       return 1;

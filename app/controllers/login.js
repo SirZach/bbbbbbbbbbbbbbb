@@ -2,9 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   actions: {
-    login: function () {
-      var email = this.get('loginEmail');
-      var password = this.get('loginPassword');
+    login() {
+      let email = this.get('loginEmail');
+      let password = this.get('loginPassword');
       this.set('loginError');
       this.session.loginWithPassword(email, password).then(
         () => this.transitionToRoute('/'),
@@ -16,10 +16,10 @@ export default Ember.Controller.extend({
         });
     },
 
-    signup: function () {
-      var username = this.get('signupUsername');
-      var email = this.get('signupEmail');
-      var password = this.get('signupPassword');
+    signup() {
+      let username = this.get('signupUsername');
+      let email = this.get('signupEmail');
+      let password = this.get('signupPassword');
       this.session.signupWithPassword(username, email, password).then(
         () => this.transitionToRoute('/'),
         (error) => {

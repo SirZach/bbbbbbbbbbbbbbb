@@ -5,18 +5,18 @@ export default Ember.Controller.extend({
   needs: ['cards'],
 
   actions: {
-    close: function() {
+    close() {
       return this.send('closeModal');
     },
 
-    importDeck: function () {
-      var importContents = this.get('importContents');
-      
+    importDeck() {
+      let importContents = this.get('importContents');
+
       this.get('session.user').then((user) => {
         Deck.createFromImport(importContents, this.store).then((result) => {
-          var deck = result.deck;
+          let { deck } = result;
           deck.set('owner', user);
-          var errors = result.errors;
+          let { errors } = result;
 
           if (errors.length) {
             deck.set('failedImports', errors);
