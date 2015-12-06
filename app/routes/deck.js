@@ -40,6 +40,13 @@ export default Ember.Route.extend({
     return Ember.RSVP.all(cardPromiseArray);
   },
 
+  /** Get the default image url for the deck and set it as the imageUrl. */
+  applyDefaultImageUrlToDeck(deck) {
+    let buildController = this.controllerFor('deck.build');
+    let imageUrl = buildController.get('defaultImageUrl');
+    deck.set('imageUrl', imageUrl);
+  },
+
   actions: {
     addToMain(card) {
       this.get('controller.model').addCard(card, 'main');
@@ -50,6 +57,8 @@ export default Ember.Route.extend({
     },
 
     saveDeck(deck) {
+      this.applyDefaultImageUrlToDeck(deck);
+
       this.get('session.user').then((user) => {
         deck.save()
           .then(() => user.get('decks'))
