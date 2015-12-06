@@ -9,8 +9,8 @@ export default Component.extend({
   classNameBindings: [':deck-option', 'isSelected:deck-option-selected'],
   attributeBindings: ['style'],
 
-  style: computed('deck.defaultImageUrl', function() {
-    return `background-image: url("${this.get('deck.defaultImageUrl')}")`;
+  style: computed('deck.imageUrl', function() {
+    return `background-image: url("${this.get('deck.imageUrl')}")`;
   }),
 
   /** @property {Boolean} Is this the selected deck? */

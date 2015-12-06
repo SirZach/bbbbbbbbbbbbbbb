@@ -53,6 +53,9 @@ let Deck = DS.Model.extend({
   /** @property {String} - the deck name */
   name: DS.attr('string'),
 
+  /** @property {String} - url of the associated image */
+  imageUrl: DS.attr('string'),
+
   /** @property {String} - user defined comments about the deck */
   comments: DS.attr('string'),
 
@@ -287,17 +290,9 @@ let Deck = DS.Model.extend({
   /** @property {Boolean} - is this deck game-ready? */
   isGameReady: Ember.computed.gt('mainCount', 0),
 
-  /** @property {String} - default image url; uses a card in the deck */
-  defaultImageUrl: function() {
-    let cardGroups = this.get('mainCardGroups');
-    return cardGroups.filterBy('card.mainType', 'Creature')
-      .sortBy('card.cmc')
-      .get('lastObject.card.imageUrl');
-  }.property('mainCardGroups.@each.cmc'),
-
-  defaultImageUrlStyle: computed('defaultImageUrl', function() {
-    let defaultImageUrl = get(this, 'defaultImageUrl');
-    return new Ember.Handlebars.SafeString(`background-image: url(${defaultImageUrl})`);
+  imageUrlStyle: computed('imageUrl', function() {
+    let imageUrl = get(this, 'imageUrl');
+    return new Ember.Handlebars.SafeString(`background-image: url(${imageUrl})`);
   })
 });
 
