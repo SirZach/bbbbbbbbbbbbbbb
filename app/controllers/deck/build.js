@@ -26,13 +26,15 @@ export default Ember.Controller.extend({
   }.property('model.cardGroups.[]'),
 
   /** @property {String} - url of most expensive cmc card in the deck */
-  defaultImageUrl: Ember.computed('model.mainCardGroups.@each.cmc', function() {
-    let cardGroups = this.get('model.mainCardGroups');
-    if (!cardGroups || !cardGroups.length) {
-      return 'http://big-furry-monster.herokuapp.com/images/default';
+  defaultImageUrl: Ember.computed('model.mainCardGroups.@each.card.cmc',
+    function() {
+      let cardGroups = this.get('model.mainCardGroups');
+      if (!cardGroups || !cardGroups.length) {
+        return 'http://big-furry-monster.herokuapp.com/images/default';
+      }
+      return cardGroups.sortBy('card.cmc').get('lastObject.card.imageUrl');
     }
-    return cardGroups.sortBy('card.cmc').get('lastObject.card.imageUrl');
-  }),
+  ),
 
   actions: {
     toggleFiltersActive() {
