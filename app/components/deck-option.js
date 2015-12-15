@@ -10,7 +10,7 @@ export default Component.extend({
   attributeBindings: ['style'],
 
   style: computed('deck.imageUrl', function() {
-    return `background-image: url("${this.get('deck.imageUrl')}")`;
+    return new Ember.Handlebars.SafeString(`background-image: url("${this.get('deck.imageUrl')}")`);
   }),
 
   /** @property {Boolean} Is this the selected deck? */
