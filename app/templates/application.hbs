@@ -21,12 +21,12 @@
           <ul>
             {{!--Logged in user--}}
             {{#if session.isAuthenticated}}
-            <li class="cursor-pointer">
-              <img class="avatar avatar-text avatar-small avatar-list" src={{session.user.avatarUrl}} />
-            </li>
-            <li>{{#link-to 'decks.list'}}Decks{{/link-to}}</li>
+              {{#link-to 'user.index' session.user tagName="li" className="cursor-pointer"}}
+                <img class="avatar avatar-text avatar-small avatar-list" src={{session.user.avatarUrl}} />
+              {{/link-to}}
+              <li>{{#link-to 'decks.list'}}Decks{{/link-to}}</li>
             {{else}}
-            <li>{{#link-to 'login'}}Log in{{/link-to}}</li>
+              <li>{{#link-to 'login'}}Log in{{/link-to}}</li>
             {{/if}}
 
             {{!-- Games link --}}

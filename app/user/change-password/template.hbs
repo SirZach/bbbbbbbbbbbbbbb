@@ -1,0 +1,12 @@
+{{#paper-card}}
+  {{#paper-card-content}}
+    <h3>Change Password</h3>
+    <form role="form" {{action "changePassword" on="submit"}}>
+        {{paper-input classNames="login-input" type="password" label="Old Password" value=oldPassword}}
+        {{paper-input classNames="login-input" type="password" label="New Password" value=newPassword}}
+      {{#paper-button type="submit" primary=true raised=true}}
+        Change Password
+      {{/paper-button}}
+    </form>
+  {{/paper-card-content}}
+{{/paper-card}}
