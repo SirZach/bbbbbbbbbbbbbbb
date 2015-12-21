@@ -33,16 +33,16 @@ export default Route.extend({
           email: get(user, 'email'),
           oldPassword,
           newPassword
-        }, function (error) {
+        }, function(error) {
           if (error) {
             switch (error.code) {
-              case "INVALID_PASSWORD":
+              case 'INVALID_PASSWORD':
                 notifications.addNotification({
                   message: 'The specified user account password is incorrect.',
                   type: 'error'
                 });
                 break;
-              case "INVALID_USER":
+              case 'INVALID_USER':
                 notifications.addNotification({
                   message: 'The specified user account does not exist.',
                   type: 'error'
