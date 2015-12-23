@@ -1,5 +1,6 @@
 import ENV from 'webatrice/config/environment';
 import DS from 'ember-data';
+import Ember from 'ember';
 
 /* for ref: single card format
 
