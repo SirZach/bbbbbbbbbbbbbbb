@@ -39,10 +39,12 @@ function getSymbol(letter) {
   }
 }
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+
+export default Component.extend({
   tagName: 'span',
 
-  formattedCharacters: function() {
+  formattedCharacters: computed('mana', function() {
     let mana = this.get('mana');
     let charObjects = [];
 
@@ -52,5 +54,5 @@ export default Ember.Component.extend({
     }
 
     return charObjects;
-  }.property('mana')
+  })
 });
