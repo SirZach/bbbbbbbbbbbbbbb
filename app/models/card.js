@@ -69,7 +69,7 @@ export default DS.Model.extend({
     if (ENV.environment === 'development') {
       host = 'http://localhost:3000';
     }
-    return encodeURI(`${host}/images/${name}`);
+    return new Ember.Handlebars.SafeString(encodeURI(`${host}/images/${name}`));
   }.property('name'),
 
   channelFireballPrice: function() {
