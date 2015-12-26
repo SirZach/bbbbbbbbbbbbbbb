@@ -5,7 +5,7 @@
     "BUILDPACK_URL":{
       "required":true
     },
-    "EMBER_ENV":"development",
+    "EMBER_ENV":"review-app",
     "REBUILD_ALL":{
       "required":true
     }

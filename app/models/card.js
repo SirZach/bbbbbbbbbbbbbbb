@@ -1,5 +1,6 @@
 import ENV from 'webatrice/config/environment';
 import DS from 'ember-data';
+import Ember from 'ember';
 
 /* for ref: single card format
 
@@ -69,7 +70,7 @@ export default DS.Model.extend({
     if (ENV.environment === 'development') {
       host = 'http://localhost:3000';
     }
-    return encodeURI(`${host}/images/${name}`);
+    return new Ember.Handlebars.SafeString(encodeURI(`${host}/images/${name}`));
   }.property('name'),
 
   channelFireballPrice: function() {
