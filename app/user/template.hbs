@@ -1,0 +1,33 @@
+{{#paper-toolbar classNames="mb-10"}}
+  <h2 class="md-toolbar-tools">
+    {{#paper-sidenav-toggle}}
+      {{paper-icon icon="menu"}}
+    {{/paper-sidenav-toggle}}
+  </h2>
+{{/paper-toolbar}}
+
+{{#paper-content class="md-padding"}}
+  <div class="user-page">
+    <div class="d-f">
+      <div class="user-page-nav">
+        {{#paper-card}}
+          {{#paper-card-content}}
+            <nav class="sidenav vertical-tabs">
+              <ul>
+                <li>{{#link-to 'user.index'}}Profile{{/link-to}}</li>
+                {{#if model.email}}
+                  {{#if (eq session.user.id model.id)}}
+                    <li>{{#link-to 'user.change-password'}}Change Password{{/link-to}}</li>
+                  {{/if}}
+                {{/if}}
+              </ul>
+            </nav>
+          {{/paper-card-content}}
+        {{/paper-card}}
+      </div>
+      <div class="user-page-content">
+        {{liquid-outlet}}
+      </div>
+    </div>
+  </div>
+{{/paper-content}}

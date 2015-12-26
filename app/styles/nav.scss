@@ -16,6 +16,22 @@
       background-color: map-get($color-grey, '300');
     }
   }
+  &.vertical-tabs {
+    li > a {
+      &:before {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        margin-right: 8px;
+      }
+      &.active {
+        &:before {
+          background-color: map-get($primary, '500');
+        }
+      }
+    }
+  }
 }
 
 // Override ember-paper sidenav to allow forcing the sidenav unlocked.
