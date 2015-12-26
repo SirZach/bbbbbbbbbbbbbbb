@@ -1,0 +1,23 @@
+{{#paper-toolbar classNames="mb-10"}}
+  <h2 class="md-toolbar-tools">
+    {{#paper-sidenav-toggle}}
+      {{paper-icon icon="menu"}}
+    {{/paper-sidenav-toggle}}
+  </h2>
+{{/paper-toolbar}}
+
+{{#paper-content}}
+  {{#paper-card}}
+    {{#paper-card-content}}
+      <h3>Password Reset</h3>
+
+      <form role="form" {{action "resetPassword" on="submit"}}>
+        {{paper-input classNames="login-input" type="email" label="Email" value=loginEmail}}
+        {{#paper-button action="cancel"}}Cancel{{/paper-button}}
+        {{#paper-button type="submit" primary=true raised=true}}
+          Reset Password
+        {{/paper-button}}
+      </form>
+    {{/paper-card-content}}
+  {{/paper-card}}
+{{/paper-content}}
