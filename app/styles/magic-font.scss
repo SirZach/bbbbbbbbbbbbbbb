@@ -1,13 +1,33 @@
+@import 'color-palette';
+
 @font-face {
   font-family: 'Magic:the Gathering';
   src: url('MAGIC.TTF');
 }
 
-[data-magic-icon]:before {
-  font-family: 'Magic:the Gathering';
-  content: attr(data-magic-icon);
-}
-
 [data-magic-icon] {
   font-size: 20px;
+  width: 14px;
+  height: 15px;
+  border-radius: 50%;
+  display: inline-block;
+  &.Island {
+    background-color: map-get($color-blue, '500');
+  }
+  &.Forest {
+    background-color: map-get($color-green, '500');
+  }
+  &.Mountain {
+    background-color: map-get($color-red, '500');
+  }
+  &.Plains {
+    background-color: #FFFCD6;
+  }
+  &.Swamp {
+    background-color: #ccc;
+  }
+  &:before {
+    font-family: 'Magic:the Gathering';
+    content: attr(data-magic-icon);
+  }
 }

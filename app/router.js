@@ -7,8 +7,11 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('login');
+  this.route('password-reset');
   this.route('disclaimer');
-  this.resource('user', { path: '/u/:user_id' });
+  this.resource('user', { path: '/u/:user_id' }, function() {
+    this.route('change-password');
+  });
   this.resource('decks', function() {
     this.route('list');
   });

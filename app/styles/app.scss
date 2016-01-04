@@ -24,12 +24,14 @@ $locked-breakpoint: 1700px;
 @import 'decks/list';
 @import 'form';
 @import 'modal';
+@import 'user';
 
 body { background-color: map-get($color-grey, '300');}
 
 .ember-app {
   width: 100%;
   height: 100%;
+  background-color: map-get($color-grey, '300');
 }
 
 .sm-display {
