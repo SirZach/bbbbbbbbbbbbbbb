@@ -2,10 +2,10 @@ import Ember from 'ember';
 const { inject, computed } = Ember;
 
 export default Ember.Controller.extend({
-  userController: inject.controller('user'),
+  userController: inject.controller('user')
 
   /**
-    We may need this code again as 
+    We may need this code again as the behavior may have broken with ember-paper 0.2.10 update
   */
   // routeDidChange: function() {
   //   this.set('drawerOpen', false);
