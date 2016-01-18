@@ -1,7 +1,9 @@
 {{#paper-toolbar}}
   <h2 class="md-toolbar-tools jc-sb">
-    {{#paper-sidenav-toggle}}
-      {{paper-icon icon="menu"}}
+    {{#paper-sidenav-toggle as |toggle|}}
+      {{#paper-button target=toggle action="toggleMenu" icon-button=true}}
+        {{paper-icon="menu"}}
+      {{/paper-button}}
     {{/paper-sidenav-toggle}}
 
     {{#if amIPlaying}}

@@ -1,7 +1,9 @@
 @import 'color-palette';
 
 $primary: $color-orange;
-$locked-breakpoint: 1700px;
+// $layout-breakpoint-sm: 1700px;
+// $layout-breakpoint-md: 1800px;
+// $layout-breakpoint-lg: 1900px;
 
 @import 'ember-paper';
 

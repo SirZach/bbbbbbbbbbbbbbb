@@ -21,7 +21,6 @@
   "devDependencies": {
     "body-parser": "^1.13.3",
     "broccoli-asset-rev": "^2.2.0",
-    "broccoli-sass": "0.7.0",
     "compression": "^1.2.0",
     "connect-restreamer": "^1.0.1",
     "ember-cli": "1.13.13",
