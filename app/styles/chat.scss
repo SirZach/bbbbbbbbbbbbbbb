@@ -28,7 +28,7 @@
   right: 0;
 }
 
-@media screen and (min-width: $locked-breakpoint) {
+@media screen and (min-width: $layout-breakpoint-lg) {
   .chat {
     left: 264px;
   }
