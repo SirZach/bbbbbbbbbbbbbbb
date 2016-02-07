@@ -1,6 +1,7 @@
 @import 'color-palette';
 
-$primary: $color-orange;
+$primary: $color-deep-orange;
+$accent:  $color-teal;
 // $layout-breakpoint-sm: 1700px;
 // $layout-breakpoint-md: 1800px;
 // $layout-breakpoint-lg: 1900px;
@@ -27,6 +28,8 @@ $primary: $color-orange;
 @import 'form';
 @import 'modal';
 @import 'user';
+@import 'flex-grid';
+@import 'card';
 
 body { background-color: map-get($color-grey, '300');}
 
@@ -57,24 +60,6 @@ body { background-color: map-get($color-grey, '300');}
   width: 15px;
   display: inline-block;
   text-align: right;
-}
-
-.cursor-pointer {
-  cursor: pointer;
-}
-
-.cursor-move {
-  cursor: move;
-}
-
-.overflow-y-scroll {
-  overflow-y: scroll;
-}
-
-.truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .overlay {

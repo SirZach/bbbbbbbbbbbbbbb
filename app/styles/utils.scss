@@ -21,15 +21,24 @@
 .ta-l {text-align: left!important;}
 .ta-c {text-align: center}
 
-.jc-sb {justify-content: space-between;}
-
-.d-f {display: flex;}
-
 .link {
   cursor: pointer;
   color: map-get($color-light-blue, '800')!important;
   &:hover {
     color: map-get($color-light-blue, '900')!important;
+  }
+}
+
+.primary-link {
+  color: color($accent, '500');
+  font-weight: bold;
+  padding: 2px;
+  display: inline-block;
+
+  &:hover {
+    color: #fff;
+    background: color($accent, '500');
+    text-decoration: none;
   }
 }
 
@@ -40,6 +49,16 @@
   }
 }
 
-.bg-transparent {
-  background-color: transparent;
+.bg-transparent { background-color: transparent; }
+
+.cursor-pointer { cursor: pointer; }
+
+.cursor-move { cursor: move; }
+
+.overflow-y-scroll { overflow-y: scroll; }
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
