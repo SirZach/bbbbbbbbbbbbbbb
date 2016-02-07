@@ -1,0 +1,24 @@
+{{#if model.length}}
+
+  <div class="d-f fw-wrap">
+    {{#each model as |deck index|}}
+      <div class="d-f fd-column fs-on deck-item">
+        {{deck-tile deck=deck}}
+      </div>
+    {{/each}}
+  </div>
+
+{{else}}
+  <div class="no-decks-container">
+    <div class="three-card-deck">
+      <div class="card-one"></div>
+      <div class="card-two"></div>
+      <div class="card-three"></div>
+    </div>
+    <h2 class="main-message">There aren't any decks here.</h2>
+    <p class="message">
+      {{paper-button raised=true class="md-primary" label="Create" action="createNewDeck"}}
+      a new deck or {{paper-button raised=true label="Import" action="importDeck"}} a deck to get started.
+    </p>
+  </div>
+{{/if}}
